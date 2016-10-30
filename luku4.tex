@@ -450,13 +450,15 @@ kuluu vain $n$ bittiä eli 32 kertaa vähemmän.
 Seuraava koodi luo bittijoukon, jossa on 10 alkiota
 (indeksointi $0 \ldots 9$).
 Bittijoukkoa voi käyttää samalla tavalla kuin taulukkoa.
+Lisäksi funktio \texttt{count} kertoo ykkösbittien
+määrän bittijoukossa.
 \begin{lstlisting}
 bitset<10> s;
 s[2] = 1;
 s[5] = 1;
-s[9] = 1;
 cout << s[4] << "\n"; // 0
 cout << s[5] << "\n"; // 1
+cout << s.count() << "\n"; // 2
 \end{lstlisting}
 
 Bittijoukon toinen etu muistinkäytön lisäksi on,
