@@ -1,0 +1,817 @@
+\chapter{Johdanto}
+
+Kisakoodauksessa yhdistyy kaksi asiaa:
+(1) algoritmien suunnittelu ja
+(2) algoritmien toteutus.
+
+Algoritmien suunnittelu on loogista ongelmanratkaisua,
+joka on lähellä matematiikkaa.
+Se vaatii kykyä analysoida ongelmia ja
+ratkaista niitä luovasti.
+Tehtävän ratkaisevan algoritmin tulee olla sekä
+toimiva että tehokas,
+ja usein nimenomaan tehokkaan algoritmin
+keksiminen on tehtävän ydin.
+
+Teoreettiset tiedot algoritmiikasta
+ovat kisakoodarille kullanarvoisia.
+Usein tehtävän ratkaisu on yhdistelmä tunnettuja
+tekniikoita sekä omia oivalluksia.
+Kisakoodauksessa esiintyvät menetelmät ovat myös
+algoritmiikan tieteellisen tutkimuksen perusta.
+
+Algoritmien toteutus edellyttää hyvää ohjelmointitaitoa.
+Kisakoodauksessa tehtävän ratkaisun arvostelu tapahtuu
+testaamalla toteutettua algoritmia
+joukolla testisyötteitä.
+Ei siis riitä, että algoritmin idea on oikea,
+vaan algoritmi pitää myös onnistua toteuttamaan virheettömästi.
+
+Hyvä kisakoodi on suoraviivaista ja tiivistä.
+Ratkaisu täytyy pystyä kirjoittamaan nopeasti,
+koska kisoissa on vain vähän aikaa.
+Toisin kuin tavallisessa ohjelmistokehityksessä,
+ratkaisut ovat lyhyitä
+(yleensä enintään joitakin satoja rivejä)
+eikä koodia tarvitse kehittää kilpailun jälkeen.
+
+
+
+\section{Ohjelmointikielet}
+
+Tällä hetkellä yleisimmät koodauskisoissa
+käytetyt kielet ovat C++, Python ja Java.
+Esimerkiksi vuoden 2016 Google Code Jamissa
+3000 parhaan osallistujan joukossa
+73 \% käytti C++:aa,
+15 \% käytti Pythonia ja
+10 \% käytti Javaa \footnote{\url{https://www.go-hero.net/jam/16}}.
+Jotkut osallistujat käyttivät myös useita näistä kielistä.
+
+Monen mielestä C++ on paras
+valinta kisakoodauksen kieleksi,
+ja se on yleensä aina käytettävissä
+kisajärjestelmissä.
+C++:n etuja ovat, että sillä
+toteutettu koodi on hyvin tehokasta
+ja kielen standardikirjastoon
+kuuluu kattava valikoima valmiita
+tietorakenteita ja algoritmeja.
+
+Toisaalta on hyvä hallita useita kieliä
+ja tuntea niiden edut.
+Esimerkiksi jos tehtävässä esiintyy
+suuria kokonaislukuja,
+Python voi olla hyvä valinta,
+koska kielessä on sisäänrakennettuna
+suurten kokonaislukujen käsittely.
+Toisaalta tehtävät yritetään yleensä laatia niin,
+ettei tietyn kielen ominaisuuksista
+ole kohtuutonta hyötyä tehtävän ratkaisussa.
+
+Kaikki tämän kirjan esimerkit on kirjoitettu C++:lla,
+ja niissä on käytetty runsaasti C++:n valmiita 
+tietorakenteita ja algoritmeja.
+Käytössä on C++:n standardi C++11,
+jota voi nykyään käyttää useimmissa kisoissa.
+Jos et vielä osaa ohjelmoida C++:lla,
+nyt on hyvä hetki alkaa opetella.
+
+\section{Koodipohja}
+
+Tyypillinen C++-koodin pohja kisakoodausta varten
+näyttää seuraavalta:
+
+\begin{lstlisting}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    // koodi tulee tähän
+}
+\end{lstlisting}
+
+\noindent
+Koodin alussa oleva \texttt{\#include}-rivi
+on \texttt{g++}-kääntäjän tarjoama tapa
+ottaa mukaan kaikki standardikirjaston sisältö.
+Tämän ansiosta koodissa ei tarvitse erikseen
+ottaa mukaan tiedostoja \texttt{iostream},
+\texttt{vector}, \texttt{algorithm}, jne.,
+vaan ne kaikki ovat käytettävissä automaattisesti.
+
+Seuraavana oleva \texttt{using}-rivi määrittää,
+että standardikirjaston sisältöä voi käyttää
+suoraan koodissa.
+Ilman \texttt{using}-riviä koodissa pitäisi
+kirjoittaa esimerkiksi \texttt{std::cout},
+mutta \texttt{using}-rivin ansiosta riittää
+kirjoittaa \texttt{cout}.
+
+Koodin voi kääntää esimerkiksi
+seuraavalla komennolla:
+
+\begin{lstlisting}
+g++ -std=c++11 -O2 -Wall koodi.cpp -o koodi
+\end{lstlisting}
+
+Komento tuottaa kooditiedostosta \texttt{koodi.cpp}
+binääritiedoston \texttt{koodi}.
+Kääntäjä noudattaa C++11-standardia
+(\texttt{-std=c++11}),
+optimoi koodia käännöksen aikana (\texttt{-O2})
+ja näyttää varoituksia
+mahdollisista virheistä (\texttt{-Wall}).
+
+\section{Syöte ja tuloste}
+
+Useimmissa kisoissa käytetään
+standardivirtoja syötteen lukemiseen ja tulosteen
+kirjoittamiseen.
+C++:ssa standardivirrat ovat \texttt{cin}
+lukemiseen
+ja \texttt{cout} tulostamiseen. Lisäksi voi käyttää
+C:n funktioita \texttt{scanf} ja \texttt{printf}.
+
+Ohjelmalle tuleva syöte muodostuu yleensä
+luvuista ja merkkijonoista,
+joiden välissä on välilyöntejä ja rivinvaihtoja.
+Niitä voi lukea \texttt{cin}-virrasta näin:
+
+\begin{lstlisting}
+int a, b;
+string x;
+cin >> a >> b >> x;
+\end{lstlisting}
+
+Tällainen koodi toimii aina,
+kunhan jokaisen luettavan alkion välissä
+on ainakin yksi rivinvaihto tai välilyönti.
+Esimerkiksi yllä oleva koodi hyväksyy
+molemmat seuraavat syötteet:
+\begin{lstlisting}
+123 456 apina
+\end{lstlisting}
+\begin{lstlisting}
+123    456
+apina
+\end{lstlisting}
+Tulostaminen tapahtuu seuraavasti
+\texttt{cout}-virran kautta:
+
+\begin{lstlisting}
+int a = 123, b = 456;
+string x = "apina";
+cout << a << " " << b << " " << x << "\n";
+\end{lstlisting}
+
+Syötteen ja tulosteen käsittely on joskus
+pullonkaula ohjelmassa.
+Seuraavat rivit koodin alussa tehostavat
+syötteen ja tulosteen käsittelyä:
+
+\begin{lstlisting}
+ios_base::sync_with_stdio(0);
+cin.tie(0);
+\end{lstlisting}
+
+Huomaa myös, että rivinvaihto \texttt{"\textbackslash n"}
+toimii tulostuksessa nopeammin kuin \texttt{endl},
+koska \texttt{endl} aiheuttaa
+aina flush-operaation.
+
+C:n funktiot \texttt{scanf}
+ja \texttt{printf} ovat vaihtoehto
+C++:n standardivirroille.
+Ne ovat yleensä hieman nopeampia,
+mutta toisaalta vaikeakäyttöisempiä.
+Seuraava koodi lukee kaksi kokonaislukua syötteestä:
+
+\begin{lstlisting}
+int a, b;
+scanf("%d %d", &a, &b);
+\end{lstlisting}
+Seuraava koodi taas tulostaa kaksi kokonaislukua:
+
+\begin{lstlisting}
+int a = 123, b = 456;
+printf("%d %d\n", a, b);
+\end{lstlisting}
+
+Joskus ohjelman täytyy lukea syötteestä
+kokonainen rivi tietoa
+välittämättä rivin välilyönneistä.
+Tämä onnistuu seuraavasti funktiolla
+\texttt{getline}:
+
+\begin{lstlisting}
+string s;
+getline(cin, s);
+\end{lstlisting}
+
+Jos syötteessä olevan tiedon määrä ei ole tiedossa
+etukäteen, seuraavanlainen silmukka on kätevä:
+
+\begin{lstlisting}
+while (cin >> x) {
+    // koodia
+}
+\end{lstlisting}
+
+Tämä silmukka lukee syötettä alkio
+kerrallaan, kunnes syöte loppuu.
+
+Joissakin kisajärjestelmissä syötteen ja tulosteen
+käsittelyyn käytetään tiedostoja. Helppo ratkaisu tähän
+on kirjoittaa koodi tavallisesti
+standardivirtoja käyttäen,
+mutta kirjoittaa alkuun seuraavat rivit:
+
+\begin{lstlisting}
+freopen("input.txt", "r", stdin);
+freopen("output.txt", "w", stdout);
+\end{lstlisting}
+Tämän seurauksena koodi lukee syötteen tiedostosta
+''input.txt'' ja kirjoittaa tulosteen
+tiedostoon ''output.txt''.
+
+\section{Lukujen käsittely}
+
+\subsection{Kokonaisluvut}
+
+Tavallisin kokonaislukutyyppi kisakoodauksessa on \texttt{int}.
+Tämä on 32-bittinen tyyppi,
+jonka sallittu lukuväli on $-2^{31} \ldots 2^{31}-1$
+eli noin $-2 \cdot 10^9 \ldots 2 \cdot 10^9$.
+Jos tyyppi \texttt{int} ei riitä, sen sijaan voi käyttää
+64-bittistä tyyppiä
+\texttt{long long}, jonka lukuväli on $-2^{63} \ldots 2^{63}-1$
+eli noin $-9 \cdot 10^{18} \ldots 9 \cdot 10^{18}$.
+
+Seuraava koodi määrittelee
+\texttt{long long} -muuttujan:
+
+\begin{lstlisting}
+long long x = 123456789123456789LL;
+\end{lstlisting}
+Luvun lopussa oleva \texttt{LL}
+ilmaisee, että luku on \texttt{long long} -tyyppinen.
+
+Yleinen virhe \texttt{long long} -tyypin käytössä on,
+että jossain kohtaa käytetään kuitenkin \texttt{int}-tyyppiä.
+Esimerkiksi tässä koodissa on salakavala virhe:
+
+\begin{lstlisting}
+int a = 123456789;
+long long b = a*a;
+\end{lstlisting}
+
+Vaikka muuttuja \texttt{b} on \texttt{long long} -tyyppinen,
+laskussa \texttt{a*a} molemmat osat ovat \texttt{int}-tyyppisiä
+ja myös laskun tulos on \texttt{int}-tyyppinen.
+Tämän vuoksi muuttujaan \texttt{b} ilmestyy väärä luku.
+Ongelman voi korjata vaihtamalla muuttujan \texttt{a}
+tyypiksi \texttt{long long} tai kirjoittamalla
+laskun muodossa \texttt{(long long)a*a}.
+
+Yleensä tehtävät laaditaan niin, että tyyppi
+\texttt{long long} riittää niiden ratkaisuun.
+Kuitenkin \texttt{g++}-kääntäjä sisältää myös 128-bittisen
+tyypin \texttt{\_\_int128\_t}, jonka lukuväli on
+$-2^{127} \ldots 2^{127}-1$ eli noin $-10^{38} \ldots 10^{38}$.
+Tämä tyyppi ei kuitenkaan ole käytettävissä kaikissa kisajärjestelmissä.
+
+\subsection{Vastaus modulona}
+
+Joskus tehtävän vastaus on hyvin suuri kokonaisluku,
+mutta vastaus riittää tulostaa ''modulo $M$''
+eli vastauksen jakojäännös luvulla $M$
+(esimerkiksi ''modulo $10^9+7$'').
+Ideana on, että vaikka todellinen vastaus
+voi olla suuri luku,
+tehtävässä riittää käyttää tyyppejä \texttt{int} ja \texttt{long long}.
+
+Luvun $x$ jakojäännöstä $M$:llä
+merkitään $x \bmod M$.
+Esimerkiksi $12 \bmod 5 = 2$,
+koska 12:n jakojäännös 5:llä on 2.
+
+Tärkeä modulon ominaisuus on,
+että yhteen-, vähennys- ja kertolaskussa
+modulon voi laskea ennen laskutoimitusta,
+eli seuraavat kaavat pätevät:
+
+\[
+\begin{array}{rcr}
+(a+b) \bmod M & = & (a \bmod M + b \bmod M) \bmod M \\
+(a-b) \bmod M & = & (a \bmod M - b \bmod M) \bmod M \\
+(a \cdot b) \bmod M & = & (a \bmod M \cdot b \bmod M) \bmod M
+\end{array}
+\]
+
+Näiden kaavojen ansiosta
+jokaisen laskun vaiheen jälkeen voi ottaa modulon
+eivätkä luvut kasva liian suuriksi.
+
+Esimerkiksi seuraava koodi
+laskee luvun $n$ kertoman modulo $M$:
+
+\begin{lstlisting}
+long long x = 1;
+for (int i = 2; i <= n i++) {
+    x = (x*i)%M;
+}
+cout << x << "\n";
+\end{lstlisting}
+
+Yleensä vastaus modulona tulee antaa niin,
+että se on aina välillä $0\ldots M-1$.
+Kuitenkin C++:ssa ja muissa
+kielissä negatiivisen
+luvun modulo on nolla tai negatiivinen.
+Helppo tapa varmistaa, että modulo ei ole negatiivinen,
+on laskea ensin modulo ja lisätä sitten $M$,
+jos tulos on negatiivinen:
+
+\begin{lstlisting}
+x = x%M;
+if (x < 0) x += M;
+\end{lstlisting}
+Tämä on tarpeen kuitenkin vain silloin,
+kun modulo voi olla negatiivinen
+koodissa olevien vähennyslaskujen vuoksi.
+
+\subsection{Liukuluvut}
+
+Tavalliset liukulukutyypit kisakoodauksessa
+ovat 64-bittinen \texttt{double}
+sekä \texttt{g++}-kääntäjän
+laajennoksena
+80-bittinen \texttt{long double}.
+Yleensä \texttt{double} riittää,
+mutta \texttt{long double} tuo tarvittaessa
+lisää tarkkuutta.
+
+Vastauksena oleva liukuluku täytyy yleensä tulostaa
+tietyllä tarkkuudella.
+Tämä onnistuu helpoiten \texttt{printf}-funktiolla,
+jolle voi antaa desimaalien määrän.
+Esimerkiksi seuraava koodi tulostaa luvun 9
+desimaalin tarkkuudella:
+
+\begin{lstlisting}
+printf("%.9f\n", x);
+\end{lstlisting}
+
+Liukulukujen käyttämisessä on hankaluutena,
+että kaikkia lukuja ei voi esittää tarkasti
+liukulukuina vaan tapahtuu pyöristysvirheitä.
+Esimerkiksi seuraava koodi tuottaa yllättävän tuloksen:
+
+\begin{lstlisting}
+double x = 0.3*3+0.1;
+printf("%.20f\n", x);
+\end{lstlisting}
+
+Koodin tulostus on seuraava:
+
+\begin{lstlisting}
+0.99999999999999988898
+\end{lstlisting}
+
+Pyöristysvirheen vuoksi muuttujan \texttt{x}
+sisällöksi tulee hieman alle 1,
+vaikka sen arvo tarkasti laskettuna olisi 1.
+
+Liukulukuja on vaarallista vertailla \texttt{==}-merkinnällä,
+koska vaikka luvut olisivat todellisuudessa samat,
+niissä voi olla pientä eroa pyöristysvirheiden vuoksi.
+Parempi tapa vertailla liukulukuja on
+tulkita kaksi lukua samoiksi, jos niiden erona on $\varepsilon$,
+jossa $\varepsilon$ on sopiva pieni luku.
+
+Käytännössä vertailun voi toteuttaa seuraavasti ($\varepsilon=10^{-9}$):
+
+\begin{lstlisting}
+if (abs(a-b) < 1e-9) {
+    // a ja b ovat samat
+}
+\end{lstlisting}
+
+Vaikka liukuluvut ovat epätarkkoja, niillä voi esittää
+tarkasti kokonaislukuja tiettyyn rajaan asti.
+Esimerkiksi \texttt{double}-tyypillä voi esittää
+tarkasti kaikki kokonaisluvut, joiden itseisarvo
+on enintään $2^{53}$.
+% 
+% Huomaa, että hyvin lähellä nollaa olevien liukulukujen
+% käsittely voi olla yllättävän hidasta.
+% Tällaisia liukulukuja kutsutaan subnormaaleiksi,
+% ja niillä laskeminen on hidasta joissakin järjestelmissä.
+% Yleensä toimiva ratkaisu on muuttaa tietyn rajan
+% alittavat luvut nollaksi.
+
+\section{Koodin lyhentäminen}
+
+\subsection{Tyyppinimet}
+
+Komennolla \texttt{typedef} voi antaa lyhyemmän
+nimen tyypille.
+Esimerkiksi nimi \texttt{long long} on pitkä,
+joten tyypille voi antaa lyhyemmän nimen \texttt{ll}:
+\begin{lstlisting}
+typedef long long ll;
+\end{lstlisting}
+Tämän jälkeen seuraavat kaksi koodia tarkoittavat samaa:
+\begin{lstlisting}
+long long f(long long x) {
+    long long u = (x == 0) ? 1 : f(x/2);
+    return u*u;
+}
+\end{lstlisting}
+\begin{lstlisting}
+ll f(ll x) {
+    ll u = (x == 0) ? 1 : f(x/2);
+    return u*u;
+}
+\end{lstlisting}
+Komentoa \texttt{typedef} voi käyttää myös
+monimutkaisempien tyyppien kanssa.
+Esimerkiksi seuraava koodi antaa nimen \texttt{vi}
+kokonaisluvuista muodostuvalle vektorille
+sekä nimen \texttt{pi} kaksi
+kokonaislukua sisältävälle parille.
+\begin{lstlisting}
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+\end{lstlisting}
+
+\subsection{Makrot}
+
+Esikääntäjän komennolla \texttt{\#define}
+voi määritellä makroja, joiden avulla voi lyhentää
+koodia. Yksinkertaisimmillaan makro antaa lyhyemmän
+version jollekin koodissa esiintyvälle sanalle.
+
+Määritellään esimerkiksi seuraavat makrot:
+\begin{lstlisting}
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+\end{lstlisting}
+Tämän jälkeen seuraavat koodit vastaavat toisiaan:
+\begin{lstlisting}
+v.push_back(make_pair(y1,x1));
+v.push_back(make_pair(y2,x2));
+int d = v[i].first+v[i].second;
+\end{lstlisting}
+\begin{lstlisting}
+v.PB(MP(y1,x1));
+v.PB(MP(y2,x2));
+int d = v[i].F+v[i].S;
+\end{lstlisting}
+Makro on mahdollista määritellä myös niin,
+että sille voi antaa parametreja.
+Tämän ansiosta makrolla voi lyhentää esimerkiksi
+komentorakenteita.
+
+Määritellään esimerkiksi seuraava makro:
+\begin{lstlisting}
+#define REP(i,a,b) for (int i = a; i <= b; i++)
+\end{lstlisting}
+Tämän jälkeen seuraavat koodit vastaavat toisiaan:
+\begin{lstlisting}
+for (int i = 1; i <= n; i++) {
+    haku(i);
+}
+\end{lstlisting}
+\begin{lstlisting}
+REP(i,1,n) {
+    haku(i);
+}
+\end{lstlisting}
+
+Huomaa, että toisin kuin funktioissa,
+makron parametri sijoitetaan lausekkeeseen
+sellaisenaan.
+Tästä voi tulla joskus yllättäviä ongelmia.
+Näin on esimerkiksi seuraavassa makrossa:
+
+\begin{lstlisting}
+#define SQR(x) x*x
+\end{lstlisting}
+
+Nyt seuraavat koodit vastaavat toisiaan:
+
+\begin{lstlisting}
+cout << SQR(1+2) << "\n";
+\end{lstlisting}
+
+\begin{lstlisting}
+cout << 1+2*1+2 << "\n";
+\end{lstlisting}
+
+Tuloksena koodi laskee siis $1+(2 \cdot 1)+2$,
+vaikka tarkoitus olisi laskea $(1+2) \cdot (1+2)$.
+Yleensä helppo korjaus ongelmaan on lisätä makron
+lausekkeeseen sulkuja, tässä tapauksessa seuraavasti:
+
+\begin{lstlisting}
+#define SQR(x) (x)*(x)
+\end{lstlisting}
+
+\section{Virheen etsiminen}
+
+Yleensä kilpailun aikana ei saa tietää,
+millä syötteillä koodia testataan.
+Niinpä jos koodi toimii väärin, syy virheeseen
+täytyy löytää itse.
+Virhe voi selvitä helposti koodia tutkimalla,
+mutta virhettä voi olla myös vaikeaa löytää.
+
+Järjestelmällinen tapa etsiä virhettä on koodata kaksi
+ratkaisua: tehokas palautettavaksi tarkoitettu
+ratkaisu sekä toinen raa'an voiman ratkaisu,
+joka toimii varmasti oikein mutta ei ole tehokas.
+Tämän jälkeen riittää etsiä syöte,
+jossa nämä koodit toimivat eri tavalla.
+
+Seuraavassa on esimerkki Python-koodista,
+joka etsii virheellistä syötettä automaattisesti.
+Tehokas ratkaisu on nimeltään \texttt{fast}
+ja raa'an voiman ratkaisu on nimeltään \texttt{brute}.
+Syötteessä annetaan ensin lukujen määrä $n$ ja
+sen jälkeen $n$ lukua väliltä $1 \ldots r$.
+
+\begin{lstlisting}
+from os import system
+from random import randint
+
+n = 10 # lukujen määrä
+r = 5 # lukujen yläraja
+
+while True:
+    f = open("input.txt","w")
+    f.write(str(n) + "\n")
+    u = []
+    for i in range(n):
+        u.append(str(randint(1,r)))
+    f.write(" ".join(u) + "\n")
+    f.close()
+    system("./fast < input.txt > output1.txt")
+    system("./brute < input.txt > output2.txt")
+    o1 = open("output1.txt").readlines()
+    o2 = open("output2.txt").readlines()
+    if o1 == o2:
+        print "ok"
+    else:
+        print "virhe!"
+        exit(0)
+\end{lstlisting}
+
+Koodi muodostaa satunnaisen syötteen tiedostoon ''input.txt''
+ja suorittaa sitten kummankin koodin tälle syötteelle
+niin, että tulosteet ohjautuvat tiedostoihin
+''output1.txt'' ja ''output2.txt''.
+Tämän jälkeen koodi vertaa tulostiedostoja ja
+pysähtyy, jos ne eivät ole samat.
+
+Tällä lähestymistavalla
+koodissa oleva virhe löytyy
+lähes varmasti.
+Lisäksi yleensä jos koodissa on virhe,
+se esiintyy jollakin pienellä syötteellä,
+mikä helpottaa virheen etsimistä koodista.
+
+\section{Matematiikka}
+
+\subsection{Merkintöjä}
+
+Summa $\sum_{x=a}^b$ käy läpi välin $a \ldots b$ kokonaisluvut.
+Jokaisen luvun kohdalla summaan lisätään
+yleensä $x$:stä riippuvan lausekkeen arvo.
+Esimerkiksi $\sum_{x=1}^n x$
+vastaa summaa $1+2+3+\ldots+n$
+ja $\sum_{x=1}^n x^2$
+vastaa summaa $1^2+2^2+3^2+\ldots+n^2$.
+
+Vastaavasti tulo $\prod_{x=a}^b$
+käy läpi välin $a \ldots b$ kokonaisluvut.
+Esimerkiksi $\prod_{x=1}^n x$ vastaa tuloa
+$1 \cdot 2 \cdot 3 \cdot \cdots \cdot n$ (eli kertomaa $n!$).
+
+Merkinnät $\lfloor x \rfloor$ ja $\lceil x \rceil$
+pyöristävät luvun $x$ kokonaisluvuksi alaspäin ja ylöspäin.
+Esimerkiksi $\lfloor \pi \rfloor = 3$ ja $\lceil \pi \rceil = 4$,
+missä $\pi = 3{,}14159\ldots$
+
+Merkinnät $\min(a_1,a_2,\ldots,a_n)$ ja
+$\max(a_1,a_2,\ldots,a_n)$ valitsevat
+pienimmän ja suurimman alkioista
+$a_1,a_2,\ldots,a_n$.
+
+\subsection{Joukot}
+
+Joukko on kokoelma alkioita.
+Esimerkiksi joukko $\{2,4,7\}$
+sisältää alkiot 2, 4 ja 7.
+Tietty alkio voi esiintyä joukossa enintään kerran.
+Merkintä $\emptyset$ tarkoittaa tyhjää joukkoa.
+Joukon $S$ koko eli alkoiden määrä on $|S|$,
+esimerkiksi $|\{2,4,7\}|=3$.
+
+Merkintä $x \in S$ tarkoittaa,
+että alkio $x$ on joukossa $S$,
+ja merkintä $x \notin S$ tarkoittaa,
+että alkio $x$ ei ole joukossa $S$.
+Esimerkiksi $4 \in \{2,4,7\}$,
+mutta $5 \notin \{2,4,7\}$.
+
+Leikkaus $A \cap B$ sisältää alkiot,
+jotka ovat molemmissa joukoista $A$ ja $B$.
+Yhdiste $A \cup B$ sisältää alkiot,
+jotka ovat ainakin toisessa joukoista $A$ ja $B$.
+Erotus $A \setminus B$ sisältää alkiot,
+jotka ovat joukossa $A$ mutta eivät joukossa $B$.
+Esimerkiksi jos $A=\{1,2,5\}$ ja $B=\{2,4\}$,
+niin $A \cap B = \{2\}$, $A \cup B = \{1,2,4,5\}$
+ja $A \setminus B = \{1,5\}$.
+
+Merkintä $A \subset S$ tarkoittaa,
+että $A$ on $S$:n osajoukko
+eli jokainen $A$:n alkio esiintyy $S$:ssä.
+Esimerkiksi joukon $\{2,4,7\}$
+osajoukot ovat $\emptyset$,
+$\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ ja $\{2,4,7\}$.
+Joukon $S$ osajoukkojen määrä on $2^{|S|}$.
+
+Usein esiintyviä joukkoja ovat
+$\mathbb{N}$ (luonnolliset luvut),
+$\mathbb{Z}$ (kokonaisluvut),
+$\mathbb{Q}$ (rationaaliluvut) sekä
+$\mathbb{R}$ (reaaliluvut).
+Joukko $\mathbb{N}$ voidaan määritellä
+kahdella tavalla: joko $\mathbb{N}=\{0,1,2,\ldots\}$
+tai $\mathbb{N}=\{1,2,3,...\}$.
+
+\subsection{Logiikka}
+
+Loogisen lausekkeen arvo on joko 1 (tosi) tai 0 (epätosi).
+Tärkeimmät loogiset operaatiot ovat
+$\lnot$ (negaatio),
+$\land$ (konjunktio),
+$\lor$ (disjunktio),
+$\Rightarrow$ (implikaatio) sekä
+$\Leftrightarrow$ (ekvivalenssi).
+Seuraava taulukko näyttää operaatioiden merkityksen:
+
+\begin{center}
+\begin{tabular}{rr|rrrrrrr}
+$A$ & $B$ & $\lnot A$ & $\lnot B$ & $A \land B$ & $A \lor B$ & $A \Rightarrow B$ & $A \Leftrightarrow B$ \\
+\hline
+0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 \\
+1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 \\
+1 & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\
+\end{tabular}
+\end{center}
+
+Negaatio $\lnot A$ muuttaa lausekkeen käänteiseksi.
+Lauseke $A \land B$ on tosi, jos molemmat $A$ ja $B$ ovat tosia,
+ja lauseke $A \lor B$ on tosi, jos $A$ tai $B$ tai molemmat
+ovat tosia.
+Lauseke $A \Rightarrow B$ on tosi,
+jos $A$:n ollessa tosi myös $B$:n on aina tosi.
+Lauseke $A \Leftrightarrow B$ on tosi,
+jos $A$:n ja $B$:n totuusarvo on sama.
+
+Predikaatti on lauseke, jonka arvo on tosi tai epätosi
+riippuen sen parametreista.
+Yleensä predikaattia merkitään suurella kirjaimella.
+Esimerkiksi voidaan määritellä predikaatti $P(x)$,
+joka on tosi tarkalleen silloin, kun $x$ on alkuluku.
+Tällöin esimerkiksi $P(7)$ on tosi, kun taas $P(8)$ on epätosi.
+
+Kvanttoreita ovat $\forall$ (kaikille) ja $\exists$
+(on olemassa).
+Esimerkiksi $\forall x (\exists y (y > x))$
+tarkoittaa kokonaislukujen joukossa,
+että jokaiselle luvulle $x$ on olemassa
+jokin luku $y$ niin, että $y$ on $x$:ää suurempi.
+Tämän lausekkeen arvo on tosi, koska kokonaislukuja
+on äärettömästi.
+
+Näiden merkintöjä avulla on mahdollista esittää
+monenlaisia loogisia väitteitä.
+Esimerkiksi
+$\forall x (\lnot P(x) \Rightarrow (\exists a (\exists b (x = ab \land a > 1 \land b > 1))))$
+tarkoittaa, että jos luku $x$ ei ole alkuluku,
+niin on olemassa luvut $a$ ja $b$,
+joiden tulo on $x$ ja jotka molemmat ovat suurempia kuin 1.
+Tämänkin lausekkeen arvo on tosi.
+
+\subsection{Logaritmi}
+
+Logaritmi merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
+Logaritmi on potenssilaskun käänteisoperaatio:
+$\log_k(x)=a$ tarkalleen silloin, kun $k^a=x$.
+
+Algoritmiikassa hyödyllinen tulkinta on,
+että logaritmi $\log_k(x)$ ilmaisee, montako kertaa lukua $x$
+täytyy jakaa $k$:lla, ennen kuin tulos on 1.
+Esimerkiksi $\log_2(32)=5$, koska 2:lla jakaminen
+muuttaa lukua 32 seuraavasti:
+
+\[32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \]
+
+Logaritmi tulee usein vastaan algoritmiikassa,
+koska monessa tehokkaassa algoritmissa jokin asia puolittuu
+joka askeleella.
+Niinpä logaritmin avulla voi arvioida algoritmin tehokkuutta.
+
+Logaritmi muuttaa kertolaskun yhteenlaskuksi ja
+jakolaskun vähennyslaskuksi:
+$\log_k(a \cdot b) = \log_k(a)+\log_k(b)$ ja
+$\log_k(a / b) = \log_k(a)-\log_k(b)$.
+Lisäksi on voimassa kaava $\log_u(x) = \log_k(x)/\log_k(u)$.
+Tämän ansiosta logaritmeja voi laskea mille tahansa kantaluvulle
+kiinteän kantaluvun funktiolla.
+
+Yksi logaritmin ominaisuus on, että se kertoo luvun numeroiden
+määrän halutussa lukujärjestelmässä.
+Esimerkiksi luvun $x$ numeroiden määrä 10-jär\-jes\-tel\-mäs\-sä on
+$\lfloor \log_{10}(x)\rfloor + 1$.
+
+\subsection{Summakaavat}
+
+\subsubsection{Aritmeettinen summa}
+
+Aritmeettisessa summassa jokaisen vierekkäisen
+summattavan luvun erotus on vakio.
+Esimerkiksi $3+7+11+15$ on aritmeettinen summa,
+jossa vakio on 4.
+Siinä pätee siis $7-3=4$, $11-7=4$ ja $15-11=4$.
+
+Aritmeettinen summa voidaan laskea kaavalla
+\[\frac{n(a+b)}{2},\]
+missä summan ensimmäinen luku on $a$,
+viimeinen luku on $b$ ja lukujen määrä on $n$.
+Esimerkiksi
+\[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36\]
+Kaava perustuu siihen, että summa muodostuu $n$ luvusta
+ja luvun suuruus on keskimäärin $(a+b)/2$.
+
+Aritmeettisen summan erikoistapaus on
+\[1+2+3+\cdots+n = \frac{n(n+1)}{2}.\]
+
+\subsubsection{Geometrinen summa}
+
+Geometrisessa summassa jokaisen vierekkäisen
+summattavan luvun suhde on vakio.
+Esimerkiksi $3+6+12+24$ on geometrinen summa,
+jossa vakio on 2.
+Siinä pätee $6/3=2$, $12/6=2$ ja $24/12=2$.
+
+Geometrinen summa voidaan laskea kaavalla
+\[\frac{bx-a}{x-1},\]
+missä summan ensimmäinen luku on $a$,
+viimeinen luku on $b$ ja vierekkäisten lukujen suhde on $x$.
+Esimerkiksi
+\[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
+Geometrisen summan kaavan voi johtaa merkitsemällä
+\[ S = a + ax + ax^2 + \cdots + b .\] 
+Kertomalla molemmat puolet $x$:llä saadaan
+\[ xS = ax + ax^2 + ax^3 + \cdots + bx,\]
+josta kaava seuraa ratkaisemalla yhtälön
+\[ xS-S = bx-a.\]
+Geometrisen summan erikoistapaus on usein kätevä kaava
+\[1+2+4+8+\ldots+2^n=2^{n+1}-1.\]
+
+\subsubsection{Harmoninen summa}
+
+Harmoninen summa on
+\[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\ldots+\frac{1}{n}.\]
+Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
+Summaa voi näet arvioida ylöspäin
+muuttamalla jokaista termiä $1/k$ niin,
+että $k$:ksi tulee alempi 2:n potenssi.
+Esimerkiksi tapauksessa $n=6$ arvioksi tulee
+\[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6} \le
+1+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{4}.\]
+Tämän seurauksena summa jakaantuu $\log_2(n)+1$ samaa
+rationaalilukua toistavaan osaan, joista jokaisen summa on enintään 1.
+
+\subsubsection{Muita kaavoja}
+
+Jokaiselle muotoa $\sum_{x=1}^n x^k$ olevalle summalle
+on olemassa oma kaavansa, kun $k$ on vakio.
+Mitä suurempi $k$ on, sitä monimutkaisempi kaava on.
+
+Esimerkiksi
+\[1^2+2^2+3^2+\cdots+n^2 = \frac{n(n+1)(2n+1)}{6}\]
+ja
+\[1^3+2^3+3^3+\cdots+n^3 = \frac{n^2(n+1)^2}{4}.\]
+Geometrisen summan sukulainen on
+\[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]

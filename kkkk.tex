@@ -1,0 +1,138 @@
+\documentclass[twoside,12pt,a4paper,finnish]{book}
+
+%\includeonly{luku1}
+
+\usepackage[finnish,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{array}
+
+\usepackage{fouriernc}
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx}
+\usepackage{framed}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\usepackage{pifont}
+
+
+\usetikzlibrary{patterns,snakes}
+\pagestyle{plain}
+
+\lstset{language=C++,frame=single,basicstyle=\ttfamily \small,showstringspaces=false,columns=flexible}
+\lstset{
+  literate={ö}{{\"o}}1
+           {ä}{{\"a}}1
+           {ü}{{\"u}}1
+}
+\lstset{xleftmargin=20pt,xrightmargin=5pt}
+\lstset{aboveskip=12pt,belowskip=8pt}
+
+
+\date{\Large \today}
+
+\usepackage[a4paper,vmargin=30mm,hmargin=33mm,footskip=15mm]{geometry}
+
+\title{\Huge Kisakoodarin käsikirja}
+\author{\Large Antti Laaksonen}
+
+\begin{document}
+
+\selectlanguage{finnish}
+
+%\setcounter{page}{1}
+%\pagenumbering{roman}
+
+\frontmatter
+\maketitle
+\setcounter{tocdepth}{0}
+\tableofcontents
+
+\include{johdanto}
+
+\mainmatter
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+\newcounter{row}
+\newcounter{col}
+
+\newcommand\setrow[5]{
+  \setcounter{col}{1}
+  \foreach \n in {#1, #2, #3, #4, #5} {
+    \edef\x{\value{col} - 0.5}
+    \edef\y{9.5 - \value{row}}
+    \node[anchor=center] at (\x, \y) {\n};
+    \stepcounter{col}
+  }
+  \stepcounter{row}
+}
+
+\newcommand\setrowx[8]{
+  \setcounter{col}{1}
+  \foreach \n in {#1, #2, #3, #4, #5, #6, #7, #8} {
+    \edef\x{\value{col} - 0.5}
+    \edef\y{9.5 - \value{row}}
+    \node[anchor=center] at (\x, \y) {\n};
+    \stepcounter{col}
+  }
+  \stepcounter{row}
+}
+
+\newenvironment{task}[0]
+{
+\begin{framed}
+\noindent
+\textit{Tehtävä:}
+}
+{\end{framed}}
+
+\part{Perusasiat}
+\include{luku1}
+\include{luku2}
+\include{luku3}
+\include{luku4}
+\include{luku5}
+\include{luku6}
+\include{luku7}
+\include{luku8}
+\include{luku9}
+\include{luku10}
+\part{Verkkoalgoritmit}
+\include{luku11}
+\include{luku12}
+\include{luku13}
+\include{luku14}
+\include{luku15}
+\include{luku16}
+\include{luku17}
+\include{luku18}
+\include{luku19}
+\include{luku20}
+\part{Uusia haasteita}
+\include{luku21}
+\include{luku22}
+\include{luku23}
+\include{luku24}
+\include{luku25}
+\include{luku26}
+\include{luku27}
+\include{luku28}
+\include{luku29}
+\include{luku30}
+
+\end{document}
+
+% \chapter{Convex hull -trick} muu dp opt
+% hungarian
+% gray-koodi, de bruijn
+% minimihintainen virtaus
+% cayley burnside
+% 2-yhtenäisyys

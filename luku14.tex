@@ -1,0 +1,532 @@
+\chapter{Puiden käsittely}
+
+Puu on yhtenäinen, syklitön ja suuntaamaton verkko,
+mikä tarkoittaa, että jokaisen solmuparin
+välillä on yksikäsitteinen polku.
+Puiden käsittely on yleisiä verkkoja helpompaa
+niiden yksinkertaisen rakenteen ansiosta.
+Tyypillinen tekniikka puiden käsittelyssä
+on dynaaminen ohjelmointi.
+
+\section{Perusasiat}
+
+\subsection{Juuren valinta}
+
+Tavallinen tapa käsitellä puuta on valita
+yksi puun solmuista juureksi (\textit{root}),
+jonka alapuolelle kaikki muut solmut asettuvat.
+Usein ei ole merkitystä,
+mikä puun solmuista valitaan juureksi.
+
+\begin{samepage}
+Kun esimerkiksi puussa
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,3) {$2$};
+\node[draw, circle] (3) at (0,1) {$4$};
+\node[draw, circle] (4) at (2,1) {$5$};
+\node[draw, circle] (5) at (4,1) {$6$};
+\node[draw, circle] (6) at (-2,3) {$7$};
+\node[draw, circle] (7) at (-2,1) {$3$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\end{tikzpicture}
+\end{center}
+\end{samepage}
+
+\begin{samepage}
+solmu 1 valitaan juureksi,
+puu asettuu seuraavaan muotoon:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$2$};
+\node[draw, circle] (3) at (-2,1) {$4$};
+\node[draw, circle] (4) at (0,1) {$5$};
+\node[draw, circle] (5) at (2,-1) {$6$};
+\node[draw, circle] (6) at (-3,-1) {$3$};
+\node[draw, circle] (7) at (-1,-1) {$7$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\end{tikzpicture}
+\end{center}
+\end{samepage}
+
+Solmun vanhempi (\textit{parent}) on ylemmän tason solmu,
+josta on kaari solmuun,
+ja solmun lapset (\textit{children})
+ovat vastaavasti alemman tason solmut,
+joihin on kaari solmusta.
+Esimerkiksi yllä olevassa verkossa
+solmun 4 vanhempi on solmu 1
+ja sen lapset ovat solmut 3 ja 7.
+
+Jokaisesta puun solmusta alkaa alipuu (\textit{subtree}),
+jonka juurena on solmu itse
+ja johon kuuluvat kaikki alemman tason solmut,
+joihin solmusta pääsee.
+Esimerkiksi solmun 4 alipuussa
+ovat solmut 4, 3 ja 7.
+
+Puun lehtiä (\textit{leaves}) ovat solmut, joilla ei ole lapsia,
+eli tässä puussa solmut 3, 7, 5 ja 6.
+Puun solmuista vähintään puolet on aina lehtiä.
+
+\subsection{Läpikäynti}
+
+Seuraava rekursiivinen koodi käy läpi
+vieruslistoina tallennetun puun:
+
+\begin{lstlisting}
+void haku(int s, int e) {
+    // solmun s käsittely tähän
+    for (int i = 0; i < v[s].size(); i++) {
+        if (v[s][i] == e) continue;
+        haku(v[s][i], s);
+    }
+}
+\end{lstlisting}
+
+Funktion parametrit ovat käsiteltävä solmu $s$
+sekä tätä solmua ylempi solmu $e$.
+Parametrin $e$ ideana on pakottaa,
+että puuta käydään läpi vain ylhäältä alaspäin.
+Seuraava kutsu käy läpi puun niin,
+että juurena on solmu 1:
+
+\begin{lstlisting}
+haku(1, 0);
+\end{lstlisting}
+Juurisolmulla ei ole ylempää solmua,
+joten parametri $e$ on aluksi 0.
+
+\subsection{Dynaaminen ohjelmointi}
+
+Puun läpikäyntiin voi yhdistää dynaamista
+ohjelmointia ja laskea sen avulla jotain tietoa puusta.
+Dynaamisen ohjelmoinnin avulla voi esimerkiksi
+laskea ajassa $O(n)$ jokaiselle solmulle,
+montako solmua sen alipuussa
+on tai kuinka pitkä on pisin solmusta
+alaspäin jatkuva polku puussa.
+
+Lasketaan esimerkiksi jokaiselle solmulle $s$
+sen alipuun solmujen määrä $\texttt{c}[s]$.
+Solmun alipuussa on solmu itse
+sekä kaikki sen lasten alipuut.
+Niinpä solmun alipuun solmujen määrä on
+yhden suurempi kuin summa lasten
+alipuiden solmujen määristä.
+Laskennan voi toteuttaa seuraavasti:
+
+\begin{lstlisting}
+void haku(int s, int e) {
+    c[s] = 1;
+    for (int i = 0; i < v[s].size(); i++) {
+        if (v[s][i] == e) continue;
+        haku(v[s][i], s);
+        c[s] += c[v[s][i]];
+    }
+}
+\end{lstlisting}
+
+\section{Etäisyydet}
+
+\subsection{Läpimitta}
+
+Puun läpimitta (\textit{diameter}) on pisin polku
+kahden puussa olevan solmun välillä.
+Esimerkiksi puussa
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,3) {$2$};
+\node[draw, circle] (3) at (0,1) {$4$};
+\node[draw, circle] (4) at (2,1) {$5$};
+\node[draw, circle] (5) at (4,1) {$6$};
+\node[draw, circle] (6) at (-2,3) {$7$};
+\node[draw, circle] (7) at (-2,1) {$3$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+
+\path[draw,thick,-,color=red,line width=2pt] (7) -- (3);
+\path[draw,thick,-,color=red,line width=2pt] (3) -- (1);
+\path[draw,thick,-,color=red,line width=2pt] (1) -- (2);
+\path[draw,thick,-,color=red,line width=2pt] (2) -- (5);
+\end{tikzpicture}
+\end{center}
+
+läpimitta on 4, koska polku solmusta 3 solmuun 6
+on pituudeltaan 4.
+Läpimittaa vastaava polku ei ole
+välttämättä yksikäsitteinen.
+Esimerkiksi tässä puussa myös polku solmusta 7
+solmuun 6 on pituudeltaan 4.
+
+Käymme seuraavaksi läpi kaksi tehokasta
+algoritmia puun läpimitan laskeminen.
+Molemmat algoritmit laskevat läpimitan ajassa
+$O(n)$.
+Ensimmäinen algoritmi perustuu dynaamiseen
+ohjelmointiin, ja toinen algoritmi
+etsii kaukaisimmat solmut syvyyshakujen avulla.
+
+\subsubsection{Algoritmi 1}
+
+Algoritmin alussa
+yksi solmuista valitaan puun juureksi.
+Tämän jälkeen algoritmi laskee
+jokaiseen solmuun,
+kuinka pitkä on pisin polku,
+joka alkaa lehdestä,
+nousee kyseiseen solmuun asti
+ja laskeutuu toiseen lehteen.
+Yksi näistä poluista on
+pisin kahden solmun välinen polku puussa.
+
+Esimerkissä pisin polku alkaa lehdestä 7,
+nousee solmuun 1 asti ja laskeutuu
+sitten alas lehteen 6:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$2$};
+\node[draw, circle] (3) at (-2,1) {$4$};
+\node[draw, circle] (4) at (0,1) {$5$};
+\node[draw, circle] (5) at (2,-1) {$6$};
+\node[draw, circle] (6) at (-3,-1) {$3$};
+\node[draw, circle] (7) at (-1,-1) {$7$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+
+\path[draw,thick,-,color=red,line width=2pt] (7) -- (3);
+\path[draw,thick,-,color=red,line width=2pt] (3) -- (1);
+\path[draw,thick,-,color=red,line width=2pt] (1) -- (2);
+\path[draw,thick,-,color=red,line width=2pt] (2) -- (5);
+\end{tikzpicture}
+\end{center}
+
+Algoritmi laskee dynaamisella ohjelmoinnilla
+jokaiseen solmuun kaksi pisintä polkua,
+jotka lähtevät solmusta alaspäin.
+Nämä polut yhdistämällä syntyy pisin polku,
+jonka käännekohtana kyseinen solmu on.
+
+Esimerkiksi solmusta 1 lähtee kolme polkua alaspäin.
+Niistä kahden pituus on 2 ($1 \rightarrow 4 \rightarrow 7$
+sekä $1 \rightarrow 2 \rightarrow 6$)
+ja yhden pituus on 1 ($1 \rightarrow 5$).
+Pisin polku syntyy yhdistämällä molemmat 2-pituiset polut.
+
+\subsubsection{Algoritmi 2}
+
+Toinen tehokas tapa laskea puun läpimitta 
+perustuu kahteen syvyyshakuun.
+Ensin valitaan mikä tahansa solmu $a$ puusta
+ja etsitään siitä kaukaisin solmu $b$
+syvyyshaulla.
+Tämän jälkeen etsitään $b$:stä kaukaisin
+solmu $c$ syvyyshaulla.
+Puun läpimitta on etäisyys $b$:n ja $c$:n välillä.
+
+Esimerkissä $a$, $b$ ja $c$ voisivat olla:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,3) {$2$};
+\node[draw, circle] (3) at (0,1) {$4$};
+\node[draw, circle] (4) at (2,1) {$5$};
+\node[draw, circle] (5) at (4,1) {$6$};
+\node[draw, circle] (6) at (-2,3) {$7$};
+\node[draw, circle] (7) at (-2,1) {$3$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\node[color=red] at (2,1.6) {$a$};
+\node[color=red] at (-1.4,3) {$b$};
+\node[color=red] at (4,1.6) {$c$};
+
+\path[draw,thick,-,color=red,line width=2pt] (6) -- (3);
+\path[draw,thick,-,color=red,line width=2pt] (3) -- (1);
+\path[draw,thick,-,color=red,line width=2pt] (1) -- (2);
+\path[draw,thick,-,color=red,line width=2pt] (2) -- (5);
+\end{tikzpicture}
+\end{center}
+
+Menetelmä on tyylikäs, mutta miksi se toimii?
+
+Tässä auttaa tarkastella puuta niin,
+että puun läpimittaa vastaava polku on
+levitetty vaakatasoon ja muut puun osat
+riippuvat siitä alaspäin:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (2,1) {$1$};
+\node[draw, circle] (2) at (4,1) {$2$};
+\node[draw, circle] (3) at (0,1) {$4$};
+\node[draw, circle] (4) at (2,-1) {$5$};
+\node[draw, circle] (5) at (6,1) {$6$};
+\node[draw, circle] (6) at (0,-1) {$3$};
+\node[draw, circle] (7) at (-2,1) {$7$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\node[color=red] at (2,-1.6) {$a$};
+\node[color=red] at (-2,1.6) {$b$};
+\node[color=red] at (6,1.6) {$c$};
+\node[color=red] at (2,1.6) {$x$};
+
+\path[draw,thick,-,color=red,line width=2pt] (7) -- (3);
+\path[draw,thick,-,color=red,line width=2pt] (3) -- (1);
+\path[draw,thick,-,color=red,line width=2pt] (1) -- (2);
+\path[draw,thick,-,color=red,line width=2pt] (2) -- (5);
+\end{tikzpicture}
+\end{center}
+
+Solmu $x$ on kohta,
+jossa polku solmusta $a$ liittyy
+läpimittaa vastaavaan polkuun.
+Kaukaisin solmu $a$:sta
+on solmu $b$, solmu $c$
+tai jokin muu solmu, joka
+on ainakin yhtä kaukana solmusta $x$.
+Niinpä tämä solmu on aina sopiva
+valinta läpimittaa vastaavan polun
+toiseksi päätesolmuksi.
+
+\subsection{Kaikki etäisyydet}
+
+Hieman vaikeampi tehtävä on laskea
+jokaiselle puun solmulle
+jokaiseen suuntaan, mikä on suurin
+etäisyys johonkin kyseisessä suunnassa
+olevaan solmuun.
+Esimerkkipuussa etäisyydet ovat:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,3) {$2$};
+\node[draw, circle] (3) at (0,1) {$4$};
+\node[draw, circle] (4) at (2,1) {$5$};
+\node[draw, circle] (5) at (4,1) {$6$};
+\node[draw, circle] (6) at (0,-1) {$7$};
+\node[draw, circle] (7) at (-2,1) {$3$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\node[color=red] at (0.5,3.2) {$2$};
+\node[color=red] at (0.3,2.4) {$1$};
+\node[color=red] at (-0.2,2.4) {$2$};
+\node[color=red] at (-0.2,1.5) {$3$};
+\node[color=red] at (-0.2,0.4) {$1$};
+\node[color=red] at (-0.2,-0.4) {$4$};
+\node[color=red] at (-0.5,1.2) {$1$};
+\node[color=red] at (-1.5,1.2) {$4$};
+\node[color=red] at (1.5,3.2) {$3$};
+\node[color=red] at (1.5,1.2) {$3$};
+\node[color=red] at (3.5,1.2) {$4$};
+\node[color=red] at (2.2,2.4) {$1$};
+\end{tikzpicture}
+\end{center}
+Esimerkiksi solmussa 4
+kaukaisin solmu ylöspäin mentäessä
+on solmu 6, johon etäisyys on 3 käyttäen
+polkua $4 \rightarrow 1 \rightarrow 2 \rightarrow 6$.
+
+\begin{samepage}
+Tässäkin tehtävässä hyvä lähtökohta on
+valita jokin solmu puun juureksi,
+jolloin kaikki etäisyydet alaspäin
+saa laskettua dynaamisella ohjelmoinnilla:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$2$};
+\node[draw, circle] (3) at (-2,1) {$4$};
+\node[draw, circle] (4) at (0,1) {$5$};
+\node[draw, circle] (5) at (2,-1) {$6$};
+\node[draw, circle] (6) at (-3,-1) {$3$};
+\node[draw, circle] (7) at (-1,-1) {$7$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+
+\node[color=red] at (-2.5,0.7) {$1$};
+\node[color=red] at (-1.5,0.7) {$1$};
+
+\node[color=red] at (2.2,0.5) {$1$};
+
+\node[color=red] at (-0.5,2.8) {$2$};
+\node[color=red] at (0.2,2.5) {$1$};
+\node[color=red] at (0.5,2.8) {$2$};
+\end{tikzpicture}
+\end{center}
+\end{samepage}
+
+Jäljelle jäävä tehtävä on laskea etäisyydet ylöspäin.
+Tämä onnistuu tekemällä puuhun toinen läpikäynti,
+joka pitää mukana tietoa,
+mikä on suurin etäisyys solmun vanhemmasta
+johonkin toisessa suunnassa olevaan solmuun.
+
+Esimerkiksi solmun 2
+suurin etäisyys ylöspäin on yhtä suurempi
+kuin solmun 1 suurin etäisyys
+johonkin muuhun suuntaan kuin solmuun 2:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$2$};
+\node[draw, circle] (3) at (-2,1) {$4$};
+\node[draw, circle] (4) at (0,1) {$5$};
+\node[draw, circle] (5) at (2,-1) {$6$};
+\node[draw, circle] (6) at (-3,-1) {$3$};
+\node[draw, circle] (7) at (-1,-1) {$7$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+
+\path[draw,thick,-,color=red,line width=2pt] (1) -- (2);
+\path[draw,thick,-,color=red,line width=2pt] (1) -- (3);
+\path[draw,thick,-,color=red,line width=2pt] (3) -- (7);
+
+\end{tikzpicture}
+\end{center}
+Lopputuloksena on etäisyydet kaikista solmuista
+kaikkiin suuntiin:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$2$};
+\node[draw, circle] (3) at (-2,1) {$4$};
+\node[draw, circle] (4) at (0,1) {$5$};
+\node[draw, circle] (5) at (2,-1) {$6$};
+\node[draw, circle] (6) at (-3,-1) {$3$};
+\node[draw, circle] (7) at (-1,-1) {$7$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+
+\node[color=red] at (-2.5,0.7) {$1$};
+\node[color=red] at (-1.5,0.7) {$1$};
+
+\node[color=red] at (2.2,0.5) {$1$};
+
+\node[color=red] at (-0.5,2.8) {$2$};
+\node[color=red] at (0.2,2.5) {$1$};
+\node[color=red] at (0.5,2.8) {$2$};
+
+\node[color=red] at (-3,-0.4) {$4$};
+\node[color=red] at (-1,-0.4) {$4$};
+\node[color=red] at (-2,1.6) {$3$};
+\node[color=red] at (2,1.6) {$3$};
+
+\node[color=red] at (2.2,-0.4) {$4$};
+\node[color=red] at (0.2,1.6) {$3$};
+\end{tikzpicture}
+\end{center}
+
+Kummankin läpikäynnin aikavaativuus on $O(n)$,
+joten algoritmin kokonais\-aikavaativuus on $O(n)$.
+
+\section{Binääripuut}
+
+\begin{samepage}
+Binääripuu (\textit{binary tree}) on juurellinen puu,
+jonka jokaisella solmulla on vasen ja oikea alipuu.
+On mahdollista, että alipuu on tyhjä,
+jolloin puu ei jatku siitä pidemmälle alaspäin.
+Niinpä jokaisella solmulla on 0--2 lasta.
+Esimerkiksi seuraava puu on binääripuu:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {$1$};
+\node[draw, circle] (2) at (-1.5,-1.5) {$2$};
+\node[draw, circle] (3) at (1.5,-1.5) {$3$};
+\node[draw, circle] (4) at (-3,-3) {$4$};
+\node[draw, circle] (5) at (0,-3) {$5$};
+\node[draw, circle] (6) at (-1.5,-4.5) {$6$};
+\node[draw, circle] (7) at (3,-3) {$7$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (2) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (5) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\end{tikzpicture}
+\end{center}
+\end{samepage}
+
+Binääripuun solmuilla on kolme luontevaa järjestystä,
+jotka syntyvät rekursiivisesta läpikäynnistä:
+
+\begin{itemize}
+\item esijärjestys (\textit{pre-order}): juuri, vasen alipuu, oikea alipuu
+\item sisäjärjestys (\textit{in-order}): vasen alipuu, juuri, oikea alipuu
+\item jälkijärjestys (\textit{post-order}): vasen alipuu, oikea alipuu, juuri
+\end{itemize}
+
+Esimerkissä kuvatun puun esijärjestys on
+$(1,2,4,5,6,3,7)$,
+sisäjärjestys on $(4,2,6,5,1,3,7)$
+ja jälkijärjestys on $(4,6,5,2,7,3,1)$.
+
+Osoittautuu, että tietämällä puun esijärjestyksen
+ja sisäjärjestyksen voi päätellä puun koko rakenteen.
+Vastaava pätee, jos esijärjestyksen sijasta tiedossa
+on jälkijärjestys.
+Kuitenkaan esijärjestys ja jälkijärjestys
+eivät vielä kuvaa puuta yksikäsitteisesti.
+Esimerkiksi molemmissa puissa
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {$1$};
+\node[draw, circle] (2) at (-1.5,-1.5) {$2$};
+\path[draw,thick,-] (1) -- (2);
+
+\node[draw, circle] (1b) at (0+4,0) {$1$};
+\node[draw, circle] (2b) at (1.5+4,-1.5) {$2$};
+\path[draw,thick,-] (1b) -- (2b);
+\end{tikzpicture}
+\end{center}
+
+esijärjestys on $(1,2)$ ja jälkijärjestys on $(2,1)$,
+mutta siitä huolimatta puiden rakenteet eivät ole samat.
