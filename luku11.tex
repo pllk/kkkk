@@ -370,115 +370,225 @@ On monia tapoja pitää verkkoa muistissa algoritmissa.
 Sopiva tietorakenne riippuu siitä,
 kuinka suuri verkko on ja
 millä tavoin algoritmi käsittelee sitä.
-Seuraavaksi käymme läpi kolme tavallista vaihtoehtoa
-käyttäen esimerkkinä seuraavaa verkkoa:
-\begin{center}
-\begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (1,3) {$1$};
-\node[draw, circle] (2) at (1,1) {$4$};
-\node[draw, circle] (3) at (3,3) {$2$};
-\node[draw, circle] (4) at (5,3) {$3$};
-\node[draw, circle] (5) at (3,1) {$5$};
-\node[draw, circle] (6) at (5,1) {$6$};
+Seuraavaksi käymme läpi kolme tavallista vaihtoehtoa.
 
-\path[draw,thick,->,>=latex] (1) -- (2);
-\path[draw,thick,->,>=latex] (2) -- (3);
-\path[draw,thick,->,>=latex] (3) -- (1);
-\path[draw,thick,->,>=latex] (3) -- (4);
-\path[draw,thick,->,>=latex] (3) -- (5);
-\path[draw,thick,->,>=latex] (3) -- (6);
-\path[draw,thick,->,>=latex] (6) -- (4);
-\path[draw,thick,->,>=latex] (6) -- (5);
-\end{tikzpicture}
-\end{center}
+\subsection{Vieruslistaesitys}
 
-\subsubsection*{Vieruslistat}
+Tavallisin tapa pitää verkkoa muistissa on
+luoda jokaisesta solmusta vieruslista (\textit{adjacency list}),
+joka sisältää kaikki solmut,
+joihin solmusta pystyy siirtymään kaarta pitkin.
+Vieruslistaesitys on tavallisin verkon esitysmuoto ja
+useimmat algoritmit pystyy toteuttamaan
+tehokkaasti sitä käyttäen.
 
-Yleisin tapa pitää verkkoa muistissa
-on käyttää vieruslistaesitystä.
-Siinä jokaisella solmulla on vieruslista (\textit{adjacency list}),
-joka kertoo, mihin solmuihin siitä pääsee suoraan kaarella.
-Useimmat verkkoalgoritmit pystyy toteuttamaan tehokkaasti
-käyttäen vieruslistaesitystä.
+Kätevä tapa tallentaa verkon vieruslistaesitys on luoda taulukko,
+jossa jokainen alkio on vektori:
 
-Vieruslistoja varten voi luoda esimerkiksi taulukon vektoreita
 \begin{lstlisting}
 vector<int> v[N];
 \end{lstlisting}
-minkä jälkeen kaaret voi lisätä näin:
+
+Ideana on, että solmun $s$ vieruslista löytyy kohdasta $\texttt{v}[s]$.
+Vakio $N$ on valittu niin suureksi, että kaikki solmut
+mahtuvat taulukkoon.
+Esimerkiksi verkon
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (3,1) {$4$};
+
+\path[draw,thick,->,>=latex] (1) -- (2);
+\path[draw,thick,->,>=latex] (2) -- (3);
+\path[draw,thick,->,>=latex] (2) -- (4);
+\path[draw,thick,->,>=latex] (3) -- (4);
+\path[draw,thick,->,>=latex] (4) -- (1);
+\end{tikzpicture}
+\end{center}
+
+voi tallentaa seuraavasti:
 \begin{lstlisting}
-v[1].push_back(4);
-v[2].push_back(1);
+v[1].push_back(2);
 v[2].push_back(3);
-v[2].push_back(5);
-v[2].push_back(6);
-v[4].push_back(2);
-v[6].push_back(3);
-v[6].push_back(5);
+v[2].push_back(4);
+v[3].push_back(4);
+v[4].push_back(1);
 \end{lstlisting}
 
-Taulukon koko $N$ on valittu niin suureksi,
-että taulukossa on oma vieruslista
-jokaiselle verkossa esiintyvälle solmulle.
+Jos verkko on suuntaamaton, sen voi tallentaa samalla tavalla,
+mutta silloin jokainen kaari lisätään kumpaankin suuntaan.
 
-Vieruslistaesityksen avulla voi käydä tehokkaasti
-läpi kaikki tietystä solmusta lähtevät kaaret.
-Se onnistuu seuraavasti solmulle $s$:
-\begin{lstlisting}
-for (int i = 0; i < v[s].size(); i++) {
-    // käsittele solmu v[s][i]
-}
-\end{lstlisting}
+Painotetun verkon tapauksessa rakennetta voi laajentaa näin:
 
-Jos verkon kaarilla on painot,
-vieruslistat voi rakentaa esimerkiksi niin,
-että jokainen listan solmu on pari,
-jossa on solmun tunnus ja siihen johtavan kaaren paino.
-Tällöin verkon määrittelystä tulee
 \begin{lstlisting}
 vector<pair<int,int>> v[N];
 \end{lstlisting}
-ja esimerkiksi kaari solmusta 2 solmuun 5 painolla 4 lisätään näin:
+
+Nyt vieruslistalla on pareja, joiden ensimmäinen jäsen on
+kaaren kohdesolmu ja toinen jäsen on kaaren paino.
+Esimerkiksi verkon
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (3,1) {$4$};
+
+\path[draw,thick,->,>=latex] (1) -- node[font=\small,label=above:5] {} (2);
+\path[draw,thick,->,>=latex] (2) -- node[font=\small,label=above:7] {} (3);
+\path[draw,thick,->,>=latex] (2) -- node[font=\small,label=left:6] {} (4);
+\path[draw,thick,->,>=latex] (3) -- node[font=\small,label=right:5] {} (4);
+\path[draw,thick,->,>=latex] (4) -- node[font=\small,label=left:2] {} (1);
+\end{tikzpicture}
+\end{center}
+
+voi tallentaa seuraavasti:
 \begin{lstlisting}
-v[2].push_back({5,4});
+v[1].push_back({2,5});
+v[2].push_back({3,7});
+v[2].push_back({4,6});
+v[3].push_back({4,5});
+v[4].push_back({1,2});
 \end{lstlisting}
 
-\subsubsection*{Vierusmatriisi}
+Vieruslistaesityksen etuna on, että sen avulla on nopeaa selvittää,
+mihin solmuihin tietystä solmusta pääsee kulkemaan.
+Esimerkiksi seuraava silmukka käy läpi kaikki solmut,
+joihin pääsee solmusta $s$:
+
+\begin{lstlisting}
+for (auto u : v[s]) {
+    // käsittele solmu u
+}
+\end{lstlisting}
+
+\subsection{Vierusmatriisiesitys}
 
 Vierusmatriisi (\textit{adjacency matrix})
-kertoo jokaisesta kaaresta,
+on kaksiulotteinen taulukko,
+joka kertoo jokaisesta mahdollisesta kaaresta,
 onko se mukana verkossa.
-Matriisista on tehokasta tarkistaa,
-onko kahden solmun välillä kaari,
-mutta toisaalta matriisi vie paljon tilaa,
+Vierusmatriisista on nopeaa tarkistaa,
+onko kahden solmun välillä kaari.
+Toisaalta matriisi vie paljon tilaa,
 jos verkko on suuri.
 
-Vierusmatriisi on yleensä järkevää tallentaa
-taulukkona
+Vierusmatriisi tallennetaan taulukkona
 
 \begin{lstlisting}
 int v[N][N];
 \end{lstlisting}
 
-jossa \texttt{v}[$a$][$b$] on 1,
-jos solmusta $a$ on kaari solmuun $b$, ja muuten 0.
-Seuraava koodi lisää esimerkin kaaret verkkoon:
-\begin{lstlisting}
-v[1][4] = 1;
-v[2][1] = 1;
-v[2][3] = 1;
-v[2][5] = 1;
-v[2][6] = 1;
-v[4][2] = 1;
-v[6][3] = 1;
-v[6][5] = 1;
-\end{lstlisting}
+jossa arvo $\texttt{v}[a][b]$ ilmaisee,
+onko kaari solmusta $a$ solmuun $b$ mukana verkossa.
+Yksinkertaisin tapa luoda vierusmatriisi
+on käyttää arvoja 1 (mukana) ja 0 (ei mukana).
+Tällöin esimerkiksi verkkoa
 
-Jos verkko on painotettu, luvun 1 sijasta
-vierusmatriisin voi tallentaa luontevasti
-kyseisen kaaren painon.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (3,1) {$4$};
 
-\subsubsection*{Kaarilista}
+\path[draw,thick,->,>=latex] (1) -- (2);
+\path[draw,thick,->,>=latex] (2) -- (3);
+\path[draw,thick,->,>=latex] (2) -- (4);
+\path[draw,thick,->,>=latex] (3) -- (4);
+\path[draw,thick,->,>=latex] (4) -- (1);
+\end{tikzpicture}
+\end{center}
+
+vastaa seuraava vierusmatriisi:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,0) grid (4,4);
+\node at (0.5,0.5) {1};
+\node at (1.5,0.5) {0};
+\node at (2.5,0.5) {0};
+\node at (3.5,0.5) {0};
+\node at (0.5,1.5) {0};
+\node at (1.5,1.5) {0};
+\node at (2.5,1.5) {0};
+\node at (3.5,1.5) {1};
+\node at (0.5,2.5) {0};
+\node at (1.5,2.5) {0};
+\node at (2.5,2.5) {1};
+\node at (3.5,2.5) {1};
+\node at (0.5,3.5) {0};
+\node at (1.5,3.5) {1};
+\node at (2.5,3.5) {0};
+\node at (3.5,3.5) {0};
+\node at (-0.5,0.5) {4};
+\node at (-0.5,1.5) {3};
+\node at (-0.5,2.5) {2};
+\node at (-0.5,3.5) {1};
+\node at (0.5,4.5) {1};
+\node at (1.5,4.5) {2};
+\node at (2.5,4.5) {3};
+\node at (3.5,4.5) {4};
+\end{tikzpicture}
+\end{center}
+
+Jos verkko on painotettu, vierusmatriisiesitystä voi 
+laajentaa luontevasti niin, että matriisissa kerrotaan
+kaaren paino, jos kaari on olemassa.
+Tätä esitystapaa käyttäen esimerkiksi verkkoa
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (3,1) {$4$};
+
+\path[draw,thick,->,>=latex] (1) -- node[font=\small,label=above:5] {} (2);
+\path[draw,thick,->,>=latex] (2) -- node[font=\small,label=above:7] {} (3);
+\path[draw,thick,->,>=latex] (2) -- node[font=\small,label=left:6] {} (4);
+\path[draw,thick,->,>=latex] (3) -- node[font=\small,label=right:5] {} (4);
+\path[draw,thick,->,>=latex] (4) -- node[font=\small,label=left:2] {} (1);
+\end{tikzpicture}
+\end{center}
+
+vastaa seuraava vierusmatriisi:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,0) grid (4,4);
+\node at (0.5,0.5) {2};
+\node at (1.5,0.5) {0};
+\node at (2.5,0.5) {0};
+\node at (3.5,0.5) {0};
+\node at (0.5,1.5) {0};
+\node at (1.5,1.5) {0};
+\node at (2.5,1.5) {0};
+\node at (3.5,1.5) {5};
+\node at (0.5,2.5) {0};
+\node at (1.5,2.5) {0};
+\node at (2.5,2.5) {7};
+\node at (3.5,2.5) {6};
+\node at (0.5,3.5) {0};
+\node at (1.5,3.5) {5};
+\node at (2.5,3.5) {0};
+\node at (3.5,3.5) {0};
+\node at (-0.5,0.5) {4};
+\node at (-0.5,1.5) {3};
+\node at (-0.5,2.5) {2};
+\node at (-0.5,3.5) {1};
+\node at (0.5,4.5) {1};
+\node at (1.5,4.5) {2};
+\node at (2.5,4.5) {3};
+\node at (3.5,4.5) {4};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Kaarilistaesitys}
 
 Kaarilista (\textit{edge list}) sisältää kaikki verkon kaaret.
 Kaarilista on hyvä tapa tallentaa verkko,
@@ -486,124 +596,71 @@ jos algoritmissa täytyy käydä läpi
 kaikki verkon kaaret eikä ole tarvetta
 etsiä kaarta alkusolmun perusteella.
 
-Kaarilistan voi tallentaa esimerkiksi vektoriin
+Kaarilistan voi tallentaa vektoriin
 \begin{lstlisting}
 vector<pair<int,int>> v;
 \end{lstlisting}
 jossa jokaisessa solmussa on parina kaaren
 alku- ja loppusolmu.
-Kaaret lisätään listalle näin:
+Tällöin esimerkiksi verkon
 
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (3,1) {$4$};
+
+\path[draw,thick,->,>=latex] (1) -- (2);
+\path[draw,thick,->,>=latex] (2) -- (3);
+\path[draw,thick,->,>=latex] (2) -- (4);
+\path[draw,thick,->,>=latex] (3) -- (4);
+\path[draw,thick,->,>=latex] (4) -- (1);
+\end{tikzpicture}
+\end{center}
+voi tallentaa seuraavasti:
 \begin{lstlisting}
-v.push_back(make_pair(1,4));
-v.push_back(make_pair(2,1));
-v.push_back(make_pair(2,3));
-v.push_back(make_pair(2,5));
-v.push_back(make_pair(2,6));
-v.push_back(make_pair(4,2));
-v.push_back(make_pair(6,3));
-v.push_back(make_pair(6,5));
+v.push_back({1,2});
+v.push_back({2,3});
+v.push_back({2,4});
+v.push_back({3,4});
+v.push_back({4,1});
 \end{lstlisting}
 
-Toinen tapa toteuttaa kaarilista
-on tallentaa tiedot kaarten alku-
-ja loppusolmuista taulukkoihin
-seuraavaan tapaan:
+\noindent
+Painotetun verkon tapauksessa rakennetta voi laajentaa
+esimerkiksi näin:
+\begin{lstlisting}
+vector<pair<pair<int,int>,int>> v;
+\end{lstlisting}
+Ideana on, että listalla on pareja, joiden ensimmäinen jäsen
+sisältää parina kaaren alku- ja loppusolmun,
+ja toinen jäsen on kaaren paino.
+Nyt verkon
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (3,1) {$4$};
+
+\path[draw,thick,->,>=latex] (1) -- node[font=\small,label=above:5] {} (2);
+\path[draw,thick,->,>=latex] (2) -- node[font=\small,label=above:7] {} (3);
+\path[draw,thick,->,>=latex] (2) -- node[font=\small,label=left:6] {} (4);
+\path[draw,thick,->,>=latex] (3) -- node[font=\small,label=right:5] {} (4);
+\path[draw,thick,->,>=latex] (4) -- node[font=\small,label=left:2] {} (1);
+\end{tikzpicture}
+\end{center}
+
+voi tallentaa seuraavasti:
 
 \begin{lstlisting}
-a[1] = 1; b[1] = 4;
-a[2] = 2; b[2] = 1;
-a[3] = 2; b[3] = 3;
-a[4] = 2; b[4] = 5;
-a[5] = 2; b[5] = 6;
-a[6] = 4; b[6] = 2;
-a[7] = 6; b[7] = 3;
-a[8] = 6; b[8] = 5;
+v.push_back({{1,2},5});
+v.push_back({{2,3},7});
+v.push_back({{2,4},6});
+v.push_back({{3,4},5});
+v.push_back({{4,1},2});
 \end{lstlisting}
-% 
-% \subsubsection*{Epäsuora esitys}
-% 
-% Joskus verkkoa on kätevää käsitellä epäsuoran
-% esityksen (\textit{implicit representation}) kautta.
-% Tämä tarkoittaa, että muistissa ei ole
-% suoraan verkon solmuja ja kaaria
-% vaan verkko on kuvattu jollakin
-% toisella tavalla.
-% 
-% Tyypillinen esimerkki epäsuorasta
-% verkosta on labyrintti:
-% \\
-% \begin{center}
-% \begin{tikzpicture}[scale=0.7]
-% \fill[color=gray] (0,0) rectangle (8,1);
-% \fill[color=gray] (0,5) rectangle (8,6);
-% \fill[color=gray] (0,0) rectangle (1,6);
-% \fill[color=gray] (7,0) rectangle (8,6);
-% 
-% \fill[color=gray] (2,0) rectangle (3,4);
-% \fill[color=gray] (4,2) rectangle (6,4);
-% 
-% \draw (0,0) grid (8,6);
-% 
-% \node at (1.5,1.5) {$a$};
-% \node at (6.5,3.5) {$b$};
-% \end{tikzpicture}
-% \end{center}
-% ~\\
-% Labyrintti vastaa verkkoa,
-% jossa jokainen lattiaruutu on solmu
-% ja vierekkäisten lattiaruutujen
-% välissä on kaari.
-% Verkko näyttää tältä:
-% \\
-% \begin{center}
-% \begin{tikzpicture}[scale=0.7]
-% \node[draw,circle,minimum size=20pt] (a) at (1,1) {$a$};
-% \node[draw,circle,minimum size=20pt] (b) at (1,2.5) {};
-% \node[draw,circle,minimum size=20pt] (c) at (1,4) {};
-% \node[draw,circle,minimum size=20pt] (d) at (1,5.5) {};
-% \node[draw,circle,minimum size=20pt] (e) at (2.5,5.5) {};
-% \node[draw,circle,minimum size=20pt] (f) at (4,5.5) {};
-% \node[draw,circle,minimum size=20pt] (g) at (5.5,5.5) {};
-% \node[draw,circle,minimum size=20pt] (h) at (7,5.5) {};
-% \node[draw,circle,minimum size=20pt] (i) at (8.5,5.5) {};
-% \node[draw,circle,minimum size=20pt] (j) at (8.5,4) {$b$};
-% \node[draw,circle,minimum size=20pt] (k) at (8.5,2.5) {};
-% \node[draw,circle,minimum size=20pt] (l) at (8.5,1) {};
-% \node[draw,circle,minimum size=20pt] (m) at (7,1) {};
-% \node[draw,circle,minimum size=20pt] (n) at (5.5,1) {};
-% \node[draw,circle,minimum size=20pt] (o) at (4,1) {};
-% \node[draw,circle,minimum size=20pt] (p) at (4,2.5) {};
-% \node[draw,circle,minimum size=20pt] (q) at (4,4) {};
-% 
-% \path[draw,thick,-] (a) -- (b);
-% \path[draw,thick,-] (b) -- (c);
-% \path[draw,thick,-] (c) -- (d);
-% \path[draw,thick,-] (d) -- (e);
-% \path[draw,thick,-] (e) -- (f);
-% \path[draw,thick,-] (f) -- (g);
-% \path[draw,thick,-] (g) -- (h);
-% \path[draw,thick,-] (h) -- (i);
-% \path[draw,thick,-] (i) -- (j);
-% \path[draw,thick,-] (j) -- (k);
-% \path[draw,thick,-] (k) -- (l);
-% \path[draw,thick,-] (l) -- (m);
-% \path[draw,thick,-] (m) -- (n);
-% \path[draw,thick,-] (n) -- (o);
-% \path[draw,thick,-] (o) -- (p);
-% \path[draw,thick,-] (p) -- (q);
-% \path[draw,thick,-] (q) -- (f);
-% \end{tikzpicture}
-% \end{center}
-% ~\\
-% Kätevä tapa tallentaa labyrintti on luoda taulukko
-% merkkijonoista. Jokainen merkkijono vastaa yhtä
-% labyrintin riviä:
-% \begin{lstlisting}
-% s[0] = "########";
-% s[1] = "#......#";
-% s[2] = "#.#.##b#";
-% s[3] = "#.#.##.#";
-% s[4] = "#a#....#";
-% s[5] = "########";
-% \end{lstlisting}
+
+
