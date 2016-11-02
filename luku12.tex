@@ -1,17 +1,18 @@
 \chapter{Verkon läpikäynti}
 
-Syvyyshaku ja leveyshaku ovat keskeisiä
-menetelmiä verkon läpikäyntiin.
+Tässä luvussa tutustumme
+syvyyshakuun ja leveyshakuun, jotka
+ovat keskeisiä menetelmiä verkon läpikäyntiin.
 Molemmat algoritmit lähtevät liikkeelle
 tietystä verkon solmusta ja 
 käyvät läpi kaikki solmut,
 joihin aloitussolmusta pääsee.
 Algoritmien erona on,
-missä järjestyksessä ne etenevät verkon solmuja.
+missä järjestyksessä ne kulkevat verkossa.
 
 \section{Syvyyshaku}
 
-Syvyyshaku (\textit{depth-first search})
+Syvyyshaku (\textit{depth-first search} eli \textit{DFS})
 on suoraviivainen menetelmä verkon läpikäyntiin.
 Syvyyshaku lähtee liikkeelle tietystä
 verkon solmusta ja etenee siitä
@@ -19,12 +20,11 @@ kaikkiin solmuihin, jotka ovat
 saavutettavissa kaaria kulkemalla.
 
 Syvyyshaku etenee verkossa syvyyssuuntaisesti
-eli valitsee aina yhden suunnan
-ja kulkee eteenpäin niin kauan
+eli kulkee eteenpäin verkossa niin kauan
 kuin vastaan tulee uusia solmuja.
 Tämän jälkeen haku perääntyy kokeilemaan
 muita suuntia.
-Haku pitää kirjaa vierailemistaan solmuista,
+Algoritmi pitää kirjaa vierailemistaan solmuista,
 jotta se käsittelee kunkin solmun vain kerran.
 
 \subsubsection*{Toiminta}
@@ -149,15 +149,15 @@ void dfs(int s) {
     if (z[s]) return;
     z[s] = 1;
     // solmun s käsittely tähän
-    for (int i = 0; i < v[s].size(); i++) {
-        dfs(v[s][i]);
+    for (auto u: v[s]) {
+        dfs(u);
     }
 }
 \end{lstlisting}
 
 \section{Leveyshaku}
 
-Leveyshaku (\textit{breadth-first search})
+Leveyshaku (\textit{breadth-first search} eli \textit{BFS})
 käy solmut läpi järjestyksessä sen mukaan,
 kuinka kaukana ne ovat aloitussolmusta.
 Niinpä leveyshaun avulla pystyy laskemaan
@@ -340,13 +340,12 @@ ja taulukkoon \texttt{e} lasketaan lyhin
 etäisyys alkusolmusta kaikkiin verkon solmuihin.
 Toteutuksesta tulee seuraavanlainen:
 \begin{lstlisting}
-q.push(s);
 z[s] = 1; e[s] = 0;
+q.push(s);
 while (!q.empty()) {
     int s = q.front(); q.pop();
     // solmun s käsittely tähän     
-    for (int i = 0; i < v[s].size(); i++) {
-        int u = v[s][i];
+    for (auto u : v[s]) {
         if (z[u]) continue;
         z[u] = 1; e[u] = e[s]+1;
         q.push(u);
@@ -356,14 +355,12 @@ while (!q.empty()) {
 
 \section{Sovelluksia}
 
-Verkon läpikäyntien avulla
+Verkon läpikäynnin avulla
 saa selville monia asioita
 verkon rakenteesta.
-Seuraavissa sovelluksissa
-voi käyttää joko
-syvyyshakua tai leveyshakua,
-mutta syvyyshaku
-on käytännössä parempi valinta,
+Läpikäynnin voi yleensä aina toteuttaa
+joko syvyyshaulla tai leveyshaulla,
+mutta käytännössä syvyyshaku on parempi valinta,
 koska sen toteutus on helpompi.
 
 \subsubsection{Yhtenäisyys}
@@ -375,40 +372,95 @@ Niinpä verkon yhtenäisyys selviää
 aloittamalla läpikäynti
 jostakin verkon solmusta ja
 tarkastamalla, pääseekö siitä kaikkiin solmuihin.
-Jos kaikki solmut
-tulevat vastaan läpikäynnin aikana,
-niin verkko on yhtenäinen.
 
-\subsubsection{Komponentit}
+Esimerkiksi verkossa
 
-Jos verkko ei ole yhtenäinen,
-se muodostuu useammasta komponentista.
-Kaikki tiettyyn komponenttiin kuuluvat
-solmut löytyvät aloittamalla
-läpikäynti jostakin komponentin solmusta.
+\begin{center}
+\begin{tikzpicture}
+\node[draw, circle] (2) at (7,5) {$2$};
+\node[draw, circle] (1) at (3,5) {$1$};
+\node[draw, circle] (3) at (5,4) {$3$};
+\node[draw, circle] (5) at (7,3) {$5$};
+\node[draw, circle] (4) at (3,3) {$4$};
 
-Verkon komponentit saa selville
-käymällä läpi verkon solmut ja
-pitämällä kirjaa komponenteista.
-Jos solmu ei kuulu vielä
-komponenttiin, se aloittaa uuden
-komponentin, johon kuuluvat kaikki
-solmut, joihin solmusta pääsee.
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\end{tikzpicture}
+\end{center}
+
+solmusta $1$ alkava syvyyshaku löytää seuraavat
+solmut:
+
+\begin{center}
+\begin{tikzpicture}
+\node[draw, circle] (2) at (7,5) {$2$};
+\node[draw, circle,fill=lightgray] (1) at (3,5) {$1$};
+\node[draw, circle,fill=lightgray] (3) at (5,4) {$3$};
+\node[draw, circle] (5) at (7,3) {$5$};
+\node[draw, circle,fill=lightgray] (4) at (3,3) {$4$};
+
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (2) -- (5);
+
+\path[draw=red,thick,->,line width=2pt] (1) -- (3);
+\path[draw=red,thick,->,line width=2pt] (3) -- (4);
+
+\end{tikzpicture}
+\end{center}
+
+Koska syvyyshaku ei pääse kaikkiin solmuihin,
+tämä tarkoittaa, että verkko ei ole yhtenäinen.
+Vastaavalla tavalla voi etsiä myös verkon komponentit
+käymällä solmut läpi ja aloittamalla uuden syvyyshaun
+aina, jos käsiteltävä solmu ei kuulu vielä mihinkään komponenttiin.
 
 \subsubsection{Syklin etsiminen}
 
-Suuntaamaton verkko sisältää syklin,
-jos verkon läpikäynnin aikana tulee vastaan
-solmu, jossa on käyty jo aiemmin,
-ja tämä solmu on jokin muu kuin se solmu,
-jonka kautta nykyiseen solmuun tultiin.
+Suuntaamattomassa verkossa on sykli,
+jos jonkin komponentin läpikäynnin aikana tulee vastaan solmu,
+jonka naapuri on jo käsitelty
+ja solmuun ei ole saavuttu kyseisen naapurin kautta.
+Esimerkiksi verkossa
 
-Syklin olemassaolon voi myös päätellä
-komponentin koosta. Jos komponentin
-kaarten määrä on yhtä pienempi kuin
-solmujen määrä, komponentissa ei ole sykliä,
-ja jos kaarten määrä on tätä suurempi,
-komponentissa on sykli.
+\begin{center}
+\begin{tikzpicture}
+\node[draw, circle,fill=lightgray] (2) at (7,5) {$2$};
+\node[draw, circle,fill=lightgray] (1) at (3,5) {$1$};
+\node[draw, circle,fill=lightgray] (3) at (5,4) {$3$};
+\node[draw, circle,fill=lightgray] (5) at (7,3) {$5$};
+\node[draw, circle] (4) at (3,3) {$4$};
+
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (2) -- (3);
+\path[draw,thick,-] (3) -- (5);
+
+\path[draw=red,thick,->,line width=2pt] (1) -- (3);
+\path[draw=red,thick,->,line width=2pt] (3) -- (2);
+\path[draw=red,thick,->,line width=2pt] (2) -- (5);
+
+\end{tikzpicture}
+\end{center}
+
+on sykli, koska tultaessa solmusta 2 solmuun 5
+havaitaan, että solmu 3 on jo käsitelty.
+Niinpä verkossa täytyy olla solmun 3 kautta
+kulkeva sykli.
+Tällainen sykli on esimerkiksi
+$3 \rightarrow 2 \rightarrow 5 \rightarrow 3$.
+
+Syklin olemassaolon voi myös päätellä laskemalla,
+montako solmua ja kaarta komponentissa on.
+Jos komponentissa on $c$ solmua ja siinä ei ole sykliä,
+niin siinä on oltava tarkalleen $c-1$ kaarta.
+Jos kaaria on $c$ tai enemmän, niin komponentissa
+on varmasti sykli.
 
 \subsubsection{Kaksijakoisuus}
 
@@ -417,9 +469,9 @@ jos sen solmut voi värittää
 kahdella värillä
 niin, että kahta samanväristä
 solmua ei ole vierekkäin.
-Kaksijakoisuus on yllättävän
-helppoa selvittää
-verkon läpikäynnin avulla.
+On yllättävän helppoa selvittää
+verkon läpikäynnin avulla,
+onko verkko kaksijakoinen.
 
 Ideana on värittää alkusolmu
 siniseksi, sen kaikki naapurit
@@ -433,7 +485,57 @@ verkko ei ole kaksijakoinen.
 Muuten verkko on kaksijakoinen
 ja yksi väritys on muodostunut.
 
-Tämä algoritmi toimii,
+Esimerkiksi verkko
+
+\begin{center}
+\begin{tikzpicture}
+\node[draw, circle] (2) at (5,5) {$2$};
+\node[draw, circle] (1) at (3,5) {$1$};
+\node[draw, circle] (3) at (7,4) {$3$};
+\node[draw, circle] (5) at (5,3) {$5$};
+\node[draw, circle] (4) at (3,3) {$4$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (5) -- (4);
+\path[draw,thick,-] (4) -- (1);
+\path[draw,thick,-] (2) -- (3);
+\path[draw,thick,-] (5) -- (3);
+\end{tikzpicture}
+\end{center}
+
+ei ole kaksijakoinen, koska
+läpikäynti solmusta 1 alkaen
+aiheuttaa seuraavan ristiriidan:
+
+\begin{center}
+\begin{tikzpicture}
+\node[draw, circle,fill=red!40] (2) at (5,5) {$2$};
+\node[draw, circle,fill=blue!40] (1) at (3,5) {$1$};
+\node[draw, circle,fill=blue!40] (3) at (7,4) {$3$};
+\node[draw, circle,fill=red!40] (5) at (5,3) {$5$};
+\node[draw, circle] (4) at (3,3) {$4$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (5) -- (4);
+\path[draw,thick,-] (4) -- (1);
+\path[draw,thick,-] (2) -- (3);
+\path[draw,thick,-] (5) -- (3);
+
+\path[draw=red,thick,->,line width=2pt] (1) -- (2);
+\path[draw=red,thick,->,line width=2pt] (2) -- (3);
+\path[draw=red,thick,->,line width=2pt] (3) -- (5);
+\path[draw=red,thick,->,line width=2pt] (5) -- (2);
+\end{tikzpicture}
+\end{center}
+Tässä vaiheessa havaitaan,
+että sekä solmun 2 että solmun 5 väri on punainen,
+vaikka solmut ovat vierekkäin verkossa,
+joten verkko ei ole kaksijakoinen.
+
+Tämä algoritmi on luotettava tapa selvittää
+verkon kaksijakoisuus,
 koska kun värejä on vain kaksi,
 ensimmäisen solmun värin valinta
 määrittää kaikkien muiden
@@ -443,89 +545,90 @@ Ei ole merkitystä,
 kumman värin ensimmäinen
 solmu saa.
 
-Yleensä ottaen on vaikea ongelma
-selvittää, voiko verkon solmuja
+Huomaa, että yleensä ottaen on vaikeaa
+selvittää, voiko verkon solmut
 värittää $k$ värillä niin,
 ettei missään kohtaa ole vierekkäin
 kahta samanväristä solmua.
 Edes tapaukseen $k=3$ ei tunneta
-mitään tehokasta algoritmia.
-
-\section{Labyrintin käsittely}
-
-Labyrintti on ruudukko, joka muodostuu lattia- ja seinäruuduista,
-ja labyrintissa on sallittua kulkea lattiaruutuja pitkin.
-Labyrinttia
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-\fill[color=gray] (0,0) rectangle (8,1);
-\fill[color=gray] (0,5) rectangle (8,6);
-\fill[color=gray] (0,0) rectangle (1,6);
-\fill[color=gray] (7,0) rectangle (8,6);
-
-\fill[color=gray] (2,0) rectangle (3,4);
-\fill[color=gray] (4,2) rectangle (6,4);
-
-\draw (0,0) grid (8,6);
-
-\node at (1.5,1.5) {$a$};
-\node at (6.5,3.5) {$b$};
-\end{tikzpicture}
-\end{center}
-vastaa luontevasti verkko
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-\node[draw,circle,minimum size=20pt] (a) at (1,1) {$a$};
-\node[draw,circle,minimum size=20pt] (b) at (1,2.5) {};
-\node[draw,circle,minimum size=20pt] (c) at (1,4) {};
-\node[draw,circle,minimum size=20pt] (d) at (1,5.5) {};
-\node[draw,circle,minimum size=20pt] (e) at (2.5,5.5) {};
-\node[draw,circle,minimum size=20pt] (f) at (4,5.5) {};
-\node[draw,circle,minimum size=20pt] (g) at (5.5,5.5) {};
-\node[draw,circle,minimum size=20pt] (h) at (7,5.5) {};
-\node[draw,circle,minimum size=20pt] (i) at (8.5,5.5) {};
-\node[draw,circle,minimum size=20pt] (j) at (8.5,4) {$b$};
-\node[draw,circle,minimum size=20pt] (k) at (8.5,2.5) {};
-\node[draw,circle,minimum size=20pt] (l) at (8.5,1) {};
-\node[draw,circle,minimum size=20pt] (m) at (7,1) {};
-\node[draw,circle,minimum size=20pt] (n) at (5.5,1) {};
-\node[draw,circle,minimum size=20pt] (o) at (4,1) {};
-\node[draw,circle,minimum size=20pt] (p) at (4,2.5) {};
-\node[draw,circle,minimum size=20pt] (q) at (4,4) {};
-
-\path[draw,thick,-] (a) -- (b);
-\path[draw,thick,-] (b) -- (c);
-\path[draw,thick,-] (c) -- (d);
-\path[draw,thick,-] (d) -- (e);
-\path[draw,thick,-] (e) -- (f);
-\path[draw,thick,-] (f) -- (g);
-\path[draw,thick,-] (g) -- (h);
-\path[draw,thick,-] (h) -- (i);
-\path[draw,thick,-] (i) -- (j);
-\path[draw,thick,-] (j) -- (k);
-\path[draw,thick,-] (k) -- (l);
-\path[draw,thick,-] (l) -- (m);
-\path[draw,thick,-] (m) -- (n);
-\path[draw,thick,-] (n) -- (o);
-\path[draw,thick,-] (o) -- (p);
-\path[draw,thick,-] (p) -- (q);
-\path[draw,thick,-] (q) -- (f);
-\end{tikzpicture}
-\end{center}
-jossa verkon solmuja ovat labyrintin lattiaruudut
-ja solmujen välillä on kaari, jos lattiaruudusta
-toiseen pääsee kulkemaan yhdellä askeleella.
-Niinpä erilaiset labyrinttiin liittyvät ongelmat
-palautuvat verkko-ongelmiksi.
-
-Esimerkiksi syvyyshaulla pystyy selvittämään,
-onko ruudusta $a$ reittiä ruutuun $b$
-ja leveyshaku kertoo lisäksi,
-mikä on pienin mahdollinen askelten määrä reitillä.
-Samoin voi esimerkiksi vaikkapa, kuinka monta
-toisistaan erillistä huonetta labyrintissa on
-sekä kuinka monta ruutua huoneissa on.
-
-Labyrintin tapauksessa ei kannata muodostaa erikseen
-verkkoa, vaan syvyyshaun ja leveyshaun voi toteuttaa
-suoraan labyrintin ruudukkoon.
+mitään tehokasta algoritmia,
+vaan kyseessä on NP-täydellinen ongelma.
+% 
+% \section{Labyrintin käsittely}
+% 
+% Labyrintti on ruudukko, joka muodostuu lattia- ja seinäruuduista,
+% ja labyrintissa on sallittua kulkea lattiaruutuja pitkin.
+% Labyrinttia
+% \begin{center}
+% \begin{tikzpicture}[scale=0.7]
+% \fill[color=gray] (0,0) rectangle (8,1);
+% \fill[color=gray] (0,5) rectangle (8,6);
+% \fill[color=gray] (0,0) rectangle (1,6);
+% \fill[color=gray] (7,0) rectangle (8,6);
+% 
+% \fill[color=gray] (2,0) rectangle (3,4);
+% \fill[color=gray] (4,2) rectangle (6,4);
+% 
+% \draw (0,0) grid (8,6);
+% 
+% \node at (1.5,1.5) {$a$};
+% \node at (6.5,3.5) {$b$};
+% \end{tikzpicture}
+% \end{center}
+% vastaa luontevasti verkko
+% \begin{center}
+% \begin{tikzpicture}[scale=0.7]
+% \node[draw,circle,minimum size=20pt] (a) at (1,1) {$a$};
+% \node[draw,circle,minimum size=20pt] (b) at (1,2.5) {};
+% \node[draw,circle,minimum size=20pt] (c) at (1,4) {};
+% \node[draw,circle,minimum size=20pt] (d) at (1,5.5) {};
+% \node[draw,circle,minimum size=20pt] (e) at (2.5,5.5) {};
+% \node[draw,circle,minimum size=20pt] (f) at (4,5.5) {};
+% \node[draw,circle,minimum size=20pt] (g) at (5.5,5.5) {};
+% \node[draw,circle,minimum size=20pt] (h) at (7,5.5) {};
+% \node[draw,circle,minimum size=20pt] (i) at (8.5,5.5) {};
+% \node[draw,circle,minimum size=20pt] (j) at (8.5,4) {$b$};
+% \node[draw,circle,minimum size=20pt] (k) at (8.5,2.5) {};
+% \node[draw,circle,minimum size=20pt] (l) at (8.5,1) {};
+% \node[draw,circle,minimum size=20pt] (m) at (7,1) {};
+% \node[draw,circle,minimum size=20pt] (n) at (5.5,1) {};
+% \node[draw,circle,minimum size=20pt] (o) at (4,1) {};
+% \node[draw,circle,minimum size=20pt] (p) at (4,2.5) {};
+% \node[draw,circle,minimum size=20pt] (q) at (4,4) {};
+% 
+% \path[draw,thick,-] (a) -- (b);
+% \path[draw,thick,-] (b) -- (c);
+% \path[draw,thick,-] (c) -- (d);
+% \path[draw,thick,-] (d) -- (e);
+% \path[draw,thick,-] (e) -- (f);
+% \path[draw,thick,-] (f) -- (g);
+% \path[draw,thick,-] (g) -- (h);
+% \path[draw,thick,-] (h) -- (i);
+% \path[draw,thick,-] (i) -- (j);
+% \path[draw,thick,-] (j) -- (k);
+% \path[draw,thick,-] (k) -- (l);
+% \path[draw,thick,-] (l) -- (m);
+% \path[draw,thick,-] (m) -- (n);
+% \path[draw,thick,-] (n) -- (o);
+% \path[draw,thick,-] (o) -- (p);
+% \path[draw,thick,-] (p) -- (q);
+% \path[draw,thick,-] (q) -- (f);
+% \end{tikzpicture}
+% \end{center}
+% jossa verkon solmuja ovat labyrintin lattiaruudut
+% ja solmujen välillä on kaari, jos lattiaruudusta
+% toiseen pääsee kulkemaan yhdellä askeleella.
+% Niinpä erilaiset labyrinttiin liittyvät ongelmat
+% palautuvat verkko-ongelmiksi.
+% 
+% Esimerkiksi syvyyshaulla pystyy selvittämään,
+% onko ruudusta $a$ reittiä ruutuun $b$
+% ja leveyshaku kertoo lisäksi,
+% mikä on pienin mahdollinen askelten määrä reitillä.
+% Samoin voi esimerkiksi vaikkapa, kuinka monta
+% toisistaan erillistä huonetta labyrintissa on
+% sekä kuinka monta ruutua huoneissa on.
+% 
+% Labyrintin tapauksessa ei kannata muodostaa erikseen
+% verkkoa, vaan syvyyshaun ja leveyshaun voi toteuttaa
+% suoraan labyrintin ruudukkoon.
