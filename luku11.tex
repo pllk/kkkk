@@ -7,14 +7,23 @@ jonka rakenne muistuttaa luonnostaan verkkoa.
 Joskus taas verkko kätkeytyy syvemmälle ongelmaan
 ja sitä voi olla vaikeaa huomata.
 
-\section{Määritelmiä}
+Tässä kirjan osassa tutustumme verkkojen käsittelyyn
+liittyviin tekniikoihin ja kisakoodauksessa
+keskeisiin verkkoalgoritmeihin.
+Aloitamme aiheeseen perehtymisen
+käymällä läpi verkkoihin liittyviä käsitteitä
+sekä erilaisia tapoja pitää verkkoa muistissa algoritmeissa.
 
-Verkko (\textit{graph}) on tietorakenne,
-joka muodostuu solmuista (\textit{vertex})
+\section{Käsitteitä}
+
+Verkko (\textit{graph})
+muodostuu solmuista (\textit{node} tai \textit{vertex})
 ja niiden välisistä kaarista (\textit{edge}).
-Esimerkiksi tieverkostossa
-verkon solmut ovat kaupunkeja ja kaaret ovat 
-niiden välisiä teitä.
+Merkitsemme tässä kirjassa yleensä
+verkon solmujen määrää
+muuttujalla $n$ ja verkon kaarten määrää muuttujalla $m$.
+Lisäksi numeroimme verkon solmut kokonaisluvuin
+$1,2,\ldots,n$.
 
 Esimerkiksi seuraavassa verkossa on 5 solmua ja 7 kaarta:
 
@@ -35,19 +44,22 @@ Esimerkiksi seuraavassa verkossa on 5 solmua ja 7 kaarta:
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-                      
-Polku (\textit{path}) on kaaria pitkin kulkeva reitti alkusolmusta
-loppusolmuun.
-Kuvan verkossa solmusta 1 solmuun 5
-johtaa esimerkiksi polku $1 \rightarrow 3 \rightarrow 4 \rightarrow 5$.
-Solmun naapuri (\textit{neighbor}) on toinen solmu,
-johon solmusta pääsee kaarta pitkin,
-ja solmun aste (\textit{degree}) on sen naapurien määrä.
-Yllä olevassa verkossa solmun 2
-naapurit ovat 1, 4 ja 5,
-ja sen aste on 3.
 
-\subsubsection*{Yhtenäisyys}
+Polku (\textit{path}) on solmusta $a$ solmuun $b$
+johtava reitti, joka kulkee verkon kaaria pitkin.
+Polun pituus (\textit{length}) on kaarten määrä polulla.
+Esimerkiksi yllä olevassa verkossa
+mahdollisia polkuja solmusta 1 solmuun 5 ovat:
+
+\begin{itemize}
+\item $1 \rightarrow 2 \rightarrow 5$ (pituus 2)
+\item $1 \rightarrow 4 \rightarrow 5$ (pituus 2)
+\item $1 \rightarrow 2 \rightarrow 4 \rightarrow 5$ (pituus 3)
+\item $1 \rightarrow 3 \rightarrow 4 \rightarrow 5$ (pituus 3)
+\item $1 \rightarrow 3 \rightarrow 4 \rightarrow 2 \rightarrow 5$ (pituus 4)
+\end{itemize}
+
+\subsubsection{Yhtenäisyys}
 
 Verkko on yhtenäinen (\textit{connected}), jos siinä on polku
 mistä tahansa solmusta mihin tahansa solmuun.
@@ -65,23 +77,22 @@ Esimerkiksi seuraava verkko on yhtenäinen:
 \path[draw,thick,-] (2) -- (4);
 \end{tikzpicture}
 \end{center}
+
 Seuraava verkko taas ei ole yhtenäinen,
-koska solmu 4 on erillään muista.
+koska esimerkiksi solmusta 1 ei ole polkua solmuun 2.
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
 \node[draw, circle] (2) at (4,3) {$2$};
 \node[draw, circle] (3) at (1,1) {$3$};
 \node[draw, circle] (4) at (4,1) {$4$};
-\path[draw,thick,-] (1) -- (2);
+%\path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
-\path[draw,thick,-] (2) -- (3);
+%\path[draw,thick,-] (2) -- (3);
 %\path[draw,thick,-] (3) -- (4);
-%\path[draw,thick,-] (2) -- (4);
+\path[draw,thick,-] (2) -- (4);
 \end{tikzpicture}
 \end{center}
-
-\subsubsection*{Komponentit}
 
 Verkon yhtenäiset osat muodostavat sen
 komponentit (\textit{components}).
@@ -113,15 +124,12 @@ $\{8\}$.
 \end{tikzpicture}
 \end{center}
 
-\subsubsection*{Syklit}
-
-Sykli (\textit{cycle}) on polku, jonka alku- ja loppusolmu
-on sama ja jossa ei ole samaa kaarta monta kertaa.
-Verkko on syklinen (\textit{cyclic}),
-jos siinä on sykli.
-Esimerkiksi seuraavassa verkossa
-on sykli
-$4 \rightarrow 2 \rightarrow 1 \rightarrow 4$.
+Puu (\textit{tree}) on yhtenäinen verkko,
+jossa on $n$ solmua ja $n-1$ kaarta.
+Siinä jokaisen solmun välillä on yksikäsitteinen polku,
+ja jos minkä tahansa kaaren poistaa,
+verkko ei ole enää yhtenäinen.
+Esimerkiksi seuraava verkko on puu:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -133,20 +141,18 @@ $4 \rightarrow 2 \rightarrow 1 \rightarrow 4$.
 
 \path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
-\path[draw,thick,-] (1) -- (4);
+%\path[draw,thick,-] (1) -- (4);
 \path[draw,thick,-] (2) -- (5);
 \path[draw,thick,-] (2) -- (4);
-\path[draw,thick,-] (4) -- (5);
+%\path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
 
-\subsubsection*{Kaarten suunnat}
+\subsubsection{Kaarten suunnat}
 
 Verkko on suunnattu (\textit{directed}),
 jos verkon kaaria pystyy
 kulkemaan vain niiden merkittyyn suuntaan.
-Jos taas kaaria voi kulkea kumpaankin
-suuntaan, verkko on suuntaamaton (\textit{undirected}).
 Esimerkiki seuraava verkko on suunnattu:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -163,18 +169,30 @@ Esimerkiki seuraava verkko on suunnattu:
 \path[draw,thick,->,>=latex] (3) -- (1);
 \end{tikzpicture}
 \end{center}
-Tässä verkossa on esimerkiksi polku
-$3 \rightarrow 1 \rightarrow 2 \rightarrow 5$,
-mutta polkua ei voi kulkea toiseen suuntaan
-$5 \rightarrow 2 \rightarrow 1 \rightarrow 3$,
-Solmuun 3 ei pääse mistään muusta solmusta,
-ja solmusta 5 ei taas pääse mihinkään
-muuhun solmuun.
 
-\subsubsection*{Kaarten painot}
+Yllä olevassa verkossa solmusta 3 on polku
+kaikkiin muihin verkon solmuihin.
+Esimerkiksi solmusta 3 pääsee solmuun 5 pääsee polkua
+$3 \rightarrow 1 \rightarrow 2 \rightarrow 5$.
+Sen sijaan solmusta 5 ei lähde polkua mihinkään muuhun
+solmuun.
 
-Verkko on painotettu (\textit{weighted}),
-jos verkon kaariin liittyy painoja.
+Suunnattu verkko on vahvasti yhtenäinen
+(\textit{strongly connected}),
+jos mistä tahansa solmusta on polku mihin
+tahansa toiseen solmuun.
+
+Sykli (\textit{cycle}) on polku, jonka ensimmäinen
+ja viimeinen solmu on sama.
+Esimerkiksi yllä olevassa verkossa on sykli
+$1 \rightarrow 2 \rightarrow 4 \rightarrow 1$.
+Jos verkossa ei ole yhtään sykliä, se on syklitön
+(\textit{acyclic}).
+
+\subsubsection{Kaarten painot}
+
+Painotetussa (\textit{weighted}) verkossa
+jokaisesta kaaresta tiedetään sen paino.
 Tavallinen tulkinta on, että painot kuvaavat
 kaarien pituuksia.
 Seuraavassa on esimerkki painotetusta verkosta:
@@ -188,85 +206,91 @@ Seuraavassa on esimerkki painotetusta verkosta:
 \path[draw,thick,-] (1) -- node[font=\small,label=above:5] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:1] {} (3);
 \path[draw,thick,-] (3) -- node[font=\small,label=below:7] {} (4);
-\path[draw,thick,-] (2) -- node[font=\small,label=left:4] {} (4);
-\path[draw,thick,-] (2) -- node[font=\small,label=above:5] {} (5);
+\path[draw,thick,-] (2) -- node[font=\small,label=left:6] {} (4);
+\path[draw,thick,-] (2) -- node[font=\small,label=above:7] {} (5);
 \path[draw,thick,-] (4) -- node[font=\small,label=below:3] {} (5);
 \end{tikzpicture}
 \end{center}
-Polun pituus (\textit{path length}) on
-sen kaarten painojen summa.
-Esimerkiksi polun $1 \rightarrow 2 \rightarrow 4$
-pituus on $5+4=9$ ja polun
-$1 \rightarrow 3 \rightarrow 4$ pituus on $1+7=8$.
-Jälkimmäinen polku on lyhin polku (\textit{shortest path})
-solmusta 1 solmuun 4.
 
-\subsubsection*{Puu}
+Painotetussa verkossa polun pituus on sen kaarten painojen summa.
+Esimerkiksi polun $1 \rightarrow 2 \rightarrow 5$
+pituus on $5+7=12$ ja polun
+$1 \rightarrow 3 \rightarrow 4 \rightarrow 5$ pituus on $1+7+3=11$.
+Jälkimmäinen polku on lyhin polku solmusta 1 solmuun 5.
 
-Puu (\textit{tree})
-on yhtenäinen, syklitön ja
-suuntaamaton verkko.
-Puussa kaarten määrä on aina yhden pienempi
-kuin solmujen määrä.
-Lisäksi jokaisesta puun solmusta toiseen
-on yksikäsitteinen polku.
+\subsubsection{Naapurit ja asteet}
 
-Esimerkiksi seuraava verkko on puu:
+Kaksi solmua ovat naapureita (\textit{neighbor}),
+jos ne ovat vierekkäin eli niiden välillä on kaari.
+Solmun aste (\textit{degree}) on
+sen naapurien määrä.
+Esimerkiksi seuraavassa verkossa
+solmun 2 naapurit ovat 1, 4 ja 5,
+joten sen aste on 3.
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (0,3) {$2$};
-\node[draw, circle] (2) at (2,3) {$3$};
-\node[draw, circle] (3) at (0,1) {$5$};
-\node[draw, circle] (4) at (2,1) {$6$};
-\node[draw, circle] (5) at (4,1) {$7$};
-\node[draw, circle] (6) at (-2,3) {$1$};
-\node[draw, circle] (7) at (-2,1) {$4$};
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (4,3) {$2$};
+\node[draw, circle] (3) at (1,1) {$3$};
+\node[draw, circle] (4) at (4,1) {$4$};
+\node[draw, circle] (5) at (6,2) {$5$};
+
 \path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
 \path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (2) -- (4);
 \path[draw,thick,-] (2) -- (5);
-\path[draw,thick,-] (3) -- (6);
-\path[draw,thick,-] (3) -- (7);
+%\path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-Puun lehti (\textit{leaf}) on solmu,
-josta lähtee vain yksi kaari eli jonka aste on 1.
-Yllä olevassa puussa lehtiä ovat solmut 1, 4, 6 ja 7.
 
-Puu esitetään usein juurellisena niin,
-että yksi solmuista nostetaan puun juureksi (\textit{root})
-ja muut sijoittuvat tasoittain sen alapuolelle.
-Esimerkiksi jos äskeisessä verkossa
-solmusta 2 tehdään juuri, tulos on tämä:
+Verkon solmujen asteiden summa on $2m$,
+missä $m$ on kaarten määrä.
+Tämä johtuu siitä, että jokainen kaari lisää
+kahden solmun astetta yhdellä.
+Niinpä solmujen asteiden summa on aina parillinen.
+
+Verkko on säännöllinen (\textit{regular}),
+jos jokaisen solmun aste on vakio $d$.
+Verkko on täydellinen (\textit{complete}),
+jos jokaisen solmun aste on $n-1$ eli
+verkossa on kaikki mahdolliset kaaret
+solmujen välillä.
+
+Suunnatussa verkossa lähtöaste (\textit{outdegree})
+on solmusta lähtevien kaarten määrä ja
+tuloaste (\textit{indegree}) on solmuun tulevien
+kaarten määrä.
+Esimerkiksi seuraavassa verkossa solmun 2
+lähtöaste on 1 ja tuloaste on 2.
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (0,3) {$2$};
-\node[draw, circle] (2) at (2,1) {$3$};
-\node[draw, circle] (3) at (-2,1) {$5$};
-\node[draw, circle] (4) at (0,1) {$6$};
-\node[draw, circle] (5) at (2,-1) {$7$};
-\node[draw, circle] (6) at (-3,-1) {$1$};
-\node[draw, circle] (7) at (-1,-1) {$4$};
-\path[draw,thick,-] (1) -- (2);
-\path[draw,thick,-] (1) -- (3);
-\path[draw,thick,-] (1) -- (4);
-\path[draw,thick,-] (2) -- (5);
-\path[draw,thick,-] (3) -- (6);
-\path[draw,thick,-] (3) -- (7);
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (4,3) {$2$};
+\node[draw, circle] (3) at (1,1) {$3$};
+\node[draw, circle] (4) at (4,1) {$4$};
+\node[draw, circle] (5) at (6,2) {$5$};
+
+\path[draw,thick,->,>=latex] (1) -- (2);
+\path[draw,thick,->,>=latex] (1) -- (3);
+\path[draw,thick,->,>=latex] (1) -- (4);
+\path[draw,thick,->,>=latex] (3) -- (4);
+\path[draw,thick,->,>=latex] (2) -- (4);
+\path[draw,thick,<-,>=latex] (2) -- (5);
 \end{tikzpicture}
 \end{center}
-Solmun lapset (\textit{children})
-ovat sen alemman tason naapurit
-ja solmun vanhempi (\textit{parent}) on ylemmän tason naapuri.
-Esimerkiksi kuvan puussa solmun 5
-lapset ovat solmut 1 ja 4 ja vanhempi on solmu 2.
 
-\subsubsection*{Kaksijakoisuus}
+\subsubsection{Väritykset}
 
+Verkon värityksessä (\textit{coloring}) jokaiselle solmulle valitaan
+tietty väri niin, että millään kahdella
+vierekkäisellä solmulla ei ole samaa väriä.
 Verkko on kaksijakoinen (\textit{bipartite}),
-jos sen solmut voi värittää kahdella värillä niin,
-ettei minkään kaaren molemmissa päissä
-ole samanväristä solmua.
+jos kaksi väriä riittää sen värittämiseen.
+
 Esimerkiksi verkko
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -287,12 +311,12 @@ Esimerkiksi verkko
 on kaksijakoinen, koska sen voi värittää näin:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle, fill=blue] (1) at (1,3) {$2$};
-\node[draw, circle, fill=red] (2) at (4,3) {$3$};
-\node[draw, circle, fill=red] (3) at (1,1) {$5$};
-\node[draw, circle, fill=blue] (4) at (4,1) {$6$};
-\node[draw, circle, fill=red] (5) at (-2,1) {$4$};
-\node[draw, circle, fill=blue] (6) at (-2,3) {$1$};
+\node[draw, circle, fill=blue!40] (1) at (1,3) {$2$};
+\node[draw, circle, fill=red!40] (2) at (4,3) {$3$};
+\node[draw, circle, fill=red!40] (3) at (1,1) {$5$};
+\node[draw, circle, fill=blue!40] (4) at (4,1) {$6$};
+\node[draw, circle, fill=red!40] (5) at (-2,1) {$4$};
+\node[draw, circle, fill=blue!40] (6) at (-2,3) {$1$};
 \path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
 \path[draw,thick,-] (3) -- (4);
@@ -301,16 +325,19 @@ on kaksijakoinen, koska sen voi värittää näin:
 \path[draw,thick,-] (5) -- (6);
 \end{tikzpicture}
 \end{center}
-Verkko on kaksijakoinen tarkalleen silloin,
-kun siinä ei ole sykliä, jonka osana
-on pariton määrä solmuja.
 
-\subsubsection*{Yksinkertaisuus}
+Verkko on kaksijakoinen tarkalleen silloin,
+kun siinä ei ole sykliä, johon kuuluu
+pariton määrä solmuja.
+
+\subsubsection{Yksinkertaisuus}
 
 Verkko on yksinkertainen (\textit{simple}),
 jos mistään solmusta ei ole kaarta itseensä
 eikä minkään kahden solmun välillä ole
 monta kaarta samaan suuntaan.
+Usein oletuksena on, että verkko on yksinkertainen.
+
 Esimerkiksi verkko
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
