@@ -1,25 +1,22 @@
 \chapter{Puiden käsittely}
 
-Puu on yhtenäinen, syklitön ja suuntaamaton verkko,
-mikä tarkoittaa, että jokaisen solmuparin
-välillä on yksikäsitteinen polku.
-Puiden käsittely on yleisiä verkkoja helpompaa
-niiden yksinkertaisen rakenteen ansiosta.
-Tyypillinen tekniikka puiden käsittelyssä
-on dynaaminen ohjelmointi.
+Jos verkko on rakenteeltaan puu, sen käsittely on yleistä
+verkkoa helpompaa.
+Esimerkiksi lyhin polku kahden puun solmun välillä
+löytyy aina syvyyshaulla, koska puussa ei ole silmukoita.
+Tässä luvussa opimme lisää puiden käsittelystä ja
+näemme, miten puihin voi soveltaa dynaamista ohjelmointia.
 
-\section{Perusasiat}
+\section{Käsitteitä}
 
-\subsection{Juuren valinta}
+Puu (\textit{tree}) on yhtenäinen, syklitön ja suuntaamaton verkko,
+jossa on $n$ solmua ja $n-1$ kaarta.
+Jokaisen kahden puun solmun välillä on yksikäsitteinen polku.
+Jos puusta poistaa yhden kaaren, se ei ole enää yhtenäinen,
+ja jos puuhun lisää yhden kaaren, se ei ole enää syklitön.
 
-Tavallinen tapa käsitellä puuta on valita
-yksi puun solmuista juureksi (\textit{root}),
-jonka alapuolelle kaikki muut solmut asettuvat.
-Usein ei ole merkitystä,
-mikä puun solmuista valitaan juureksi.
+Esimerkiksi seuraavassa puussa on 7 solmua ja 6 kaarta:
 
-\begin{samepage}
-Kun esimerkiksi puussa
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -37,11 +34,17 @@ Kun esimerkiksi puussa
 \path[draw,thick,-] (3) -- (7);
 \end{tikzpicture}
 \end{center}
-\end{samepage}
 
-\begin{samepage}
-solmu 1 valitaan juureksi,
-puu asettuu seuraavaan muotoon:
+Puun lehdet (\textit{leaves}) ovat solmut,
+joiden aste on 1 eli joista lähtee vain yksi kaari.
+Esimerkiksi yllä olevan puun lehdet ovat
+solmut 3, 5, 6 ja 7.
+
+Usein yksi solmuista valitaan puun juureksi 
+(\textit{root}) ja muut solmut asettuvat sen alapuolelle.
+Esimerkiksi jos yllä olevassa puussa valitaan
+juureksi solmu 1, solmut asettuvat seuraavaan järjestykseen:
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -59,55 +62,63 @@ puu asettuu seuraavaan muotoon:
 \path[draw,thick,-] (3) -- (7);
 \end{tikzpicture}
 \end{center}
-\end{samepage}
 
-Solmun vanhempi (\textit{parent}) on ylemmän tason solmu,
-josta on kaari solmuun,
-ja solmun lapset (\textit{children})
-ovat vastaavasti alemman tason solmut,
-joihin on kaari solmusta.
-Esimerkiksi yllä olevassa verkossa
-solmun 4 vanhempi on solmu 1
-ja sen lapset ovat solmut 3 ja 7.
+Solmun lapset (\textit{children})
+ovat sen alemman tason naapurit
+ja solmun vanhempi (\textit{parent})
+on sen ylemmän tason naapuri.
+Jokaisella solmulla on tasan yksi vanhempi,
+paitsi juurella ei ole vanhempaa.
+Esimerkiksi yllä olevassa puussa solmun 4
+lapset ovat solmut 3 ja 7 ja solmun 4 vanhempi on solmu 1.
 
-Jokaisesta puun solmusta alkaa alipuu (\textit{subtree}),
-jonka juurena on solmu itse
-ja johon kuuluvat kaikki alemman tason solmut,
-joihin solmusta pääsee.
+Juurellisen puun rakenne on rekursiivinen:
+jokaisesta puun solmusta alkaa alipuu (\textit{subtree}),
+jonka juurena on solmu itse ja johon kuuluvat
+kaikki solmut, joihin solmusta pääsee kulkemalla alaspäin puussa.
 Esimerkiksi solmun 4 alipuussa
 ovat solmut 4, 3 ja 7.
 
-Puun lehtiä (\textit{leaves}) ovat solmut, joilla ei ole lapsia,
-eli tässä puussa solmut 3, 7, 5 ja 6.
-Puun solmuista vähintään puolet on aina lehtiä.
+\section{Perustekniikat}
 
 \subsection{Läpikäynti}
 
-Seuraava rekursiivinen koodi käy läpi
-vieruslistoina tallennetun puun:
+Puun läpikäyntiin voi käyttää syvyyshakua ja
+leveyshakua samaan
+tapaan kuin yleisen verkon läpikäyntiin.
+Erona on kuitenkin, että puussa ei ole silmukoita,
+minkä ansiosta ei tarvitse huolehtia siitä,
+että läpikäynti päätyisi tiettyyn
+solmuun monesta eri suunnasta.
+
+Tavallisin menetelmä puun läpikäyntiin on
+valita tietty solmu juureksi ja aloittaa
+siitä syvyyshaku.
+Seuraava rekursiivinen funktio toteuttaa sen:
 
 \begin{lstlisting}
-void haku(int s, int e) {
+void dfs(int s, int e) {
     // solmun s käsittely tähän
-    for (int i = 0; i < v[s].size(); i++) {
-        if (v[s][i] == e) continue;
-        haku(v[s][i], s);
+    for (auto u : v[s]) {
+        if (u != e) dfs(u, s);
     }
 }
 \end{lstlisting}
 
 Funktion parametrit ovat käsiteltävä solmu $s$
-sekä tätä solmua ylempi solmu $e$.
-Parametrin $e$ ideana on pakottaa,
-että puuta käydään läpi vain ylhäältä alaspäin.
-Seuraava kutsu käy läpi puun niin,
-että juurena on solmu 1:
+sekä edellinen käsitelty solmu $e$.
+Parametrin $e$ ideana on varmistaa, että
+läpikäynti etenee vain alaspäin puussa
+sellaisiin solmuihin, joita ei ole vielä käsitelty.
+
+Seuraava kutsu käy läpi puun aloittaen juuresta $x$:
 
 \begin{lstlisting}
-haku(1, 0);
+dfs(x, 0);
 \end{lstlisting}
-Juurisolmulla ei ole ylempää solmua,
-joten parametri $e$ on aluksi 0.
+
+Ensimmäisessä kutsussa $e=0$, koska läpikäynti
+saa edetä juuresta kaikkiin suuntiin alaspäin.
 
 \subsection{Dynaaminen ohjelmointi}
 
@@ -121,7 +132,7 @@ alaspäin jatkuva polku puussa.
 
 Lasketaan esimerkiksi jokaiselle solmulle $s$
 sen alipuun solmujen määrä $\texttt{c}[s]$.
-Solmun alipuussa on solmu itse
+Solmun alipuuhun kuuluvat solmu itse
 sekä kaikki sen lasten alipuut.
 Niinpä solmun alipuun solmujen määrä on
 yhden suurempi kuin summa lasten
@@ -129,12 +140,12 @@ alipuiden solmujen määristä.
 Laskennan voi toteuttaa seuraavasti:
 
 \begin{lstlisting}
-void haku(int s, int e) {
+void dfs(int s, int e) {
     c[s] = 1;
-    for (int i = 0; i < v[s].size(); i++) {
-        if (v[s][i] == e) continue;
-        haku(v[s][i], s);
-        c[s] += c[v[s][i]];
+    for (auto u : v[s]) {
+        if (u == e) continue;
+        dfs(u, s);
+        c[s] += c[u];
     }
 }
 \end{lstlisting}
@@ -162,7 +173,7 @@ Esimerkiksi puussa
 \path[draw,thick,-] (3) -- (6);
 \path[draw,thick,-] (3) -- (7);
 
-\path[draw,thick,-,color=red,line width=2pt] (7) -- (3);
+\path[draw,thick,-,color=red,line width=2pt] (6) -- (3);
 \path[draw,thick,-,color=red,line width=2pt] (3) -- (1);
 \path[draw,thick,-,color=red,line width=2pt] (1) -- (2);
 \path[draw,thick,-,color=red,line width=2pt] (2) -- (5);
@@ -194,8 +205,7 @@ kuinka pitkä on pisin polku,
 joka alkaa lehdestä,
 nousee kyseiseen solmuun asti
 ja laskeutuu toiseen lehteen.
-Yksi näistä poluista on
-pisin kahden solmun välinen polku puussa.
+Pisin tällaisista poluista vastaa puun läpimittaa.
 
 Esimerkissä pisin polku alkaa lehdestä 7,
 nousee solmuun 1 asti ja laskeutuu
@@ -223,17 +233,19 @@ sitten alas lehteen 6:
 \end{tikzpicture}
 \end{center}
 
-Algoritmi laskee dynaamisella ohjelmoinnilla
-jokaiseen solmuun kaksi pisintä polkua,
-jotka lähtevät solmusta alaspäin.
-Nämä polut yhdistämällä syntyy pisin polku,
-jonka käännekohtana kyseinen solmu on.
+Algoritmi laskee ensin dynaamisella ohjelmoinnilla
+jokaiselle solmulle, kuinka pitkä on pisin solmu,
+joka lähtee solmusta alaspäin.
+Esimerkiksi yllä olevassa puussa pisin polku
+solmusta 1 alaspäin on pituudeltaan 2
+(vaihtoehdot $1 \rightarrow 4 \rightarrow 3$,
+$1 \rightarrow 4 \rightarrow 7$ ja $1 \rightarrow 2 \rightarrow 6$).
 
-Esimerkiksi solmusta 1 lähtee kolme polkua alaspäin.
-Niistä kahden pituus on 2 ($1 \rightarrow 4 \rightarrow 7$
-sekä $1 \rightarrow 2 \rightarrow 6$)
-ja yhden pituus on 1 ($1 \rightarrow 5$).
-Pisin polku syntyy yhdistämällä molemmat 2-pituiset polut.
+Tämän jälkeen algoritmi laskee kullekin solmulle,
+kuinka pitkä on pisin polku, jossa solmu on käännekohtana.
+Pisin tällainen polku syntyy valitsemalla kaksi lasta,
+joista lähtee alaspäin mahdollisimman pitkä polku.
+Esimerkiksi yllä olevassa puussa solmun 1 lapsista valitaan solmut 2 ja 4.
 
 \subsubsection{Algoritmi 2}
 
@@ -319,11 +331,15 @@ toiseksi päätesolmuksi.
 
 \subsection{Kaikki etäisyydet}
 
-Hieman vaikeampi tehtävä on laskea
+Vaikeampi tehtävä on laskea
 jokaiselle puun solmulle
 jokaiseen suuntaan, mikä on suurin
 etäisyys johonkin kyseisessä suunnassa
 olevaan solmuun.
+Osoittautuu, että tämäkin tehtävä ratkeaa
+ajassa $O(n)$ dynaamisella ohjelmoinnilla.
+
+\begin{samepage}
 Esimerkkipuussa etäisyydet ovat:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -332,7 +348,7 @@ Esimerkkipuussa etäisyydet ovat:
 \node[draw, circle] (3) at (0,1) {$4$};
 \node[draw, circle] (4) at (2,1) {$5$};
 \node[draw, circle] (5) at (4,1) {$6$};
-\node[draw, circle] (6) at (0,-1) {$7$};
+\node[draw, circle] (6) at (-2,3) {$7$};
 \node[draw, circle] (7) at (-2,1) {$3$};
 \path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
@@ -344,16 +360,17 @@ Esimerkkipuussa etäisyydet ovat:
 \node[color=red] at (0.3,2.4) {$1$};
 \node[color=red] at (-0.2,2.4) {$2$};
 \node[color=red] at (-0.2,1.5) {$3$};
-\node[color=red] at (-0.2,0.4) {$1$};
-\node[color=red] at (-0.2,-0.4) {$4$};
 \node[color=red] at (-0.5,1.2) {$1$};
-\node[color=red] at (-1.5,1.2) {$4$};
+\node[color=red] at (-1.7,2.4) {$4$};
+\node[color=red] at (-0.5,0.8) {$1$};
+\node[color=red] at (-1.5,0.8) {$4$};
 \node[color=red] at (1.5,3.2) {$3$};
 \node[color=red] at (1.5,1.2) {$3$};
 \node[color=red] at (3.5,1.2) {$4$};
 \node[color=red] at (2.2,2.4) {$1$};
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 Esimerkiksi solmussa 4
 kaukaisin solmu ylöspäin mentäessä
 on solmu 6, johon etäisyys on 3 käyttäen
@@ -460,9 +477,9 @@ kaikkiin suuntiin:
 \node[color=red] at (0.2,1.6) {$3$};
 \end{tikzpicture}
 \end{center}
-
-Kummankin läpikäynnin aikavaativuus on $O(n)$,
-joten algoritmin kokonais\-aikavaativuus on $O(n)$.
+% 
+% Kummankin läpikäynnin aikavaativuus on $O(n)$,
+% joten algoritmin kokonais\-aikavaativuus on $O(n)$.
 
 \section{Binääripuut}
 
@@ -510,10 +527,16 @@ ja jälkijärjestys on $(4,6,5,2,7,3,1)$.
 
 Osoittautuu, että tietämällä puun esijärjestyksen
 ja sisäjärjestyksen voi päätellä puun koko rakenteen.
-Vastaava pätee, jos esijärjestyksen sijasta tiedossa
-on jälkijärjestys.
-Kuitenkaan esijärjestys ja jälkijärjestys
-eivät vielä kuvaa puuta yksikäsitteisesti.
+Esimerkiksi yllä oleva puu on ainoa mahdollinen
+puu, jossa esijärjestys on
+$(1,2,4,5,6,3,7)$ ja sisäjärjestys on $(4,2,6,5,1,3,7)$.
+Vastaavasti myös jälkijärjestys ja sisäjärjestys
+määrittävät puun rakenteen.
+
+Tilanne on toinen, jos tiedossa on vain
+esijärjestys ja jälkijärjestys.
+Nämä järjestykset eivät
+kuvaa välttämättä puuta yksikäsitteisesti.
 Esimerkiksi molemmissa puissa
 
 \begin{center}

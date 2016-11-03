@@ -13,6 +13,8 @@ sen voi kuitenkin jakaa vahvasti yhtenäisiin
 komponentteihin. Komponenttien muodostama
 verkko on suunnattu syklitön verkko,
 joka kuvaa alkuperäisen verkon syvärakenteen.
+Tässä luvussa opimme tehokkaan algoritmin tämän
+toteuttamiseen.
 
 \section{Käsitteitä}
 
@@ -23,7 +25,7 @@ kaikkiin muihin solmuihin.
 Esimerkiksi seuraavassa kuvassa vasen
 verkko on vahvasti yhtenäinen,
 kun taas oikea verkko ei ole.
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,1) {$1$};
@@ -61,7 +63,6 @@ muodostavat komponenttiverkon,
 joka kuvaa alkuperäisen verkon syvärakennetta.
 
 Esimerkiksi verkon
-\\
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -86,12 +87,10 @@ Esimerkiksi verkon
 \end{tikzpicture}
 \end{center}
 
-\newpage
 vahvasti yhtenäiset komponentit ovat
-\\
 
 \begin{center}
-\begin{tikzpicture}[scale=1.0]
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (-1,1) {$7$};
 \node[draw, circle] (2) at (-3,2) {$3$};
 \node[draw, circle] (4) at (-5,2) {$2$};
@@ -119,10 +118,9 @@ vahvasti yhtenäiset komponentit ovat
 \end{center}
 
 ja ne muodostavat seuraavan komponenttiverkon:
-\\
 
 \begin{center}
-\begin{tikzpicture}[scale=1.0]
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (-3,1) {$B$};
 \node[draw, circle] (2) at (-6,2) {$A$};
 \node[draw, circle] (3) at (-5,0) {$D$};
@@ -142,41 +140,10 @@ $B=\{3,6,7\}$, $C=\{4\}$ sekä $D=\{5\}$.
 Komponenttiverkko on syklitön suunnattu verkko,
 jonka käsittely on tietyissä tapauksissa
 alkuperäistä verkkoa helpompaa.
-Esimerkiksi luvun 8.3 tyylistä dynaamista
-ohjelmointia voi soveltaa komponenttiverkkoon.
+Esimerkiksi komponenttiverkkoon voi soveltaa
+luvun 16 tyylistä dynaamista ohjelmointia.
 
 \section{Kosarajun algoritmi}
-
-% Seuraavaksi käymme läpi algoritmit,
-% joilla voi tarkistaa,
-% onko verkko vahvasti yhtenäinen,
-% sekä jakaa verkko vahvasti
-% yhtenäisiin komponentteihin.
-% 
-% \subsection{Yhtenäisyyden tarkistus}
-% 
-% Vahvasti yhtenäisyyden tarkistaminen
-% on helppoa, koska riittää valita
-% mikä tahansa solmu $x$ verkosta
-% ja tarkistaa, että solmusta $x$ pääsee
-% kaikkiin verkon solmuihin
-% ja vastaavasti kaikista verkon
-% solmuista pääsee solmuun $x$.
-% Verkko on vahvasti yhtenäinen,
-% jos molemmat ehdot toteutuvat.
-% 
-% Kätevä tapa toteuttaa tarkistus
-% on käyttää kahta syvyyshakua.
-% Ensimmäinen syvyyshaku tarkistaa,
-% että solmusta $x$ pääsee kaikkiin
-% solmuihin verkon kaaria pitkin.
-% Toinen syvyyshaku tehdään samoin,
-% mutta ennen sitä kaikki kaarten suunnat
-% muutetaan käänteisiksi.
-% Jos molemmat syvyyshaut saavuttavat kaikki solmut,
-% verkko on vahvasti yhtenäinen.
-% 
-% \subsection{Komponenttien etsintä}
 
 Kosarajun algoritmi on tehokas
 menetelmä verkon
@@ -188,18 +155,15 @@ ja toinen muodostaa vahvasti yhtenäiset komponentit.
 
 \subsubsection{Syvyyshaku 1}
 
-Ensimmäinen syvyyshaku käy läpi
-kaikki verkon solmut ja
-muodostaa listan solmuista
-siinä järjestyksessä kuin niiden
-käsittely on päättynyt.
-Solmu lisätään listalle,
-kun kaikki siitä lähtevät
-kaaret on käsitelty.
+Algoritmin ensimmäinen vaihe muodostaa listan solmuista
+syvyyshaun käsittelyjärjestyksessä.
+Algoritmi käy solmut läpi yksi kerrallaan,
+ja jos solmua ei ole vielä käsitelty, algoritmi suorittaa
+solmusta alkaen syvyyshaun.
+Solmu lisätään listalle, kun syvyyshaku on 
+käsitellyt kaikki siitä lähtevät kaaret.
 
-Seuraava kuva näyttää solmujen
-käsittelyjärjestyksen esimerkkiverkossa:
-\\
+Esimerkkiverkossa solmujen käsittelyjärjestys on:
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -255,9 +219,8 @@ tulee olemaan tämä järjestys käänteisenä eli $[3,7,6,1,2,5,4]$.
 
 \subsubsection{Syvyyshaku 2}
 
-Toinen syvyyshaku muodostaa verkon vahvasti
+Algoritmin toinen vaihe muodostaa verkon vahvasti
 yhtenäiset komponentit.
-
 Ennen toista syvyyshakua algoritmi muuttaa
 jokaisen kaaren suunnan käänteiseksi.
 Tämä varmistaa,
@@ -266,7 +229,7 @@ joka kerta vahvasti yhtenäinen komponentti,
 johon ei kuulu ylimääräisiä solmuja.
 
 Esimerkkiverkko on käännettynä seuraava:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -291,17 +254,17 @@ Esimerkkiverkko on käännettynä seuraava:
 \end{center}
 
 Tämän jälkeen algoritmi käy läpi
-solmut ensimmäisen syvyyshaun
-tuottamassa käsittelyjärjestyksessä.
+solmut käänteisessä ensimmäisen syvyyshaun
+tuottamassa järjestyksessä.
 Jos solmu ei kuulu vielä komponenttiin,
-siitä alkaa uusi syvyyshaku käänteisessä verkossa.
-Solmun komponenttiin kuuluvat kaikki aiemmin
+siitä alkaa uusi syvyyshaku.
+Solmun komponenttiin liitetään kaikki aiemmin
 käsittelemättömät solmut,
 joihin syvyyshaku pääsee solmusta.
 
 Esimerkkiverkossa muodostuu ensin komponentti
 solmusta 3 alkaen:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -333,11 +296,11 @@ solmusta 3 alkaen:
 Huomaa, että kaarten kääntämisen ansiosta komponentti
 ei pääse ''vuotamaan'' muihin verkon osiin.
 
-\newpage
+\begin{samepage}
 Sitten listalla ovat solmut 7 ja 6, mutta ne on jo liitetty
 komponenttiin.
 Seuraava uusi solmu on 1, josta muodostuu uusi komponentti:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -365,10 +328,11 @@ Seuraava uusi solmu on 1, josta muodostuu uusi komponentti:
 %\draw [red,thick,dashed,line width=2pt] (-6.5,0.5) rectangle (-7.5,-0.5);
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 Viimeisenä algoritmi käsittelee solmut 5 ja 4,
 jotka tuottavat loput vahvasti yhtenäiset komponentit:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -433,6 +397,7 @@ L_1 = (x_2 \lor \lnot x_1) \land
 
 on tosi, kun $x_1$ ja $x_2$ ovat epätosia
 ja $x_3$ ja $x_4$ ovat tosia.
+
 Vastaavasti lauseke
 
 \[
@@ -443,10 +408,11 @@ L_2 = (x_1 \lor x_2) \land
 \]
 
 on epätosi riippumatta muuttujien valinnasta.
-Tämä johtuu siitä, että jos $x_1$ on tosi,
-pitäisi päteä sekä $x_3$ että $\lnot x_3$,
+Tämän näkee siitä, että muuttujalle $x_1$
+ei ole mahdollista arvoa, joka ei tuottaisi ristiriitaa.
+Jos $x_1$ on tosi, pitäisi päteä sekä $x_3$ että $\lnot x_3$,
 mikä on mahdotonta.
-Toisaalta jos $x_1$ on epätosi,
+Jos taas $x_1$ on epätosi,
 pitäisi päteä sekä $x_2$ että $\lnot x_2$,
 mikä on myös mahdotonta.
 
@@ -587,6 +553,6 @@ jossa jokainen lausekkeen osa on muotoa
 $(a_i \lor b_i \lor c_i)$.
 Tämän ongelman ratkaisemiseen \textit{ei}
 tunneta tehokasta menetelmää,
-vaan kyseessä on NP-vaikea ongelma.
+vaan kyseessä on NP-täydellinen ongelma.
 
 

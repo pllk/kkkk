@@ -75,17 +75,6 @@
   \stepcounter{row}
 }
 
-\newcommand\setrowx[8]{
-  \setcounter{col}{1}
-  \foreach \n in {#1, #2, #3, #4, #5, #6, #7, #8} {
-    \edef\x{\value{col} - 0.5}
-    \edef\y{9.5 - \value{row}}
-    \node[anchor=center] at (\x, \y) {\n};
-    \stepcounter{col}
-  }
-  \stepcounter{row}
-}
-
 \newenvironment{task}[0]
 {
 \begin{framed}
@@ -129,10 +118,3 @@
 \include{luku30}
 
 \end{document}
-
-% \chapter{Convex hull -trick} muu dp opt
-% hungarian
-% gray-koodi, de bruijn
-% minimihintainen virtaus
-% cayley burnside
-% 2-yhtenäisyys
