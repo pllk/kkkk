@@ -22,11 +22,11 @@ tarvitaan kehittyneempiä algoritmeja.
 Bellman-Fordin algoritmi etsii
 lyhimmän polun alkusolmusta
 kaikkiin muihin verkon solmuihin.
-Algoritmi on helppo toteuttaa, ja
-sitä voi käyttää kaikenlaisissa verkoissa.
-Algoritmi pystyy myös tunnistamaan,
-onko verkossa sykliä,
-jonka pituus on negatiivinen.
+Algoritmi toimii kaikenlaisissa verkoissa,
+kunhan verkossa ei ole sykliä,
+jonka kaarten yhteispaino on negatiivinen.
+Jos verkossa on negatiivinen sykli,
+algoritmi huomaa tilanteen.
 
 Algoritmi pitää yllä etäisyysarvioita
 alkusolmusta kaikkiin muihin verkon solmuihin.
@@ -191,50 +191,48 @@ seuraavaa reittiä:
 \subsubsection{Toteutus}
 
 Seuraava Bellman-Fordin algoritmin toteutus
-tunnetaan nimellä SPFA-al\-go\-rit\-mi
-(\textit{Shortest Path Faster Algorithm}).
-Se pitää yllä jonoa solmuista,
-joiden kautta kulkevaa polkua saattaa pystyä lyhentämään,
-ja valitsee aina seuraavan käsiteltävän solmun
-jonon alusta.
-
+etsii lyhimmät polut solmusta $x$
+kaikkiin muihin verkon solmuihin.
 Koodi olettaa, että verkko on tallennettuna
-vieruslistoina taulukossa \texttt{v}.
-Jokainen vieruslista muodostuu pareista,
-joissa on ensin kaaren kohdesolmu ja sitten kaaren paino.
-Koodi laskee taulukkoon \texttt{e} lyhimmän etäisyyden
-alkusolmusta $x$ kaikkiin muihin solmuihin.
-
-Jono \texttt{q} sisältää käsiteltävät verkon solmut:
+vieruslistoina taulukossa
 \begin{lstlisting}
-queue<int> q;
+vector<pair<int,int>> v[N];
 \end{lstlisting}
+niin, että parissa on ensin kaaren kohdesolmu
+ja sitten kaaren paino.
 
-Alussa jonoon lisätään vain solmu $x$.
-Koodi käy läpi jonon solmuja ja yrittää lyhentää
-polkuja niistä lähtevillä kaarilla.
-Aina kun polun pituus lyhenee
-kaaren $a \rightarrow b$ ansiosta,
-jonoon lisätään solmu $b$.
+Algoritmi muodostuu $n-1$ kierroksesta,
+joista jokaisella algoritmi käy läpi kaikki
+verkon kaaret ja koettaa parantaa etäisyysarvioita
+Algoritmi laskee taulukkoon \texttt{e}
+etäisyyden solmusta $x$ kuhunkin verkon solmuun.
+Koodissa oleva alkuarvo $10^9$ kuvastaa
+ääretöntä.
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) e[i] = 1e9;
 e[x] = 0;
-q.push(x);
-while (!q.empty()) {
-    auto s = q.front(); q.pop();
-    for (auto u : v[s]) {
-        if (e[s]+u.second < e[u.first]) {
-            e[u.first] = e[s]+u.second;
-            q.push(u.first);
+for (int i = 1; i <= n-1; i++) {
+    for (int a = 1; a <= n; a++) {
+        for (auto b : v[a]) {
+            e[b.first] = min(e[b.first],e[a]+b.second);
         }
     }
 }
 \end{lstlisting}
-Algoritmi pysähtyy aina viimeistään $O(nm)$
-parannuksen jälkeen, jos verkossa ei ole negatiivista sykliä.
-Tämä johtuu siitä, että jokaisessa lyhimmässä polussa
-on $O(m)$ kaarta
+
+Algoritmin aikavaativuus on $O(nm)$,
+koska se muodostuu $n-1$ kierroksesta ja
+käy läpi jokaisen kierroksen aikana kaikki $m$ kaarta.
+Jos verkossa ei ole negatiivista sykliä,
+kaikki etäisyysarviot ovat lopulliset $n-1$
+kierroksen jälkeen, koska jokaisessa lyhimmässä
+polussa on enintään $n-1$ kaarta.
+
+Käytännössä kaikki lopulliset etäisyysarviot
+saadaan usein laskettua selvästi alle $n-1$ kierroksessa,
+joten hyvä tehostus algoritmiin on lopettaa heti,
+kun mikään etäisyysarvio ei parane kierroksen aikana.
 
 \subsubsection{Negatiivinen sykli}
 
@@ -244,7 +242,7 @@ jonka pituus on negatiivinen.
 Esimerkiksi verkossa
 
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$1$};
 \node[draw, circle] (2) at (2,1) {$2$};
 \node[draw, circle] (3) at (2,-1) {$3$};
@@ -268,13 +266,56 @@ minkä vuoksi lyhimmän polun käsite ei ole mielekäs.
 
 Negatiivisen syklin voi tunnistaa
 Bellman-Fordin algoritmilla
-alustamalla ensin kaikki etäisyysarviot nolliksi
-ja suorittamalla sitten
-algoritmia $n$ kierrosta.
+suorittamalla algoritmia $n$ kierrosta.
 Jos viimeinen kierros parantaa jotain
 etäisyysarviota, verkossa on negatiivinen sykli.
 Huomaa, että tässä mikään solmuista ei ole alkusolmu
 ja algoritmi etsii negatiivista sykliä koko verkon alueelta.
+
+\subsubsection{SPFA-algoritmi}
+
+SPFA-algoritmi (\textit{Shortest Path Faster Algorithm})
+on Bellman-Fordin algoritmin muunnelma,
+joka on usein alkuperäistä algoritmia tehokkaampi.
+Se ei tutki joka kierroksella koko verkkoa läpi
+parantaakseen etäisyysarvioita, vaan valitsee
+tutkittavat kaaret älykkäämmin.
+
+Algoritmi pitää yllä jonoa solmuista,
+joiden kautta saattaa pystyä parantamaan etäisyysarvioita.
+Algoritmi lisää jonoon aluksi aloitussolmun $x$
+ja valitsee aina seuraavan
+tutkittavan solmun $a$ jonon alusta.
+Aina kun kaari $a \rightarrow b$ parantaa
+etäisyysarviota, algoritmi lisää jonoon solmun $b$.
+
+Seuraavassa toteutuksessa jonona on \texttt{queue}-rakenne
+\texttt{q}. Lisäksi taulukko \texttt{z} kertoo,
+onko solmu valmiina jonossa, jolloin algoritmi ei
+lisää solmua jonoon uudestaan.
+
+\begin{lstlisting}
+for (int i = 1; i <= n; i++) e[i] = 1e9;
+e[x] = 0;
+q.push(x);
+while (!q.empty()) {
+    int a = q.front(); q.pop();
+    z[a] = 0;
+    for (auto b : v[a]) {
+        if (e[a]+b.second < e[b.first]) {
+            e[b.first] = e[a]+b.second;
+            if (!z[b]) {q.push(b); z[b] = 1;}
+        }
+    }
+}
+\end{lstlisting}
+
+SPFA-algoritmin tehokkuus riippuu verkon rakenteesta:
+algoritmi on keskimäärin hyvin tehokas mutta
+sen pahimman tapauksen aikavaativuus on edelleen
+$O(nm)$ ja on mahdollista
+laatia syötteitä, jotka saavat algoritmin yhtä hitaaksi
+kuin tavallisen Bellman-Fordin algoritmin.
 
 \section{Dijkstran algoritmi}
 
@@ -304,12 +345,18 @@ ettei verkossa ole negatiivisia kaaria.
 Tarkastellaan Dijkstran algoritmin toimintaa
 seuraavassa verkossa:
 \begin{center}
-\begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$\infty$};
-\node[draw, circle] (2) at (4,3) {$\infty$};
-\node[draw, circle] (3) at (1,1) {$\infty$};
-\node[draw, circle] (4) at (4,1) {$0$};
-\node[draw, circle] (5) at (6,2) {$\infty$};
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle] (4) at (4,1) {4};
+\node[draw, circle] (5) at (6,2) {5};
+
+\node[color=red] at (1,3+0.6) {$\infty$};
+\node[color=red] at (4,3+0.6) {$\infty$};
+\node[color=red] at (1,1-0.6) {$\infty$};
+\node[color=red] at (4,1-0.6) {$0$};
+\node[color=red] at (6,2-0.6) {$\infty$};
 
 \path[draw,thick,-] (1) -- node[font=\small,label=above:6] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:2] {} (3);
@@ -330,7 +377,7 @@ sellaisen solmun,
 jota ei ole vielä käsitelty
 ja jonka etäisyysarvio on
 mahdollisimman pieni.
-Alussa tällainen solmu on alkusolmu,
+Alussa tällainen solmu on solmu 4,
 jonka etäisyysarvio on 0.
 
 Kun solmu tulee käsittelyyn,
@@ -339,12 +386,18 @@ siitä lähtevät kaaret ja
 parantaa etäisyysarvioita
 niiden avulla:
 \begin{center}
-\begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$\infty$};
-\node[draw, circle] (2) at (4,3) {$9$};
-\node[draw, circle] (3) at (1,1) {$5$};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {$0$};
-\node[draw, circle] (5) at (6,2) {$1$};
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle] (5) at (6,2) {5};
+
+\node[color=red] at (1,3+0.6) {$\infty$};
+\node[color=red] at (4,3+0.6) {$9$};
+\node[color=red] at (1,1-0.6) {$5$};
+\node[color=red] at (4,1-0.6) {$0$};
+\node[color=red] at (6,2-0.6) {$1$};
 
 \path[draw,thick,-] (1) -- node[font=\small,label=above:6] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:2] {} (3);
@@ -358,21 +411,27 @@ niiden avulla:
 \path[draw=red,thick,->,line width=2pt] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-Alkusolmun käsittely paransi etäisyysarvioita
-kolmen muuhun solmuun,
-joiden uudet etäisyydet ovat nyt 1, 5 ja 9.
+Solmun 4 käsittely paransi etäisyysarvioita
+solmuihin 2, 3 ja 5,
+joiden uudet etäisyydet ovat nyt 9, 5 ja 1.
 
 \begin{samepage}
-Seuraavaksi käsittelyyn tulee solmu,
+Seuraavaksi käsittelyyn tulee solmu 5,
 jonka etäisyys on 1:
 
 \begin{center}
 \begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$\infty$};
-\node[draw, circle] (2) at (4,3) {$3$};
-\node[draw, circle] (3) at (1,1) {$5$};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {$0$};
-\node[draw, circle, fill=lightgray] (5) at (6,2) {$1$};
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle, fill=lightgray] (5) at (6,2) {5};
+
+\node[color=red] at (1,3+0.6) {$\infty$};
+\node[color=red] at (4,3+0.6) {$3$};
+\node[color=red] at (1,1-0.6) {$5$};
+\node[color=red] at (4,1-0.6) {$0$};
+\node[color=red] at (6,2-0.6) {$1$};
 
 \path[draw,thick,-] (1) -- node[font=\small,label=above:6] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:2] {} (3);
@@ -386,15 +445,21 @@ jonka etäisyys on 1:
 \end{center}
 \end{samepage}
 
-Tämän jälkeen vuorossa on solmu 3:
+Tämän jälkeen vuorossa on solmu 2:
 
 \begin{center}
-\begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$9$};
-\node[draw, circle, fill=lightgray] (2) at (4,3) {$3$};
-\node[draw, circle] (3) at (1,1) {$5$};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {$0$};
-\node[draw, circle, fill=lightgray] (5) at (6,2) {$1$};
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle, fill=lightgray] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle, fill=lightgray] (5) at (6,2) {5};
+
+\node[color=red] at (1,3+0.6) {$9$};
+\node[color=red] at (4,3+0.6) {$3$};
+\node[color=red] at (1,1-0.6) {$5$};
+\node[color=red] at (4,1-0.6) {$0$};
+\node[color=red] at (6,2-0.6) {$1$};
 
 \path[draw,thick,-] (1) -- node[font=\small,label=above:6] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:2] {} (3);
@@ -412,7 +477,7 @@ että aina kun solmu tulee käsittelyyn,
 sen etäisyysarvio on siitä lähtien lopullinen.
 Esimerkiksi tässä vaiheessa
 etäisyydet 0, 1 ja 3 ovat lopulliset
-etäisyydet käsiteltyihin solmuihin.
+etäisyydet solmuihin 4, 5 ja 2.
 
 Algoritmi käsittelee vastaavasti
 vielä kaksi viimeistä solmua,
@@ -420,12 +485,18 @@ minkä jälkeen algoritmin päätteeksi
 etäisyydet ovat:
 
 \begin{center}
-\begin{tikzpicture}
-\node[draw, circle, fill=lightgray] (1) at (1,3) {$7$};
-\node[draw, circle, fill=lightgray] (2) at (4,3) {$3$};
-\node[draw, circle, fill=lightgray] (3) at (1,1) {$5$};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {$0$};
-\node[draw, circle, fill=lightgray] (5) at (6,2) {$1$};
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle, fill=lightgray] (1) at (1,3) {1};
+\node[draw, circle, fill=lightgray] (2) at (4,3) {2};
+\node[draw, circle, fill=lightgray] (3) at (1,1) {3};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle, fill=lightgray] (5) at (6,2) {5};
+
+\node[color=red] at (1,3+0.6) {$7$};
+\node[color=red] at (4,3+0.6) {$3$};
+\node[color=red] at (1,1-0.6) {$5$};
+\node[color=red] at (4,1-0.6) {$0$};
+\node[color=red] at (6,2-0.6) {$1$};
 
 \path[draw,thick,-] (1) -- node[font=\small,label=above:6] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:2] {} (3);
@@ -442,10 +513,10 @@ Dijkstran algoritmin tehokkuus perustuu siihen,
 että verkossa ei ole negatiivisia kaaria.
 Jos verkossa on negatiivinen kaari,
 algoritmi ei välttämättä toimi oikein.
-Esimerkiksi verkossa
+Tarkastellaan esimerkkinä seuraavaa verkkoa:
 
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$1$};
 \node[draw, circle] (2) at (2,1) {$2$};
 \node[draw, circle] (3) at (2,-1) {$3$};
@@ -458,25 +529,30 @@ Esimerkiksi verkossa
 \end{tikzpicture}
 \end{center}
 \noindent
-solmusta 1 alkaen Dijkstran algoritmi löytää keveimpiä kaaria seuraamalla
-reitin $1 \rightarrow 2 \rightarrow 4$,
-vaikka lyhyempi reitti olisi $1 \rightarrow 3 \rightarrow 4$.
+Lyhin polku solmusta 1 solmuun 4 kulkee
+$1 \rightarrow 3 \rightarrow 4$,
+ja sen pituus on 1.
+Dijkstran algoritmi löytää
+kuitenkin keveimpiä kaaria seuraten
+polun $1 \rightarrow 2 \rightarrow 4$.
+Algoritmi ei pysty ottamaan huomioon,
+että alemmalla polulla kaaren paino $-5$
+kumoaa aiemman suuren kaaren painon $6$.
 
 \subsubsection{Toteutus}
 
 Seuraava Dijkstran algoritmin toteutus laskee
-pienimmän etäisyyden solmusta $s$ kaikkiin muihin solmuihin.
-Verkossa on $n$ solmua ja $m$ kaarta,
-ja tiedot kaarista on tallennettu taulukkoon \texttt{v}
+pienimmän etäisyyden solmusta $x$ kaikkiin muihin solmuihin.
+Verkko on tallennettu taulukkoon \texttt{v}
 vieruslistoina, joissa on pareina kohdesolmu
 ja kaaren pituus.
 
 Dijkstran algoritmin tehokas toteutus vaatii,
-että verkosta on mahdollista
-löytää nopeasti vielä käsittelemätön solmu,
+että verkosta pystyy löytämään
+nopeasti vielä käsittelemättömän solmun,
 jonka etäisyysarvio on pienin.
 Sopiva tietorakenne tähän on prioriteettijono,
-jossa solmut ovat järjestyksessä etäisyysarvioiden mukaan.
+jossa solmut ovat järjestyksessä etäisyys\-arvioiden mukaan.
 Prioriteettijonon avulla
 seuraavaksi käsiteltävän solmun saa selville logaritmisessa ajassa.
 
@@ -495,60 +571,48 @@ Helppo ratkaisu on tallentaa etäisyysarviot
 \textit{negatiivisina}, jolloin C++:n prioriteettijonoa
 voi käyttää suoraan.
 
-Koodi käyttää lisäksi taulukoita
-\texttt{z} ja \texttt{e},
-joissa on alkio jokaiselle solmulle $i$
-välillä $1 \le i \le n$.
-Taulukko $\texttt{z}$ kertoo,
-onko solmu jo käsitely,
-ja sen jokainen alkio on 0 (ei käsitelty)
-tai 1 (käsitelty).
-Taulukossa \texttt{e} taas on etäisyysarviot
-solmusta $s$ kaikkiin solmuihin.
+Koodi merkitsee taulukkoon \texttt{z},
+onko solmu käsitelty,
+ja pitää yllä etäisyysarvioita taulukossa \texttt{e}.
 Alussa alkusolmun etäisyysarvio on 0
 ja jokaisen muun solmun etäisyysarviona
 on ääretöntä vastaava $10^9$.
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) e[i] = 1e9;
-e[s] = 0;
-q.push({0,s});
+e[x] = 0;
+q.push({0,x});
 while (!q.empty()) {
-    int x = q.top().second;
-    q.pop();
-    if (z[x]) continue;
-    z[x] = 1;
-    for (int i = 0; i < v[x].size(); i++) {
-        int u = v[x][i].first;
-        if (e[x]+v[x][i].second < e[u]) {
-            e[u] = e[x]+v[x][i].second;
-            q.push({-e[u],u});
+    int a = q.top().second; q.pop();
+    if (z[a]) continue;
+    z[a] = 1;
+    for (auto b : v[a]) {
+        if (e[a]+b.second < e[b]) {
+            e[b] = e[a]+b.second;
+            q.push({-e[b],b});
         }
     }
 }
 \end{lstlisting}
 
-Yllä olevan toteutuksen aikavaativuus on $O(n+m \log m)$,
+Yllä olevan toteutuksen aikavaativuus on $O(n+m \log n)$,
 koska algoritmi käy läpi kaikki verkon solmut
 ja lisää jokaista kaarta kohden korkeintaan
 yhden etäisyysarvion prioriteettijonoon.
-Jokainen prioriteettijonon operaatio vie aikaa
-$O(\log m)$ ja operaatioita tehdään kaikkiaan
-$O(m)$ kappaletta,
-joten prioriteettijonon käsittelyyn
-kuluu aikaa yhteensä $O(m \log m)$.
+Huomaa, että $O(\log m)=O(\log n)$, koska 
+$n$ solmun verkossa on enintään $O(n^2)$ eri kaarta
+ja $\log(n^2) = 2 \log n$.
 
 \section{Floyd-Warshallin algoritmi}
 
-Floyd-Warshallin algoritmi on toisenlainen
-lähestymistapa lyhimpien polkujen
-etsimiseen kuin Bellman-Fordin ja
-Dijkstran algoritmit.
+Floyd-Warshallin algoritmi lähestyy toisella
+tavalla lyhimpien polkujen etsimistä
+kuin Bellman-Fordin ja Dijkstran algoritmit.
 Siinä missä muut algoritmit
 etsivät lyhimpiä polkuja
 tietystä solmusta alkaen,
 Floyd-Warshallin algoritmi etsii
-lyhimmän polun jokaisen verkon
+samalla kertaa lyhimmän polun jokaisen verkon
 solmuparin välillä.
 
 Algoritmi ylläpitää kaksiulotteista
@@ -568,16 +632,16 @@ Tarkastellaan Floyd-Warshallin
 algoritmin toimintaa seuraavassa verkossa:
 
 \begin{center}
-\begin{tikzpicture}[scale=0.80]
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$3$};
 \node[draw, circle] (2) at (4,3) {$4$};
 \node[draw, circle] (3) at (1,1) {$2$};
 \node[draw, circle] (4) at (4,1) {$1$};
 \node[draw, circle] (5) at (6,2) {$5$};
 
-\path[draw,thick,-] (1) -- node[font=\small,label=above:6] {} (2);
+\path[draw,thick,-] (1) -- node[font=\small,label=above:7] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:2] {} (3);
-\path[draw,thick,-] (3) -- node[font=\small,label=above:5] {} (4);
+\path[draw,thick,-] (3) -- node[font=\small,label=below:5] {} (4);
 \path[draw,thick,-] (2) -- node[font=\small,label=left:9] {} (4);
 \path[draw,thick,-] (2) -- node[font=\small,label=above:2] {} (5);
 \path[draw,thick,-] (4) -- node[font=\small,label=below:1] {} (5);
@@ -597,15 +661,15 @@ Tässä verkossa taulukosta tulee:
 \hline
 1 & 0 & 5 & $\infty$ & 9 & 1 \\
 2 & 5 & 0 & 2 & $\infty$ & $\infty$ \\
-3 & $\infty$ & 2 & 0 & 6 & $\infty$ \\
-4 & 9 & $\infty$ & 6 & 0 & 2 \\
+3 & $\infty$ & 2 & 0 & 7 & $\infty$ \\
+4 & 9 & $\infty$ & 7 & 0 & 2 \\
 5 & 1 & $\infty$ & $\infty$ & 2 & 0 \\
 \end{tabular}
 \end{center}
 \vspace{10pt}
 Algoritmin toiminta muodostuu peräkkäisistä kierroksista.
-Jokaisella kierroksella uusi solmu saa
-toimia välisolmuna poluilla,
+Jokaisella kierroksella valitaan yksi uusi solmu,
+joka saa toimia välisolmuna poluilla,
 ja algoritmi parantaa taulukon
 etäisyyksiä muodostaen polkuja tämän solmun avulla.
 
@@ -622,14 +686,14 @@ jonka pituus on 6.
 \hline
 1 & 0 & 5 & $\infty$ & 9 & 1 \\
 2 & 5 & 0 & 2 & \textbf{14} & \textbf{6} \\
-3 & $\infty$ & 2 & 0 & 6 & $\infty$ \\
-4 & 9 & \textbf{14} & 6 & 0 & 2 \\
+3 & $\infty$ & 2 & 0 & 7 & $\infty$ \\
+4 & 9 & \textbf{14} & 7 & 0 & 2 \\
 5 & 1 & \textbf{6} & $\infty$ & 2 & 0 \\
 \end{tabular}
 \end{center}
 \vspace{10pt}
 
-Toisella kierroksella myös solmu 2 saa toimia välisolmuna.
+Toisella kierroksella solmu 2 saa toimia välisolmuna.
 Tämä mahdollistaa uudet polut solmuparien 1 ja 3
 sekä 3 ja 5 välille:
 
@@ -639,12 +703,29 @@ sekä 3 ja 5 välille:
 \hline
 1 & 0 & 5 & \textbf{7} & 9 & 1 \\
 2 & 5 & 0 & 2 & 14 & 6 \\
-3 & \textbf{7} & 2 & 0 & 6 & \textbf{8} \\
-4 & 9 & 14 & 6 & 0 & 2 \\
+3 & \textbf{7} & 2 & 0 & 7 & \textbf{8} \\
+4 & 9 & 14 & 7 & 0 & 2 \\
 5 & 1 & 6 & \textbf{8} & 2 & 0 \\
 \end{tabular}
 \end{center}
 \vspace{10pt}
+
+Kolmannella kierroksella solmu 3 saa toimia välisolmuna,
+jolloin syntyy uusi polku solmuparin 2 ja 4 välille:
+
+\begin{center}
+\begin{tabular}{r|rrrrr}
+ & 1 & 2 & 3 & 4 & 5 \\
+\hline
+1 & 0 & 5 & 7 & 9 & 1 \\
+2 & 5 & 0 & 2 & \textbf{9} & 6 \\
+3 & 7 & 2 & 0 & 7 & 8 \\
+4 & 9 & \textbf{9} & 7 & 0 & 2 \\
+5 & 1 & 6 & 8 & 2 & 0 \\
+\end{tabular}
+\end{center}
+\vspace{10pt}
+
 
 Algoritmin toiminta jatkuu samalla tavalla
 niin, että kukin solmu tulee vuorollaan
@@ -658,11 +739,36 @@ solmuparin välillä:
  & 1 & 2 & 3 & 4 & 5 \\
 \hline
 1 & 0 & 5 & 7 & 3 & 1 \\
-2 & 5 & 0 & 2 & 8 & 6 \\
-3 & 7 & 2 & 0 & 6 & 8 \\
-4 & 3 & 8 & 6 & 0 & 2 \\
+2 & 5 & 0 & 2 & 9 & 6 \\
+3 & 7 & 2 & 0 & 7 & 8 \\
+4 & 3 & 9 & 7 & 0 & 2 \\
 5 & 1 & 6 & 8 & 2 & 0 \\
 \end{tabular}
+\end{center}
+
+Esimerkiksi taulukosta selviää, että lyhin polku
+solmusta 2 solmuun 4 on pituudeltaan 8.
+Tämä vastaa seuraavaa polkua:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$3$};
+\node[draw, circle] (2) at (4,3) {$4$};
+\node[draw, circle] (3) at (1,1) {$2$};
+\node[draw, circle] (4) at (4,1) {$1$};
+\node[draw, circle] (5) at (6,2) {$5$};
+
+\path[draw,thick,-] (1) -- node[font=\small,label=above:7] {} (2);
+\path[draw,thick,-] (1) -- node[font=\small,label=left:2] {} (3);
+\path[draw,thick,-] (3) -- node[font=\small,label=below:5] {} (4);
+\path[draw,thick,-] (2) -- node[font=\small,label=left:9] {} (4);
+\path[draw,thick,-] (2) -- node[font=\small,label=above:2] {} (5);
+\path[draw,thick,-] (4) -- node[font=\small,label=below:1] {} (5);
+
+\path[draw=red,thick,->,line width=2pt] (3) -- (4);
+\path[draw=red,thick,->,line width=2pt] (4) -- (5);
+\path[draw=red,thick,->,line width=2pt] (5) -- (2);
+\end{tikzpicture}
 \end{center}
 
 \subsubsection{Toteutus}
@@ -672,10 +778,19 @@ että se on helppoa toteuttaa.
 Seuraava toteutus muodostaa etäisyysmatriisin
 \texttt{d}, jossa $\texttt{d}[a][b]$
 on pienin etäisyys polulla solmusta $a$ solmuun $b$.
-Alussa $\texttt{d}[a][b]=0$, jos $a=b$,
-$\texttt{d}[a][b]=x$, jos $a$:sta $b$:hen
-on $x$-pituinen kaari,
-ja muuten $\texttt{d}[a][b]=\infty$.
+Aluksi algoritmi alustaa matriisin \texttt{d}
+verkon vierusmatriisin \texttt{v} perusteella
+(arvo $10^9$ kuvastaa ääretöntä):
+
+\begin{lstlisting}
+for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= n; j++) {
+        if (i == j) d[i][j] = 0;
+        else if (v[i][j]) d[i][j] = v[i][j];
+        else d[i][j] = 1e9;
+    }
+}
+\end{lstlisting}
 
 Tämän jälkeen lyhimmät polut löytyvät seuraavasti:
 
@@ -701,3 +816,47 @@ lyhin polku verkossa.
 Tämä vaatii kuitenkin, että verkko on pieni
 ja kuutiollinen aikavaativuus on riittävä.
 
+\section{Yhteenveto}
+
+Olemme käyneet läpi useita algoritmeja,
+joilla voi etsiä lyhimmän polun verkossa
+solmusta $a$ solmuun $b$.
+Jokaisella algoritmilla on jokin etu verrattuna
+muihin algoritmeihin.
+Seuraava kaavio auttaa sopivan algoritmin valinnassa:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (1,0) rectangle (9,1.5);
+\node at (5,0.75) {riittääkö $O(n^3)$-algoritmi?};
+
+\draw[thick,->] (5,0) -- (1,-2);
+\draw[thick,->] (5,0) -- (9,-2);
+\node at (1,-1) {kyllä};
+\node at (9,-1) {ei};
+\draw (-2,-2) rectangle (4,-3);
+\node at (1,-2.5) {Floyd-Warshall};
+\draw (5,-2) rectangle (13,-3.5);
+\node at (9,-2.75) {onko kaarilla painot?};
+
+\draw[thick,->] (9,-3.5) -- (5,-5.5);
+\draw[thick,->] (9,-3.5) -- (13,-5.5);
+\node at (5,-4.5) {kyllä};
+\node at (13,-4.5) {ei};
+\draw (10,-5.5) rectangle (16,-6.5);
+\node at (13,-6) {leveyshaku};
+\draw (1,-5.5) rectangle (9,-7);
+\node at (5,-6.25) {onko negatiivisia kaaria?};
+
+\draw[thick,->] (5,-7) -- (1,-9);
+\draw[thick,->] (5,-7) -- (9,-9);
+\node at (1,-8) {kyllä};
+\node at (9,-8) {ei};
+\draw (-2,-9) rectangle (4,-10);
+\node at (1,-9.5) {Bellman-Ford};
+\draw (6,-9) rectangle (12,-10);
+\node at (9,-9.5) {Dijkstra};
+
+
+\end{tikzpicture}
+\end{center}
