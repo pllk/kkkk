@@ -1,14 +1,12 @@
 \chapter{Lyhimmät polut}
 
-Lyhin polku on kahden verkon solmun
-välinen reitti,
-joka kulkee alkusolmusta loppusolmuun ja
-jossa kaarten painojen summa on
-mahdollisimman pieni.
+Lyhimmän polun etsiminen alkusolmusta loppusolmuun
+on keskeinen verkko-ongelma, joka esiintyy usein
+käytännön tilanteissa.
 Esimerkiksi tieverkostossa
 tyypillinen ongelma on selvittää,
-mikä on lyhin reitti kahden kaupungin
-välillä kulkemalla teitä pitkin.
+mikä on lyhin reitti kahden kaupungin välillä,
+kun tiedossa ovat kaupunkien väliset tiet ja niiden pituudet.
 
 Jos verkon kaarilla ei ole painoja,
 polun pituus on sama kuin kaarten
@@ -34,12 +32,10 @@ Algoritmi pitää yllä etäisyysarvioita
 alkusolmusta kaikkiin muihin verkon solmuihin.
 Alussa alkusolmun etäisyysarvio on 0
 ja muiden solmujen etäisyys\-arvio on ääretön.
-Sitten algoritmi alkaa parantaa arvioita
+Algoritmi parantaa arvioita
 etsimällä verkosta kaaria,
-jotka lyhentävät polkuja.
-Kun algoritmi päättyy,
-jokaiseen solmuun on saatu laskettua
-pienin etäisyys alkusolmusta.
+jotka lyhentävät polkuja,
+kunnes mitään arviota ei voi enää parantaa.
 
 \subsubsection{Toiminta}
 
@@ -47,11 +43,16 @@ Tarkastellaan Bellman-Fordin
 algoritmin toimintaa seuraavassa verkossa:
 \begin{center}
 \begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$0$};
-\node[draw, circle] (2) at (4,3) {$\infty$};
-\node[draw, circle] (3) at (1,1) {$\infty$};
-\node[draw, circle] (4) at (4,1) {$\infty$};
-\node[draw, circle] (5) at (6,2) {$\infty$};
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle] (4) at (4,1) {4};
+\node[draw, circle] (5) at (6,2) {5};
+\node[color=red] at (1,3+0.55) {$0$};
+\node[color=red] at (4,3+0.55) {$\infty$};
+\node[color=red] at (1,1-0.55) {$\infty$};
+\node[color=red] at (4,1-0.55) {$\infty$};
+\node[color=red] at (6,2-0.55) {$\infty$};
 \path[draw,thick,-] (1) -- node[font=\small,label=above:2] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:3] {} (3);
 \path[draw,thick,-] (3) -- node[font=\small,label=below:$-2$] {} (4);
@@ -61,27 +62,27 @@ algoritmin toimintaa seuraavassa verkossa:
 \path[draw,thick,-] (1) -- node[font=\small,label=above:7] {} (4);
 \end{tikzpicture}
 \end{center}
-Verkon jokaiseen solmuun on merkitty etäisyysarvio.
+Verkon jokaiseen solmun viereen on merkitty etäisyysarvio.
 Alussa alkusolmun etäisyysarvio on 0
 ja muiden solmujen etäisyysarvio on
 ääretön ($\infty$).
 
-Algoritmin toiminta muodostuu peräkkäisistä
-kierroksista.
-Jokaisella kierroksella algoritmi käy kaikki
-verkon kaaret läpi.
-Jos kaaren avulla pystyy parantamaan jotain
-etäisyysarviota, algoritmi tekee näin.
-
-Tässä verkossa ensimmäinen kierros
-parantaa arvioita näin:
+Algoritmin etsii verkosta kaaria,
+jotka parantavat etäisyysarvioita.
+Aluksi kaikki solmusta 0 lähtevät kaaret
+parantavat arvioita:
 \begin{center}
 \begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$0$};
-\node[draw, circle] (2) at (4,3) {$2$};
-\node[draw, circle] (3) at (1,1) {$3$};
-\node[draw, circle] (4) at (4,1) {$7$};
-\node[draw, circle] (5) at (6,2) {$\infty$};
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle] (4) at (4,1) {4};
+\node[draw, circle] (5) at (6,2) {5};
+\node[color=red] at (1,3+0.55) {$0$};
+\node[color=red] at (4,3+0.55) {$2$};
+\node[color=red] at (1,1-0.55) {$3$};
+\node[color=red] at (4,1-0.55) {$7$};
+\node[color=red] at (6,2-0.55) {$\infty$};
 \path[draw,thick,-] (1) -- node[font=\small,label=above:2] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:3] {} (3);
 \path[draw,thick,-] (3) -- node[font=\small,label=below:$-2$] {} (4);
@@ -96,20 +97,21 @@ parantaa arvioita näin:
 \end{tikzpicture}
 \end{center}
 
-Esimerkiksi alkusolmusta lähtevä 2:n pituinen
-kaari parantaa kohdesolmun etäisyysarviota,
-koska vanha arvio oli ääretön,
-mutta kulkemalla tätä kaarta alkusolmusta
-etäisyys on vain 2.
+Sitten kaaret $2 \rightarrow 5$ ja $3 \rightarrow 4$
+parantavat arvioita:
 
-Seuraavalla kierroksella arviot paranevat näin:
 \begin{center}
 \begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$0$};
-\node[draw, circle] (2) at (4,3) {$2$};
-\node[draw, circle] (3) at (1,1) {$3$};
-\node[draw, circle] (4) at (4,1) {$1$};
-\node[draw, circle] (5) at (6,2) {$7$};
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle] (4) at (4,1) {4};
+\node[draw, circle] (5) at (6,2) {5};
+\node[color=red] at (1,3+0.55) {$0$};
+\node[color=red] at (4,3+0.55) {$2$};
+\node[color=red] at (1,1-0.55) {$3$};
+\node[color=red] at (4,1-0.55) {$1$};
+\node[color=red] at (6,2-0.55) {$7$};
 \path[draw,thick,-] (1) -- node[font=\small,label=above:2] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:3] {} (3);
 \path[draw,thick,-] (3) -- node[font=\small,label=below:$-2$] {} (4);
@@ -118,20 +120,25 @@ Seuraavalla kierroksella arviot paranevat näin:
 \path[draw,thick,-] (4) -- node[font=\small,label=below:2] {} (5);
 \path[draw,thick,-] (1) -- node[font=\small,label=above:7] {} (4);
 
-%\path[draw=gray,thick,->,line width=2pt] (1) -- (2);
-%\path[draw=gray,thick,->,line width=2pt] (1) -- (3);
 \path[draw=red,thick,->,line width=2pt] (2) -- (5);
 \path[draw=red,thick,->,line width=2pt] (3) -- (4);
 \end{tikzpicture}
 \end{center}
-Sitten tulee vielä yksi parannus:
+
+Lopuksi tulee vielä yksi parannus:
+
 \begin{center}
 \begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$0$};
-\node[draw, circle] (2) at (4,3) {$2$};
-\node[draw, circle] (3) at (1,1) {$3$};
-\node[draw, circle] (4) at (4,1) {$1$};
-\node[draw, circle] (5) at (6,2) {$3$};
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle] (4) at (4,1) {4};
+\node[draw, circle] (5) at (6,2) {5};
+\node[color=red] at (1,3+0.55) {$0$};
+\node[color=red] at (4,3+0.55) {$2$};
+\node[color=red] at (1,1-0.55) {$3$};
+\node[color=red] at (4,1-0.55) {$1$};
+\node[color=red] at (6,2-0.55) {$3$};
 \path[draw,thick,-] (1) -- node[font=\small,label=above:2] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:3] {} (3);
 \path[draw,thick,-] (3) -- node[font=\small,label=below:$-2$] {} (4);
@@ -143,22 +150,30 @@ Sitten tulee vielä yksi parannus:
 \path[draw=red,thick,->,line width=2pt] (4) -- (5);
 \end{tikzpicture}
 \end{center}
+
 Tämän jälkeen mikään kaari
 ei paranna etäisyysarvioita.
 Tämä tarkoittaa, että etäisyydet
 ovat lopulliset, eli joka solmussa
 on nyt pienin etäisyys alkusolmusta
 kyseiseen solmuun.
+
 Esimerkiksi pienin etäisyys 3
-oikeanpuolimmaiseen solmuun toteutuu
-käyttämällä seuraavaa reittiä:
+solmusta 1 solmuun 5 toteutuu käyttämällä
+seuraavaa reittiä:
+
 \begin{center}
 \begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {$0$};
-\node[draw, circle] (2) at (4,3) {$2$};
-\node[draw, circle] (3) at (1,1) {$3$};
-\node[draw, circle] (4) at (4,1) {$1$};
-\node[draw, circle] (5) at (6,2) {$3$};
+\node[draw, circle] (1) at (1,3) {1};
+\node[draw, circle] (2) at (4,3) {2};
+\node[draw, circle] (3) at (1,1) {3};
+\node[draw, circle] (4) at (4,1) {4};
+\node[draw, circle] (5) at (6,2) {5};
+\node[color=red] at (1,3+0.55) {$0$};
+\node[color=red] at (4,3+0.55) {$2$};
+\node[color=red] at (1,1-0.55) {$3$};
+\node[color=red] at (4,1-0.55) {$1$};
+\node[color=red] at (6,2-0.55) {$3$};
 \path[draw,thick,-] (1) -- node[font=\small,label=above:2] {} (2);
 \path[draw,thick,-] (1) -- node[font=\small,label=left:3] {} (3);
 \path[draw,thick,-] (3) -- node[font=\small,label=below:$-2$] {} (4);
@@ -176,51 +191,50 @@ käyttämällä seuraavaa reittiä:
 \subsubsection{Toteutus}
 
 Seuraava Bellman-Fordin algoritmin toteutus
-laskee lyhimmät etäisyydet solmusta $s$
-kaikkiin muihin solmuihin.
-Verkossa on $n$ solmua ja $m$ kaarta,
-ja sen rakenne on kuvattu taulukoissa
-\texttt{a}, \texttt{b} ja \texttt{w}
-niin, että solmusta $\texttt{a}[i]$
-on kaari solmuun $\texttt{b}[i]$
-painolla $\texttt{w}[i]$, kun $1 \le i \le m$.
+tunnetaan nimellä SPFA-al\-go\-rit\-mi
+(\textit{Shortest Path Faster Algorithm}).
+Se pitää yllä jonoa solmuista,
+joiden kautta kulkevaa polkua saattaa pystyä lyhentämään,
+ja valitsee aina seuraavan käsiteltävän solmun
+jonon alusta.
 
-Algoritmi käyttää lisäksi
-taulukkoa $\texttt{e}$,
-jossa $\texttt{e}[i]$
-on etäisyysarvio solmusta $s$ solmuun $i$,
-kun $1 \le i \le n$.
-Aluksi jokaisen solmun etäisyysarvio alkusolmua
-lukuun ottamatta on ääretön,
-mitä koodissa kuvastaa lukuarvo $10^9$.
+Koodi olettaa, että verkko on tallennettuna
+vieruslistoina taulukossa \texttt{v}.
+Jokainen vieruslista muodostuu pareista,
+joissa on ensin kaaren kohdesolmu ja sitten kaaren paino.
+Koodi laskee taulukkoon \texttt{e} lyhimmän etäisyyden
+alkusolmusta $x$ kaikkiin muihin solmuihin.
 
-Koodi muodostuu peräkkäisistä kierroksista,
-joista jokainen käy läpi kaikki verkon kaaret
-ja yrittää parantaa etäisyysarvioita.
-Jos jonkin kierroksen aikana mikään arvio ei parane,
-tämä tarkoittaa, että lopulliset etäisyydet
-on saatu laskettua, jolloin algoritmi pysähtyy.
+Jono \texttt{q} sisältää käsiteltävät verkon solmut:
+\begin{lstlisting}
+queue<int> q;
+\end{lstlisting}
+
+Alussa jonoon lisätään vain solmu $x$.
+Koodi käy läpi jonon solmuja ja yrittää lyhentää
+polkuja niistä lähtevillä kaarilla.
+Aina kun polun pituus lyhenee
+kaaren $a \rightarrow b$ ansiosta,
+jonoon lisätään solmu $b$.
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) e[i] = 1e9;
-e[s] = 0;
-while (true) {
-    bool ok = false;
-    for (int i = 1; i <= m; i++) {
-        if (e[a[i]]+w[i] < e[b[i]]) {
-            e[b[i]] = e[a[i]]+w[i];
-            ok = true;
+e[x] = 0;
+q.push(x);
+while (!q.empty()) {
+    auto s = q.front(); q.pop();
+    for (auto u : v[s]) {
+        if (e[s]+u.second < e[u.first]) {
+            e[u.first] = e[s]+u.second;
+            q.push(u.first);
         }
     }
-    if (!ok) break;
 }
 \end{lstlisting}
-Algoritmi pysähtyy aina viimeistään $n-1$
-kierroksen jälkeen,
-koska lyhin polku minkä
-tahansa kahden solmun välillä voi sisältää
-korkeintaan $n-1$ kaarta.
-Niinpä algoritmin aikavaativuus on $O(nm)$.
+Algoritmi pysähtyy aina viimeistään $O(nm)$
+parannuksen jälkeen, jos verkossa ei ole negatiivista sykliä.
+Tämä johtuu siitä, että jokaisessa lyhimmässä polussa
+on $O(m)$ kaarta
 
 \subsubsection{Negatiivinen sykli}
 
