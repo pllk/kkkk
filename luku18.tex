@@ -135,24 +135,24 @@ syvyyshaku etenee
 \path[draw,thick,-] (4) -- (8);
 \path[draw,thick,-] (4) -- (9);
 
-\path[draw=red,thick,->,line width=2pt] (1) -- (2);
-\path[draw=red,thick,->,line width=2pt] (1) -- (3);
-\path[draw=red,thick,->,line width=2pt] (1) -- (4);
-\path[draw=red,thick,->,line width=2pt] (1) -- (5);
-\path[draw=red,thick,->,line width=2pt] (2) -- (6);
-\path[draw=red,thick,->,line width=2pt] (4) -- (7);
-\path[draw=red,thick,->,line width=2pt] (4) -- (8);
-\path[draw=red,thick,->,line width=2pt] (4) -- (9);
 
-\node[color=red] at (0,3+0.65) {1};
-\node[color=red] at (-3-0.65,1) {2};
-\node[color=red] at (-1-0.65,1) {4};
-\node[color=red] at (1+0.65,1) {5};
-\node[color=red] at (3+0.65,1) {9};
-\node[color=red] at (-3,-1-0.65) {3};
-\node[color=red] at (-0.5,-1-0.65) {6};
-\node[color=red] at (1,-1-0.65) {7};
-\node[color=red] at (2.5,-1-0.65) {8};
+\path[draw=red,thick,->,line width=2pt] (1) edge [bend right=15] (2);
+\path[draw=red,thick,->,line width=2pt] (2) edge [bend right=15] (6);
+\path[draw=red,thick,->,line width=2pt] (6) edge [bend right=15] (2);
+\path[draw=red,thick,->,line width=2pt] (2) edge [bend right=15] (1);
+\path[draw=red,thick,->,line width=2pt] (1) edge [bend right=15] (3);
+\path[draw=red,thick,->,line width=2pt] (3) edge [bend right=15] (1);
+\path[draw=red,thick,->,line width=2pt] (1) edge [bend right=15] (4);
+\path[draw=red,thick,->,line width=2pt] (4) edge [bend right=15] (7);
+\path[draw=red,thick,->,line width=2pt] (7) edge [bend right=15] (4);
+\path[draw=red,thick,->,line width=2pt] (4) edge [bend right=15] (8);
+\path[draw=red,thick,->,line width=2pt] (8) edge [bend right=15] (4);
+\path[draw=red,thick,->,line width=2pt] (4) edge [bend right=15] (9);
+\path[draw=red,thick,->,line width=2pt] (9) edge [bend right=15] (4);
+\path[draw=red,thick,->,line width=2pt] (4) edge [bend right=15] (1);
+\path[draw=red,thick,->,line width=2pt] (1) edge [bend right=15] (5);
+\path[draw=red,thick,->,line width=2pt] (5) edge [bend right=15] (1);
+
 \end{tikzpicture}
 \end{center}
 
