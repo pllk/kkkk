@@ -9,16 +9,6 @@ toteuttaa puukyselyjä tehokkaasti.
 Usein esiintyvä idea on muuttaa
 puu jollakin tavalla taulukoksi,
 mikä helpottaa puun käsittelyä.
-% 
-% Tyypillisiä puukyselyitä ovat
-% puun polkuihin ja alipuihin
-% liittyvät kyselyt.
-% Tämä luku esittelee
-% tekniikoita, joiden avulla on mahdollista
-% toteuttaa puukyselyjä tehokkaasti.
-% Usein esiintyvä idea on muuttaa
-% puu jollakin tavalla taulukoksi,
-% mikä helpottaa puun käsittelyä.
 
 \section{Tehokas nouseminen}
 
@@ -590,7 +580,6 @@ Tehtäväsi on vastata kyselyihin
 ''mikä on solmujen $a$ ja $b$ alin yhteinen esivanhempi''.
 \end{task}
 
-
 \begin{samepage}
 Esimerkiksi puussa
 
@@ -618,6 +607,100 @@ Esimerkiksi puussa
 solmujen 5 ja 8 alin yhteinen esivanhempi on solmu 2
 ja solmujen 3 ja 4 alin yhteinen esivanhempi on solmu 1.
 
+Tutustumme seuraavaksi kahteen menetelmään
+alimman yhteisen esivanhemman selvittämiseen.
+
+\subsubsection{Menetelmä 1}
+
+Yksi tapa ratkaista tehtävä on hyödyntää
+tehokasta nousemista puussa.
+Tällöin alimman yhteisen esivanhemman etsiminen
+muodostuu kahdesta vaiheesta.
+Ensin noustaan alemmasta solmusta samalle tasolle
+ylemmän solmun kanssa,
+sitten noustaan rinnakkain kohti
+alinta yhteistä esivanhempaa.
+
+Tarkastellaan esimerkkinä solmujen 5 ja 8
+alimman yhteisen esivanhemman etsimistä:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$4$};
+\node[draw, circle] (3) at (-2,1) {$2$};
+\node[draw, circle] (4) at (0,1) {$3$};
+\node[draw, circle] (5) at (2,-1) {$7$};
+\node[draw, circle,fill=lightgray] (6) at (-3,-1) {$5$};
+\node[draw, circle] (7) at (-1,-1) {$6$};
+\node[draw, circle,fill=lightgray] (8) at (-1,-3) {$8$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\path[draw,thick,-] (7) -- (8);
+\end{tikzpicture}
+\end{center}
+
+Solmu 5 on tasolla 3, kun taas solmu 8 on tasolla 4.
+Niinpä nousemme ensin solmusta 8 yhden tason ylemmäs solmuun 6:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$4$};
+\node[draw, circle] (3) at (-2,1) {$2$};
+\node[draw, circle] (4) at (0,1) {$3$};
+\node[draw, circle] (5) at (2,-1) {$7$};
+\node[draw, circle,fill=lightgray] (6) at (-3,-1) {$5$};
+\node[draw, circle,fill=lightgray] (7) at (-1,-1) {$6$};
+\node[draw, circle] (8) at (-1,-3) {$8$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\path[draw,thick,-] (7) -- (8);
+\end{tikzpicture}
+\end{center}
+
+Tämän jälkeen etsitään pienin määrä tasoja,
+jotka nousemalla ylöspäin päädymme samaan solmuun.
+Tässä tapauksessa riittää nousta yksi taso ylöspäin
+solmuun 2. Niinpä solmujen alin yhteinen esivanhempi on 2:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (2,1) {$4$};
+\node[draw, circle,fill=lightgray] (3) at (-2,1) {$2$};
+\node[draw, circle] (4) at (0,1) {$3$};
+\node[draw, circle] (5) at (2,-1) {$7$};
+\node[draw, circle] (6) at (-3,-1) {$5$};
+\node[draw, circle] (7) at (-1,-1) {$6$};
+\node[draw, circle] (8) at (-1,-3) {$8$};
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (7);
+\path[draw,thick,-] (7) -- (8);
+\end{tikzpicture}
+\end{center}
+
+Menetelmä vaatii $O(n \log n)$-aikaisen esikäsittelyn,
+jonka jälkeen minkä tahansa kahden solmun alin yhteinen
+esivanhempi selviää ajassa $O(\log n)$,
+koska kumpikin vaihe nousussa vie aikaa $O(\log n)$.
+
+\subsubsection{Menetelmä 2}
+
+Toinen tapa ratkaista tehtävä perustuu solmutaulukon
+käyttämiseen.
 Ideana on jälleen järjestää solmut syvyyshaun mukaan:
 
 \begin{center}
@@ -655,28 +738,22 @@ Ideana on jälleen järjestää solmut syvyyshaun mukaan:
 \end{tikzpicture}
 \end{center}
 
-Erona aiempaan solmu lisätään kuitenkin järjestykseen
+Erona aiempaan solmu lisätään kuitenkin solmutaulukkoon
 mukaan \textit{aina}, kun syvyyshaku käy solmussa,
 eikä vain ensimmäisellä kerralla.
-Niinpä solmu esiintyy järjestyksessä $x+1$ kertaa,
+Niinpä solmu esiintyy solmutaulukossa $x+1$ kertaa,
 missä $x$ on solmun lasten määrä,
-ja järjestyksessä on yhteensä $2n-1$ solmua.
+ja solmutaulukossa on yhteensä $2n-1$ solmua.
 
-Tässä tehtävässä tarvittavat taulukot ovat \texttt{node},
-joka sisältää solmujen tunnukset,
-sekä \texttt{depth}, jossa on kunkin solmun syvyys puussa.
-Juuren syvyys on 1, seuraavan tason solmujen syvyys on 2, jne.
-
+Tallennamme solmutaulukkoon kaksi tietoa:
+(1) solmun tunnus ja (2) solmun taso puussa.
 Esimerkkipuuta vastaavat taulukot ovat:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
-%\fill[color=lightgray] (4,1) rectangle (5,2);
-%\fill[color=lightgray] (4,0) rectangle (5,1);
-%\fill[color=lightgray] (4,-1) rectangle (7,0);
 
 \draw (0,1) grid (15,2);
-\node at (-1.1,1.5) {\texttt{node}};
+%\node at (-1.1,1.5) {\texttt{node}};
 \node at (0.5,1.5) {$1$};
 \node at (1.5,1.5) {$2$};
 \node at (2.5,1.5) {$5$};
@@ -695,7 +772,7 @@ Esimerkkipuuta vastaavat taulukot ovat:
 
 
 \draw (0,0) grid (15,1);
-\node at (-1.1,0.5) {\texttt{depth}};
+%\node at (-1.1,0.5) {\texttt{depth}};
 \node at (0.5,0.5) {$1$};
 \node at (1.5,0.5) {$2$};
 \node at (2.5,0.5) {$3$};
@@ -731,18 +808,9 @@ Esimerkkipuuta vastaavat taulukot ovat:
 \end{tikzpicture}
 \end{center}
 
-Näiden taulukoiden avulla solmujen $a$ ja $b$ alin yhteinen esivanhempi
-selviää etsimällä taulukosta \texttt{node}
-kohdat $x$ ja $y$, joissa $\texttt{node}[x]=a$
-ja $\texttt{node}[y]=b$.
-Tämän jälkeen taulukon \texttt{depth}
-pienin arvo välillä $x \ldots y$
-(tai välillä $y \ldots x$, jos $y<x$)
-ilmaisee solmun, joka on $a$:n ja $b$:n
-alin yhteinen esivanhempi.
-Jos on monta vaihtoehtoa valita solmut
-$x$ ja $y$, mikä tahansa valinta kelpaa.
-
+Tämän taulukon avulla solmujen $a$ ja $b$ alin yhteinen esivanhempi
+selviää etsimällä taulukosta alimman tason solmu
+solmujen $a$ ja $b$ välissä.
 Esimerkiksi solmujen 5 ja 8 alin yhteinen esivanhempi
 löytyy seuraavasti:
 
@@ -754,9 +822,6 @@ löytyy seuraavasti:
 
 \node at (3.5,-0.5) {$\uparrow$};
 
-%\fill[color=lightgray] (4,0) rectangle (5,1);
-%\fill[color=lightgray] (4,-1) rectangle (7,0);
-
 \draw (0,1) grid (15,2);
 \node at (-1.1,1.5) {\texttt{node}};
 \node at (0.5,1.5) {$1$};
@@ -813,22 +878,20 @@ löytyy seuraavasti:
 \end{tikzpicture}
 \end{center}
 
-Taulukosta \texttt{node} selviää,
-että $\texttt{node}[3]=5$ ja 
-$\texttt{node}[6]=8$.
-Taulukossa \texttt{depth}
-pienin arvo välillä $3 \ldots 6$
-on $\texttt{depth}[4]=2$.
-Niinpä kohdan 4 solmu eli
-solmu 2 on solmujen 5 ja 8
-alin yhteinen esivanhempi.
+Solmu 5 on taulukossa kohdassa 3,
+solmu 8 on taulukossa kohdassa 6
+ja alimman tason solmu välillä $3 \ldots 6$
+on kohdassa 4 oleva solmu 2,
+jonka taso on 2.
+Niinpä solmujen 5 ja 8 alin yhteinen esivanhempi
+on solmu 2.
 
-Välin pienin arvo taulukosta \texttt{depth}
-selviää tehokkaasti ajassa $O(\log n)$
-segmenttipuun avulla.
-Koska taulukko ei muutu koskaan,
-minimin haku on mahdollista toteuttaa
-myös ajassa $O(1)$, mutta tälle on harvoin tarvetta.
+Alimman tason solmu välillä selviää
+ajassa $O(\log n)$, kun taulukon sisältö on
+tallennettu segmenttipuuhun.
+Myös aikavaativuus $O(1)$ on mahdollinen,
+koska taulukko on staattinen, mutta tälle on harvoin tarvetta.
+Kummassakin tapauksessa esikäsittely vie aikaa $O(n \log n)$.
 
 \subsubsection{Solmujen etäisyydet}
 
