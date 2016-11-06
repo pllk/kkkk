@@ -17,16 +17,13 @@ suoraan verkon solmujen asteista,
 ja jos polku on olemassa, sen pystyy myös
 muodostamaan tehokkaasti.
 
-\section{Eulerin polku}
+\section{Käsitteitä}
 
 Eulerin polku (\textit{Eulerian path}) on verkossa oleva
 polku, joka kulkee tarkalleen kerran jokaista kaarta pitkin.
-Eulerin kierros (\textit{Eulerian circuit})
-taas on Eulerin polku, jonka alku- ja loppusolmu on sama.
-
 Esimerkiksi verkossa
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
 \node[draw, circle] (2) at (3,5) {$2$};
 \node[draw, circle] (3) at (5,4) {$3$};
@@ -43,7 +40,7 @@ Esimerkiksi verkossa
 \end{center}
 on Eulerin polku solmusta 2 solmuun 5:
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
 \node[draw, circle] (2) at (3,5) {$2$};
 \node[draw, circle] (3) at (5,4) {$3$};
@@ -66,7 +63,76 @@ on Eulerin polku solmusta 2 solmuun 5:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Olemassaolo}
+Vastaavasti Hamiltonin polku (\textit{Hamiltonian path})
+on verkossa oleva polku,
+joka kulkee tarkalleen kerran jokaisen solmun kautta.
+Yllä olevassa verkossa on esimerkiksi
+Hamiltonin polku solmusta 1 solmuun 3:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,5) {$1$};
+\node[draw, circle] (2) at (3,5) {$2$};
+\node[draw, circle] (3) at (5,4) {$3$};
+\node[draw, circle] (4) at (1,3) {$4$};
+\node[draw, circle] (5) at (3,3) {$5$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (2) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+
+\path[draw=red,thick,->,line width=2pt] (1) -- node[font=\small,label={[red]left:1.}] {} (4);
+\path[draw=red,thick,->,line width=2pt] (4) -- node[font=\small,label={[red]south:2.}] {} (5);
+\path[draw=red,thick,->,line width=2pt] (5) -- node[font=\small,label={[red]left:3.}] {} (2);
+\path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]north:4.}] {} (3);
+\end{tikzpicture}
+\end{center}
+
+Jos Eulerin polun alku- ja loppusolmu on sama,
+kyseessä on Eulerin kierros (\textit{Eulerian circuit}).
+Vastaavasti jos Hamiltonin polun alku- ja loppusolmu on sama,
+kyseessä on Hamiltonin kierros (\textit{Hamiltonian circuit}).
+
+Yllä olevassa verkossa ei ole Eulerin kierrosta,
+mutta siinä on Hamiltonin kierros, jonka alku- ja loppusolmu on solmu 1:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,5) {$1$};
+\node[draw, circle] (2) at (3,5) {$2$};
+\node[draw, circle] (3) at (5,4) {$3$};
+\node[draw, circle] (4) at (1,3) {$4$};
+\node[draw, circle] (5) at (3,3) {$5$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (2) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+
+\path[draw=red,thick,->,line width=2pt] (1) -- node[font=\small,label={[red]north:1.}] {} (2);
+\path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]north:2.}] {} (3);
+\path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]south:3.}] {} (5);
+\path[draw=red,thick,->,line width=2pt] (5) -- node[font=\small,label={[red]south:4.}] {} (4);
+\path[draw=red,thick,->,line width=2pt] (4) -- node[font=\small,label={[red]left:5.}] {} (1);
+\end{tikzpicture}
+\end{center}
+
+Vaikka Eulerin ja Hamiltonin polku ovat samantapaisia käsitteitä,
+niihin liittyy laskennallisesti hyvin erilaisia ongelmia.
+Näemme seuraavaksi, että yksinkertainen verkon rakenteeseen liittyvä
+ehto ratkaisee, onko verkossa Eulerin polkua,
+ja myönteisessä tapauksessa on helppoa etsiä jokin polku verkosta.
+
+Hamiltonin polun tapauksessa tilanne on kuitenkin täysin toinen:
+ei tunneta mitään tehokasta menetelmää, jolla voi selvittää,
+onko verkossa Hamiltonin polkua, vaan kyseessä on NP-täydellinen ongelma.
+Ainoat tunnetut yleiset menetelmät Hamiltonin polun muodostamiseen perustuvat
+raakaan voimaan.
+
+\section{Eulerin polku}
 
 Osoittautuu, että Eulerin polun ja kierroksen olemassaolo riippuu verkon solmujen asteista.
 Solmun aste on sen naapurien määrä eli niiden solmujen määrä,
@@ -78,12 +144,13 @@ kun kaikki kaaret ovat samassa yhtenäisessä
 komponentissa ja jokaisen solmun aste on parillinen.
 Lisäksi jos tasan kahden solmun aste on pariton,
 verkossa ei ole Eulerin kierrosta, mutta siinä
-on kuitenkin Eulerin polku, jonka päätesolmut ovat
+on Eulerin polku, jonka päätesolmut ovat
 paritonasteiset solmut.
 
+\begin{samepage}
 Esimerkiksi verkossa
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
 \node[draw, circle] (2) at (3,5) {$2$};
 \node[draw, circle] (3) at (5,4) {$3$};
@@ -98,6 +165,8 @@ Esimerkiksi verkossa
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
+\end{samepage}
+
 solmujen 1, 3 ja 4 aste on 2 ja solmujen 2 ja 5 aste on 3.
 Tarkalleen kahden solmun aste on pariton,
 joten verkossa on Eulerin polku solmujen 2 ja 5 välillä,
@@ -113,20 +182,69 @@ Suunnatussa verkossa on Eulerin kierros, jos
 kaikki kaaret ovat samassa vahvasti yhtenäisessä
 komponentissa ja joka solmun lähtöaste ja tuloaste on sama.
 Lisäksi verkossa on Eulerin polku,
-jos yhdessä solmussa lähtöaste on yhden suurempi kuin tuloaste,
-toisessa solmussa tuloaste on yhden suurempi kuin lähtöaste
+jos alkusolmussa lähtöaste on yhden suurempi kuin tuloaste,
+loppusolmussa tuloaste on yhden suurempi kuin lähtöaste
 ja muissa solmuissa lähtö- ja tuloasteet ovat samat.
 
-\subsubsection{Muodostus}
+Esimerkiksi verkossa
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,5) {$1$};
+\node[draw, circle] (2) at (3,5) {$2$};
+\node[draw, circle] (3) at (5,4) {$3$};
+\node[draw, circle] (4) at (1,3) {$4$};
+\node[draw, circle] (5) at (3,3) {$5$};
+
+\path[draw,thick,->,>=latex] (1) -- (2);
+\path[draw,thick,->,>=latex] (2) -- (3);
+\path[draw,thick,->,>=latex] (4) -- (1);
+\path[draw,thick,->,>=latex] (3) -- (5);
+\path[draw,thick,->,>=latex] (2) -- (5);
+\path[draw,thick,->,>=latex] (5) -- (4);
+\end{tikzpicture}
+\end{center}
+solmuissa 1, 3 ja 4 sekä lähtöaste että tuloaste on 1.
+Solmussa 2 tuloaste on 1 ja lähtöaste on 2,
+kun taas solmussa 5 tulosate on 2 ja lähtöaste on 1.
+Niinpä verkossa on Eulerin polku solmusta 2 solmuun 5:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,5) {$1$};
+\node[draw, circle] (2) at (3,5) {$2$};
+\node[draw, circle] (3) at (5,4) {$3$};
+\node[draw, circle] (4) at (1,3) {$4$};
+\node[draw, circle] (5) at (3,3) {$5$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (2) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+
+\path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]north:1.}] {} (3);
+\path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]south:2.}] {} (5);
+\path[draw=red,thick,->,line width=2pt] (5) -- node[font=\small,label={[red]south:3.}] {} (4);
+\path[draw=red,thick,->,line width=2pt] (4) -- node[font=\small,label={[red]left:4.}] {} (1);
+\path[draw=red,thick,->,line width=2pt] (1) -- node[font=\small,label={[red]north:5.}] {} (2);
+\path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]left:6.}] {} (5);
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Algoritmi}
 
 Seuraavaksi esitettävä algoritmi muodostaa Eulerin kierroksen
 suuntaamattomassa verkossa.
 Algoritmi olettaa, että kaikki kaaret ovat samassa
 komponentissa ja jokaisen solmun aste on parillinen.
+
 Jos verkossa on kaksi paritonasteista solmua,
 samalla algoritmilla voi myös muodostaa
 Eulerin polun lisäämällä kaaren
 paritonasteisten solmujen välille.
+Tämän jälkeen verkosta voi etsiä Eulerin kierroksen,
+ja lopuksi Eulerin kierroksesta saa Eulerin polun
+poistamalla ylimääräisen kaaren.
 
 Algoritmi muodostaa ensin verkkoon jonkin kierroksen,
 johon kuuluu osa verkon kaarista.
@@ -147,7 +265,7 @@ ennemmin tai myöhemmin polku palaa takaisin solmuun.
 \begin{samepage}
 Tarkastellaan algoritmin toimintaa seuraavassa verkossa:
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
 \node[draw, circle] (2) at (1,3) {$2$};
 \node[draw, circle] (3) at (3,3) {$3$};
@@ -170,11 +288,12 @@ Tarkastellaan algoritmin toimintaa seuraavassa verkossa:
 \end{center}
 \end{samepage}
 
+\begin{samepage}
 Oletetaan, että algoritmi aloittaa
 ensimmäisen kierroksen solmusta 1.
 Siitä syntyy kierros $1 \rightarrow 2 \rightarrow 3 \rightarrow 1$:
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
 \node[draw, circle] (2) at (1,3) {$2$};
 \node[draw, circle] (3) at (3,3) {$3$};
@@ -196,14 +315,15 @@ Siitä syntyy kierros $1 \rightarrow 2 \rightarrow 3 \rightarrow 1$:
 
 \path[draw=red,thick,->,line width=2pt] (1) -- node[font=\small,label={[red]north:1.}] {} (2);
 \path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]north:2.}] {} (3);
-\path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]west:3.}] {} (1);
+\path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]east:3.}] {} (1);
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 Seuraavaksi algoritmi lisää mukaan kierroksen
 $2 \rightarrow 5 \rightarrow 6 \rightarrow 2$:
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
 \node[draw, circle] (2) at (1,3) {$2$};
 \node[draw, circle] (3) at (3,3) {$3$};
@@ -225,17 +345,17 @@ $2 \rightarrow 5 \rightarrow 6 \rightarrow 2$:
 
 \path[draw=red,thick,->,line width=2pt] (1) -- node[font=\small,label={[red]north:1.}] {} (2);
 \path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]west:2.}] {} (5);
-\path[draw=red,thick,->,line width=2pt] (5) -- node[font=\small,label={[red]north:3.}] {} (6);
+\path[draw=red,thick,->,line width=2pt] (5) -- node[font=\small,label={[red]south:3.}] {} (6);
 \path[draw=red,thick,->,line width=2pt] (6) -- node[font=\small,label={[red]north:4.}] {} (2);
 \path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]north:5.}] {} (3);
-\path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]west:6.}] {} (1);
+\path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]east:6.}] {} (1);
 \end{tikzpicture}
 \end{center}
 
 Lopuksi algoritmi lisää mukaan kierroksen
 $6 \rightarrow 3 \rightarrow 4 \rightarrow 7 \rightarrow 6$:
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
 \node[draw, circle] (2) at (1,3) {$2$};
 \node[draw, circle] (3) at (3,3) {$3$};
@@ -257,12 +377,12 @@ $6 \rightarrow 3 \rightarrow 4 \rightarrow 7 \rightarrow 6$:
 
 \path[draw=red,thick,->,line width=2pt] (1) -- node[font=\small,label={[red]north:1.}] {} (2);
 \path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]west:2.}] {} (5);
-\path[draw=red,thick,->,line width=2pt] (5) -- node[font=\small,label={[red]north:3.}] {} (6);
+\path[draw=red,thick,->,line width=2pt] (5) -- node[font=\small,label={[red]south:3.}] {} (6);
 \path[draw=red,thick,->,line width=2pt] (6) -- node[font=\small,label={[red]east:4.}] {} (3);
 \path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]north:5.}] {} (4);
 \path[draw=red,thick,->,line width=2pt] (4) -- node[font=\small,label={[red]east:6.}] {} (7);
-\path[draw=red,thick,->,line width=2pt] (7) -- node[font=\small,label={[red]north:7.}] {} (6);
-\path[draw=red,thick,->,line width=2pt] (6) -- node[font=\small,label={[red]north:8.}] {} (2);
+\path[draw=red,thick,->,line width=2pt] (7) -- node[font=\small,label={[red]south:7.}] {} (6);
+\path[draw=red,thick,->,line width=2pt] (6) -- node[font=\small,label={[red]right:8.}] {} (2);
 \path[draw=red,thick,->,line width=2pt] (2) -- node[font=\small,label={[red]north:9.}] {} (3);
 \path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]east:10.}] {} (1);
 \end{tikzpicture}
@@ -273,7 +393,7 @@ joten Eulerin kierros on valmis.
 
 \subsubsection{Toteutus}
 
-Eulerin kierroksen muodostus on mukavaa toteuttaa
+Edellä kuvattu algoritmi on mukavaa toteuttaa
 niin, että solmujen vieruslistat on tallennettu joukkoina
 
 \begin{lstlisting}
@@ -372,87 +492,3 @@ kussakin kaaressa olevat merkit.
 Aloitussolmussa on $n-1$ merkkiä ja kaarissa
 on $k^n$ merkkiä, joten tuloksena on
 lyhin mahdollinen merkkijono.
-
-\section{Hamiltonin polku}
-
-Hamiltonin polku (\textit{Hamiltonian path})
-on verkossa oleva polku, joka käy tasan kerran
-jokaisessa \textit{solmussa}.
-Hamiltonin kierros (\textit{Hamiltonian cycle})
-taas on Hamiltonin polku,
-jonka alku- ja loppusolmu on sama.
-
-Esimerkiksi verkossa
-\begin{center}
-\begin{tikzpicture}
-\node[draw, circle] (1) at (1,5) {$1$};
-\node[draw, circle] (2) at (3,5) {$2$};
-\node[draw, circle] (3) at (5,4) {$3$};
-\node[draw, circle] (4) at (1,3) {$4$};
-\node[draw, circle] (5) at (3,3) {$5$};
-
-\path[draw,thick,-] (1) -- (2);
-\path[draw,thick,-] (2) -- (3);
-\path[draw,thick,-] (1) -- (4);
-\path[draw,thick,-] (3) -- (5);
-\path[draw,thick,-] (2) -- (5);
-\path[draw,thick,-] (4) -- (5);
-\end{tikzpicture}
-\end{center}
-
-on Hamiltonin kierros
-
-\begin{center}
-\begin{tikzpicture}
-\node[draw, circle] (1) at (1,5) {$1$};
-\node[draw, circle] (2) at (3,5) {$2$};
-\node[draw, circle] (3) at (5,4) {$3$};
-\node[draw, circle] (4) at (1,3) {$4$};
-\node[draw, circle] (5) at (3,3) {$5$};
-
-\path[draw,thick,-] (1) -- (2);
-\path[draw,thick,-] (2) -- (3);
-\path[draw,thick,-] (1) -- (4);
-\path[draw,thick,-] (3) -- (5);
-\path[draw,thick,-] (2) -- (5);
-\path[draw,thick,-] (4) -- (5);
-
-\path[draw=red,thick,->,line width=2pt] (1) -- (4);
-\path[draw=red,thick,->,line width=2pt] (4) -- (5);
-\path[draw=red,thick,->,line width=2pt] (5) -- (3);
-\path[draw=red,thick,->,line width=2pt] (3) -- (2);
-\path[draw=red,thick,->,line width=2pt] (2) -- (1);
-\end{tikzpicture}
-\end{center}
-
-Vaikka Eulerin polku ja Hamiltonin polku 
-muistuttavat paljon toisiaan,
-niihin liittyvät laskennalliset ongelmat
-ovat tyystin erilaisia.
-Toisin kuin Eulerin polun tapauksessa,
-Hamiltonin polun etsimiseen ei tunneta
-mitään tehokasta algoritmia, vaan kyseessä
-on NP-täydellinen ongelma.
-
-Yksinkertaisin tapa etsiä Hamiltonin polkua
-on käyttää peruuttavaa hakua ja käydä läpi
-kaikki vaihtoehdot muodostaa polku.
-Tämä on kuitenkin hidas menetelmä,
-koska pahimmillaan algoritmi voi joutua tarkistamaan
-$O(n!)$ vaihtoehtoa polun muodostamiseen.
-
-Hieman tehokkaampi tapa perustuu dynaamiseen
-ohjelmointiin solmujen osa\-joukoille.
-Ideana on laskea arvoja funktiolle $f(s,x)$:
-onko verkossa polkua, joka käy tasan kerran
-jokaisessa osajoukon $s$ solmussa
-ja päättyy solmuun $x$.
-Tällaisen algoritmin aikavaativuus on $O(2^n n^2)$.
-
-Yleensä ottaen jos verkossa on paljon kaaria,
-siitä on todennäköisesti helppoa löytää
-jokin Hamiltonin polku.
-Tähän liittyvä tulos on Diracin lause,
-jonka mukaan $n$-solmuisessa verkossa
-on varmasti Hamiltonin kierros,
-jos jokaisen solmun aste on vähintään $n/2$.
