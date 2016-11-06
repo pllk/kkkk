@@ -9,6 +9,16 @@ toteuttaa puukyselyjä tehokkaasti.
 Usein esiintyvä idea on muuttaa
 puu jollakin tavalla taulukoksi,
 mikä helpottaa puun käsittelyä.
+% 
+% Tyypillisiä puukyselyitä ovat
+% puun polkuihin ja alipuihin
+% liittyvät kyselyt.
+% Tämä luku esittelee
+% tekniikoita, joiden avulla on mahdollista
+% toteuttaa puukyselyjä tehokkaasti.
+% Usein esiintyvä idea on muuttaa
+% puu jollakin tavalla taulukoksi,
+% mikä helpottaa puun käsittelyä.
 
 \section{Tehokas nouseminen}
 
@@ -16,12 +26,12 @@ mikä helpottaa puun käsittelyä.
 Annettuna on juurellinen puu, jonka solmut on numeroitu
 $1 \ldots n$ ja juurisolmu on 1.
 Tehtäväsi on vastata
-kyselyihin muotoa ''mikä solmu on
-$k$ askelta ylempänä solmua $s$''.
+tehokkaasti kyselyihin muotoa ''mikä solmu on
+$k$ askelta ylempänä solmua $x$''.
 \end{task}
 
-Merkitään $f(s,k)$ solmua,
-joka on $k$ askelta ylempänä solmua $s$.
+Merkitään $f(x,k)$ solmua,
+joka on $k$ askelta ylempänä solmua $x$.
 Esimerkiksi seuraavassa puussa
 $f(2,1)=1$ ja $f(8,2)=4$.
 
@@ -48,275 +58,534 @@ $f(2,1)=1$ ja $f(8,2)=4$.
 \end{tikzpicture}
 \end{center}
 
-Suoraviivainen tapa laskea funktion $f(s,k)$
+Suoraviivainen tapa laskea funktion $f(x,k)$
 arvo on kulkea puussa $k$ askelta ylöspäin
-solmusta $s$ alkaen.
+solmusta $x$ alkaen.
 Tämän aikavaativuus on kuitenkin $O(n)$,
-koska on mahdollista, että puussa on alaspäin
-kulkeva ketju, jossa on $O(n)$ solmua.
+koska on mahdollista, että puussa on
+ketju, jossa on $O(n)$ solmua.
 
-Funktion $f(s,k)$ arvo on kuitenkin mahdollista
-laskea ajassa $O(\log n)$ sopivan esilaskennan avulla.
-Jokaiseen solmuun $s$ lasketaan
-etukäteen kaikki arvot
-$f(s,k)$, joissa $k=1,2,4,8,\ldots$ eli 2:n potenssi.
-Tämän jälkeen mikä tahansa askelmäärä $k$
-muodostuu $O(\log n)$ esilasketusta arvosta.
+Kuten luvussa 16.3.1, funktion $f(x,k)$
+arvo on mahdollista laskea tehokkaasti ajassa
+$O(\log k)$ sopivan esikäsittelyn avulla.
+Ideana on laskea etukäteen kaikki arvot
+$f(x,k)$, joissa $k=1,2,4,8,\ldots$ eli 2:n potenssi.
+Esimerkiksi yllä olevassa puussa muodostuu seuraava taulukko:
 
-Kun $k=1$, arvot $f(s,k)$ on helppo laskea,
-koska riittää mennä yksi kaari ylemmäs.
-Kun taas $k>1$, pätee kaava
-$f(s,k)=f(f(s,k/2),k/2)$, eli $k$ askeleen
-nousun pystyy jakamaan kahdeksi $k/2$
-askeleen nousuksi.
-Esimerkiksi äskeisessä puussa $f(8,1)=7$
-ja $f(7,1)=4$, joten $f(8,2)=f(f(8,1),1)=4$.
+\begin{center}
+\begin{tabular}{r|rrrrrrrrr}
+$x$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+$f(x,1)$ & 0 & 1 & 4 & 1 & 1 & 2 & 4 & 7 \\
+$f(x,2)$ & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 4 \\
+$f(x,4)$ & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+$\cdots$ \\
+\end{tabular}
+\end{center}
 
-Esilasketut arvot vievät tilaa $O(n \log n)$,
-ja niiden avulla pystyy vastaamaan
-mihin tahansa kyselyyn ajassa $O(\log n)$.
+Taulukossa arvo 0 tarkoittaa, että nousemalla $k$
+askelta päätyy puun ulkopuolelle juurisolmun yläpuolelle.
 
-\section{Alipuiden käsittely}
+Esilaskenta vie aikaa $O(n \log n)$, koska jokaisesta
+solmusta voi nousta korkeintaan $n$ askelta ylöspäin.
+Tämän jälkeen minkä tahansa funktion $f(x,k)$ arvon saa
+laskettua ajassa $O(\log k)$ jakamalla nousun 2:n
+potenssin osiin.
 
-\begin{task}
-Annettuna on juurellinen puu, jossa on $n$ solmua.
-Jokaisen solmun väri on sininen tai punainen.
-Tehtäväsi on käsitellä kyselyt muotoa
-''muuta solmun $s$ väriä'' sekä
-''montako sinistä solmua on
-solmun $s$ alipuussa''.
-\end{task}
+\section{Solmutaulukko}
+
+Solmutaulukko sisältää juurellisen puun solmut siinä
+järjestyksessä kuin juuresta alkava syvyyshaku
+vierailee solmuissa.
 
 Esimerkiksi puussa
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\definecolor{lightblue}{rgb}{0.5,0.5,1}
-\definecolor{lightred}{rgb}{1,0.5,0.5}
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (-3,1) {$2$};
+\node[draw, circle] (3) at (-1,1) {$3$};
+\node[draw, circle] (4) at (1,1) {$4$};
+\node[draw, circle] (5) at (3,1) {$5$};
+\node[draw, circle] (6) at (-3,-1) {$6$};
+\node[draw, circle] (7) at (-0.5,-1) {$7$};
+\node[draw, circle] (8) at (1,-1) {$8$};
+\node[draw, circle] (9) at (2.5,-1) {$9$};
 
-\node[draw, circle, fill=lightred] (1) at (0,3) {$1$};
-\node[draw, circle, fill=lightred] (2) at (-2,1) {$2$};
-\node[draw, circle, fill=lightblue] (3) at (2,1) {$4$};
-\node[draw, circle, fill=lightblue] (4) at (0,1) {$3$};
-\node[draw, circle, fill=lightblue] (5) at (-2,-1) {$5$};
-\node[draw, circle, fill=lightblue] (6) at (3,-1) {$7$};
-\node[draw, circle, fill=lightred] (7) at (1,-1) {$6$};
 \path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
 \path[draw,thick,-] (1) -- (4);
-\path[draw,thick,-] (2) -- (5);
-\path[draw,thick,-] (3) -- (6);
-\path[draw,thick,-] (3) -- (7);
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (6);
+\path[draw,thick,-] (4) -- (7);
+\path[draw,thick,-] (4) -- (8);
+\path[draw,thick,-] (4) -- (9);
 \end{tikzpicture}
 \end{center}
-solmun 1 alipuussa on 4 sinistä solmua,
-solmun 2 alipuussa on 1 sininen solmu
-ja solmun 4 alipuussa on 2 sinistä solmua.
 
-Alipuiden käsittelyssä kätevä tekniikka on
-järjestää solmut sen mukaan,
-missä järjestyksessä puun juuresta lähtevä
-syvyyshaku vierailee solmuissa.
-Tällöin jokaiseen alipuuhun
-kuuluvat solmut ovat vierekkäin järjestyksessä.
-Esimerkkipuussa syvyyshaku etenee
+syvyyshaku etenee
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\definecolor{lightblue}{rgb}{0.5,0.5,1}
-\definecolor{lightred}{rgb}{1,0.5,0.5}
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (-3,1) {$2$};
+\node[draw, circle] (3) at (-1,1) {$3$};
+\node[draw, circle] (4) at (1,1) {$4$};
+\node[draw, circle] (5) at (3,1) {$5$};
+\node[draw, circle] (6) at (-3,-1) {$6$};
+\node[draw, circle] (7) at (-0.5,-1) {$7$};
+\node[draw, circle] (8) at (1,-1) {$8$};
+\node[draw, circle] (9) at (2.5,-1) {$9$};
 
-\node[draw, circle, fill=lightred] (1) at (0,3) {$1$};
-\node[draw, circle, fill=lightred] (2) at (-2,1) {$2$};
-\node[draw, circle, fill=lightblue] (3) at (2,1) {$4$};
-\node[draw, circle, fill=lightblue] (4) at (0,1) {$3$};
-\node[draw, circle, fill=lightblue] (5) at (-2,-1) {$5$};
-\node[draw, circle, fill=lightblue] (6) at (3,-1) {$7$};
-\node[draw, circle, fill=lightred] (7) at (1,-1) {$6$};
 \path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
 \path[draw,thick,-] (1) -- (4);
-\path[draw,thick,-] (2) -- (5);
-\path[draw,thick,-] (3) -- (6);
-\path[draw,thick,-] (3) -- (7);
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (6);
+\path[draw,thick,-] (4) -- (7);
+\path[draw,thick,-] (4) -- (8);
+\path[draw,thick,-] (4) -- (9);
 
-\path[draw=red,thick,->,line width=2pt] (1) edge [bend right=15] (3);
-\path[draw=red,thick,->,line width=2pt] (3) edge [bend right=15] (6);
-\path[draw=red,thick,->,line width=2pt] (6) edge [bend right=15] (3);
-\path[draw=red,thick,->,line width=2pt] (3) edge [bend right=15] (7);
-\path[draw=red,thick,->,line width=2pt] (7) edge [bend right=15] (3);
-\path[draw=red,thick,->,line width=2pt] (3) edge [bend right=15] (1);
-\path[draw=red,thick,->,line width=2pt] (1) edge [bend right=15] (4);
-\path[draw=red,thick,->,line width=2pt] (4) edge [bend right=15] (1);
-\path[draw=red,thick,->,line width=2pt] (1) edge [bend right=15] (2);
-\path[draw=red,thick,->,line width=2pt] (2) edge [bend right=15] (5);
-\path[draw=red,thick,->,line width=2pt] (5) edge [bend right=15] (2);
-\path[draw=red,thick,->,line width=2pt] (2) edge [bend right=15] (1);
+\path[draw=red,thick,->,line width=2pt] (1) -- (2);
+\path[draw=red,thick,->,line width=2pt] (1) -- (3);
+\path[draw=red,thick,->,line width=2pt] (1) -- (4);
+\path[draw=red,thick,->,line width=2pt] (1) -- (5);
+\path[draw=red,thick,->,line width=2pt] (2) -- (6);
+\path[draw=red,thick,->,line width=2pt] (4) -- (7);
+\path[draw=red,thick,->,line width=2pt] (4) -- (8);
+\path[draw=red,thick,->,line width=2pt] (4) -- (9);
+
+\node[color=red] at (0,3+0.65) {1};
+\node[color=red] at (-3-0.65,1) {2};
+\node[color=red] at (-1-0.65,1) {4};
+\node[color=red] at (1+0.65,1) {5};
+\node[color=red] at (3+0.65,1) {9};
+\node[color=red] at (-3,-1-0.65) {3};
+\node[color=red] at (-0.5,-1-0.65) {6};
+\node[color=red] at (1,-1-0.65) {7};
+\node[color=red] at (2.5,-1-0.65) {8};
 \end{tikzpicture}
 \end{center}
-ja tuottaa järjestyksen
+
+ja solmutaulukoksi tulee:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,0) grid (9,1);
+
+\node at (0.5,0.5) {$1$};
+\node at (1.5,0.5) {$2$};
+\node at (2.5,0.5) {$6$};
+\node at (3.5,0.5) {$3$};
+\node at (4.5,0.5) {$4$};
+\node at (5.5,0.5) {$7$};
+\node at (6.5,0.5) {$8$};
+\node at (7.5,0.5) {$9$};
+\node at (8.5,0.5) {$5$};
+
+\footnotesize
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\node at (8.5,1.4) {$9$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Alipuiden käsittely}
+
+Solmutaulukossa jokaisen alipuun kaikki solmut ovat peräkkäin
+niin, että ensin on alipuun juurisolmu ja sitten
+kaikki muut alipuun solmut.
+Esimerkiksi äskeisessä taulukossa solmun $4$
+alipuuta vastaa seuraava taulukon osa:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\fill[color=lightgray] (4,0) rectangle (8,1);
+\draw (0,0) grid (9,1);
+
+\node at (0.5,0.5) {$1$};
+\node at (1.5,0.5) {$2$};
+\node at (2.5,0.5) {$6$};
+\node at (3.5,0.5) {$3$};
+\node at (4.5,0.5) {$4$};
+\node at (5.5,0.5) {$7$};
+\node at (6.5,0.5) {$8$};
+\node at (7.5,0.5) {$9$};
+\node at (8.5,0.5) {$5$};
+
+\footnotesize
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\node at (8.5,1.4) {$9$};
+\end{tikzpicture}
+\end{center}
+
+Tämän ansiosta solmutaulukon avulla voi käsitellä tehokkaasti
+puun alipuihin liittyviä kyselyitä.
+Voimme ratkaista esimerkiksi seuraavan tehtävän:
+
+\begin{task}
+Annettuna on juurellinen puu, jossa on $n$ solmua
+ja jokaisella solmulla on tietty arvo.
+Tehtäväsi on käsitellä kyselyt muotoa
+''muuta solmun $x$ arvoa'' sekä
+''laske arvojen summa solmun $x$ alipuussa''.
+\end{task}
+
+Tarkastellaan seuraavaa puuta,
+jossa siniset luvut ovat solmujen arvoja.
+Esimerkiksi solmun $4$ alipuun arvojen summa on $3+4+3+1=11$.
+
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\definecolor{lightblue}{rgb}{0.5,0.5,1}
-\definecolor{lightred}{rgb}{1,0.5,0.5}
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (-3,1) {$2$};
+\node[draw, circle] (3) at (-1,1) {$3$};
+\node[draw, circle] (4) at (1,1) {$4$};
+\node[draw, circle] (5) at (3,1) {$5$};
+\node[draw, circle] (6) at (-3,-1) {$6$};
+\node[draw, circle] (7) at (-0.5,-1) {$7$};
+\node[draw, circle] (8) at (1,-1) {$8$};
+\node[draw, circle] (9) at (2.5,-1) {$9$};
 
-\node[draw, circle, fill=lightred] (1) at (0,0) {$1$};
-\node[draw, circle, fill=lightred] (2) at (1.5,0) {$2$};
-\node[draw, circle, fill=lightblue] (4) at (6,0) {$4$};
-\node[draw, circle, fill=lightblue] (3) at (4.5,0) {$3$};
-\node[draw, circle, fill=lightblue] (5) at (3,0) {$5$};
-\node[draw, circle, fill=lightblue] (7) at (9,0) {$7$};
-\node[draw, circle, fill=lightred] (6) at (7.5,0) {$6$};
-\path[draw,thick,->] (1) -- (2);
-\path[draw,thick,->] (2) -- (5);
-\path[draw,thick,->] (5) -- (3);
-\path[draw,thick,->] (3) -- (4);
-\path[draw,thick,->] (4) -- (6);
-\path[draw,thick,->] (6) -- (7);
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (6);
+\path[draw,thick,-] (4) -- (7);
+\path[draw,thick,-] (4) -- (8);
+\path[draw,thick,-] (4) -- (9);
+
+\node[color=blue] at (0,3+0.65) {2};
+\node[color=blue] at (-3-0.65,1) {3};
+\node[color=blue] at (-1-0.65,1) {5};
+\node[color=blue] at (1+0.65,1) {3};
+\node[color=blue] at (3+0.65,1) {1};
+\node[color=blue] at (-3,-1-0.65) {4};
+\node[color=blue] at (-0.5,-1-0.65) {4};
+\node[color=blue] at (1,-1-0.65) {3};
+\node[color=blue] at (2.5,-1-0.65) {1};
 \end{tikzpicture}
 \end{center}
 
-Ideana on tallentaa tietoa solmuista taulukoihin
-syvyyshaun järjestyksessä.
-Tässä tehtävässä tarvittavat taulukot ovat
-\texttt{node}, \texttt{size} ja \texttt{color}.
-Taulukossa \texttt{node} on solmujen tunnukset,
-taulukossa \texttt{size} on alipuiden solmujen määrät
-ja taulukossa \texttt{color} on solmujen värit
-(0 = punainen, 1 = sininen).
-
-Esimerkkipuussa taulukot ovat seuraavat:
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-\draw (0,1) grid (7,2);
-\node at (-1.1,1.5) {\texttt{node}};
-\node at (0.5,1.5) {$1$};
-\node at (1.5,1.5) {$2$};
-\node at (2.5,1.5) {$5$};
-\node at (3.5,1.5) {$3$};
-\node at (4.5,1.5) {$4$};
-\node at (5.5,1.5) {$6$};
-\node at (6.5,1.5) {$7$};
-
-\draw (0,0) grid (7,1);
-\node at (-1.1,0.5) {\texttt{size}};
-\node at (0.5,0.5) {$7$};
-\node at (1.5,0.5) {$2$};
-\node at (2.5,0.5) {$1$};
-\node at (3.5,0.5) {$1$};
-\node at (4.5,0.5) {$3$};
-\node at (5.5,0.5) {$1$};
-\node at (6.5,0.5) {$1$};
-
-\draw (0,-1) grid (7,0);
-\node at (-1,-0.5) {\texttt{color}};
-\node at (0.5,-0.5) {$0$};
-\node at (1.5,-0.5) {$0$};
-\node at (2.5,-0.5) {$1$};
-\node at (3.5,-0.5) {$1$};
-\node at (4.5,-0.5) {$1$};
-\node at (5.5,-0.5) {$0$};
-\node at (6.5,-0.5) {$1$};
-
-\footnotesize
-\node at (0.5,2.5) {$1$};
-\node at (1.5,2.5) {$2$};
-\node at (2.5,2.5) {$3$};
-\node at (3.5,2.5) {$4$};
-\node at (4.5,2.5) {$5$};
-\node at (5.5,2.5) {$6$};
-\node at (6.5,2.5) {$7$};
-\end{tikzpicture}
-\end{center}
-
-Taulukoiden avulla voi laskea
-sinisten solmujen määrän minkä tahansa solmun $s$ alipuussa.
-Ideana on etsiä taulukosta \texttt{node}
-kohta $x$, jossa $\texttt{node}[x]=s$.
-Tämän jälkeen $\texttt{size}[x]$ kertoo solmun $s$
-alipuun solmujen määrän ja alipuun solmujen
-värit ovat $\texttt{color}[x]$,$\texttt{color}[x+1]$,$\texttt{color}[x+2]$, jne.
-Alipuun solmut ovat aina peräkkäin taulukoissa,
-koska solmut ovat syvyyshaun järjestyksessä.
-
-Lasketaan esimerkkinä sinisten solmujen määrä solmun 4
-alipuussa:
+Ideana on luoda solmutaulukko, joka sisältää jokaisesta solmusta
+kolme tietoa: (1) solmun tunnus, (2) alipuun koko ja (3) solmun arvo.
+Esimerkiksi yllä olevasta puusta syntyy seuraava taulukko:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
-\fill[color=lightgray] (4,1) rectangle (5,2);
-\fill[color=lightgray] (4,0) rectangle (5,1);
-\fill[color=lightgray] (4,-1) rectangle (7,0);
+\draw (0,1) grid (9,-2);
 
-\draw (0,1) grid (7,2);
-\node at (-1.1,1.5) {\texttt{node}};
-\node at (0.5,1.5) {$1$};
-\node at (1.5,1.5) {$2$};
-\node at (2.5,1.5) {$5$};
-\node at (3.5,1.5) {$3$};
-\node at (4.5,1.5) {$4$};
-\node at (5.5,1.5) {$6$};
-\node at (6.5,1.5) {$7$};
-
-\draw (0,0) grid (7,1);
-\node at (-1.1,0.5) {\texttt{size}};
-\node at (0.5,0.5) {$7$};
+\node at (0.5,0.5) {$1$};
 \node at (1.5,0.5) {$2$};
-\node at (2.5,0.5) {$1$};
-\node at (3.5,0.5) {$1$};
-\node at (4.5,0.5) {$3$};
-\node at (5.5,0.5) {$1$};
-\node at (6.5,0.5) {$1$};
+\node at (2.5,0.5) {$6$};
+\node at (3.5,0.5) {$3$};
+\node at (4.5,0.5) {$4$};
+\node at (5.5,0.5) {$7$};
+\node at (6.5,0.5) {$8$};
+\node at (7.5,0.5) {$9$};
+\node at (8.5,0.5) {$5$};
 
-\draw (0,-1) grid (7,0);
-\node at (-1,-0.5) {\texttt{color}};
-\node at (0.5,-0.5) {$0$};
-\node at (1.5,-0.5) {$0$};
+\node at (0.5,-0.5) {$9$};
+\node at (1.5,-0.5) {$2$};
 \node at (2.5,-0.5) {$1$};
 \node at (3.5,-0.5) {$1$};
-\node at (4.5,-0.5) {$1$};
-\node at (5.5,-0.5) {$0$};
+\node at (4.5,-0.5) {$4$};
+\node at (5.5,-0.5) {$1$};
 \node at (6.5,-0.5) {$1$};
+\node at (7.5,-0.5) {$1$};
+\node at (8.5,-0.5) {$1$};
+
+\node at (0.5,-1.5) {$2$};
+\node at (1.5,-1.5) {$3$};
+\node at (2.5,-1.5) {$4$};
+\node at (3.5,-1.5) {$5$};
+\node at (4.5,-1.5) {$3$};
+\node at (5.5,-1.5) {$4$};
+\node at (6.5,-1.5) {$3$};
+\node at (7.5,-1.5) {$1$};
+\node at (8.5,-1.5) {$1$};
 
 \footnotesize
-\node at (0.5,2.5) {$1$};
-\node at (1.5,2.5) {$2$};
-\node at (2.5,2.5) {$3$};
-\node at (3.5,2.5) {$4$};
-\node at (4.5,2.5) {$5$};
-\node at (5.5,2.5) {$6$};
-\node at (6.5,2.5) {$7$};
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\node at (8.5,1.4) {$9$};
 \end{tikzpicture}
 \end{center}
 
-Taulukosta \texttt{node} selviää,
-että solmu 4 on kohdassa 5 syvyyshaun
-järjestyksessä.
-Sitten taulukko \texttt{size} kertoo,
-että solmun alipuussa on 3 solmua,
-ja lopulta taulukko \texttt{color}
-sisältää solmujen värit.
-Sinisten solmujen määrä solmun 4
-alipuussa on taulukon \texttt{color}
-välin summa eli $1+0+1=2$.
+Tästä taulukosta alipuun solmujen arvojen summa selviää
+lukemalla ensin alipuun koko ja sitten sitä vastaavat solmut.
+Esimerkiksi solmun $4$ alipuun arvojen summa selviää näin:
 
-Solmun sijainti taulukossa \texttt{node}
-selviää ajassa $O(1)$ tallentamalla
-sijainnit käänteiseen taulukkoon.
-Taulukon \texttt{color} muuttaminen ja
-välin summan laskenta onnistuvat ajassa $O(\log n)$
-tekemällä segmenttipuu, jossa on taulukon sisältö.
-Niinpä molemmat kyselyt on mahdollista toteuttaa
-ajassa $O(\log n)$.
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\fill[color=lightgray] (4,1) rectangle (5,0);
+\fill[color=lightgray] (4,0) rectangle (5,-1);
+\fill[color=lightgray] (4,-1) rectangle (8,-2);
+\draw (0,1) grid (9,-2);
+
+\node at (0.5,0.5) {$1$};
+\node at (1.5,0.5) {$2$};
+\node at (2.5,0.5) {$6$};
+\node at (3.5,0.5) {$3$};
+\node at (4.5,0.5) {$4$};
+\node at (5.5,0.5) {$7$};
+\node at (6.5,0.5) {$8$};
+\node at (7.5,0.5) {$9$};
+\node at (8.5,0.5) {$5$};
+
+\node at (0.5,-0.5) {$9$};
+\node at (1.5,-0.5) {$2$};
+\node at (2.5,-0.5) {$1$};
+\node at (3.5,-0.5) {$1$};
+\node at (4.5,-0.5) {$4$};
+\node at (5.5,-0.5) {$1$};
+\node at (6.5,-0.5) {$1$};
+\node at (7.5,-0.5) {$1$};
+\node at (8.5,-0.5) {$1$};
+
+\node at (0.5,-1.5) {$2$};
+\node at (1.5,-1.5) {$3$};
+\node at (2.5,-1.5) {$4$};
+\node at (3.5,-1.5) {$5$};
+\node at (4.5,-1.5) {$3$};
+\node at (5.5,-1.5) {$4$};
+\node at (6.5,-1.5) {$3$};
+\node at (7.5,-1.5) {$1$};
+\node at (8.5,-1.5) {$1$};
+
+\footnotesize
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\node at (8.5,1.4) {$9$};
+\end{tikzpicture}
+\end{center}
+
+Viimeinen tarvittava askel on tallentaa solmujen arvot
+binääri-indeksi\-puuhun tai segmenttipuuhun.
+Tällöin sekä alipuun arvojen summan laskeminen
+että solmun arvon muuttaminen onnistuvat ajassa $O(\log n)$,
+eli pystymme vastaamaan kyselyihin tehokkaasti.
+
+\subsection{Polkujen käsittely}
+
+Solmutaulukon avulla voi myös käsitellä tehokkaasti
+polkuja, jotka kulkevat juuresta tiettyyn solmuun puussa.
+Näin on seuraavassa tehtävässä:
+
+\begin{task}
+Annettuna on juurellinen puu, jossa on $n$ solmua
+ja jokaisella solmulla on tietty arvo.
+Tehtäväsi on käsitellä kyselyt muotoa
+''muuta solmun $x$ arvoa'' sekä
+''laske arvojen summa juuresta solmuun $x$''.
+\end{task}
+
+Esimerkiksi seuraavassa puussa polulla solmusta 1
+solmuun 8 arvojen summa on $4+5+3=12$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,3) {$1$};
+\node[draw, circle] (2) at (-3,1) {$2$};
+\node[draw, circle] (3) at (-1,1) {$3$};
+\node[draw, circle] (4) at (1,1) {$4$};
+\node[draw, circle] (5) at (3,1) {$5$};
+\node[draw, circle] (6) at (-3,-1) {$6$};
+\node[draw, circle] (7) at (-0.5,-1) {$7$};
+\node[draw, circle] (8) at (1,-1) {$8$};
+\node[draw, circle] (9) at (2.5,-1) {$9$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (6);
+\path[draw,thick,-] (4) -- (7);
+\path[draw,thick,-] (4) -- (8);
+\path[draw,thick,-] (4) -- (9);
+
+\node[color=blue] at (0,3+0.65) {4};
+\node[color=blue] at (-3-0.65,1) {5};
+\node[color=blue] at (-1-0.65,1) {3};
+\node[color=blue] at (1+0.65,1) {5};
+\node[color=blue] at (3+0.65,1) {2};
+\node[color=blue] at (-3,-1-0.65) {3};
+\node[color=blue] at (-0.5,-1-0.65) {5};
+\node[color=blue] at (1,-1-0.65) {3};
+\node[color=blue] at (2.5,-1-0.65) {1};
+\end{tikzpicture}
+\end{center}
+
+Ideana on muodostaa samanlaiset taulukot kuin
+alipuiden käsittelyssä mutta tallentaa
+solmujen arvot erikoisella tavalla:
+kun taulukon kohdassa $k$ olevan solmun arvo on $a$,
+kohdan $k$ arvoon lisätään $a$ ja kohdan $k+c$ arvosta
+vähennetään $a$, missä $c$ on alipuun koko.
+
+Esimerkiksi yllä olevaa puuta vastaa seuraava taulukko:
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,1) grid (10,-2);
+
+\node at (0.5,0.5) {$1$};
+\node at (1.5,0.5) {$2$};
+\node at (2.5,0.5) {$6$};
+\node at (3.5,0.5) {$3$};
+\node at (4.5,0.5) {$4$};
+\node at (5.5,0.5) {$7$};
+\node at (6.5,0.5) {$8$};
+\node at (7.5,0.5) {$9$};
+\node at (8.5,0.5) {$5$};
+\node at (9.5,0.5) {--};
+
+\node at (0.5,-0.5) {$9$};
+\node at (1.5,-0.5) {$2$};
+\node at (2.5,-0.5) {$1$};
+\node at (3.5,-0.5) {$1$};
+\node at (4.5,-0.5) {$4$};
+\node at (5.5,-0.5) {$1$};
+\node at (6.5,-0.5) {$1$};
+\node at (7.5,-0.5) {$1$};
+\node at (8.5,-0.5) {$1$};
+\node at (9.5,-0.5) {--};
+
+\node at (0.5,-1.5) {$4$};
+\node at (1.5,-1.5) {$5$};
+\node at (2.5,-1.5) {$3$};
+\node at (3.5,-1.5) {$-5$};
+\node at (4.5,-1.5) {$2$};
+\node at (5.5,-1.5) {$5$};
+\node at (6.5,-1.5) {$-2$};
+\node at (7.5,-1.5) {$-2$};
+\node at (8.5,-1.5) {$-4$};
+\node at (9.5,-1.5) {$-4$};
+
+\footnotesize
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\node at (8.5,1.4) {$9$};
+\node at (9.5,1.4) {$10$};
+\end{tikzpicture}
+\end{center}
+
+Esimerkiksi solmun $3$ arvona on $-5$, koska
+se on solmujen $2$ ja $6$ alipuiden jälkeinen solmu,
+mistä tulee arvoa $-5-3$, ja sen oma arvo on $3$.
+Yhteensä solmun 3 arvo on siis $-5-3+3=-5$.
+Huomaa, että taulukossa on ylimääräinen kohta 10,
+johon on tallennettu vain juuren arvon vastaluku.
+
+Nyt solmujen arvojen summa polulla juuresta alkaen
+selviää laskemalla kaikkien taulukon arvojen summa
+taulukon alusta solmuun asti.
+Esimerkiksi summa solmusta $1$ solmuun $8$ selviää näin:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\fill[color=lightgray] (6,1) rectangle (7,0);
+\fill[color=lightgray] (0,-1) rectangle (7,-2);
+\draw (0,1) grid (10,-2);
+
+\node at (0.5,0.5) {$1$};
+\node at (1.5,0.5) {$2$};
+\node at (2.5,0.5) {$6$};
+\node at (3.5,0.5) {$3$};
+\node at (4.5,0.5) {$4$};
+\node at (5.5,0.5) {$7$};
+\node at (6.5,0.5) {$8$};
+\node at (7.5,0.5) {$9$};
+\node at (8.5,0.5) {$5$};
+\node at (9.5,0.5) {--};
+
+\node at (0.5,-0.5) {$9$};
+\node at (1.5,-0.5) {$2$};
+\node at (2.5,-0.5) {$1$};
+\node at (3.5,-0.5) {$1$};
+\node at (4.5,-0.5) {$4$};
+\node at (5.5,-0.5) {$1$};
+\node at (6.5,-0.5) {$1$};
+\node at (7.5,-0.5) {$1$};
+\node at (8.5,-0.5) {$1$};
+\node at (9.5,-0.5) {--};
+
+\node at (0.5,-1.5) {$4$};
+\node at (1.5,-1.5) {$5$};
+\node at (2.5,-1.5) {$3$};
+\node at (3.5,-1.5) {$-5$};
+\node at (4.5,-1.5) {$2$};
+\node at (5.5,-1.5) {$5$};
+\node at (6.5,-1.5) {$-2$};
+\node at (7.5,-1.5) {$-2$};
+\node at (8.5,-1.5) {$-4$};
+\node at (9.5,-1.5) {$-4$};
+
+\footnotesize
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\node at (8.5,1.4) {$9$};
+\node at (9.5,1.4) {$10$};
+\end{tikzpicture}
+\end{center}
+
+Summaksi tulee $4+5+3-5+2+5-2=12$, mikä vastaa
+polun summaa $4+5+3=12$.
+Tämä laskentatapa toimii, koska jokaisen solmun arvo
+lisätään summaan, kun se tulee vastaan syvyyshaussa,
+ja vähennetään summasta, kun sen käsittely päättyy.
+
+Alipuiden käsittelyä vastaavasti voimme tallentaa
+arvot binääri-indeksi\-puuhun tai segmenttipuuhun ja
+sekä polun summan laskeminen että arvon muuttaminen
+onnistuvat ajassa $O(\log n)$.
 
 \section{Alin yhteinen esivanhempi}
 
-Juurellisessa puussa kahden solmun $a$ ja $b$
+Solmujen $a$ ja $b$
 alin yhteinen esivanhempi (\textit{lowest common ancestor})
 on mahdollisimman alhaalla puussa oleva solmu,
-jonka alipuussa ovat molemmat solmut $a$ ja $b$.
+jonka alipuuhun kuuluvat molemmat solmut $a$ ja $b$.
 Luonteva tehtävä on:
 
 \begin{task}
-Annettuna on juurellinen puu, jossa on $n$ solmua.
+Annettuna on puu, jossa on $n$ solmua.
 Tehtäväsi on vastata kyselyihin
 ''mikä on solmujen $a$ ja $b$ alin yhteinen esivanhempi''.
 \end{task}
