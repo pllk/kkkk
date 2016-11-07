@@ -172,7 +172,7 @@ on löytynyt väli, jonka lukujen summa on $x$.
 Algoritmin toteutus näyttää seuraavalta:
 
 \begin{lstlisting}
-int s = 0; b = 0;
+int s = 0, b = 0;
 for (int a = 1; a <= n; a++) {
     while (b<n && s+t[b+1] <= x) {
         b++;
@@ -181,6 +181,7 @@ for (int a = 1; a <= n; a++) {
     if (s == x) {
         // ratkaisu löytyi
     }
+    s -= t[a];
 }
 \end{lstlisting}
 
