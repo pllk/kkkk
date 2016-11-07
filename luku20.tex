@@ -375,7 +375,7 @@ Nyt virtausta ei pysty enää kasvattamaan,
 koska verkossa ei ole mitään polkua
 alkusolmusta loppusolmuun,
 jossa jokaisen kaaren paino olisi positiivinen.
-Verkon maksimivirtaus on siis 7.
+Niinpä algoritmi pysähtyy ja verkon maksimivirtaus on 7.
 
 \subsubsection{Polun valinta}
 
@@ -388,8 +388,7 @@ lisää virtausta vain 1:llä,
 jolloin algoritmi voi toimia hitaasti.
 
 Polun valintaan on kaksi helposti toteutettavaa tapaa,
-jotka varmistavat, että virtaus kasvaa nopeasti
-ja algoritmi toimii nopeasti:
+jotka varmistavat, että virtaus kasvaa nopeasti:
 
 \textit{Edmonds-Karpin algoritmi} on
 Ford-Fulkersonin algoritmin toteutus,
@@ -500,119 +499,208 @@ joka on tarkalleen yhtä suuri kuin verkossa oleva leikkaus.
 Niinpä tämän virtauksen on oltava maksimivirtaus ja
 vastaavasti leikkauksen on oltava minimileikkaus.
 
+\newpage 
+\section{Kaksijakoisen verkon ongelmia}
 
-\section{Sovelluksia}
-
-Tavallinen tapa hyödyntää virtauslaskentaa on
-muuttaa verkko-ongelma sopivalla tavalla
-maksimivirtauksen laskemiseksi.
-Seuraavassa on joukko esimerkkejä tällaisista
-ongelmista.
+Kaksijakoisen verkon solmut voidaan jakaa
+kahteen joukkoon niin, että kaikki verkon kaaret
+kulkevat joukosta toiseen.
+Tietyt verkko-ongelmat ovat helpompia ratkaista,
+jos verkko on kaksijakoinen.
+Seuraavaksi näemme, miten virtauslaskentaa voi
+hyödyntää ongelmien ratkaisemisessa.
 
 \subsection{Maksimiparitus}
 
+Verkon paritus (\textit{matching}) muodostuu
+yhdestä tai usemmasta solmuparista,
+joissa kunkin parin solmujen välillä on kaari ja
+sama solmu ei esiinny useassa parissa.
 Maksimiparitus (\textit{maximum matching})
-on verkko-ongelma, jossa tehtävänä on valita
-verkosta mahdollisimman suuri joukko kaaria niin,
-että mikään solmu ei esiinny monen kaaren
-päätesolmuna.
+on puolestaan paritus, jossa parien määrä on mahdollisimman suuri.
 
-Maksimiparituksen etsiminen yleisessä verkossa
-on vaikea ongelma, mutta kaksijakoisessa verkossa
-se onnistuu maksimivirtauksen avulla.
-Kaksijakoisessa verkossa solmut jakautuvat
-kahteen ryhmään, joiden välillä kulkee kaaria.
+Maksimiparituksen etsimiseen yleisessä
+verkossa on olemassa polynominen algoritmi,
+mutta se on hyvin monimutkainen.
+Sen sijaan kaksijakoisessa verkossa
+maksimiparitus on helppoa löytää
+virtauslaskennan avulla.
+Osoittautuu, että maksimiparituksen laskeminen vastaa
+maksimivirtauksen laskemista.
 
-Tilanne voi näyttää esimerkiksi seuraavalta:
-\\
-
-\begin{center}
-\begin{tikzpicture}[scale=0.60]
-\node[draw, circle] (a) at (3,4.5) {1};
-\node[draw, circle] (m) at (3,3) {2};
-\node[draw, circle] (u) at (3,1.5) {3};
-\node[draw, circle] (l) at (3,0) {4};
-\node[draw, circle] (1) at (7,3.75) {5};
-\node[draw, circle] (2) at (7,2.25) {6};
-\node[draw, circle] (3) at (7,0.75) {7};
-
-\path[draw,thick,-] (a) -- (1);
-\path[draw,thick,-] (a) -- (3);
-\path[draw,thick,-] (m) -- (1);
-\path[draw,thick,-] (m) -- (2);
-\path[draw,thick,-] (u) -- (1);
-\path[draw,thick,-] (l) -- (2);
-\end{tikzpicture}
-\end{center}
-
-Tämän verkon maksimiparituksessa on 3 paria:
-\\
+Tarkastellaan esimerkkinä seuraavaa verkkoa:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
-\node[draw, circle] (a) at (3,4.5) {1};
-\node[draw, circle] (m) at (3,3) {2};
-\node[draw, circle] (u) at (3,1.5) {3};
-\node[draw, circle] (l) at (3,0) {4};
-\node[draw, circle] (1) at (7,3.75) {5};
-\node[draw, circle] (2) at (7,2.25) {6};
-\node[draw, circle] (3) at (7,0.75) {7};
+\node[draw, circle] (1) at (2,4.5) {1};
+\node[draw, circle] (2) at (2,3) {2};
+\node[draw, circle] (3) at (2,1.5) {3};
+\node[draw, circle] (4) at (2,0) {4};
+\node[draw, circle] (5) at (8,4.5) {5};
+\node[draw, circle] (6) at (8,3) {6};
+\node[draw, circle] (7) at (8,1.5) {7};
+\node[draw, circle] (8) at (8,0) {8};
 
-\path[draw,thick,-] (a) -- (1);
-\path[draw,thick,-] (a) -- (3);
-\path[draw,thick,-] (m) -- (1);
-\path[draw,thick,-] (m) -- (2);
-\path[draw,thick,-] (u) -- (1);
-\path[draw,thick,-] (l) -- (2);
-
-\path[draw=red,thick,-,line width=2pt] (a) -- (3);
-\path[draw=red,thick,-,line width=2pt] (m) -- (1);
-\path[draw=red,thick,-,line width=2pt] (l) -- (2);
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (7);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (8);
+\path[draw,thick,-] (4) -- (7);
 \end{tikzpicture}
 \end{center}
 
-Maksimiparituksen saa muutettua maksimivirtaukseksi
-lisäämällä verkkoon alkusolmun ja loppusolmun.
-Alkusolmusta pääsee ensimmäisen ryhmän solmuihin
-ja loppusolmuun pääsee toisen ryhmän solmuista.
+Tässä verkossa maksimiparituksen koko on 3:
+\begin{center}
+\begin{tikzpicture}[scale=0.60]
+\node[draw, circle] (1) at (2,4.5) {1};
+\node[draw, circle] (2) at (2,3) {2};
+\node[draw, circle] (3) at (2,1.5) {3};
+\node[draw, circle] (4) at (2,0) {4};
+\node[draw, circle] (5) at (8,4.5) {5};
+\node[draw, circle] (6) at (8,3) {6};
+\node[draw, circle] (7) at (8,1.5) {7};
+\node[draw, circle] (8) at (8,0) {8};
+
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (7);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (8);
+\path[draw,thick,-] (4) -- (7);
+
+\path[draw=red,thick,-,line width=2pt] (1) -- (5);
+\path[draw=red,thick,-,line width=2pt] (2) -- (7);
+\path[draw=red,thick,-,line width=2pt] (3) -- (6);
+\end{tikzpicture}
+\end{center}
+
+Ideana on lisätä verkkoon alkusolmu,
+josta on kaari kaikkiin vasemman ryhmän solmuihin,
+sekä loppusolmu,
+johon on kaari kaikista oikean ryhmän solmuista.
 Lisäksi ryhmien väliset kaaret muutetaan
-johtamaan ensimmäisestä ryhmästä toiseen.
+johtamaan vasemmasta ryhmästä oikeaan.
+Jokaisen kaaren kapasiteettina on 1.
 
 Esimerkissä tuloksena on seuraava verkko:
-\\
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
-\node[draw, circle] (a) at (3,4.5) {1};
-\node[draw, circle] (m) at (3,3) {2};
-\node[draw, circle] (u) at (3,1.5) {3};
-\node[draw, circle] (l) at (3,0) {4};
-\node[draw, circle] (1) at (7,3.75) {5};
-\node[draw, circle] (2) at (7,2.25) {6};
-\node[draw, circle] (3) at (7,0.75) {7};
+\node[draw, circle] (1) at (2,4.5) {1};
+\node[draw, circle] (2) at (2,3) {2};
+\node[draw, circle] (3) at (2,1.5) {3};
+\node[draw, circle] (4) at (2,0) {4};
+\node[draw, circle] (5) at (8,4.5) {5};
+\node[draw, circle] (6) at (8,3) {6};
+\node[draw, circle] (7) at (8,1.5) {7};
+\node[draw, circle] (8) at (8,0) {8};
 
-\node[draw, circle, text=white] (x) at (0,2.25) {x};
-\node[draw, circle, text=white] (y) at (10,2.25) {x};
+\node[draw, circle] (a) at (-2,2.25) {\phantom{0}};
+\node[draw, circle] (b) at (12,2.25) {\phantom{0}};
+
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (7);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (8);
+\path[draw,thick,-] (4) -- (7);
 
 \path[draw,thick,->] (a) -- (1);
+\path[draw,thick,->] (a) -- (2);
 \path[draw,thick,->] (a) -- (3);
-\path[draw,thick,->] (m) -- (1);
-\path[draw,thick,->] (m) -- (2);
-\path[draw,thick,->] (u) -- (1);
-\path[draw,thick,->] (l) -- (2);
-
-\path[draw,thick,->] (x) -- (a);
-\path[draw,thick,->] (x) -- (m);
-\path[draw,thick,->] (x) -- (u);
-\path[draw,thick,->] (x) -- (l);
-\path[draw,thick,->] (1) -- (y);
-\path[draw,thick,->] (2) -- (y);
-\path[draw,thick,->] (3) -- (y);
+\path[draw,thick,->] (a) -- (4);
+\path[draw,thick,->] (5) -- (b);
+\path[draw,thick,->] (6) -- (b);
+\path[draw,thick,->] (7) -- (b);
+\path[draw,thick,->] (8) -- (b);
 \end{tikzpicture}
 \end{center}
 
 Tämän verkon maksimivirtaus on
-alkuperäisen verkon maksimiparitus.
+alkuperäisen verkon maksimiparitus,
+koska jokainen virtausta lisäävä polku
+verkossa ottaa mukaan yhden uuden parin.
+Tässä tapauksessa maksimivirtaus on 3,
+joten maksimiparitus on myös 3.
+
+\subsection{Hallin lause}
+
+Hallin lause antaa ehdon, milloin kaksijakoiseen
+verkkoon voidaan muodostaa paritus,
+joka sisältää kaikki toisen puolen solmut.
+Jos kummallakin puolella on yhtä monta solmua,
+Hallin lause kertoo, voidaanko muodostaa
+täydellinen paritus (\textit{perfect matching}),
+jossa kaikki solmut paritetaan keskenään.
+
+Oletetaan, että haluamme muodostaa parituksen,
+johon kuuluvat kaikki vasemman puolen solmut.
+Olkoon $X$ jokin joukko vasemman puolen solmuja
+ja joukko $f(X)$ ne oikean puolen solmut,
+jotka ovat yhteydessä joukon $X$ solmuihin.
+Hallin lauseen mukaan paritus on mahdollinen
+tarkalleen silloin,
+kun mille tahansa joukolle $X$ pätee $|X| \le |f(X)|$.
+
+Tarkastellaan Hallin lauseen esimerkkiverkossa.
+Valitaan ensin $X=\{1,3\}$, jolloin $f(X)=\{5,6,8\}$:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.60]
+\node[draw, circle, fill=lightgray] (1) at (2,4.5) {1};
+\node[draw, circle] (2) at (2,3) {2};
+\node[draw, circle, fill=lightgray] (3) at (2,1.5) {3};
+\node[draw, circle] (4) at (2,0) {4};
+\node[draw, circle, fill=lightgray] (5) at (8,4.5) {5};
+\node[draw, circle, fill=lightgray] (6) at (8,3) {6};
+\node[draw, circle] (7) at (8,1.5) {7};
+\node[draw, circle, fill=lightgray] (8) at (8,0) {8};
+
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (7);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (8);
+\path[draw,thick,-] (4) -- (7);
+\end{tikzpicture}
+\end{center}
+
+Tämä täyttää Hallin lauseen ehdon, koska $|X|=2$ ja $|f(X)|=3$.
+Valitaan sitten $X=\{2,4\}$, jolloin $f(X)=\{7\}$:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.60]
+\node[draw, circle] (1) at (2,4.5) {1};
+\node[draw, circle, fill=lightgray] (2) at (2,3) {2};
+\node[draw, circle] (3) at (2,1.5) {3};
+\node[draw, circle, fill=lightgray] (4) at (2,0) {4};
+\node[draw, circle] (5) at (8,4.5) {5};
+\node[draw, circle] (6) at (8,3) {6};
+\node[draw, circle, fill=lightgray] (7) at (8,1.5) {7};
+\node[draw, circle] (8) at (8,0) {8};
+
+\path[draw,thick,-] (1) -- (5);
+\path[draw,thick,-] (2) -- (7);
+\path[draw,thick,-] (3) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (3) -- (8);
+\path[draw,thick,-] (4) -- (7);
+\end{tikzpicture}
+\end{center}
+
+Tässä tapauksessa $|X|=2$ ja $|f(X)|=1$, joten Hallin lauseen ehto
+ei pidä paikkaansa.
+Tämä tarkoittaa, että ei ole mahdollista muodostaa paritusta,
+jossa ovat mukana kaikki vasemman puolen solmut.
+Syy tähän on, että sekä solmu 2 että solmu 4 tulisi
+yhdistää solmuun 7, mutta tämä ei ole mahdollista.
+
+
+\subsection{Königin lause}
+
+Königin lause antaa 
+
 
 \subsection{Polkujoukko}
 
