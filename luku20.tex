@@ -596,9 +596,10 @@ ja $1 \rightarrow 4 \rightarrow 5 \rightarrow 6$:
 Osoittautuu, että suurin rinnakkaisten polkujen määrä
 on yhtä suuri kuin maksimivirtaus verkossa,
 jossa jokaisen kaaren kapasiteetti on 1.
-Polut voi löytää Ford-Fulkersonin algoritmilla:
-jokainen virtausta kasvattava polku muodostaa uuden
-polun alkusolmusta loppusolmuun.
+Kun maksimivirtaus on muodostettu,
+rinnakkaiset polut voi löytää
+ahneesti etsimällä alkusolmusta loppusolmuun
+kulkevia polkuja.
 
 Tarkastellaan sitten tehtävän muunnelmaa,
 jossa jokainen solmu (alku- ja loppusolmuja lukuun ottamatta)
@@ -721,23 +722,25 @@ kun sama solmu ei saa esiintyä monessa polussa.
 
 \section{Maksimiparitus}
 
-Verkon paritus (\textit{matching}) muodostuu
-yhdestä tai usemmasta solmuparista,
-joissa kunkin parin solmujen välillä on kaari ja
-sama solmu ei esiinny useassa parissa.
+Verkon paritus (\textit{matching}) on kokoelma kaaria,
+jotka on valittu niin, että jokainen verkon solmu
+esiintyy enintään yhden paritukseen kuuluvan kaaren päätesolmuna.
 Maksimiparitus (\textit{maximum matching})
 on puolestaan paritus, jossa parien määrä on mahdollisimman suuri.
 
 Maksimiparituksen etsimiseen yleisessä
 verkossa on olemassa polynominen algoritmi,
 mutta se on hyvin monimutkainen.
-Tässä luvussa keskitymme kuitenkin tilanteeseen,
+Tässä luvussa keskitymmekin tilanteeseen,
 jossa verkko on kaksijakoinen.
-Tällöin maksimiparituksen pystyy selvittämään
+Tällöin maksimiparituksen pystyy etsimään
 helposti virtauslaskennan avulla.
 
 \subsection{Maksimiparituksen etsiminen}
 
+Kaksijakoinen verkko voidaan esittää aina niin,
+että kukin verkon solmu on vasemmalla tai oikealle
+puolella ja kaikki verkon kaaret kulkevat puolten välillä.
 Tarkastellaan esimerkkinä seuraavaa verkkoa:
 
 \begin{center}
@@ -785,12 +788,12 @@ Tässä verkossa maksimiparituksen koko on 3:
 \end{tikzpicture}
 \end{center}
 
-Ideana on lisätä verkkoon alkusolmu,
-josta on kaari kaikkiin vasemman ryhmän solmuihin,
-sekä loppusolmu,
-johon on kaari kaikista oikean ryhmän solmuista.
-Lisäksi ryhmien väliset kaaret muutetaan
-johtamaan vasemmasta ryhmästä oikeaan.
+Kaksijakoisen verkon maksimiparitus
+vastaa aina maksimivirtausta verkossa,
+johon on lisätty alkusolmu ja loppusolmu.
+Alkusolmusta on kaari jokaiseen vasemman
+puolen solmuun, ja vastaavasti loppusolmuun
+on kaari jokaisesta oikean puolen solmusta.
 Jokaisen kaaren kapasiteettina on 1.
 
 Esimerkissä tuloksena on seuraava verkko:
@@ -809,12 +812,12 @@ Esimerkissä tuloksena on seuraava verkko:
 \node[draw, circle] (a) at (-2,2.25) {\phantom{0}};
 \node[draw, circle] (b) at (12,2.25) {\phantom{0}};
 
-\path[draw,thick,-] (1) -- (5);
-\path[draw,thick,-] (2) -- (7);
-\path[draw,thick,-] (3) -- (5);
-\path[draw,thick,-] (3) -- (6);
-\path[draw,thick,-] (3) -- (8);
-\path[draw,thick,-] (4) -- (7);
+\path[draw,thick,->] (1) -- (5);
+\path[draw,thick,->] (2) -- (7);
+\path[draw,thick,->] (3) -- (5);
+\path[draw,thick,->] (3) -- (6);
+\path[draw,thick,->] (3) -- (8);
+\path[draw,thick,->] (4) -- (7);
 
 \path[draw,thick,->] (a) -- (1);
 \path[draw,thick,->] (a) -- (2);
@@ -827,10 +830,11 @@ Esimerkissä tuloksena on seuraava verkko:
 \end{tikzpicture}
 \end{center}
 
-Tämän verkon maksimivirtaus on
+Tämän verkon maksimivirtaus on yhtä suuri kuin
 alkuperäisen verkon maksimiparitus,
-koska jokainen virtausta lisäävä polku
-verkossa ottaa mukaan yhden uuden parin.
+koska virtaus muodostuu joukosta polkuja
+alkusolmusta loppusolmuun ja jokainen
+polku ottaa mukaan uuden kaaren paritukseen.
 Tässä tapauksessa maksimivirtaus on 3,
 joten maksimiparitus on myös 3.
 
@@ -853,7 +857,7 @@ Hallin lauseen mukaan paritus on mahdollinen
 tarkalleen silloin,
 kun mille tahansa joukolle $X$ pätee $|X| \le |f(X)|$.
 
-Tarkastellaan Hallin lauseen esimerkkiverkossa.
+Tarkastellaan Hallin lauseen merkitystä esimerkkiverkossa.
 Valitaan ensin $X=\{1,3\}$, jolloin $f(X)=\{5,6,8\}$:
 
 \begin{center}
@@ -902,28 +906,39 @@ Valitaan sitten $X=\{2,4\}$, jolloin $f(X)=\{7\}$:
 Tässä tapauksessa $|X|=2$ ja $|f(X)|=1$, joten Hallin lauseen ehto
 ei pidä paikkaansa.
 Tämä tarkoittaa, että ei ole mahdollista muodostaa paritusta,
-jossa ovat mukana kaikki vasemman puolen solmut.
+jossa ovat mukana kaikki vasemman puolen solmut
+(eli täydellistä paritusta).
+Tämä on odotettu tulos, koska verkon maksimiparitus on 3 eikä 4.
 
 Jos Hallin lauseen ehto ei päde, osajoukko $X$
 kertoo syyn sille, miksi paritusta ei voi muodostaa.
 Koska $X$ sisältää enemmän solmuja kuin $f(X)$,
 kaikille $X$:n solmuille ei riitä paria oikealta.
-Esimerkiksi yllä olevassa verkossa sekä solmu 2 että solmu 4 tulisi
+Esimerkiksi yllä molemmat solmut 2 ja 4 tulisi
 yhdistää solmuun 7, mutta tämä ei ole mahdollista.
 
-\subsection{Königin lause}
+\subsection{Kőnigin lause}
 
 Solmupeite (\textit{vertex cover}) on sellainen joukko
 verkon solmuja, että jokaisesta verkon kaaresta ainakin
 toinen kaaren päätesolmuista kuuluu joukkoon.
-Pienin solmupeite (\textit{minimum vertex cover})
-on solmupeite, jossa solmujen määrä on pienin mahdollinen.
+Riippumaton joukko (\textit{independent set})
+on puolestaan joukko verkon solmuja,
+jossa minkään solmuparin välillä ei ole kaarta.
 
-Yleisessä verkossa pienimmän solmupeitteen etsiminen
-on NP-vaikea ongelma eikä siihen tunneta mitään tehokasta
-algoritmia.
-Kuitenkin kaksijakoisessa verkossa ongelma ratkeaa tehokkaasti,
-koska Königin lauseen nojalla pienin solmupeite on yhtä suurin
+Jokaista verkon solmupeitettä vastaa riippumaton
+joukko, joka muodostuu niistä solmuista,
+jotka eivät kuulu solmupeitteeseen.
+Niinpä jos verkossa on solmupeite,
+jossa on $x$ solmua, niin siinä on myös
+riippumaton joukko, jossa on $n-x$ solmua.
+Vastaava riippuvuus pätee myös toiseen suuntaan.
+
+Yleisessä verkossa pienimmän solmupeitteen ja
+suurimman riippumattoman joukon etsiminen ovat
+NP-vaikeita ongelmia.
+Kuitenkin kaksijakoisessa verkossa ongelmat ratkeavat tehokkaasti,
+koska Kőnigin lauseen nojalla pienin solmupeite on yhtä suurin
 kuin maksimiparitus.
 
 Esimerkiksi seuraavan verkon maksimiparituksen koko on 3:
@@ -976,19 +991,14 @@ solmut $\{1,3,7\}$:
 \end{tikzpicture}
 \end{center}
 
-Pienin solmupeite voidaan muodostaa aina niin,
-että jokaisesta maksimiparituksen solmuparista
-valitaan toinen solmuista peitteeseen.
+Pienin solmupeite muodostuu aina niin,
+että jokaisesta maksimiparituksen kaaresta
+toinen kaaren päätesolmuista kuuluu peitteeseen.
 
-Königin lauseen avulla ratkeaa myös toinen verkko-ongelma:
-Riippumaton joukko (\textit{independent set}) on joukko
-verkon solmuja, jossa minkään kahden solmun välillä ei ole kaarta.
-Suurin riippumaton joukko (\textit{maximum independent set})
-taas on riippumaton joukko, jossa on mahdollisimman paljon solmuja.
-
-Suurin riippumaton joukko muodostuu valitsemalla
-kaikki solmut, jotka \textit{eivät} kuulu pienimpään
-solmupeitteeseen. Esimerkiksi yllä olevassa verkossa
+Pienimmästä solmupeitteestä saadaan suurin
+riippumaton joukko valitsemalla
+kaikki solmut, jotka eivät kuulu peitteeseen.
+Esimerkiksi yllä olevassa verkossa
 suurin riippumaton joukko on seuraava:
 
 \begin{center}
