@@ -1,21 +1,18 @@
 \chapter{Virtauslaskenta}
 
-Virtauslaskenta on verkkoteorian osa-alue,
-joka tutkii verkossa kulkevia virtauksia.
-Keskeinen virtauslaskennan ongelma on
-laskea maksimivirtaus kahden verkon solmun välillä.
-Maksimivirtausta voi soveltaa
-monissa verkko-on\-gel\-mis\-sa,
-kuten maksimiparituksen ja
-minimileikkauksen laskemisessa.
+Virtaus (\textit{flow})
+lähtee liikkeelle alkusolmusta ja päätyy loppusolmuun.
+Kunkin kaaren paino on kapasiteetti,
+joka ilmaisee, kuinka paljon virtausta kaaren
+kautta voi kulkea.
+Kaikissa solmuissa alku- ja loppusolmua lukuun ottamatta
+tulevan ja lähtevän virtauksen on oltava yhtä suuri.
 
 \section{Käsitteitä}
 
-Tämän luvun algoritmit käsittelevät suunnattua, painotettua
-verkkoa, jossa on valittu alkusolmu ja loppusolmu.
-Määrittelemme seuraavaksi kaksi käsitettä, jotka 
-ovat saman asian kaksi eri puolta.
-
+Oletamme, että annettuna on suunnattu,
+painotettu verkko, 
+jossa on valittu tietty alkusolmu ja loppusolmu.
 Käytämme esimerkkinä seuraavaa verkkoa,
 jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 
@@ -40,17 +37,17 @@ jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 
 \subsubsection{Maksimivirtaus}
 
-Maksimivirtaus (\textit{maximum flow}) on suurin
-mahdollinen virtaus,
-joka lähtee liikkeelle alkusolmusta,
-päätyy loppusolmuun eikä ylitä minkään
-kaaren kapasiteettia (painoa).
-Kaikissa solmuissa alku- ja loppusolmua
-lukuun ottamatta tulevan ja lähtevän
-virtauksen tulee olla sama.
+Virtaus (\textit{flow})
+lähtee liikkeelle alkusolmusta ja päätyy loppusolmuun.
+Kunkin kaaren paino on kapasiteetti,
+joka ilmaisee, kuinka paljon virtausta kaaren
+kautta voi kulkea.
+Kaikissa solmuissa alku- ja loppusolmua lukuun ottamatta
+tulevan ja lähtevän virtauksen on oltava yhtä suuri.
 
-Esimerkkiverkon maksimivirtaus on 7,
-joka muodostuu seuraavasti:
+Maksimivirtaus (\textit{maximum flow}) on suurin
+mahdollinen virtaus verkossa.
+Esimerkkiverkossa maksimivirtauksen suuruus on 7:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -77,17 +74,26 @@ ja kaaren kapasiteetti on $k$.
 Virtauksen suuruus on 7, koska alkusolmusta
 lähtevä virtaus on $3+4=7$ ja loppusolmuun
 saapuva virtaus on $5+2=7$.
-Virtaus on maksimivirtaus, koska ei ole tapaa
-lähettää enempää virtausta verkossa.
+
+Huomaa, että jokaisessa välisolmussa tulevan ja
+lähtevän virtauksen määrä on sama.
+Esimerkiksi solmuun 2 tulee virtausta $3+3=6$ yksikköä solmuista 1 ja 4
+ja siitä lähtee virtausta $6$ yksikköä solmuun 3.
+
+Virtaus 7 on verkon maksimivirtaus, koska verkon
+rakenteesta johtuen ei ole tapaa
+kuljettaa enempää virtausta verkossa.
 
 \subsubsection{Minimileikkaus}
 
-Minimileikkaus (\textit{minimum cut}) jakaa verkon
+Leikkaus (\textit{cut}) jakaa verkon solmut
 kahteen osaan niin, että alkusolmu ja loppusolmu
-ovat eri osissa ja alkusolmun osasta
-loppusolmun osaan kulkevien kaarten painojen
-summa on pienin mahdollinen.
+ovat eri osissa.
+Leikkauksen paino on niiden kaarten yhteispaino,
+jotka kulkevat alkusolmun osasta loppusolmun osaan.
 
+Minimileikkaus (\textit{minimum cut})
+on leikkaus, jonka paino on pienin mahdollinen.
 Esimerkkiverkossa minimileikkaus on painoltaan 7:
 
 \begin{center}
@@ -114,7 +120,7 @@ Esimerkkiverkossa minimileikkaus on painoltaan 7:
 \end{tikzpicture}
 \end{center}
 
-Tässä alkusolmun osassa ovat solmut $\{1,2,4\}$
+Tässä leikkauksessa alkusolmun osassa ovat solmut $\{1,2,4\}$
 ja loppusolmun osassa ovat solmut $\{3,5,6\}$.
 Alkusolmun osasta loppusolmun osaan kulkevat
 kaaret $2 \rightarrow 3$ ja $4 \rightarrow 5$,
@@ -123,11 +129,22 @@ joiden yhteispaino on $6+1=7$.
 ~\\
 \noindent
 Ei ole sattumaa, että yllä olevassa verkossa
-maksimivirtaus ja minimileikkaus ovat yhtä suuret.
-Seuraavaksi tutustumme algoritmiin, jonka avulla
-voi määrittää verkon maksimivirtauksen,
-minkä jälkeen näemme, miksi maksimivirtaus on
-aina yhtä suuri kuin minimileikkaus.
+sekä maksimivirtauksen suuruus
+että minimileikkauksen paino on 7.
+Virtauslaskennan keskeinen tulos on,
+että verkon maksimivirtaus ja
+minimileikkaus
+ovat \textit{aina} yhtä suuret,
+eli käsitteet kuvaavat saman asian
+kahta eri puolta.
+
+Seuraavaksi tutustumme Ford-Fulkersonin
+algoritmiin, jolla voi etsiä verkon
+maksimivirtauksen ja
+minimileikkauksen.
+Algoritmi auttaa myös ymmärtämään,
+\textit{miksi} maksimivirtaus ja
+minimileikkaus ovat yhtä suuret.
 
 \section{Ford-Fulkersonin algoritmi}
 
@@ -142,11 +159,12 @@ Algoritmi käsittelee verkkoa muodossa,
 jossa jokaiselle kaarelle on vastakkaiseen
 suuntaan kulkeva pari.
 Kaaren paino kuvastaa, miten paljon
-lisää virtausta sen kautta pystyisi vielä kulkemaan.
+lisää virtausta sen kautta pystyy vielä kulkemaan.
 Aluksi alkuperäisen verkon kaarilla on
 painona niiden kapasiteetti
-ja lisätyillä kaarilla on painona 0.
+ja käänteisillä kaarilla on painona 0.
 
+\begin{samepage}
 Esimerkkiverkosta syntyy seuraava verkko:
 
 \begin{center}
@@ -176,6 +194,7 @@ Esimerkkiverkosta syntyy seuraava verkko:
 \path[draw,thick,->] (6) edge [bend left=10] node[font=\small,label=left:0] {} (3);
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 \subsubsection{Algoritmin toiminta}
 
@@ -220,13 +239,14 @@ Esimerkkiverkossa voimme valita vaikkapa seuraavan polun:
 \end{tikzpicture}
 \end{center}
 
-Polun valinnan jälkeen virtaus lisääntyy $v$ yksikköä,
-jossa $v$ on pienin kaaren paino polulla.
-Samalla jokaisen polun osana olevan kaaren paino
-laskee $v$:llä ja jokaisen vastakkaiseen suuntaan
-kulkevan kaaren paino nousee $v$:llä.
+Polun valinnan jälkeen virtaus lisääntyy $x$ yksikköä,
+jossa $x$ on pienin kaaren kapasiteetti polulla.
+Samalla jokaisen polulla olevan kaaren kapasiteetti
+vähenee $x$:llä ja jokaisen käänteisen kaaren kapasiteetti kasvaa $x$:llä.
 
-Yllä valitussa polussa pienin kaaren paino on 2,
+Yllä valitussa polussa
+kaarten kapasiteetit ovat 5, 6, 8 ja 2.
+Pienin kapasiteetti on 2,
 joten virtaus kasvaa 2:lla
 ja verkko muuttuu seuraavasti:
 
@@ -261,12 +281,14 @@ ja verkko muuttuu seuraavasti:
 Muutoksessa on ideana, että virtauksen lisääminen
 vähentää polkuun kuuluvien kaarten kykyä välittää virtausta.
 Toisaalta virtausta on mahdollista peruuttaa myöhemmin
-käyttämällä vastakkaiseen suuntaan meneviä kaaria.
+käyttämällä käänteisiä kaaria, jos osoittautuu, että
+virtausta on järkevää reitittää verkossa toisella tavalla.
 
-Algoritmi lisää virtausta pikkuhiljaa
-niin kauan, kuin polkuja alkusolmusta loppusolmuun
-on olemassa.
-Esimerkissä seuraava polku voisi olla vaikkapa:
+Algoritmi kasvattaa virtausta
+niin kauan, kuin verkossa on olemassa polku
+alkusolmusta loppusolmuun positiivisia kaaria pitkin.
+Tässä tapauksessa
+voimme valita seuraavan polun vaikkapa näin:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -301,9 +323,9 @@ Esimerkissä seuraava polku voisi olla vaikkapa:
 \end{tikzpicture}
 \end{center}
 
-Tämän polun pienin kaaren paino on 3,
-joten polku kasvattaa virtausta 3:lla.
-Niinpä kokonaisvirtaus on polun käsittelyn jälkeen 5.
+Tämän polun pienin kapasiteetti on 3,
+joten polku kasvattaa virtausta 3:lla
+ja kokonaisvirtaus polun käsittelyn jälkeen on 5.
 
 \begin{samepage}
 Nyt verkko muuttuu seuraavasti:
@@ -379,34 +401,39 @@ Niinpä algoritmi pysähtyy ja verkon maksimivirtaus on 7.
 
 \subsubsection{Polun valinta}
 
-Ford-Fulkersonin algoritmi pysähtyy aina,
-koska jokainen polku kasvattaa virtausta verkossa.
-Polun valintatapa kuitenkin vaikuttaa siihen,
-kuinka tehokas algoritmi on.
-Pahimmassa tapauksessa jokainen polku
-lisää virtausta vain 1:llä,
-jolloin algoritmi voi toimia hitaasti.
+Ford-Fulkersonin algoritmi ei ota kantaa siihen,
+millä tavoin virtausta kasvattava polku valitaan verkossa.
+Valintatavasta riippumatta algoritmi pysähtyy
+ja tuottaa maksimivirtauksen ennemmin tai myöhemmin,
+mutta polun valinnalla on vaikutusta algoritmin tehokkuuteen.
 
-Polun valintaan on kaksi helposti toteutettavaa tapaa,
-jotka varmistavat, että virtaus kasvaa nopeasti:
+Yksinkertainen tapa on valita virtausta kasvattava
+polku syvyyshaulla.
+Tämä toimii usein hyvin, mutta pahin tapaus on,
+että jokainen polku
+kasvattaa virtausta vain 1:llä ja algoritmi toimii hitaasti.
+Seuraavaksi käymme läpi kaksi tapaa polun valintaan,
+jotka estävät tämän ilmiön.
 
 \textit{Edmonds-Karpin algoritmi} on
 Ford-Fulkersonin algoritmin toteutus,
 jossa virtausta kasvattava polku valitaan
 aina niin, että siinä on mahdollisimman vähän kaaria.
-Tämä onnistuu etsimällä polku leveyshaulla
-alkusolmusta lähtien.
-Algoritmin aikavaativuus on $O(m^2 n)$.
+Tämä onnistuu etsimällä polku syvyyshaun
+sijasta leveyshaulla.
+Osoittautuu, että tämä varmistaa virtauksen
+kasvamisen nopeasti ja
+maksimivirtauksen etsiminen vie aikaa $O(m^2 n)$.
 
 \textit{Skaalaava algoritmi}
-asettaa minimipainon, joka on ensin alkusolmusta
-lähtevien kaarten painojen summa $c$.
+asettaa minimiarvon, joka on ensin alkusolmusta
+lähtevien kaarten kapasiteettien summa $c$.
 Joka vaiheessa verkosta etsitään
-syvyyshaulla polku, jonka jokaisen kaaren paino
-on vähintään minimipaino.
+syvyyshaulla polku, jonka jokaisen kaaren kapasiteetti
+on vähintään minimiarvo.
 Aina jos kelvollista polkua ei löydy,
-minimipaino jaetaan 2:lla,
-kunnes lopuksi minimipaino on 1.
+minimiarvo jaetaan 2:lla,
+kunnes lopuksi minimiarvo on 1.
 Algoritmin aikavaativuus on $O(m^2 \log c)$.
 
 Käytännössä skaalaava algoritmi on mukavampi koodattava,
@@ -416,7 +443,7 @@ nopeita ohjelmointikisoissa esiintyviin tehtäviin.
 
 \subsubsection{Minimileikkaus}
 
-Kun Ford-Fulkersonin algoritmi on saanut valmiiksi
+Osoittautuu, että kun Ford-Fulkersonin algoritmi on saanut valmiiksi
 maksimivirtauksen, se on tuottanut samalla minimileikkauksen.
 Olkoon $A$ niiden solmujen joukko,
 joihin verkossa pääsee
@@ -458,9 +485,13 @@ maksimivirtauksessa.
 Tässä verkossa kyseiset kaaret ovat $2 \rightarrow 3$
 ja $4 \rightarrow 5$, jotka tuottavat minimileikkauksen $6+1=7$.
 
-Minimileikkauksen olemassaolo myös perustelee,
-miksi Ford-Fulkersonin algoritmin tuottama virtaus
-on suurin mahdollinen.
+Miksi sitten algoritmin tuottama virtaus ja leikkaus ovat
+varmasti maksimivirtaus ja minimileikkaus?
+Syynä tähän on, että virtauksen suuruus on
+\textit{aina} enintään yhtä suuri kuin leikkauksen paino.
+Niinpä kun virtaus ja leikkaus ovat yhtä suuret,
+ne ovat varmasti maksimivirtaus ja minimileikkaus.
+
 Tarkastellaan mitä tahansa verkon leikkausta,
 jossa alkusolmu kuuluu osaan $A$,
 loppusolmu kuuluu osaan $B$ ja osien välillä kulkee kaaria:
