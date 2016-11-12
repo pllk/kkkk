@@ -19,9 +19,9 @@ sekä erilaisia tapoja pitää verkkoa muistissa algoritmeissa.
 Verkko (\textit{graph})
 muodostuu solmuista (\textit{node} tai \textit{vertex})
 ja niiden välisistä kaarista (\textit{edge}).
-Merkitsemme tässä kirjassa yleensä
+Merkitsemme tässä kirjassa
 verkon solmujen määrää
-muuttujalla $n$ ja verkon kaarten määrää muuttujalla $m$.
+muuttujalla $n$ ja kaarten määrää muuttujalla $m$.
 Lisäksi numeroimme verkon solmut kokonaisluvuin
 $1,2,\ldots,n$.
 
@@ -49,7 +49,7 @@ Polku (\textit{path}) on solmusta $a$ solmuun $b$
 johtava reitti, joka kulkee verkon kaaria pitkin.
 Polun pituus (\textit{length}) on kaarten määrä polulla.
 Esimerkiksi yllä olevassa verkossa
-mahdollisia polkuja solmusta 1 solmuun 5 ovat:
+polkuja solmusta 1 solmuun 5 ovat:
 
 \begin{itemize}
 \item $1 \rightarrow 2 \rightarrow 5$ (pituus 2)
@@ -191,7 +191,7 @@ Jos verkossa ei ole yhtään sykliä, se on syklitön
 \subsubsection{Kaarten painot}
 
 Painotetussa (\textit{weighted}) verkossa
-jokaisesta kaaresta tiedetään sen paino.
+jokaiseen kaareen liittyy paino.
 Tavallinen tulkinta on, että painot kuvaavat
 kaarien pituuksia.
 Seuraavassa on esimerkki painotetusta verkosta:
@@ -325,7 +325,8 @@ on kaksijakoinen, koska sen voi värittää näin:
 \end{tikzpicture}
 \end{center}
 
-Verkko on kaksijakoinen tarkalleen silloin,
+Osoittautuu, että
+verkko on kaksijakoinen tarkalleen silloin,
 kun siinä ei ole sykliä, johon kuuluu
 pariton määrä solmuja.
 
@@ -371,7 +372,7 @@ kuinka suuri verkko on ja
 millä tavoin algoritmi käsittelee sitä.
 Seuraavaksi käymme läpi kolme tavallista vaihtoehtoa.
 
-\subsection{Vieruslistaesitys}
+\subsection{Vieruslistat}
 
 Tavallisin tapa pitää verkkoa muistissa on
 luoda jokaisesta solmusta vieruslista (\textit{adjacency list}),
@@ -465,7 +466,7 @@ for (auto u : v[s]) {
 }
 \end{lstlisting}
 
-\subsection{Vierusmatriisiesitys}
+\subsection{Vierusmatriisi}
 
 Vierusmatriisi (\textit{adjacency matrix})
 on kaksiulotteinen taulukko,
@@ -587,7 +588,7 @@ vastaa seuraava vierusmatriisi:
 \end{tikzpicture}
 \end{center}
 
-\subsection{Kaarilistaesitys}
+\subsection{Kaarilista}
 
 Kaarilista (\textit{edge list}) sisältää kaikki verkon kaaret.
 Kaarilista on hyvä tapa tallentaa verkko,

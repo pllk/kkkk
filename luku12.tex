@@ -362,6 +362,8 @@ Läpikäynnin voi yleensä aina toteuttaa
 joko syvyyshaulla tai leveyshaulla,
 mutta käytännössä syvyyshaku on parempi valinta,
 koska sen toteutus on helpompi.
+Oletamme seuraavaksi, että käsiteltävänä on
+suuntaamaton verkko.
 
 \subsubsection{Yhtenäisyys}
 
@@ -420,8 +422,9 @@ aina, jos käsiteltävä solmu ei kuulu vielä mihinkään komponenttiin.
 
 \subsubsection{Syklin etsiminen}
 
-Suuntaamattomassa verkossa on sykli,
-jos jonkin komponentin läpikäynnin aikana tulee vastaan solmu,
+Verkossa on sykli,
+jos jonkin komponentin läpikäynnin
+aikana tulee vastaan solmu,
 jonka naapuri on jo käsitelty
 ja solmuun ei ole saavuttu kyseisen naapurin kautta.
 Esimerkiksi verkossa
@@ -449,7 +452,7 @@ Esimerkiksi verkossa
 \end{center}
 
 on sykli, koska tultaessa solmusta 2 solmuun 5
-havaitaan, että solmu 3 on jo käsitelty.
+havaitaan, että naapurina oleva solmu 3 on jo käsitelty.
 Niinpä verkossa täytyy olla solmun 3 kautta
 kulkeva sykli.
 Tällainen sykli on esimerkiksi
