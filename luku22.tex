@@ -199,148 +199,14 @@ sulkulausekkeiden määrä voidaan laskea kaavalla
 
 \section{Inkluusio-ekskluusio}
 
-\section{Burnsiden lemma}
-
-\section{Puiden laskeminen}
-
-
-
-\subsubsection*{Yhdistelmät}
-
-Jos yhdistelmä muodostuu $n$ osasta ja jokainen osa
-voidaan valita $k$ tavalla, yhdistelmiä on yhteensä $k^n$.
-Esimerkiksi $n$-pituisia bittijonoja on $2^n$,
-koska jokainen jonon bitti voidaan valita 2 tavalla.
-
-Yleisemmin jos yhdistelmä muodostuu $n$ osasta,
-joista osan 1 voi valita $k_1$ tavalla,
-osan 2 voi valita $k_2$ tavalla, jne.,
-yhdistelmien määrä on $k_1 \cdot k_2 \cdots k_n$.
-
-\subsubsection*{Permutaatiot}
-
-Permutaatio tarkoittaa joukon alkioiden järjestystä.
-Jos joukossa on $n$ alkiota,
-niin siitä voi muodostaa $n!$ permutaatiota,
-koska ensimmäinen alkio voidaan valita $n$ tavalla,
-toinen $(n-1)$ tavalla, jne.
-Esimerkiksi kirjaimet \texttt{ABC} voidaan järjestää
-6 tavalla:
-\texttt{ABC}, \texttt{ACB}, \texttt{BAC}, \texttt{BCA},
-\texttt{CAB} ja \texttt{CBA}.
-
-\subsubsection*{Rekursiokaava}
-
-Kombinatorisen tehtävän ratkaisun pystyy usein ilmaisemaan
-rekursiolla, jolloin vastauksen saa laskettua tehokkaasti
-dynaamisella ohjelmoinnilla.
-Näin on esimerkiksi seuraavassa tehtävässä:
-
-\begin{task}
-Tehtäväsi on laskea, monessako $n$ bitin jonossa
-ei ole vierekkäin kahta ykkösbittiä.
-Esimerkiksi jos $n=4$, vastaus on 8,
-koska bittijonot ovat \texttt{0000}, \texttt{0001},
-\texttt{0010}, \texttt{0100}, \texttt{0101},
-\texttt{1000}, \texttt{1001} ja \texttt{1010}.
-\end{task}
-
-Vastaus selviää funktiolla $f(n,k)$,
-jossa $n$ on bittijonon pituus ja $k$ on viimeinen bitti (0 tai 1).
-Tätä funktiota käyttäen $n$ bitin jonojen määrä
-on summa $f(n,0)+f(n,1)$.
-Rekursiivinen kaava on seuraava:
-
-\begin{equation*}
-    f(n,k) = \begin{cases}
-               1               & n = 1\\
-               f(n-1,0)+f(n-1,1) & k = 0\\
-               f(n-1,0) & k = 1\\
-           \end{cases}
-\end{equation*}
-
-Kaavan ideana on, että jos viimeinen bitti on 0,
-sitä ennen voi olla sekä bitti 0 että bitti 1,
-ja jos viimeinen bitti on 1, sitä ennen on
-pakko olla bitti 0.
-
-
-\section{Binomikerroin}
-
-\subsubsection*{Hatut ja pallot}
-
-Binomikertoimen avulla voi ratkaista myös seuraavan tehtävän:
-
-\begin{task}
-Rivissä on $n$ hattua, joihin sijoitetaan $m$ palloa.
-Montako erilaista tapaa tähän on?
-Esimerkiksi jos $n=3$ ja $m=2$, niin tapoja on 6:
-$[0,0,2]$, $[0,1,1]$, $[0,2,0]$, $[1,0,1]$, $[1,1,0]$,
-$[2,0,0]$.
-\end{task}
-
-\noindent
-Ratkaisu tehtävään on ${n+m-1 \choose m}$.
-Jokaisen sijoitustavan voi ilmaista merkkijonona, jossa \texttt{o}
-kuvaa palloa ja \texttt{|} on kahden hatun raja.
-Merkkijonon pituus on $n+m-1$, koska palloja on $m$
-ja hatun rajoja on $n-1$,
-ja siitä valitaan $m$ paikkaa palloille.
-Esimerkiksi sijoitustapaa $[1,0,1]$
-vastaa merkkijono \texttt{o||o}.
-
-\section{Muita funktioita}
-
-\subsubsection*{Catalanin luvut}
-
-Catalanin luku $C_n$ ilmaisee,
-montako tapaa on muodostaa kelvollinen sulkulauseke
-$n$ alkusulusta ja $n$ loppusulusta.
-Esimerkiksi $C_3=5$, koska vastaavat sulkulausekkeet
-ovat \texttt{()()()}, \texttt{(())()},
-\texttt{()(())}, \texttt{((()))} ja \texttt{(()())}.
-
-Luonteva tapa laskea Catalanin lukuja
-on käyttää rekursiokaavaa
-
-\[ C_n = \sum_{i=0}^{n-1} C_i C_{n-i-1}, \]
-
-jossa pohjatapauksena on $C_0=1$.
-Catalanin luvut saa laskettua myös binomikertoimen avulla kaavalla
-
-\[ C_n = \frac{1}{n+1} {2n \choose n}. \]
-
-\subsubsection*{Stirlingin luvut}
-
-Stirlingin luku ${n \brace k}$ ilmaisee,
-montako tapaa on jakaa $n$ alkion joukko
-$k$ epätyhjäksi osajoukoksi.
-Esimerkiksi ${4 \brace 2}=7$, koska
-joukon $\{A,B,C,D\}$ jakotavat 2
-epätyhjäksi osajoukoksi ovat
- $\{A,B,C\}$ ja $\{D\}$, 
- $\{A,B,D\}$ ja $\{C\}$,
- $\{A,C,D\}$ ja $\{B\}$,
- $\{B,C,D\}$ ja $\{A\}$,
-  $\{A,B\}$ ja $\{C,D\}$,
-  $\{A,C\}$ ja $\{B,D\}$, sekä
-  $\{A,D\}$ ja $\{B,C\}$.
-
-\noindent
-Stirlingin lukuja voi laskea rekursiivisesti kaavalla
-\[ {n \brace k} = k{n-1 \brace k} + {n-1 \brace k-1}, \]
-jossa pohjatapauksina ${n \brace k}=0$,
-kun $k=0$ tai $k>n$, ja ${n \brace k}=1$, kun $k=1$.
-
-\section{Sisään-ulos-periaate}
-
-Sisään-ulos-periaate eli inkluusio-ekskluusio
+Inkluusio-ekskluusio
 on tekniikka, jonka avulla pystyy laskemaan
 joukkojen yhdisteen koon leikkausten
 kokojen perusteella ja päinvastoin.
 Yksinkertainen esimerkki periaatteesta on kaava
 \[ |A \cup B| = |A| + |B| - |A \cap B|,\]
-jossa $A$ ja $B$ ovat joukkoja ja $|X|$ on joukon koko.
+jossa $A$ ja $B$ ovat joukkoja ja $|X|$
+tarkoittaa joukon $X$ kokoa.
 Seuraava kuva havainnollistaa kaavaa,
 kun joukot ovat tason ympyröitä:
 
@@ -358,7 +224,7 @@ kun joukot ovat tason ympyröitä:
 \end{center}
 
 Tavoitteena on laskea, kuinka suuri on yhdiste $A \cup B$
-eli alue, joka on ainakin toisen ympyrän sisällä.
+eli alue, joka on toisen tai kummankin ympyrän sisällä.
 Kuvan mukaisesti yhdisteen $A \cup B$ koko
 saadaan laskemalla ensin yhteen ympyröiden $A$ ja $B$ koot
 ja vähentämällä siitä sitten leikkauksen $A \cap B$ koko.
@@ -367,7 +233,6 @@ Samaa ideaa voi soveltaa, kun joukkoja on enemmän.
 Kolmen joukon tapauksessa kaavasta tulee
 \[ |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B|  - |A \cap C|  - |B \cap C| + |A \cap B \cap C| \]
 ja vastaava kuva on
-
 
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
@@ -403,17 +268,18 @@ Esimerkiksi
 ja
 \[ |A \cap B \cap C| = |A| + |B| + |C| - |A \cup B|  - |A \cup C|  - |B \cup C| + |A \cup B \cup C| .\]
 
-\subsubsection*{Esimerkki}
+\subsubsection{Esimerkki}
+
+Tarkastellaan esimerkkinä seuraavaa tehtävää:
 
 \begin{task}
-Taulukossa on luvut $1,2,\ldots,n$ järjestyksessä.
-Tehtäväsi on muuttaa järjestystä niin,
-että mikään luvuista ei jää alkuperäiselle paikalleen.
-Montako tapaa tähän on olemassa?
-Esimerkiksi jos $n=3$, ratkaisuja on 2: $(2,3,1)$ ja $(3,1,2)$
+Montako tapaa on järjestää permutaatio
+$(1,2,\ldots,n)$ uudestaan niin,
+että mikään luku ei jää alkuperäiselle paikalleen?
+Esimerkiksi jos $n=3$, tapoja on kaksi: $(2,3,1)$ ja $(3,1,2)$
 \end{task}
 
-Yksi tapa lähestyä tehtävää on käyttää sisään-ulos-periaatetta.
+Yksi tapa lähestyä tehtävää on käyttää inkluusio-ekskluusiota.
 Olkoon joukko $X_k$ niiden permutaatioiden joukko,
 jossa kohdassa $k$ on luku $k$.
 Esimerkiksi jos $n=3$, niin joukot ovat seuraavat:
@@ -428,7 +294,7 @@ Näitä joukkoja käyttäen ratkaisujen määrä on
 \[ n! - |X_1 \cup X_2 \cup \cdots \cup X_n|, \]
 eli
 riittää laskea joukkojen yhdisteen koko.
-Tämä palautuu sisään-ulos-peri\-aatteen avulla
+Tämä palautuu inkluusio-eks\-kluu\-sion avulla
 joukkojen leikkausten kokojen laskemiseen,
 mikä onnistuu tehokkaasti.
 Esimerkiksi kun $n=3$, joukon $|X_1 \cup X_2 \cup X_3|$ koko on
@@ -440,6 +306,18 @@ Esimerkiksi kun $n=3$, joukon $|X_1 \cup X_2 \cup X_3|$ koko on
 \end{array}
 \]
 joten ratkaisujen määrä on $3!-4=2$.
+
+Huomaa, että tehtävän voi ratkaista myös toisella
+tavalla ilman inkluusio-ekskluusiota
+käyttämällä seuraavaa rekursiota:
+
+\begin{equation*}
+    f(n) = \begin{cases}
+               0               & n = 1\\
+               1               & n = 2\\
+               (n-1)(f(n-1) + f(n-2)) & n>2 \\
+           \end{cases}
+\end{equation*}
 
 \section{Burnsiden lemma}
 
@@ -453,8 +331,6 @@ ja $c(k)$ on niiden yhdistelmien määrä,
 jotka pysyvät ennallaan, kun asentoa
 muutetaan tavalla $k$.
 
-\newpage
-\noindent
 Tutustumme Burnsiden lemmaan seuraavan tehtävän kautta:
 
 \begin{task}
@@ -527,3 +403,183 @@ Esimerkiksi kun helminauhan pituus on 4
 ja värejä on 3, helminauhoja on
 \[\frac{3^4+3+3^2+3}{4} = 24. \]
 
+\section{Puiden laskeminen}
+
+Laskemme lopuksi, montako puuta $n$ solmusta
+voi muodostaa.
+Keskitymme tapaukseen, jossa solmut on numeroitu
+ja kaksi puuta ovat erilaiset, jos niiden rakenne
+tai numerointi on eri.
+
+Esimerkiksi jos $n=4$, puiden määrä on 16:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\newcommand\puua[6]{
+\path[draw,thick,-] (#1,#2) -- (#1-1.25,#2-1.5);
+\path[draw,thick,-] (#1,#2) -- (#1,#2-1.5);
+\path[draw,thick,-] (#1,#2) -- (#1+1.25,#2-1.5);
+\node[draw, circle, fill=white] at (#1,#2) {#3};
+\node[draw, circle, fill=white] at (#1-1.25,#2-1.5) {#4};
+\node[draw, circle, fill=white] at (#1,#2-1.5) {#5};
+\node[draw, circle, fill=white] at (#1+1.25,#2-1.5) {#6};
+}
+\newcommand\puub[6]{
+\path[draw,thick,-] (#1,#2) -- (#1+1,#2);
+\path[draw,thick,-] (#1+1,#2) -- (#1+2,#2);
+\path[draw,thick,-] (#1+2,#2) -- (#1+3,#2);
+\node[draw, circle, fill=white] at (#1,#2) {#3};
+\node[draw, circle, fill=white] at (#1+1,#2) {#4};
+\node[draw, circle, fill=white] at (#1+2,#2) {#5};
+\node[draw, circle, fill=white] at (#1+3,#2) {#6};
+}
+
+\puua{0}{0}{1}{2}{3}{4}
+\puua{4}{0}{2}{1}{3}{4}
+\puua{8}{0}{3}{1}{2}{4}
+\puua{12}{0}{4}{1}{2}{3}
+
+\puub{0}{-3}{1}{2}{3}{4}
+\puub{4.5}{-3}{1}{2}{4}{3}
+\puub{9}{-3}{1}{3}{2}{4}
+\puub{0}{-4.5}{1}{3}{4}{2}
+\puub{4.5}{-4.5}{1}{4}{2}{3}
+\puub{9}{-4.5}{1}{4}{3}{2}
+\puub{0}{-6}{2}{1}{3}{4}
+\puub{4.5}{-6}{2}{1}{4}{3}
+\puub{9}{-6}{2}{3}{1}{4}
+\puub{0}{-7.5}{2}{4}{1}{3}
+\puub{4.5}{-7.5}{3}{1}{2}{4}
+\puub{9}{-7.5}{3}{2}{1}{4}
+\end{tikzpicture}
+\end{center}
+
+Osoittautuu, että $n$ solmusta voi muodostaa $n^{n-2}$
+numeroitua puuta.
+Tämä tulos tunnetaan nimellä Cayleyn kaava.
+
+\subsubsection{Prüfer-koodi}
+
+Prüfer-koodi on $n-2$ luvun jono,
+joka kuvaa puun rakenteen.
+Koodi muodostuu poistamalla puusta
+joka askeleella lehden, jonka numero on pienin,
+ja lisäämällä lehden vieressä olevan solmun
+tunnus koodiin.
+
+Esimerkiksi puun
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (2,3) {$1$};
+\node[draw, circle] (2) at (4,3) {$2$};
+\node[draw, circle] (3) at (2,1) {$3$};
+\node[draw, circle] (4) at (4,1) {$4$};
+\node[draw, circle] (5) at (5.5,2) {$5$};
+
+%\path[draw,thick,-] (1) -- (2);
+%\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (2) -- (4);
+\path[draw,thick,-] (2) -- (5);
+%\path[draw,thick,-] (4) -- (5);
+\end{tikzpicture}
+\end{center}
+Prüfer-koodi on $(4,4,2)$,
+koska ensin poistetaan solmu 1,
+sitten solmu 3 ja lopuksi solmu 5.
+
+Jokaiselle puulle voidaan laskea
+Prüfer-koodi, minkä lisäksi
+Prüfer-koodista pystyy palauttamaan
+yksikäsitteisesti puun rakenteen.
+Niinpä erilaisia puita on yhtä monta
+kuin Prüfer-koodeja eli $n^{n-2}$.
+
+
+% \subsubsection*{Yhdistelmät}
+% 
+% Jos yhdistelmä muodostuu $n$ osasta ja jokainen osa
+% voidaan valita $k$ tavalla, yhdistelmiä on yhteensä $k^n$.
+% Esimerkiksi $n$-pituisia bittijonoja on $2^n$,
+% koska jokainen jonon bitti voidaan valita 2 tavalla.
+% 
+% Yleisemmin jos yhdistelmä muodostuu $n$ osasta,
+% joista osan 1 voi valita $k_1$ tavalla,
+% osan 2 voi valita $k_2$ tavalla, jne.,
+% yhdistelmien määrä on $k_1 \cdot k_2 \cdots k_n$.
+% 
+% \subsubsection*{Permutaatiot}
+% 
+% Permutaatio tarkoittaa joukon alkioiden järjestystä.
+% Jos joukossa on $n$ alkiota,
+% niin siitä voi muodostaa $n!$ permutaatiota,
+% koska ensimmäinen alkio voidaan valita $n$ tavalla,
+% toinen $(n-1)$ tavalla, jne.
+% Esimerkiksi kirjaimet \texttt{ABC} voidaan järjestää
+% 6 tavalla:
+% \texttt{ABC}, \texttt{ACB}, \texttt{BAC}, \texttt{BCA},
+% \texttt{CAB} ja \texttt{CBA}.
+% 
+% \subsubsection*{Rekursiokaava}
+% 
+% Kombinatorisen tehtävän ratkaisun pystyy usein ilmaisemaan
+% rekursiolla, jolloin vastauksen saa laskettua tehokkaasti
+% dynaamisella ohjelmoinnilla.
+% Näin on esimerkiksi seuraavassa tehtävässä:
+% 
+% \begin{task}
+% Tehtäväsi on laskea, monessako $n$ bitin jonossa
+% ei ole vierekkäin kahta ykkösbittiä.
+% Esimerkiksi jos $n=4$, vastaus on 8,
+% koska bittijonot ovat \texttt{0000}, \texttt{0001},
+% \texttt{0010}, \texttt{0100}, \texttt{0101},
+% \texttt{1000}, \texttt{1001} ja \texttt{1010}.
+% \end{task}
+% 
+% Vastaus selviää funktiolla $f(n,k)$,
+% jossa $n$ on bittijonon pituus ja $k$ on viimeinen bitti (0 tai 1).
+% Tätä funktiota käyttäen $n$ bitin jonojen määrä
+% on summa $f(n,0)+f(n,1)$.
+% Rekursiivinen kaava on seuraava:
+% 
+% \begin{equation*}
+%     f(n,k) = \begin{cases}
+%                1               & n = 1\\
+%                f(n-1,0)+f(n-1,1) & k = 0\\
+%                f(n-1,0) & k = 1\\
+%            \end{cases}
+% \end{equation*}
+% 
+% Kaavan ideana on, että jos viimeinen bitti on 0,
+% sitä ennen voi olla sekä bitti 0 että bitti 1,
+% ja jos viimeinen bitti on 1, sitä ennen on
+% pakko olla bitti 0.
+% 
+% 
+% \section{Binomikerroin}
+% 
+% \subsubsection*{Hatut ja pallot}
+% 
+% Binomikertoimen avulla voi ratkaista myös seuraavan tehtävän:
+% 
+% \begin{task}
+% Rivissä on $n$ hattua, joihin sijoitetaan $m$ palloa.
+% Montako erilaista tapaa tähän on?
+% Esimerkiksi jos $n=3$ ja $m=2$, niin tapoja on 6:
+% $[0,0,2]$, $[0,1,1]$, $[0,2,0]$, $[1,0,1]$, $[1,1,0]$,
+% $[2,0,0]$.
+% \end{task}
+% 
+% \noindent
+% Ratkaisu tehtävään on ${n+m-1 \choose m}$.
+% Jokaisen sijoitustavan voi ilmaista merkkijonona, jossa \texttt{o}
+% kuvaa palloa ja \texttt{|} on kahden hatun raja.
+% Merkkijonon pituus on $n+m-1$, koska palloja on $m$
+% ja hatun rajoja on $n-1$,
+% ja siitä valitaan $m$ paikkaa palloille.
+% Esimerkiksi sijoitustapaa $[1,0,1]$
+% vastaa merkkijono \texttt{o||o}.
+% 
+% 
