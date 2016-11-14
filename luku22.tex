@@ -1,13 +1,209 @@
 \chapter{Kombinatoriikka}
-
-Kombinatoriikka tarkoittaa yhdistelmien määrän laskemista.
-Tavoitteena on yleensä laskea yhdistelmät
-tehokkaasti niin, että jokaista yhdistelmää
-ei tarvitse muodostaa erikseen, vaan yhteismäärän
-saa selville tehokkaammin hyödyntämällä säännöllisyyksiä ja
-dynaamista ohjelmointia.
+% 
+% Kombinatoriikka tarkoittaa yhdistelmien määrän laskemista.
+% Tavoitteena on yleensä laskea yhdistelmät
+% tehokkaasti niin, että jokaista yhdistelmää
+% ei tarvitse muodostaa erikseen, vaan yhteismäärän
+% saa selville tehokkaammin hyödyntämällä säännöllisyyksiä ja
+% dynaamista ohjelmointia.
 
 \section{Perustekniikat}
+
+\section{Binomikerroin}
+
+Binomikerroin ${n \choose k}$ ilmaisee, montako
+$k$ alkion osajoukkoa $n$ alkion joukosta
+voidaan muodostaa.
+Esimerkiksi ${5 \choose 2}=10$,
+koska 5 alkion joukosta $\{A,B,C,D,E\}$
+voidaan muodostaa seuraavat 10 osajoukkoa, joissa on 2 alkiota:
+\[ \{A,B\}, \{A,C\}, \{A,D\}, \{A,E\}, \{B,C\}, 
+\{B,D\}, \{B,E\}, \{C,D\}, \{C,E\}, \{D,E\} \]
+
+\subsubsection{Laskutapa 1}
+
+Binomikertoimen voi laskea rekursiivisesti seuraavasti:
+
+\[
+{n \choose k}  =  {n-1 \choose k-1} + {n-1 \choose k}
+\]
+
+Ideana rekursiossa on tarkastella tiettyä
+joukon alkiota $x$.
+Jos alkio $x$ valitaan osajoukkoon,
+täytyy vielä valita $n-1$ alkiosta $k-1$ alkiota.
+Jos taas alkiota $x$ ei valita,
+täytyy vielä valita $n-1$ alkiosta $k$ alkiota.
+
+Rekursion pohjatapaukset ovat seuraavat:
+
+\[
+{n \choose 0}  =  {n \choose n} = 1
+\]
+
+Selityksenä on, että tyhjän osajoukon voi muodostaa
+aina yhdellä tavalla, samoin kuin osajoukon,
+jossa on kaikki joukon alkiot.
+
+\subsubsection{Laskutapa 2}
+
+Toinen tapa laskea binomikerroin on seuraava:
+\[
+{n \choose k}  =  \frac{n!}{k!(n-k)!}.
+\]
+Kaavassa $n!$ on $n$ alkion joukon permutaatioiden määrä.
+Ideana on käydä läpi joukon permutaatiot
+ja valita kussakin tapauksessa
+permutaation $k$ ensimmäistä lukua osajoukkoon.
+Koska lukujen järjestyksellä osajoukossa
+ja osajoukon ulkopuolella ei ole väliä,
+tulos jaetaan luvuilla $k!$ ja $(n-k)!$.
+
+Huomaa myös, että 
+\[
+{n \choose k}  =  {n \choose n-k},
+\]
+koska voidaan joko valita alkioita
+osajoukkoon tai osajoukon ulkopuolelle.
+
+\subsubsection{Sovelluksia}
+
+Nimi ''binomikerroin'' tulee siitä, että
+
+\[ (a+b)^n =
+{n \choose 0} a^n b^0 + 
+{n \choose 1} a^{n-1} b^1 +
+\ldots + 
+{n \choose n-1} a^1 b^{n-1} +
+{n \choose n} a^0 b^n. \]
+Binomikertoimet esiintyvät myös Pascalin
+kolmiossa, jonka reunoilla on lukua 1
+ja jokainen luku saadaan
+kahden yllä olevan luvun summana:
+\begin{center}
+\begin{tikzpicture}{0.9}
+\node at (0,0) {1};
+\node at (-0.5,-0.5) {1};
+\node at (0.5,-0.5) {1};
+\node at (-1,-1) {1};
+\node at (0,-1) {2};
+\node at (1,-1) {1};
+\node at (-1.5,-1.5) {1};
+\node at (-0.5,-1.5) {3};
+\node at (0.5,-1.5) {3};
+\node at (1.5,-1.5) {1};
+\node at (-2,-2) {1};
+\node at (-1,-2) {4};
+\node at (0,-2) {6};
+\node at (1,-2) {4};
+\node at (2,-2) {1};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{Hatut ja pallot}
+
+\subsubsection*{Multinomikerroin}
+
+Binomikertoimen yleistys on multinomikerroin
+
+\[ {n \choose k_1,k_2,\ldots,k_m} = \frac{n!}{k_1! k_2! \cdots k_m!}, \]
+
+missä $k_1+k_2+\cdots+k_m=n$.
+Multinomikerroin ilmaisee, monellako tavalla $n$ alkiota voidaan jakaa osajoukkoihin,
+joiden koot ovat $k_1,k_2,\ldots,k_m$.
+Jos $m=2$, multinomikertoimen kaava vastaa binomikertoimen kaavaa.
+
+\section{Catalanin luvut}
+
+Catalanin luku $C_n$ ilmaisee,
+montako tapaa on muodostaa kelvollinen sulkulauseke
+$n$ alkusulusta ja $n$ loppusulusta.
+Esimerkiksi $C_3=5$, koska 3 alkusulusta
+ja 3 loppusulusta voidaan muodostaa
+kelvolliset sulkulausekkeet
+\texttt{()()()}, \texttt{(())()},
+\texttt{()(())}, \texttt{((()))} ja \texttt{(()())}.
+
+\subsubsection{Sulkulausekkeet}
+
+Sulkulauseke on kelvollinen, jos sen pystyy
+muodostamaan jostakin
+matemaattisesta lausekkeesta poistamalla
+kaikki merkit sulkuja lukuun ottamatta.
+Esimerkiksi sulkulauseke \texttt{(())()}
+on kelvollinen, koska sitä vastaa
+matemaattinen lauseke $(2 \cdot (4+5)+3)\cdot(1+3)$.
+
+Kelvollisen sulkulausekkeen voi tunnistaa käymällä
+läpi lausekkeen merkit vasemmalta oikealle ja
+pitämällä yllä laskuria, jonka arvo on aluksi 0.
+Merkki \texttt{(} kasvattaa laskuria ja
+merkki \texttt{)} vähentää laskuria.
+Sulkulauseke on kelvollinen, jos laskurin arvo
+on aina vähintään 0 ja lopuksi tasan 0.
+
+Huomaa myös, että kelvollisen sulkulausekkeen
+jokaisessa alkuosassa alkusulkujen määrä on
+sama tai suurempi kuin loppusulkujen määrä.
+
+\subsubsection{Laskutapa 1}
+
+Catalanin lukuja voi laskea rekursiivisesti seuraavasti:
+\[ C_n = \sum_{i=1}^{n} C_{i-1} C_{n-i}\]
+Ideana on käydä läpi vaihtoehdot
+jakaa sulkulauseke kahteen osaan niin,
+että kumpikin osa on kelvollinen sulkulauseke
+ja alkuosa on mahdollisimman lyhyt mutta ei tyhjä.
+Muuttuja $i$ ilmaisee, montako sulkuparia
+alkuosassa on.
+Kunkin vaihtoehdon kohdalla lausekkeiden määrä
+saadaan kertomalla keskenään:
+
+\begin{itemize}
+\item $C_{i-1}$: tavat muodostaa sulkulauseke
+alkuosan sulkupareista ulointa sulkuparia lukuun ottamatta
+\item $C_{n-i}$: tavat muodostaa sulkulauseke
+loppuosan sulkupareista
+\end{itemize}
+Lisäksi pohjatapauksena on $C_0=1$, koska 0
+sulkuparista voi muodostaa
+tyhjän sulkulausekkeen.
+
+\subsubsection{Laskutapa 2}
+
+Catalanin lukuja voi laskea myös binomikertoimen avulla:
+\[ C_n = \frac{1}{n+1} {2n \choose n}. \]
+Kaavan voi perustella laskemalla, moniko $n$ alkusulkua
+ja $n$ loppusulkua sisältävä sulkulauseke \textit{ei}
+ole kelvollinen.
+Sulkulausekkeita on kaikkiaan ${2n \choose n}$,
+koska lausekkeessa on $2n$ merkkiä ja siitä valitaan
+$n$ kohtaa alkusuluille.
+
+Jos sulkulauseke ei ole kelvollinen,
+siinä on alkuosa, jossa loppusulkuja on alkusulkuja
+enemmän.
+Ideana on kääntää jokainen tällaisen alkuosan
+sulkumerkki.
+Esimerkiksi lausekkeessa \texttt{())()(}
+alkuosa on \texttt{())}, joten kääntämisen
+jälkeen lausekkeesta tulee \texttt{)((()(}.
+
+Tuloksena olevassa lausekkeessa on $n+1$ alkusulkua
+ja $n-1$ loppusulkua. Tällaisia lausekkeita on
+kaikkiaan ${2n \choose n+1}$, joten kelvollisten
+sulkulausekkeiden määrä voidaan laskea kaavalla
+\[{2n \choose n}-{2n \choose n+1} = {2n \choose n} - \frac{n}{n+1} {2n \choose n} = \frac{1}{n+1} {2n \choose n}.\]
+
+\subsubsection{Sovelluksia}
+
+\section{Inkluusio-ekskluusio}
+
+\section{Burnsiden lemma}
+
+\section{Puiden laskeminen}
+
+
 
 \subsubsection*{Yhdistelmät}
 
@@ -70,56 +266,6 @@ pakko olla bitti 0.
 
 
 \section{Binomikerroin}
-
-Binomikerroin ${n \choose k}$ ilmaisee, montako
-erilaista $k$ alkion osajoukkoa $n$ alkion joukosta
-voidaan muodostaa.
-Esimerkiksi ${5 \choose 2}=10$,
-koska joukosta $\{A,B,C,D,E\}$
-voidaan muodostaa 10 erilaista 2 alkion osajoukkoa:
-\[ \{A,B\}, \{A,C\}, \{A,D\}, \{A,E\}, \{B,C\}, 
-\{B,D\}, \{B,E\}, \{C,D\}, \{C,E\}, \{D,E\} \]
-
-\subsubsection*{Laskutapa 1}
-
-Tavallisin tapa laskea binomikerroin on
-käyttää kaavaa
-\[ {n \choose k}  = \frac{n!}{k!(n-k)!} .\]
-Esimerkiksi
-\[ {5 \choose 2} = \frac{5!}{2!3!} = \frac{120}{12} = 10. \]
-Huomaa myös, että
-\[ {n \choose k} = {n \choose n-k},\]
-koska $k$ alkion valinta osajoukkoon tarkoittaa
-samalla $n-k$ alkion valintaa osajoukon ulkopuolelle.
-
-\subsubsection*{Laskutapa 2}
-
-Binomikertoimen voi myös laskea rekursiivisesti kaavalla
-
-\[  {n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}.  \]
-
-Pohjatapauksina ${n \choose 0} = 1$,
-koska tyhjän osajoukon voi muodostaa aina tasan yhdellä tavalla,
-ja ${n \choose k} = 0$, jos $k>n$,
-koska $n$ alkiosta ei ole mahdollista valita
-yli $n$ alkion osajoukkoa.
-
-Rekursion voi perustella tarkastelemalla yksittäistä
-joukon alkiota $x$. Jos alkio $x$ valitaan osajoukkoon,
-täytyy vielä valita $n-1$ alkiosta $k-1$ alkiota.
-Jos taas alkiota $x$ ei valita,
-täytyy vielä valita $n-1$ alkiosta $k$ alkiota.
-
-\subsubsection*{Multinomikerroin}
-
-Binomikertoimen yleistys on multinomikerroin
-
-\[ {n \choose k_1,k_2,\ldots,k_m} = \frac{n!}{k_1! k_2! \cdots k_m!}, \]
-
-missä $k_1+k_2+\cdots+k_m=n$.
-Multinomikerroin ilmaisee, monellako tavalla $n$ alkiota voidaan jakaa osajoukkoihin,
-joiden koot ovat $k_1,k_2,\ldots,k_m$.
-Jos $m=2$, niin multinomikertoimen kaava vastaa binomikertoimen kaavaa.
 
 \subsubsection*{Hatut ja pallot}
 
