@@ -59,14 +59,20 @@ Koska lukujen järjestyksellä osajoukossa
 ja osajoukon ulkopuolella ei ole väliä,
 tulos jaetaan luvuilla $k!$ ja $(n-k)!$.
 
-Huomaa myös, että 
+\subsubsection{Ominaisuuksia}
+
+Binomikertoimelle pätee
 \[
 {n \choose k}  =  {n \choose n-k},
 \]
-koska voidaan joko valita alkioita
-osajoukkoon tai osajoukon ulkopuolelle.
+koska $k$ alkion valinta $n$ alkiosta
+tarkoittaa samaa kuin että valitaan
+$n-k$ alkiota, joita ei oteta mukaan.
 
-\subsubsection{Sovelluksia}
+Binomikerrointen summa on
+\[
+{n \choose 0}+{n \choose 1}+{n \choose 2}+\ldots+{n \choose n}=2^n.
+\]
 
 Nimi ''binomikerroin'' tulee siitä, että
 
@@ -100,9 +106,48 @@ kahden yllä olevan luvun summana:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection*{Hatut ja pallot}
+\subsubsection{Laatikot ja pallot}
 
-\subsubsection*{Multinomikerroin}
+Laatikot ja pallot on usein hyödyllinen malli
+kombinatoriikan tehtävissä.
+Siinä $n$ laatikkoon sijoitetaan $k$ palloa.
+Tarkastellaan seuraavaksi kolmea tapausta:
+
+\textit{Tapaus 1}: Kuhunkin laatikkoon saa sijoittaa
+enintään yhden pallon.
+Sijoitustapojen määrä on ${n \choose k}$.
+
+\textit{Tapaus 2}: Samaan laatikkoon saa sijoittaa
+monta palloa.
+Sijoitustapojen määrä on ${n+k-1 \choose k}$.
+
+Prosessin voi kuvata merkkijonona, joka muodostuu
+merkeistä ''o'' ja ''$\rightarrow$''.
+Pallojen sijoittaminen alkaa
+vasemmanpuoleisimmasta laatikosta.
+Merkki ''o'' tarkoittaa, että pallo sijoitetaan
+nykyiseen laatikkoon, ja merkki
+''$\rightarrow$'' tarkoittaa, että siirrytään
+seuraavaan laatikkoon.
+
+Nyt jokainen sijoitustapa on merkkijono, jossa
+on $k$ kertaa merkki ''o'' ja $n-1$ kertaa
+merkki ''$\rightarrow$''.
+Niinpä sijoitustapojen määrä on ${n+k-1 \choose k}$.
+
+\textit{Tapaus 3}: Kuhunkin laatikkoon saa sijoittaa
+enintään yhden pallon ja lisäksi missään kahdessa
+vierekkäisessä laatikossa ei saa olla palloa.
+Sijoitustapojen määrä on ${n-k+1 \choose n-2k+1}$.
+
+Tässä tapauksessa voi ajatella, että $k$ palloa
+ovat laatikoissaan ja joka välissä on ainakin
+yksi tyhjä laatikko.
+Niinpä jää valittavaksi $n-k-(k-1)=n-2k+1$ laatikon paikat.
+Mahdollisia välejä on $k+1$, joten tapauksen 2 perusteella
+sijoitustapoja on ${k+1+n-2k+1-1 \choose n-2k+1} = {n-k+1 \choose n-2k+1}$.
+
+\subsubsection{Multinomikerroin}
 
 Binomikertoimen yleistys on multinomikerroin
 
@@ -195,7 +240,50 @@ kaikkiaan ${2n \choose n+1}$, joten kelvollisten
 sulkulausekkeiden määrä voidaan laskea kaavalla
 \[{2n \choose n}-{2n \choose n+1} = {2n \choose n} - \frac{n}{n+1} {2n \choose n} = \frac{1}{n+1} {2n \choose n}.\]
 
-\subsubsection{Sovelluksia}
+\subsubsection{Binääripuut}
+
+Toinen tulkinta Catalanin luvuille on,
+että $C_n$ on $n$ alkion binääripuiden määrä.
+Esimerkiksi $C_3=5$ ja vastaavat binääripuut ovat:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (a1) at (0,0) {\phantom{0}};
+\node[draw, circle] (a2) at (-1,-1) {\phantom{0}};
+\node[draw, circle] (a3) at (1,-1) {\phantom{0}};
+\path[draw,thick,-] (a1) -- (a2);
+\path[draw,thick,-] (a1) -- (a3);
+
+\node[draw, circle] (b1) at (4,0) {\phantom{0}};
+\node[draw, circle] (b2) at (4-0.75,-1) {\phantom{0}};
+\node[draw, circle] (b3) at (4-1.5,-2) {\phantom{0}};
+\path[draw,thick,-] (b1) -- (b2);
+\path[draw,thick,-] (b2) -- (b3);
+
+\node[draw, circle] (c1) at (6.5,0) {\phantom{0}};
+\node[draw, circle] (c2) at (6.5-0.75,-1) {\phantom{0}};
+\node[draw, circle] (c3) at (6.5-0,-2) {\phantom{0}};
+\path[draw,thick,-] (c1) -- (c2);
+\path[draw,thick,-] (c2) -- (c3);
+
+\node[draw, circle] (d1) at (9,0) {\phantom{0}};
+\node[draw, circle] (d2) at (9+0.75,-1) {\phantom{0}};
+\node[draw, circle] (d3) at (9-0,-2) {\phantom{0}};
+\path[draw,thick,-] (d1) -- (d2);
+\path[draw,thick,-] (d2) -- (d3);
+
+\node[draw, circle] (e1) at (11.5,0) {\phantom{0}};
+\node[draw, circle] (e2) at (11.5+0.75,-1) {\phantom{0}};
+\node[draw, circle] (e3) at (11.5+1.5,-2) {\phantom{0}};
+\path[draw,thick,-] (e1) -- (e2);
+\path[draw,thick,-] (e2) -- (e3);
+\end{tikzpicture}
+\end{center}
+
+Binääripuiden määrä on
+\[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1},\]
+missä $i$ on vasemman alipuun koko ja 
+$n-i-1$ on oikean alipuun koko.
 
 \section{Inkluusio-ekskluusio}
 
