@@ -3,8 +3,8 @@
 Kombinatoriikka tarkoittaa yhdistelmien määrän laskemista.
 Tavoitteena on yleensä laskea yhdistelmät
 tehokkaasti niin, että jokaista yhdistelmää
-ei tarvitse muodostaa erikseen, vaan yhteismäärän
-saa selville tehokkaammin hyödyntämällä säännöllisyyksiä ja
+ei tarvitse muodostaa erikseen, vaan yhdistelmien määrän
+saa selville hyödyntämällä säännöllisyyksiä ja
 dynaamista ohjelmointia.
 
 \section{Perustekniikat}
@@ -205,11 +205,81 @@ Tarkastellaan seuraavaksi kolmea tapausta:
 
 \textit{Tapaus 1}: Kuhunkin laatikkoon saa sijoittaa
 enintään yhden pallon.
-Sijoitustapojen määrä on ${n \choose k}$.
+Esimerkiksi kun $n=5$ ja $k=2$,
+sijoitustapoja on 10:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\newcommand\lax[3]{
+\path[draw,thick,-] (#1-0.5,#2+0.5) -- (#1-0.5,#2-0.5) --
+                    (#1+0.5,#2-0.5) -- (#1+0.5,#2+0.5);
+\ifthenelse{\equal{#3}{1}}{\draw[fill=black] (#1,#2-0.3) circle (0.15);}{}
+\ifthenelse{\equal{#3}{2}}{\draw[fill=black] (#1-0.2,#2-0.3) circle (0.15);}{}
+\ifthenelse{\equal{#3}{2}}{\draw[fill=black] (#1+0.2,#2-0.3) circle (0.15);}{}
+}
+\newcommand\laa[7]{
+    \lax{#1}{#2}{#3}
+    \lax{#1+1.2}{#2}{#4}
+    \lax{#1+2.4}{#2}{#5}
+    \lax{#1+3.6}{#2}{#6}
+    \lax{#1+4.8}{#2}{#7}
+}
+
+\laa{0}{0}{1}{1}{0}{0}{0}
+\laa{0}{-2}{1}{0}{1}{0}{0}
+\laa{0}{-4}{1}{0}{0}{1}{0}
+\laa{0}{-6}{1}{0}{0}{0}{1}
+\laa{8}{0}{0}{1}{1}{0}{0}
+\laa{8}{-2}{0}{1}{0}{1}{0}
+\laa{8}{-4}{0}{1}{0}{0}{1}
+\laa{16}{0}{0}{0}{1}{1}{0}
+\laa{16}{-2}{0}{0}{1}{0}{1}
+\laa{16}{-4}{0}{0}{0}{1}{1}
+
+\end{tikzpicture}
+\end{center}
+
+Tässä tapauksessa vastauksen kertoo suoraan binomikerroin ${n \choose k}$.
 
 \textit{Tapaus 2}: Samaan laatikkoon saa sijoittaa
 monta palloa.
-Sijoitustapojen määrä on ${n+k-1 \choose k}$.
+Esimerkiksi kun $n=5$ ja $k=2$, sijoitustapoja on 15:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\newcommand\lax[3]{
+\path[draw,thick,-] (#1-0.5,#2+0.5) -- (#1-0.5,#2-0.5) --
+                    (#1+0.5,#2-0.5) -- (#1+0.5,#2+0.5);
+\ifthenelse{\equal{#3}{1}}{\draw[fill=black] (#1,#2-0.3) circle (0.15);}{}
+\ifthenelse{\equal{#3}{2}}{\draw[fill=black] (#1-0.2,#2-0.3) circle (0.15);}{}
+\ifthenelse{\equal{#3}{2}}{\draw[fill=black] (#1+0.2,#2-0.3) circle (0.15);}{}
+}
+\newcommand\laa[7]{
+    \lax{#1}{#2}{#3}
+    \lax{#1+1.2}{#2}{#4}
+    \lax{#1+2.4}{#2}{#5}
+    \lax{#1+3.6}{#2}{#6}
+    \lax{#1+4.8}{#2}{#7}
+}
+
+\laa{0}{0}{2}{0}{0}{0}{0}
+\laa{0}{-2}{1}{1}{0}{0}{0}
+\laa{0}{-4}{1}{0}{1}{0}{0}
+\laa{0}{-6}{1}{0}{0}{1}{0}
+\laa{0}{-8}{1}{0}{0}{0}{1}
+\laa{8}{0}{0}{2}{0}{0}{0}
+\laa{8}{-2}{0}{1}{1}{0}{0}
+\laa{8}{-4}{0}{1}{0}{1}{0}
+\laa{8}{-6}{0}{1}{0}{0}{1}
+\laa{8}{-8}{0}{0}{2}{0}{0}
+\laa{16}{0}{0}{0}{1}{1}{0}
+\laa{16}{-2}{0}{0}{1}{0}{1}
+\laa{16}{-4}{0}{0}{0}{2}{0}
+\laa{16}{-6}{0}{0}{0}{1}{1}
+\laa{16}{-8}{0}{0}{0}{0}{2}
+
+\end{tikzpicture}
+\end{center}
 
 Prosessin voi kuvata merkkijonona, joka muodostuu
 merkeistä ''o'' ja ''$\rightarrow$''.
@@ -223,17 +293,46 @@ seuraavaan laatikkoon.
 Nyt jokainen sijoitustapa on merkkijono, jossa
 on $k$ kertaa merkki ''o'' ja $n-1$ kertaa
 merkki ''$\rightarrow$''.
+Esimerkiksi sijoitustapaa
+ylhäällä oikealla
+vastaa merkkijono ''$\rightarrow$ $\rightarrow$ o $\rightarrow$ o $\rightarrow$''.
 Niinpä sijoitustapojen määrä on ${n+k-1 \choose k}$.
 
 \textit{Tapaus 3}: Kuhunkin laatikkoon saa sijoittaa
 enintään yhden pallon ja lisäksi missään kahdessa
 vierekkäisessä laatikossa ei saa olla palloa.
-Sijoitustapojen määrä on ${n-k+1 \choose n-2k+1}$.
+Esimerkiksi kun $n=5$ ja $k=2$, sijoitustapoja on 6:
 
-Tässä tapauksessa voi ajatella, että $k$ palloa
-ovat laatikoissaan ja joka välissä on ainakin
-yksi tyhjä laatikko.
-Niinpä jää valittavaksi $n-k-(k-1)=n-2k+1$ laatikon paikat.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\newcommand\lax[3]{
+\path[draw,thick,-] (#1-0.5,#2+0.5) -- (#1-0.5,#2-0.5) --
+                    (#1+0.5,#2-0.5) -- (#1+0.5,#2+0.5);
+\ifthenelse{\equal{#3}{1}}{\draw[fill=black] (#1,#2-0.3) circle (0.15);}{}
+\ifthenelse{\equal{#3}{2}}{\draw[fill=black] (#1-0.2,#2-0.3) circle (0.15);}{}
+\ifthenelse{\equal{#3}{2}}{\draw[fill=black] (#1+0.2,#2-0.3) circle (0.15);}{}
+}
+\newcommand\laa[7]{
+    \lax{#1}{#2}{#3}
+    \lax{#1+1.2}{#2}{#4}
+    \lax{#1+2.4}{#2}{#5}
+    \lax{#1+3.6}{#2}{#6}
+    \lax{#1+4.8}{#2}{#7}
+}
+
+\laa{0}{0}{1}{0}{1}{0}{0}
+\laa{0}{-2}{1}{0}{0}{1}{0}
+\laa{8}{0}{1}{0}{0}{0}{1}
+\laa{8}{-2}{0}{1}{0}{1}{0}
+\laa{16}{0}{0}{1}{0}{0}{1}
+\laa{16}{-2}{0}{0}{1}{0}{1}
+\end{tikzpicture}
+\end{center}
+
+Tässä tapauksessa voi ajatella, että alussa $k$ palloa
+ovat laatikoissaan ja joka välissä on yksi tyhjä laatikko.
+Tämän jälkeen jää valittavaksi $n-k-(k-1)=n-2k+1$ tyhjän laatikon paikat.
 Mahdollisia välejä on $k+1$, joten tapauksen 2 perusteella
 sijoitustapoja on ${k+1+n-2k+1-1 \choose n-2k+1} = {n-k+1 \choose n-2k+1}$.
 
