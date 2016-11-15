@@ -1,22 +1,106 @@
 \chapter{Kombinatoriikka}
-% 
-% Kombinatoriikka tarkoittaa yhdistelmien määrän laskemista.
-% Tavoitteena on yleensä laskea yhdistelmät
-% tehokkaasti niin, että jokaista yhdistelmää
-% ei tarvitse muodostaa erikseen, vaan yhteismäärän
-% saa selville tehokkaammin hyödyntämällä säännöllisyyksiä ja
-% dynaamista ohjelmointia.
+
+Kombinatoriikka tarkoittaa yhdistelmien määrän laskemista.
+Tavoitteena on yleensä laskea yhdistelmät
+tehokkaasti niin, että jokaista yhdistelmää
+ei tarvitse muodostaa erikseen, vaan yhteismäärän
+saa selville tehokkaammin hyödyntämällä säännöllisyyksiä ja
+dynaamista ohjelmointia.
 
 \section{Perustekniikat}
 
+\subsubsection{Summat ja tulot}
+
+Summa kertoo yhdistelmien määrän,
+kun on olemassa useita vaihtoehtoja
+ja niistä valitaan yksi.
+Tulo kertoo puolestaan yhdistelmien määrän,
+kun tehdään joukko peräkkäisiä valintoja.
+
+\begin{task}
+Ravintolassa A on 4 alkuruokaa,
+7 pääruokaa ja 3 jälkiruokaa.
+Ravintolassa B on 6 alkuruokaa,
+8 pääruokaa ja 2 jälkiruokaa.
+Montako menua on olemassa (alkuruoka, pääruoka, jälkiruoka)?
+\end{task}
+
+Ravintolassa A menuja on $4 \cdot 7 \cdot 3 = 84$
+ja ravintolassa B menuja on $6 \cdot 8 \cdot 2 = 96$.
+Niinpä menuja on yhteensä $84+96=180$.
+
+\subsubsection{Merkkijonot}
+
+On $k^n$ tapaa muodostaa $n$ merkin pituinen merkkijono,
+kun käytössä on $k$ merkkiä,
+koska jokaisessa merkkijonon kohdassa merkin valintaan
+on $k$ vaihtoehtoa.
+Esimerkiksi on $2^3=8$ tapaa muodostaa kolmen merkin pituinen
+bittijono:
+000, 001, 010, 011, 100, 101, 110 ja 111.
+
+\subsubsection{Permutaatiot}
+
+Kertoma $n!$ ilmaisee, monellako tavalla voidaan
+järjestää $n$ alkiota
+eli muodostaa $n$ alkion permutaatio.
+Tämä perustuu siihen, että ensimmäisen
+alkion voi valita $n$ tavalla,
+seuraavan $n-1$ tavalla, jne.
+Esimerkiksi merkkijonolla \texttt{abc} on
+$3!=6$ permutaatiota:
+\texttt{abc},
+\texttt{acb},
+\texttt{bac},
+\texttt{bca},
+\texttt{cab} ja
+\texttt{cba}.
+
+\subsubsection{Rekursio}
+
+Kombinatorisen tehtävän ratkaisun voi usein esittää
+rekursiivisena funktiona.
+Tämän jälkeen ratkaisun voi laskea tehokkaasti
+dynaamisella ohjelmoinnilla.
+Näin on esimerkiksi seuraavassa tehtävässä:
+
+\begin{task}
+Monellako tavalla luvun $n$ voi esittää positiivisten
+kokonaislukujen summana?
+Esimerkiksi luvun 4 voi esittää 8 tavalla:
+$1+1+1+1$, $1+1+2$, $1+2+1$, $2+1+1$,
+$2+2$, $3+1$, $1+3$ ja $4$.
+\end{task}
+
+Merkitään $f(n)$:llä esitystapojen määrää luvulle $n$,
+eli esimerkiksi $f(4)=8$.
+Funktion voi laskea rekursiivisesti seuraavasti:
+\begin{equation*}
+    f(n) = \begin{cases}
+               1               & n = 0\\
+               f(0)+f(1)+\ldots+f(n-1) & n > 0\\
+           \end{cases}
+\end{equation*}
+Seuraava koodi muodostaa dynaamisen ohjelmoinnin avulla
+taulukon \texttt{d}, jossa $\texttt{d}[k]=f(k)$,
+kun $k=0,1,\ldots,n$:
+\begin{lstlisting}
+d[0] = 1;
+for (int i = 1; i <= n; i++) {
+    for (int j = 0; j < n; j++) {
+        d[i] += d[j];
+    }
+}
+\end{lstlisting}
+
 \section{Binomikerroin}
 
-Binomikerroin ${n \choose k}$ ilmaisee, montako
-$k$ alkion osajoukkoa $n$ alkion joukosta
-voidaan muodostaa.
+Binomikerroin ${n \choose k}$ ilmaisee,
+monellako tavalla $n$ alkion joukosta
+voidaan muodostaa $k$ alkion osajoukko.
 Esimerkiksi ${5 \choose 2}=10$,
-koska 5 alkion joukosta $\{A,B,C,D,E\}$
-voidaan muodostaa seuraavat 10 osajoukkoa, joissa on 2 alkiota:
+koska alkioista $\{A,B,C,D,E\}$
+voidaan valita $10$ tavalla $2$ alkiota:
 \[ \{A,B\}, \{A,C\}, \{A,D\}, \{A,E\}, \{B,C\}, 
 \{B,D\}, \{B,E\}, \{C,D\}, \{C,E\}, \{D,E\} \]
 
@@ -32,7 +116,7 @@ Ideana rekursiossa on tarkastella tiettyä
 joukon alkiota $x$.
 Jos alkio $x$ valitaan osajoukkoon,
 täytyy vielä valita $n-1$ alkiosta $k-1$ alkiota.
-Jos taas alkiota $x$ ei valita,
+Jos taas alkiota $x$ ei valita osajoukkoon,
 täytyy vielä valita $n-1$ alkiosta $k$ alkiota.
 
 Rekursion pohjatapaukset ovat seuraavat:
@@ -41,9 +125,9 @@ Rekursion pohjatapaukset ovat seuraavat:
 {n \choose 0}  =  {n \choose n} = 1
 \]
 
-Selityksenä on, että tyhjän osajoukon voi muodostaa
-aina yhdellä tavalla, samoin kuin osajoukon,
-jossa on kaikki joukon alkiot.
+Selityksenä on, että on aina yksi tapa
+muodostaa tyhjä osajoukko,
+samoin kuin valita kaikki alkiot osajoukkoon.
 
 \subsubsection{Laskutapa 2}
 
@@ -51,12 +135,13 @@ Toinen tapa laskea binomikerroin on seuraava:
 \[
 {n \choose k}  =  \frac{n!}{k!(n-k)!}.
 \]
-Kaavassa $n!$ on $n$ alkion joukon permutaatioiden määrä.
-Ideana on käydä läpi joukon permutaatiot
+Kaavassa $n!$ on $n$ alkion permutaatioiden määrä.
+Ideana on käydä läpi kaikki permutaatiot
 ja valita kussakin tapauksessa
-permutaation $k$ ensimmäistä lukua osajoukkoon.
-Koska lukujen järjestyksellä osajoukossa
-ja osajoukon ulkopuolella ei ole väliä,
+permutaation $k$ ensimmäistä alkiota osajoukkoon.
+Koska ei ole merkitystä,
+missä järjestyksessä osajoukon alkiot
+ja ulkopuoliset alkiot ovat,
 tulos jaetaan luvuilla $k!$ ja $(n-k)!$.
 
 \subsubsection{Ominaisuuksia}
@@ -65,9 +150,9 @@ Binomikertoimelle pätee
 \[
 {n \choose k}  =  {n \choose n-k},
 \]
-koska $k$ alkion valinta $n$ alkiosta
+koska $k$ alkion valinta osajoukkoon
 tarkoittaa samaa kuin että valitaan
-$n-k$ alkiota, joita ei oteta mukaan.
+$n-k$ alkiota osajoukon ulkopuolelle.
 
 Binomikerrointen summa on
 \[
@@ -103,6 +188,11 @@ kahden yllä olevan luvun summana:
 \node at (0,-2) {6};
 \node at (1,-2) {4};
 \node at (2,-2) {1};
+\node at (-2,-2.5) {$\ldots$};
+\node at (-1,-2.5) {$\ldots$};
+\node at (0,-2.5) {$\ldots$};
+\node at (1,-2.5) {$\ldots$};
+\node at (2,-2.5) {$\ldots$};
 \end{tikzpicture}
 \end{center}
 
