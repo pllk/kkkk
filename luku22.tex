@@ -360,13 +360,14 @@ kelvolliset sulkulausekkeet
 
 \subsubsection{Sulkulausekkeet}
 
-Sulkulauseke on kelvollinen, jos sen pystyy
-muodostamaan jostakin
-matemaattisesta lausekkeesta poistamalla
+Sulkulauseke on kelvollinen,
+jos sitä vastaa jokin
+matemaattinen lauseke,
+josta on poistettu
 kaikki merkit sulkuja lukuun ottamatta.
-Esimerkiksi sulkulauseke \texttt{(())()}
+Esimerkiksi yllä mainittu sulkulauseke \texttt{(())()}
 on kelvollinen, koska sitä vastaa
-matemaattinen lauseke $(2 \cdot (4+5)+3)\cdot(1+3)$.
+esimerkiksi matemaattinen lauseke $(2 \cdot (4+5)+3)\cdot(1+3)$.
 
 Kelvollisen sulkulausekkeen voi tunnistaa käymällä
 läpi lausekkeen merkit vasemmalta oikealle ja
@@ -374,7 +375,7 @@ pitämällä yllä laskuria, jonka arvo on aluksi 0.
 Merkki \texttt{(} kasvattaa laskuria ja
 merkki \texttt{)} vähentää laskuria.
 Sulkulauseke on kelvollinen, jos laskurin arvo
-on aina vähintään 0 ja lopuksi tasan 0.
+on aina vähintään 0 ja lopuksi tarkalleen 0.
 
 Huomaa myös, että kelvollisen sulkulausekkeen
 jokaisessa alkuosassa alkusulkujen määrä on
@@ -383,20 +384,19 @@ sama tai suurempi kuin loppusulkujen määrä.
 \subsubsection{Laskutapa 1}
 
 Catalanin lukuja voi laskea rekursiivisesti seuraavasti:
-\[ C_n = \sum_{i=1}^{n} C_{i-1} C_{n-i}\]
-Ideana on käydä läpi vaihtoehdot
+\[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1}\]
+Summa käy läpi tavat
 jakaa sulkulauseke kahteen osaan niin,
 että kumpikin osa on kelvollinen sulkulauseke
 ja alkuosa on mahdollisimman lyhyt mutta ei tyhjä.
-Muuttuja $i$ ilmaisee, montako sulkuparia
-alkuosassa on.
-Kunkin vaihtoehdon kohdalla lausekkeiden määrä
+Kunkin vaihtoehdon kohdalla alkuosassa
+on $i+1$ sulkuparia ja lausekkeiden määrä
 saadaan kertomalla keskenään:
 
 \begin{itemize}
-\item $C_{i-1}$: tavat muodostaa sulkulauseke
+\item $C_{i}$: tavat muodostaa sulkulauseke
 alkuosan sulkupareista ulointa sulkuparia lukuun ottamatta
-\item $C_{n-i}$: tavat muodostaa sulkulauseke
+\item $C_{n-i-1}$: tavat muodostaa sulkulauseke
 loppuosan sulkupareista
 \end{itemize}
 Lisäksi pohjatapauksena on $C_0=1$, koska 0
@@ -407,25 +407,29 @@ tyhjän sulkulausekkeen.
 
 Catalanin lukuja voi laskea myös binomikertoimen avulla:
 \[ C_n = \frac{1}{n+1} {2n \choose n}. \]
-Kaavan voi perustella laskemalla, moniko $n$ alkusulkua
-ja $n$ loppusulkua sisältävä sulkulauseke \textit{ei}
-ole kelvollinen.
-Sulkulausekkeita on kaikkiaan ${2n \choose n}$,
-koska lausekkeessa on $2n$ merkkiä ja siitä valitaan
-$n$ kohtaa alkusuluille.
+Kaavan voi perustella seuraavasti:
+
+Kun käytössä on $n$ alkusulkua ja $n$ loppusulkua,
+niistä voi muodostaa kaikkiaan ${2n \choose n}$
+sulkulauseketta.
+Lasketaan seuraavaksi, moniko tällainen
+sulkulauseke \textit{ei} ole kelvollinen.
 
 Jos sulkulauseke ei ole kelvollinen,
-siinä on alkuosa, jossa loppusulkuja on alkusulkuja
-enemmän.
-Ideana on kääntää jokainen tällaisen alkuosan
-sulkumerkki.
+siinä on oltava alkuosa,
+jossa loppusulkuja on alkusulkuja enemmän.
+Muutetaan jokainen tällaisen alkuosan
+sulkumerkki käänteiseksi.
 Esimerkiksi lausekkeessa \texttt{())()(}
-alkuosa on \texttt{())}, joten kääntämisen
+alkuosa on \texttt{())} ja kääntämisen
 jälkeen lausekkeesta tulee \texttt{)((()(}.
 
 Tuloksena olevassa lausekkeessa on $n+1$ alkusulkua
 ja $n-1$ loppusulkua. Tällaisia lausekkeita on
-kaikkiaan ${2n \choose n+1}$, joten kelvollisten
+kaikkiaan ${2n \choose n+1}$,
+joka on sama kuin ei-kelvollisten
+sulkulausekkeiden määrä.
+Niinpä kelvollisten
 sulkulausekkeiden määrä voidaan laskea kaavalla
 \[{2n \choose n}-{2n \choose n+1} = {2n \choose n} - \frac{n}{n+1} {2n \choose n} = \frac{1}{n+1} {2n \choose n}.\]
 
@@ -433,31 +437,37 @@ sulkulausekkeiden määrä voidaan laskea kaavalla
 
 Toinen tulkinta Catalanin luvuille on,
 että $C_n$ on $n$ alkion binääripuiden määrä.
+Tässä tapauksessa summa
+\[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1},\]
+käy läpi tavat muodostaa vasen ja oikea alipuu.
+Kaavassa $i$ on vasemman alipuun koko ja 
+$n-i-1$ on oikean alipuun koko.
+
 Esimerkiksi $C_3=5$ ja vastaavat binääripuut ovat:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (a1) at (0,0) {\phantom{0}};
-\node[draw, circle] (a2) at (-1,-1) {\phantom{0}};
-\node[draw, circle] (a3) at (1,-1) {\phantom{0}};
+\node[draw, circle] (a1) at (0,0) {\phantom{o}};
+\node[draw, circle] (a2) at (-1,-1) {\phantom{o}};
+\node[draw, circle] (a3) at (1,-1) {\phantom{o}};
 \path[draw,thick,-] (a1) -- (a2);
 \path[draw,thick,-] (a1) -- (a3);
 
-\node[draw, circle] (b1) at (4,0) {\phantom{0}};
-\node[draw, circle] (b2) at (4-0.75,-1) {\phantom{0}};
-\node[draw, circle] (b3) at (4-1.5,-2) {\phantom{0}};
+\node[draw, circle] (b1) at (4,0) {\phantom{o}};
+\node[draw, circle] (b2) at (4-0.75,-1) {\phantom{o}};
+\node[draw, circle] (b3) at (4-1.5,-2) {\phantom{o}};
 \path[draw,thick,-] (b1) -- (b2);
 \path[draw,thick,-] (b2) -- (b3);
 
-\node[draw, circle] (c1) at (6.5,0) {\phantom{0}};
-\node[draw, circle] (c2) at (6.5-0.75,-1) {\phantom{0}};
-\node[draw, circle] (c3) at (6.5-0,-2) {\phantom{0}};
+\node[draw, circle] (c1) at (6.5,0) {\phantom{o}};
+\node[draw, circle] (c2) at (6.5-0.75,-1) {\phantom{o}};
+\node[draw, circle] (c3) at (6.5-0,-2) {\phantom{o}};
 \path[draw,thick,-] (c1) -- (c2);
 \path[draw,thick,-] (c2) -- (c3);
 
-\node[draw, circle] (d1) at (9,0) {\phantom{0}};
-\node[draw, circle] (d2) at (9+0.75,-1) {\phantom{0}};
-\node[draw, circle] (d3) at (9-0,-2) {\phantom{0}};
+\node[draw, circle] (d1) at (9,0) {\phantom{o}};
+\node[draw, circle] (d2) at (9+0.75,-1) {\phantom{o}};
+\node[draw, circle] (d3) at (9-0,-2) {\phantom{o}};
 \path[draw,thick,-] (d1) -- (d2);
 \path[draw,thick,-] (d2) -- (d3);
 
@@ -469,10 +479,6 @@ Esimerkiksi $C_3=5$ ja vastaavat binääripuut ovat:
 \end{tikzpicture}
 \end{center}
 
-Binääripuiden määrä on
-\[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1},\]
-missä $i$ on vasemman alipuun koko ja 
-$n-i-1$ on oikean alipuun koko.
 
 \section{Inkluusio-ekskluusio}
 
