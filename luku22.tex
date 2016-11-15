@@ -701,15 +701,16 @@ Esimerkiksi kun helminauhan pituus on 4
 ja värejä on 3, helminauhoja on
 \[\frac{3^4+3+3^2+3}{4} = 24. \]
 
-\section{Numeroidut puut}
+\section{Cayleyn kaava}
 
-Laskemme lopuksi, montako numeroitua puuta $n$ solmusta
-voi muodostaa.
-Tässä laskentatehtävässä puun solmut on numeroitu
-ja kaksi puuta ovat erilaiset, jos niiden rakenne
-tai numerointi on eri.
+Cayleyn kaavan mukaan $n$ solmusta voi
+muodostaa $n^{n-2}$ numeroitua puuta.
+Puun solmut on numeroitu $1,2,\ldots,n$,
+ja kaksi puuta ovat erilaiset,
+jos niiden rakenne on erilainen
+tai niissä on eri numerointi.
 
-Esimerkiksi jos $n=4$, numeroitujen puiden määrä on 16:
+Esimerkiksi kun $n=4$, numeroitujen puiden määrä on $4^{4-2}=16$:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -752,10 +753,9 @@ Esimerkiksi jos $n=4$, numeroitujen puiden määrä on 16:
 \end{tikzpicture}
 \end{center}
 
-Osoittautuu, että $n$ solmusta voi muodostaa $n^{n-2}$
-numeroitua puuta (esimerkiksi yllä $4^2=16$).
-Tämä tulos tunnetaan nimellä Cayleyn kaava,
-ja sen voi perustella Prüfer-koodin avulla.
+Seuraavaksi näemme, miten Cayleyn kaavan
+voi perustella samastamalla numeroidut puut
+Prüfer-koodeihin.
 
 \subsubsection{Prüfer-koodi}
 
