@@ -376,102 +376,195 @@ Esimerkiksi
 }_{I}.
 \]
 
-\section{Dynaaminen ohjelmointi}
+\section{Lineaariset rekursioyhtälöt}
 
-Matriisien ja tehokkaan potenssilaskun hyötynä on,
-että tietyt dynaamisen ohjelmoinnin ratkaisut
-voi esittää matriisimuodossa.
-Niinpä tehokkaan potenssilaskun avulla
-aikavaativuuden lineaarisesta
-kertoimesta tulee logaritminen.
+Lineaarinen rekursioyhtälö 
+voidaan esittää funktiona $f(n)$,
+jolle on annettu alkuarvot
+$f(0),f(1),\ldots,f(k-1)$
+ja jonka suuremmat arvot
+parametrista $k$ lähtien lasketaan
+rekursiivisesti kaavalla
+\[f(n) = c_1 f(n-1) + c_2 f(n-2) + \ldots + c_k f (n-k),\]
+missä $c_1,c_2,\ldots,c_k$ ovat vakiokertoimia.
 
-Tarkastellaan esimerkkinä tästä
-Fibonaccin lukujen laskemista.
-Tavallinen rekursiivinen kaava on:
+Funktion arvon $f(n)$ voi laskea dynaamisella
+ohjelmoinnilla ajassa $O(kn)$
+laskemalla kaikki arvot $f(0),f(1),\ldots,f(n)$ järjestyksessä.
+Tätä ratkaisua voi kuitenkin tehostaa merkittävästi
+matriisien avulla.
+Opimme seuraavaksi, miten arvon $f(n)$
+voi laskea ajassa $O(k^3 \log n)$.
+
+\subsubsection{Fibonaccin luvut}
+
+Yksinkertainen esimerkki lineaarisesta rekursioyhtälöstä
+on Fibonaccin luvut määrittelevä funktio:
 \[
 \begin{array}{lcl}
-F_0 & = & 0 \\
-F_1 & = & 1 \\
-F_n & = & F_{n-2}+F_{n-1} \\
+f(0) & = & 0 \\
+f(1) & = & 1 \\
+f(n) & = & f(n-1)+f(n-2) \\
 \end{array}
 \]
+Tässä tapauksessa $k=2$ ja $c_1=c_2=1$.
 
-Matriisimuodossa asian voi esittää näin:
+Ideana on esittää rekursiivinen kaava $k \times k$
+-kokoisena neliömatriisina $X$, jolle pätee
 
-\[
-X=\left( \begin{array}{cc}
-0 & 1 \\
-1 & 1 \end{array} \right)
-\]
-\[
-X \cdot
-\left( \begin{array}{c}
-F_k \\
-F_{k+1} \end{array} \right)
+\[ X \cdot
+ \begin{bmatrix}
+  f(i) \\
+  f(i+1) \\
+ \end{bmatrix}
 =
-\left( \begin{array}{c}
-F_{k+1} \\
-F_{k+2} \end{array} \right)
+ \begin{bmatrix}
+  f(i+1) \\
+  f(i+2) \\
+ \end{bmatrix}.
+ \]
+Tämä tarkoittaa, että matriisille $X$ annetaan
+''syötteenä'' $k$ peräkkäistä funktion $f$ arvoa
+kohdasta $i$ alkaen ja kertolaskun tuloksena
+on $k$ peräkkäistä arvoa kohdasta $i+1$ alkaen.
+Fibonaccin lukujen tapauksessa tällainen matriisi on
+
+\[ X = 
+ \begin{bmatrix}
+  0 & 1 \\
+  1 & 1 \\
+ \end{bmatrix}.
 \]
 
-Ideana on,
-että jos $2 \times 1$ -matriisissa
-on peräkkäiset Fibonaccin luvut $F_k$ ja $F_{k+1}$,
-kertominen matriisilla $X$
-tuottaa uuden matriisin,
-jossa on peräkkäiset Fibonaccin luvut
-$F_{k+1}$ ja $F_{k+2}$. Esimerkiksi
+Esimerkiksi
+
 \[
-X\cdot
-\left( \begin{array}{c}
-F_5 \\
-F_6 \end{array} \right)
-= 
-\left( \begin{array}{cc}
-0 & 1 \\
-1 & 1 \end{array} \right)
+ \begin{bmatrix}
+  0 & 1 \\
+  1 & 1 \\
+ \end{bmatrix}
 \cdot
-\left( \begin{array}{c}
-5 \\
-8 \end{array} \right)
-= \left( \begin{array}{c}
-0\cdot5+1\cdot8 \\
-1\cdot5+1\cdot8 \end{array} \right)
-= \left( \begin{array}{c}
-8 \\
-13 \end{array} \right)
-= \left( \begin{array}{c}
-F_6 \\
-F_7 \end{array} \right).
-\]
-
-Tämän ansiosta arvon $F_n$ sisältävän matriisin saa laskettua
-
-\[
-\left( \begin{array}{c}
-F_n \\
-F_{n+1} \end{array} \right)
-= X^n\cdot
-\left( \begin{array}{c}
-F_0 \\
-F_1 \end{array} \right)
+ \begin{bmatrix}
+  f(5) \\
+  f(6) \\
+ \end{bmatrix}
 =
-\left( \begin{array}{cc}
-0 & 1 \\
-1 & 1 \end{array} \right)^n
+ \begin{bmatrix}
+  0 & 1 \\
+  1 & 1 \\
+ \end{bmatrix}
 \cdot
-\left( \begin{array}{c}
-0 \\
-1 \end{array} \right).
+ \begin{bmatrix}
+  5 \\
+  8 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  8 \\
+  13 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  f(6) \\
+  f(7) \\
+ \end{bmatrix}.
 \]
 
-Matriisin potenssilasku onnistuu ajassa $O(\log n)$,
-joten tällä tekniikalla Fibonaccin luvun $F_n$
-pystyy laskemaan ajassa $O(\log n)$.
-Samaa ideaa voi myös soveltaa aina,
-kun rekursiivisen funktion seuraava arvo
-saadaan laskemalla yhteen kiinteä määrä
-edellisiä arvoja sopivilla kertoimilla.
+Tämän ansiosta arvon $f(n)$ sisältävän matriisin saa laskettua
+kaavalla
+
+\[
+ \begin{bmatrix}
+  f(n) \\
+  f(n+1) \\
+ \end{bmatrix}
+=
+X^n \cdot
+ \begin{bmatrix}
+  f(0) \\
+  f(1) \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  0 & 1 \\
+  1 & 1 \\
+ \end{bmatrix}^n
+\cdot
+ \begin{bmatrix}
+  0 \\
+  1 \\
+ \end{bmatrix}.
+\]
+
+Potenssilasku $X^n$ onnistuu ajassa
+$O(k^3 \log n)$,
+joten myös funktion arvon $f(n)$
+saa laskettua ajassa $O(k^3 \log n)$.
+
+\subsubsection{Yleinen tapaus}
+
+Tarkastellaan sitten yleistä tapausta,
+missä $f(n)$ on mikä tahansa lineaarinen
+rekursioyhtälö. Nyt tavoitteena on etsiä
+matriisi $X$, jolle pätee
+
+\[ X \cdot
+ \begin{bmatrix}
+  f(i) \\
+  f(i+1) \\
+  \vdots \\
+  f(i+k-1) \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  f(i+1) \\
+  f(i+2) \\
+  \vdots \\
+  f(i+k) \\
+ \end{bmatrix}.
+\]
+
+Tällainen matriisi on
+
+\[
+X =
+ \begin{bmatrix}
+  0 & 1 & 0 & 0 & \cdots & 0 \\
+  0 & 0 & 1 & 0 & \cdots & 0 \\
+  0 & 0 & 0 & 1 & \cdots & 0 \\
+  \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+  0 & 0 & 0 & 0 & \cdots & 1 \\
+  c_k & c_{k-1} & c_{k-2} & c_{k-3} & \cdots & c_1 \\
+ \end{bmatrix}.
+\]
+Matriisin $k-1$ ensimmäisen rivin jokainen alkio on 0,
+paitsi yksi alkio on 1.
+Näiden rivien tarkoituksena on kopioida
+arvo $f(i+1)$ arvon $f(i)$ tilalle,
+arvo $f(i+2)$ arvon $f(i+1)$ tilalle jne.
+Viimeinen rivi sisältää rekursiokaavan kertoimet,
+joiden avulla muodostuu uusi arvo $f(i+k)$.
+
+Nyt arvon $f(n)$ pystyy laskemaan ajassa $O(k^3 \log n)$
+kaavalla
+
+\[
+ \begin{bmatrix}
+  f(n) \\
+  f(n+1) \\
+  \vdots \\
+  f(n+k-1) \\
+ \end{bmatrix}
+=
+X^n \cdot
+ \begin{bmatrix}
+  f(0) \\
+  f(1) \\
+  \vdots \\
+  f(k-1) \\
+ \end{bmatrix}.
+\]
+
 
 \section{Verkko matriisina}
 
