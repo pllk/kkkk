@@ -8,24 +8,18 @@ Osoittautuu, että jos dynaamisen ohjelmoinnin rekursiossa
 lasketaan yhteen kiinteä määrä aiempia arvoja
 vakiokertoimilla,
 
-\section{Laskutoimitukset}
+\section{Käsitteitä}
 
-\textit{Matriisi} on
-kaksiulotteista taulukkoa
-vastaava matemaattinen käsite,
-jolle on määritelty laskutoimituksia
-samaan tapaan kuin luvuille.
-
-Olkoon $X$ matriisi, jonka koko on $n \times m$,
+Olkoon $M$ matriisi, jonka koko on $n \times m$,
 missä $n$ on korkeus (rivien määrä)
 ja $m$ on leveys (sarakkeiden määrä).
-Merkintä $X[i,j]$ tarkoittaa matriisin alkiota,
+Merkintä $M[i,j]$ tarkoittaa matriisin alkiota,
 joka on rivillä $i$ sarakkeessa $j$,
 kun $1 \le i \le n$ ja $1 \le j \le m$.
 
 Esimerkiksi matriisin
 \[
-A = 
+M = 
  \begin{bmatrix}
   6 & 13 & 7 & 4 \\
   7 & 0 & 8 & 2 \\
@@ -35,16 +29,31 @@ A =
 
 koko on $3 \times 4$,
 eli sen korkeus on 3 ja leveys on 4.
-Esimerkiksi $A[2,3]=8$,
+Esimerkiksi $M[2,3]=8$,
 koska rivillä 2 sarakkeessa 3
 on luku 8.
 
-Matriisi on \textit{neliömatriisi}, jos $n=m$ eli
-matriisin korkeus ja leveys ovat samat.
+Matriisin $M$ \textit{transpoosi} $M^T$ syntyy,
+kun matriisin rivit ja sarakkeet vaihdetaan keskenään
+eli $M^T[i,j]=M[j,i]$.
+Esimerkiksi yllä olevan matriisin transpoosi
+on seuraava:
+\[
+M^T = 
+ \begin{bmatrix}
+  6 & 7 & 9 \\
+  13 & 0 & 5 \\
+  7 & 8 & 4 \\
+  4 & 2 & 18 \\
+ \end{bmatrix}
+\]
+
+Matriisi $M$ on \textit{neliömatriisi}, jos matriisi
+on kokoa $n \times n$ eli sen korkeus ja leveys ovat samat.
 Esimerkiksi seuraava matriisi on neliömatriisi:
 
 \[
-A = 
+M = 
  \begin{bmatrix}
   3 & 12 & 4  \\
   5 & 9 & 15  \\
@@ -52,15 +61,15 @@ A =
  \end{bmatrix}
 \]
 
-\subsubsection{Yhteenlasku}
+\subsubsection{Matriisisumma}
 
-Matriisien $A$ ja $B$ yhteenlasku $A+B$ on määritelty,
+Matriisien $A$ ja $B$ summa $A+B$ on määritelty,
 jos matriisit ovat yhtä suuret.
-Tuloksena on matriisi $C=A+B$,
-joka on yhtä suuri kuin matriisit $A$ ja $B$.
-Matriisin $C$ alkiot lasketaan kaavalla
+Tuloksena oleva summamatriisi $S$ on yhtä suuri kuin
+matriisit $A$ ja $B$ ja sen alkiot
+lasketaan kaavalla
 
-\[ C[i,j]=A[i,j]+B[i,j]. \]
+\[ S[i,j]=A[i,j]+B[i,j]. \]
 
 Esimerkiksi
 
@@ -85,46 +94,45 @@ Esimerkiksi
   11 & 10 & 5 \\
  \end{bmatrix}.
 \]
-Matriisien yhteenlasku on vaihdannainen ja liitännäinen,
+Matriisisumma on vaihdannainen ja liitännäinen,
 eli pätee $A+B=B+A$ ja $A+(B+C)=(A+B)+C$.
-Lukua 0 vastaa nollamatriisi $O$,
-jolle pätee $A+O=A$ ja $O+A=A$.
-Nollamatriisin jokainen alkio on 0.
-Esimerkiksi
+% Lukua 0 vastaa nollamatriisi $O$,
+% jolle pätee $M+O=M$ ja $O+M=M$.
+% Nollamatriisin jokainen alkio on 0.
+% Esimerkiksi
+% 
+% \[
+%  \begin{bmatrix}
+%   6 & 1 & 4 \\
+%   3 & 9 & 2 \\
+%  \end{bmatrix}
+% +
+%  \begin{bmatrix}
+%   0 & 0 & 0 \\
+%   0 & 0 & 0 \\
+%  \end{bmatrix}
+% =
+%  \begin{bmatrix}
+%   6 & 1 & 4 \\
+%   3 & 9 & 2 \\
+%  \end{bmatrix}.
+% \]
 
-\[
- \begin{bmatrix}
-  6 & 1 & 4 \\
-  3 & 9 & 2 \\
- \end{bmatrix}
-+
- \begin{bmatrix}
-  0 & 0 & 0 \\
-  0 & 0 & 0 \\
- \end{bmatrix}
-=
- \begin{bmatrix}
-  6 & 1 & 4 \\
-  3 & 9 & 2 \\
- \end{bmatrix}.
-\]
+\subsubsection{Matriisitulo}
 
-\subsubsection{Kertolasku}
-
-Matriisien $A$ ja $B$ kertolasku $A \cdot B$ on määritelty,
+Matriisien $A$ ja $B$ tulo $A \cdot B$ on määritelty,
 jos matriisi $A$ on kokoa $a \times n$
 ja matriisi $B$ on kokoa $n \times b$,
 eli matriisin $A$ leveys on sama kuin matriisin
 $B$ korkeus.
-Tuloksena on matriisi $C=A \cdot B$,
-jonka koko on $a \times b$.
-
-Matriisin $C$ alkiot lasketaan kaavalla
+Tulomatriisi $T$
+on kokoa $a \times b$
+ja sen alkiot lasketaan kaavalla
 \[
-C[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j].
+T[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j].
 \]
 
-Kaavan tulkintana on, että kukin $C$:n alkio
+Kaavan tulkintana on, että kukin $T$:n alkio
 saadaan summana, joka muodostuu $A$:n ja
 $B$:n alkioparien tuloista seuraavan
 kuvan mukaisesti:
@@ -136,7 +144,7 @@ kuvan mukaisesti:
 \draw (5,4) grid (10,8);
 
 \node at (2,-1) {$A$};
-\node at (7.5,-1) {$C$};
+\node at (7.5,-1) {$T$};
 \node at (11,6) {$B$};
 
 \draw[thick,->,red,line width=2pt] (0,1.5) -- (4,1.5);
@@ -172,73 +180,82 @@ Esimerkiksi
  \end{bmatrix}.
 \]
 
-Matriisien kertolasku ei ole vaihdannainen,
+Matriisitulo ei ole vaihdannainen,
 eli ei ole voimassa $A \cdot B = B \cdot A$.
-Kuitenkin matriisien kertolasku
+Kuitenkin matriisitulo
 on liitännäinen, eli on voimassa $A \cdot (B \cdot C)=(A \cdot B) \cdot C$.
-Lukua 1 vastaa ykkösmatriisi $I$,
-jolle pätee $A \cdot I = A$ ja $I \cdot A = A$.
-Ykkösmatriisi on neliömatriisi, jossa $I[i,j]=1$,
-jos $i=j$, ja muuten $I[i,j]=0$.
 
-Esimerkiksi
-
+\textit{Ykkösmatriisi} on neliömatriisi,
+jonka lävistäjän jokainen alkio on 1
+ja jokainen muu alkio on 0.
+Esimerkiksi $3 \times 3$ -yksikkömatriisi on
+seuraavanlainen:
 \[
  \begin{bmatrix}
-  1 & 0 \\
-  0 & 1 \\
- \end{bmatrix}
-\cdot
- \begin{bmatrix}
-  1 & 6 \\
-  2 & 9 \\
- \end{bmatrix}
-=
- \begin{bmatrix}
-  1 & 6 \\
-  2 & 9 \\
- \end{bmatrix}
-\cdot
- \begin{bmatrix}
-  1 & 0 \\
-  0 & 1 \\
- \end{bmatrix}
-=
- \begin{bmatrix}
-  1 & 6 \\
-  2 & 9 \\
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
  \end{bmatrix}
 \]
 
-Kertolaskun määritelmästä seuraa $O(n^3)$-algoritmi
-kahden $n \times n$ -kokoisen
-neliömatriisin kertomiseen:
+Ykkösmatriisilla kertominen säilyttää matriisin
+ennallaan. Esimerkiksi
+
+\[
+ \begin{bmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+ \end{bmatrix}
+\cdot
+ \begin{bmatrix}
+  1 & 4 \\
+  3 & 9 \\
+  8 & 6 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  1 & 4 \\
+  3 & 9 \\
+  8 & 6 \\
+ \end{bmatrix} \hspace{10px} \textrm{ja} \hspace{10px}
+ \begin{bmatrix}
+  1 & 4 \\
+  3 & 9 \\
+  8 & 6 \\
+ \end{bmatrix}
+\cdot
+ \begin{bmatrix}
+  1 & 0 \\
+  0 & 1 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  1 & 4 \\
+  3 & 9 \\
+  8 & 6 \\
+ \end{bmatrix}.
+\]
+
+Matriisitulon määritelmästä seuraa kuutiollinen
+algoritmi, joka on riittävän nopea kisakoodauksessa:
 
 \begin{lstlisting}
-for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= n; j++) {
+for (int i = 1; i <= a; i++) {
+    for (int j = 1; j <= b; j++) {
         for (int k = 1; k <= n; k++) {
-            C[i][j] += A[i][k]*B[k][j];
+            T[i][j] += A[i][k]*B[k][j];
         }
     }
 }
 \end{lstlisting}
 
-Tämä algoritmi on riittävän nopea kisakoodauksessa,
-mutta myös tehokkaampia algoritmeja on olemassa.
-Tällä hetkellä tehokkain tunnettu
-algoritmi on vaativuudeltaan $O(n^{2{,}3728639})$.
-Tämä algoritmi on kuitenkin hyvin monimutkainen
-ja sen vakiokertoimet ovat suuret.
+\subsubsection{Matriisipotenssi}
 
-\subsubsection{Potenssilasku}
-
-Matriisin $A$ potenssilasku $A^k$ on
-määritelty, jos $A$ on neliömatriisi kokoa $n \times n$.
+Matriisin $M$ potenssi $M^k$ on
+määritelty, jos $M$ on neliömatriisi.
 Määritelmä nojautuu kertolaskuun:
-
-\[ A^k = \underbrace{A \cdot A \cdot A \cdots A}_{\textrm{$k$ kertaa}} \]
-
+\[ M^k = \underbrace{M \cdot M \cdot M \cdots M}_{\textrm{$k$ kertaa}} \]
 Esimerkiksi
 
 \[
@@ -263,13 +280,21 @@ Esimerkiksi
   33 & 114 \\
  \end{bmatrix}.
 \]
+Lisäksi $M^0$ tuottaa ykkösmatriisin. Esimerkiksi
+\[
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix}^0 =
+ \begin{bmatrix}
+  1 & 0 \\
+  0 & 1 \\
+ \end{bmatrix}.
+\]
 
-Potenssilasku $A^k$ muodostuu $k$ kertolaskusta,
-joten aikavaativuus on $O(n^3 k)$.
-Tätä on mahdollista tehostaa soveltamalla
-tehokasta potenssilaskua (luku 21.2),
-jolloin aikavaativuus on vain $O(n^3 \log k)$.
-Esimerkiksi
+Matriisin $M^k$ voi laskea tehokkaasti ajassa
+$O(n^3 \log k)$ soveltamalla luvun 21.2
+tehokasta potenssilaskua. Esimerkiksi
 \[
  \begin{bmatrix}
   2 & 5 \\
@@ -288,7 +313,7 @@ Esimerkiksi
 
 \subsubsection{Determinantti}
 
-Matriisin $A$ determinantti $\det(A)$
+Matriisin $A$ \textit{determinantti} $\det(A)$
 on määritelty, jos $A$ on neliömatriisi.
 Jos $A$ on kokoa $1 \times 1$,
 niin $\det(A)=A[1,1]$.
