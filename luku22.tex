@@ -56,14 +56,9 @@ $3!=6$ permutaatiota:
 \texttt{cab} ja
 \texttt{cba}.
 
-\subsubsection{Rekursio}
+\subsubsection{Rekursio vs. suljettu muoto}
 
-Kombinatorisen tehtävän ratkaisun voi usein esittää
-rekursiivisena funktiona.
-Tämän jälkeen ratkaisun voi laskea tehokkaasti
-dynaamisella ohjelmoinnilla.
-Näin on esimerkiksi seuraavassa tehtävässä:
-
+Tarkastellaan seuraavaa tehtävää:
 \begin{task}
 Monellako tavalla luvun $n$ voi esittää positiivisten
 kokonaislukujen summana?
@@ -72,26 +67,39 @@ $1+1+1+1$, $1+1+2$, $1+2+1$, $2+1+1$,
 $2+2$, $3+1$, $1+3$ ja $4$.
 \end{task}
 
-Merkitään $f(n)$:llä esitystapojen määrää luvulle $n$,
-eli esimerkiksi $f(4)=8$.
-Funktion voi laskea rekursiivisesti seuraavasti:
+Kombinatorisen tehtävän ratkaisun voi usein esittää
+rekursiivisesti.
+Tässä tapauksessa voimme merkitä
+$f(n)$:llä esitystapojen määrää luvulle $n$.
+Funktion voi laskea rekursiivisesti näin:
 \begin{equation*}
     f(n) = \begin{cases}
-               1               & n = 0\\
-               f(0)+f(1)+\ldots+f(n-1) & n > 0\\
+               1               & n = 1\\
+               f(1)+f(2)+\ldots+f(n-1)+1 & n > 1\\
            \end{cases}
 \end{equation*}
-Seuraava koodi muodostaa dynaamisen ohjelmoinnin avulla
-taulukon \texttt{d}, jossa $\texttt{d}[k]=f(k)$,
-kun $k=0,1,\ldots,n$:
-\begin{lstlisting}
-d[0] = 1;
-for (int i = 1; i <= n; i++) {
-    for (int j = 0; j < n; j++) {
-        d[i] += d[j];
-    }
-}
-\end{lstlisting}
+Pohjatapauksena $f(1)=1$. Yleisessä tapauksessa
+käydään läpi kaikki vaihtoehdot,
+mikä on summan viimeinen luku.
+Viimeisenä oleva $1$ tulee siitä, että summa
+voi olla myös pelkkä luku $n$.
+
+Funktion ensimmäiset arvot ovat:
+\[
+\begin{array}{lcl}
+f(1) & = & 1 \\
+f(2) & = & 2 \\
+f(3) & = & 4 \\
+f(4) & = & 8 \\
+f(5) & = & 16 \\
+\end{array}
+\]
+Tässä tehtävässä funktiolle on myös \textit{suljettu muoto}
+\[
+f(n)=2^{n-1},
+\]
+mikä johtuu siitä, että summassa on $n-1$ mahdollista
+kohtaa +-merkille ja niistä valitaan mikä tahansa osajoukko.
 
 \section{Binomikerroin}
 
@@ -433,49 +441,88 @@ Niinpä kelvollisten
 sulkulausekkeiden määrä voidaan laskea kaavalla
 \[{2n \choose n}-{2n \choose n+1} = {2n \choose n} - \frac{n}{n+1} {2n \choose n} = \frac{1}{n+1} {2n \choose n}.\]
 
-\subsubsection{Binääripuut}
+\subsubsection{Puiden laskeminen}
 
-Toinen tulkinta Catalanin luvuille on,
-että $C_n$ on $n$ alkion binääripuiden määrä.
-Tässä tapauksessa summa
-\[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1},\]
-käy läpi tavat muodostaa vasen ja oikea alipuu.
-Kaavassa $i$ on vasemman alipuun koko ja 
-$n-i-1$ on oikean alipuun koko.
+Catalanin luvut kertovat myös juurellisten
+puiden lukumääriä:
 
-Esimerkiksi $C_3=5$ ja vastaavat binääripuut ovat:
+\begin{itemize}
+\item $n$ solmun binääripuiden määrä on $C_n$
+\item $n$ solmun yleisten puiden määrä on $C_{n-1}$
+\end{itemize}
+\noindent
+Esimerkiksi tapauksessa $C_3=5$ binääripuut ovat
 
 \begin{center}
-\begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (a1) at (0,0) {\phantom{o}};
-\node[draw, circle] (a2) at (-1,-1) {\phantom{o}};
-\node[draw, circle] (a3) at (1,-1) {\phantom{o}};
-\path[draw,thick,-] (a1) -- (a2);
-\path[draw,thick,-] (a1) -- (a3);
+\begin{tikzpicture}[scale=0.7]
+\path[draw,thick,-] (0,0) -- (-1,-1);
+\path[draw,thick,-] (0,0) -- (1,-1);
+\draw[fill=white] (0,0) circle (0.3);
+\draw[fill=white] (-1,-1) circle (0.3);
+\draw[fill=white] (1,-1) circle (0.3);
 
-\node[draw, circle] (b1) at (4,0) {\phantom{o}};
-\node[draw, circle] (b2) at (4-0.75,-1) {\phantom{o}};
-\node[draw, circle] (b3) at (4-1.5,-2) {\phantom{o}};
-\path[draw,thick,-] (b1) -- (b2);
-\path[draw,thick,-] (b2) -- (b3);
+\path[draw,thick,-] (4,0) -- (4-0.75,-1) -- (4-1.5,-2);
+\draw[fill=white] (4,0) circle (0.3);
+\draw[fill=white] (4-0.75,-1) circle (0.3);
+\draw[fill=white] (4-1.5,-2) circle (0.3);
 
-\node[draw, circle] (c1) at (6.5,0) {\phantom{o}};
-\node[draw, circle] (c2) at (6.5-0.75,-1) {\phantom{o}};
-\node[draw, circle] (c3) at (6.5-0,-2) {\phantom{o}};
-\path[draw,thick,-] (c1) -- (c2);
-\path[draw,thick,-] (c2) -- (c3);
+\path[draw,thick,-] (6.5,0) -- (6.5-0.75,-1) -- (6.5-0,-2);
+\draw[fill=white] (6.5,0) circle (0.3);
+\draw[fill=white] (6.5-0.75,-1) circle (0.3);
+\draw[fill=white] (6.5-0,-2) circle (0.3);
 
-\node[draw, circle] (d1) at (9,0) {\phantom{o}};
-\node[draw, circle] (d2) at (9+0.75,-1) {\phantom{o}};
-\node[draw, circle] (d3) at (9-0,-2) {\phantom{o}};
-\path[draw,thick,-] (d1) -- (d2);
-\path[draw,thick,-] (d2) -- (d3);
+\path[draw,thick,-] (9,0) -- (9+0.75,-1) -- (9-0,-2);
+\draw[fill=white] (9,0) circle (0.3);
+\draw[fill=white] (9+0.75,-1) circle (0.3);
+\draw[fill=white] (9-0,-2) circle (0.3);
 
-\node[draw, circle] (e1) at (11.5,0) {\phantom{0}};
-\node[draw, circle] (e2) at (11.5+0.75,-1) {\phantom{0}};
-\node[draw, circle] (e3) at (11.5+1.5,-2) {\phantom{0}};
-\path[draw,thick,-] (e1) -- (e2);
-\path[draw,thick,-] (e2) -- (e3);
+\path[draw,thick,-] (11.5,0) -- (11.5+0.75,-1) -- (11.5+1.5,-2);
+\draw[fill=white] (11.5,0) circle (0.3);
+\draw[fill=white] (11.5+0.75,-1) circle (0.3);
+\draw[fill=white] (11.5+1.5,-2) circle (0.3);
+\end{tikzpicture}
+\end{center}
+
+
+ja yleiset puut ovat
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\path[draw,thick,-] (0,0) -- (-1,-1);
+\path[draw,thick,-] (0,0) -- (0,-1);
+\path[draw,thick,-] (0,0) -- (1,-1);
+\draw[fill=white] (0,0) circle (0.3);
+\draw[fill=white] (-1,-1) circle (0.3);
+\draw[fill=white] (0,-1) circle (0.3);
+\draw[fill=white] (1,-1) circle (0.3);
+
+\path[draw,thick,-] (3,0) -- (3,-1) -- (3,-2) -- (3,-3);
+\draw[fill=white] (3,0) circle (0.3);
+\draw[fill=white] (3,-1) circle (0.3);
+\draw[fill=white] (3,-2) circle (0.3);
+\draw[fill=white] (3,-3) circle (0.3);
+
+\path[draw,thick,-] (6+0,0) -- (6-1,-1);
+\path[draw,thick,-] (6+0,0) -- (6+1,-1) -- (6+1,-2);
+\draw[fill=white] (6+0,0) circle (0.3);
+\draw[fill=white] (6-1,-1) circle (0.3);
+\draw[fill=white] (6+1,-1) circle (0.3);
+\draw[fill=white] (6+1,-2) circle (0.3);
+
+\path[draw,thick,-] (9+0,0) -- (9+1,-1);
+\path[draw,thick,-] (9+0,0) -- (9-1,-1) -- (9-1,-2);
+\draw[fill=white] (9+0,0) circle (0.3);
+\draw[fill=white] (9+1,-1) circle (0.3);
+\draw[fill=white] (9-1,-1) circle (0.3);
+\draw[fill=white] (9-1,-2) circle (0.3);
+
+\path[draw,thick,-] (12+0,0) -- (12+0,-1) -- (12-1,-2);
+\path[draw,thick,-] (12+0,0) -- (12+0,-1) -- (12+1,-2);
+\draw[fill=white] (12+0,0) circle (0.3);
+\draw[fill=white] (12+0,-1) circle (0.3);
+\draw[fill=white] (12-1,-2) circle (0.3);
+\draw[fill=white] (12+1,-2) circle (0.3);
+
 \end{tikzpicture}
 \end{center}
 
@@ -713,7 +760,9 @@ tai niissä on eri numerointi.
 Esimerkiksi kun $n=4$, numeroitujen puiden määrä on $4^{4-2}=16$:
 
 \begin{center}
-\begin{tikzpicture}[scale=0.9]
+\begin{tikzpicture}[scale=0.8]
+\footnotesize
+
 \newcommand\puua[6]{
 \path[draw,thick,-] (#1,#2) -- (#1-1.25,#2-1.5);
 \path[draw,thick,-] (#1,#2) -- (#1,#2-1.5);
