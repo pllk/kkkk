@@ -7,81 +7,136 @@ avulla voi optimoida dynaamista ohjelmointia.
 Osoittautuu, että jos dynaamisen ohjelmoinnin rekursiossa
 lasketaan yhteen kiinteä määrä aiempia arvoja
 vakiokertoimilla,
-ratkaisun aikavaativuuden saa muutettua lineaarisesta
-logaritmisesta matriisien avulla.
 
-\section{Määritelmiä}
+\section{Laskutoimitukset}
 
-Matriisi (\textit{matrix}) on
+\textit{Matriisi} on
 kaksiulotteista taulukkoa
-vastaava matemaattinen käsite.
-Esimerkiksi seuraavassa on $3 \times 4$ -kokoinen
-matriisi $A$:
+vastaava matemaattinen käsite,
+jolle on määritelty laskutoimituksia
+samaan tapaan kuin luvuille.
 
-\[ A = \left( \begin{array}{ccccc}
-8 & 17 & 7 & 4 \\
-7 & 19 & 5 & 10 \\
-19 & 9 & 4 & 18 \end{array} \right)\] 
+Olkoon $X$ matriisi, jonka koko on $n \times m$,
+missä $n$ on korkeus (rivien määrä)
+ja $m$ on leveys (sarakkeiden määrä).
+Merkintä $X[i,j]$ tarkoittaa matriisin alkiota,
+joka on rivillä $i$ sarakkeessa $j$,
+kun $1 \le i \le n$ ja $1 \le j \le m$.
 
-Merkitään $A_{i,j}$ matriisin $A$ rivillä $i$
-sarakkeessa $j$ olevaa arvoa.
-Esimerkiksi yllä olevassa matriisissa
-$A_{2,3}=5$.
+Esimerkiksi matriisin
+\[
+A = 
+ \begin{bmatrix}
+  6 & 13 & 7 & 4 \\
+  7 & 0 & 8 & 2 \\
+  9 & 5 & 4 & 18 \\
+ \end{bmatrix}
+\]
 
-\subsubsection*{Yhteenlasku}
+koko on $3 \times 4$,
+eli sen korkeus on 3 ja leveys on 4.
+Esimerkiksi $A[2,3]=8$,
+koska rivillä 2 sarakkeessa 3
+on luku 8.
+
+Matriisi on \textit{neliömatriisi}, jos $n=m$ eli
+matriisin korkeus ja leveys ovat samat.
+Esimerkiksi seuraava matriisi on neliömatriisi:
+
+\[
+A = 
+ \begin{bmatrix}
+  3 & 12 & 4  \\
+  5 & 9 & 15  \\
+  0 & 2 & 4 \\
+ \end{bmatrix}
+\]
+
+\subsubsection{Yhteenlasku}
 
 Matriisien $A$ ja $B$ yhteenlasku $A+B$ on määritelty,
-jos kummankin matriisin korkeus ja leveys on sama.
-Tällöin uusi matriisi saadaan laskemalla
-yhteen kaikki matriisien vastaavissa kohdissa olevat luvut.
+jos matriisit ovat yhtä suuret.
+Tuloksena on matriisi $C=A+B$,
+joka on yhtä suuri kuin matriisit $A$ ja $B$.
+Matriisin $C$ alkiot lasketaan kaavalla
 
-Seuraavassa on esimerkki
-matriisien yhteenlaskusta:
+\[ C[i,j]=A[i,j]+B[i,j]. \]
+
+Esimerkiksi
 
 \[
-A = \left( \begin{array}{ccc}
-6 & 1 & 4 \\
-3 & 9 & 2 \end{array} \right)
-\hspace{20px}
-B = \left( \begin{array}{ccc}
-4 & 9 & 3 \\
-8 & 1 & 3 \end{array} \right)
-\]
-~\\
-\[
-A+B = 
-\left( \begin{array}{ccc}
-6+4 & 1+9 & 4+3 \\
-3+8 & 9+1 & 2+3 \end{array} \right)
+ \begin{bmatrix}
+  6 & 1 & 4 \\
+  3 & 9 & 2 \\
+ \end{bmatrix}
++
+ \begin{bmatrix}
+  4 & 9 & 3 \\
+  8 & 1 & 3 \\
+ \end{bmatrix}
 =
-\left( \begin{array}{ccc}
-10 & 10 & 7 \\
-11 & 10 & 5 \end{array} \right)
-\] 
+ \begin{bmatrix}
+  6+4 & 1+9 & 4+3 \\
+  3+8 & 9+1 & 2+3 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  10 & 10 & 7 \\
+  11 & 10 & 5 \\
+ \end{bmatrix}.
+\]
+Matriisien yhteenlasku on vaihdannainen ja liitännäinen,
+eli pätee $A+B=B+A$ ja $A+(B+C)=(A+B)+C$.
+Lukua 0 vastaa nollamatriisi $O$,
+jolle pätee $A+O=A$ ja $O+A=A$.
+Nollamatriisin jokainen alkio on 0.
+Esimerkiksi
 
-\subsubsection*{Kertolasku}
+\[
+ \begin{bmatrix}
+  6 & 1 & 4 \\
+  3 & 9 & 2 \\
+ \end{bmatrix}
++
+ \begin{bmatrix}
+  0 & 0 & 0 \\
+  0 & 0 & 0 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  6 & 1 & 4 \\
+  3 & 9 & 2 \\
+ \end{bmatrix}.
+\]
 
-Matriisien $A$ ja $B$ kertolasku $AB$ on määritelty,
-jos vasemman matriisin leveys on sama kuin
-oikean matriisin korkeus.
-Toisin sanoen matriisin $A$ koon tulee olla $a \times n$
-ja matriisin $B$ koon tulee olla $n \times b$.
-Kertolaskun tuloksena on uusi matriisi,
+\subsubsection{Kertolasku}
+
+Matriisien $A$ ja $B$ kertolasku $A \cdot B$ on määritelty,
+jos matriisi $A$ on kokoa $a \times n$
+ja matriisi $B$ on kokoa $n \times b$,
+eli matriisin $A$ leveys on sama kuin matriisin
+$B$ korkeus.
+Tuloksena on matriisi $C=A \cdot B$,
 jonka koko on $a \times b$.
 
-Matriisien kertolaskussa jokainen tulosmatriisin
-luku muodostuu summana $A$:n ja $B$:n
-lukuparien tuloista.
-Summa muodostuu seuraavan kuvan tapaan:
-\\
+Matriisin $C$ alkiot lasketaan kaavalla
+\[
+C[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j].
+\]
+
+Kaavan tulkintana on, että kukin $C$:n alkio
+saadaan summana, joka muodostuu $A$:n ja
+$B$:n alkioparien tuloista seuraavan
+kuvan mukaisesti:
+
 \begin{center}
-\begin{tikzpicture}[scale=0.6]
+\begin{tikzpicture}[scale=0.5]
 \draw (0,0) grid (4,3);
 \draw (5,0) grid (10,3);
 \draw (5,4) grid (10,8);
 
 \node at (2,-1) {$A$};
-\node at (7.5,-1) {$AB$};
+\node at (7.5,-1) {$C$};
 \node at (11,6) {$B$};
 
 \draw[thick,->,red,line width=2pt] (0,1.5) -- (4,1.5);
@@ -90,97 +145,236 @@ Summa muodostuu seuraavan kuvan tapaan:
 \end{tikzpicture}
 \end{center}
 
-Kertolaskun matemaattinen määritelmä on:
-\[
-(AB)_{i,j} = \sum_{k=1}^n A_{i,k} B_{k,j}
-\]
-
-Seuraavassa on esimerkkejä matriisien kertolaskuista:
-\[
-A = \left( \begin{array}{cc}
-1 & 4 \\
-3 & 9 \\
-8 & 6 \end{array} \right)
-\hspace{20px}
-B = 
-\left( \begin{array}{cc}
-1 & 6 \\
-2 & 9 \end{array} \right)
-\]
-\[
-AB =
-\left( \begin{array}{ccc}
-1 \cdot 1 + 4 \cdot 2 & 1 \cdot 6 + 4 \cdot 9 \\
-3 \cdot 1 + 9 \cdot 2 & 3 \cdot 6 + 9 \cdot 9 \\
-8 \cdot 1 + 6 \cdot 2 & 8 \cdot 6 + 6 \cdot 9 \end{array} \right)
-=
-\left( \begin{array}{ccc}
-9 & 42 \\
-21 & 99 \\
-20 & 102 \end{array} \right)
-\] 
+Esimerkiksi
 
 \[
-A = \left( \begin{array}{ccc}
-9 & 6 & 5 \\
-4 & 1 & 8 \end{array} \right)
-\hspace{20px}
-B = \left( \begin{array}{c}
-3 \\
-5 \\
-8 \end{array} \right)
-\]
-\[
-AB =
-\left( \begin{array}{c}
-9 \cdot 3 + 6 \cdot 5 + 5 \cdot 8 \\
-4 \cdot 3 + 1 \cdot 5 + 8 \cdot 8 \end{array} \right)
-=
-\left( \begin{array}{ccc}
-97 \\
-81 \end{array} \right)
-\] 
-
-Tavallisesta kertolaskusta poiketen matriisien
-kertolasku ei ole vaihdannainen,
-eli ei ole voimassa $AB = BA$.
-Kuitenkin matriisien kertolasku
-on liitännäinen eli
-on voimassa $A(BC)=(AB)C$.
-
-Matriisikertolaskun aikavaativuus kolmea for-silmukkaa
-käyttäen on $O(n^3)$, kun matriisin koko on $n \times n$.
-
-\subsubsection*{Potenssilasku}
-
-Matriisien potenssilasku määritellään
-saman tapaan kuin tavallinen potenssilasku,
-esimerkiksi $A^3=AAA$.
-
-Potenssilaskun $A^k$ aikavaativuus on $O(n^3 k)$,
-jos sen toteuttaa $k$ kertolaskuna.
-Mutta potenssilaskun voi toteuttaa
-myös ajassa $O(n^3 \log k)$ tehokkaalla
-potenssilaskulla (luku 21.2).
-
-Esimerkiksi lasku
-\[
-\left( \begin{array}{cc}
-1 & 4 \\
-5 & 3 \end{array} \right)^{16}
-\]
-jakaantuu osiin
-\[
-\left( \begin{array}{cc}
-1 & 4 \\
-5 & 3 \end{array} \right)^{8}
+ \begin{bmatrix}
+  1 & 4 \\
+  3 & 9 \\
+  8 & 6 \\
+ \end{bmatrix}
 \cdot
-\left( \begin{array}{cc}
-1 & 4 \\
-5 & 3 \end{array} \right)^{8},
+ \begin{bmatrix}
+  1 & 6 \\
+  2 & 9 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  1 \cdot 1 + 4 \cdot 2 & 1 \cdot 6 + 4 \cdot 9 \\
+  3 \cdot 1 + 9 \cdot 2 & 3 \cdot 6 + 9 \cdot 9 \\
+  8 \cdot 1 + 6 \cdot 2 & 8 \cdot 6 + 6 \cdot 9 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  9 & 42 \\
+  21 & 99 \\
+  20 & 102 \\
+ \end{bmatrix}.
 \]
-eli ongelman koko puoliintuu,
-kun potenssi on parillinen.
+
+Matriisien kertolasku ei ole vaihdannainen,
+eli ei ole voimassa $A \cdot B = B \cdot A$.
+Kuitenkin matriisien kertolasku
+on liitännäinen, eli on voimassa $A \cdot (B \cdot C)=(A \cdot B) \cdot C$.
+Lukua 1 vastaa ykkösmatriisi $I$,
+jolle pätee $A \cdot I = A$ ja $I \cdot A = A$.
+Ykkösmatriisi on neliömatriisi, jossa $I[i,j]=1$,
+jos $i=j$, ja muuten $I[i,j]=0$.
+
+Esimerkiksi
+
+\[
+ \begin{bmatrix}
+  1 & 0 \\
+  0 & 1 \\
+ \end{bmatrix}
+\cdot
+ \begin{bmatrix}
+  1 & 6 \\
+  2 & 9 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  1 & 6 \\
+  2 & 9 \\
+ \end{bmatrix}
+\cdot
+ \begin{bmatrix}
+  1 & 0 \\
+  0 & 1 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  1 & 6 \\
+  2 & 9 \\
+ \end{bmatrix}
+\]
+
+Kertolaskun määritelmästä seuraa $O(n^3)$-algoritmi
+kahden $n \times n$ -kokoisen
+neliömatriisin kertomiseen:
+
+\begin{lstlisting}
+for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= n; j++) {
+        for (int k = 1; k <= n; k++) {
+            C[i][j] += A[i][k]*B[k][j];
+        }
+    }
+}
+\end{lstlisting}
+
+Tämä algoritmi on riittävän nopea kisakoodauksessa,
+mutta myös tehokkaampia algoritmeja on olemassa.
+Tällä hetkellä tehokkain tunnettu
+algoritmi on vaativuudeltaan $O(n^{2{,}3728639})$.
+Tämä algoritmi on kuitenkin hyvin monimutkainen
+ja sen vakiokertoimet ovat suuret.
+
+\subsubsection{Potenssilasku}
+
+Matriisin $A$ potenssilasku $A^k$ on
+määritelty, jos $A$ on neliömatriisi kokoa $n \times n$.
+Määritelmä nojautuu kertolaskuun:
+
+\[ A^k = \underbrace{A \cdot A \cdot A \cdots A}_{\textrm{$k$ kertaa}} \]
+
+Esimerkiksi
+
+\[
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix}^3 =
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix} \cdot
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix} \cdot
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix} =
+ \begin{bmatrix}
+  48 & 165 \\
+  33 & 114 \\
+ \end{bmatrix}.
+\]
+
+Potenssilasku $A^k$ muodostuu $k$ kertolaskusta,
+joten aikavaativuus on $O(n^3 k)$.
+Tätä on mahdollista tehostaa soveltamalla
+tehokasta potenssilaskua (luku 21.2),
+jolloin aikavaativuus on vain $O(n^3 \log k)$.
+Esimerkiksi
+\[
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix}^8 =
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix}^4 \cdot
+ \begin{bmatrix}
+  2 & 5 \\
+  1 & 4 \\
+ \end{bmatrix}^4.
+\]
+
+
+\subsubsection{Determinantti}
+
+Matriisin $A$ determinantti $\det(A)$
+on määritelty, jos $A$ on neliömatriisi.
+Jos $A$ on kokoa $1 \times 1$,
+niin $\det(A)=A[1,1]$.
+Muuten determinaatti lasketaan rekursiivisesti
+kaavalla
+
+\[\det(A)=\sum_{i=1}^n A[1,i] \cdot det(A') \cdot (-1)^{i+1},\]
+
+missä $A'$ tarkoittaa matriisia $A$,
+josta on poistettu rivi 1 ja sarake $i$.
+Huomaa myös, että $(-1)^{i+1}$ on $1$,
+jos $i$ on pariton, ja muuten $-1$.
+
+Esimerkiksi
+
+\[
+\det(
+ \begin{bmatrix}
+  3 & 4 \\
+  1 & 6 \\
+ \end{bmatrix}
+) = 3 \cdot 6 - 4 \cdot 1 = 14 
+\]
+
+ja
+
+\[
+\det(
+ \begin{bmatrix}
+  2 & 4 & 3 \\
+  5 & 1 & 6 \\
+  7 & 2 & 4 \\
+ \end{bmatrix}
+) = 
+2 \cdot
+\det(
+ \begin{bmatrix}
+  1 & 6 \\
+  2 & 4 \\
+ \end{bmatrix}
+)
+-4 \cdot
+\det(
+ \begin{bmatrix}
+  5 & 6 \\
+  7 & 4 \\
+ \end{bmatrix}
+)
++3 \cdot
+\det(
+ \begin{bmatrix}
+  5 & 1 \\
+  7 & 2 \\
+ \end{bmatrix}
+) = 81.
+\]
+
+Determinantti kertoo, onko matriisille
+$A$ olemassa käänteismatriisia
+$A^{-1}$, jolle pätee $A \cdot A^{-1} = I$.
+Osoittautuu, että käänteismatriisi on olemassa
+tarkalleen silloin, kun $\det(A) \neq 0$.
+Esimerkiksi
+
+\[
+\underbrace{
+ \begin{bmatrix}
+  3 & 4 \\
+  1 & 6 \\
+ \end{bmatrix}
+}_{A}
+\cdot
+\underbrace{
+ \begin{bmatrix}
+  \frac{3}{7} & -\frac{2}{7} \\
+  -\frac{1}{14} & \frac{3}{14} \\
+ \end{bmatrix}
+}_{A^{-1}}
+=
+\underbrace{
+ \begin{bmatrix}
+  1 & 0 \\
+  0 & 1 \\
+ \end{bmatrix}
+}_{I}.
+\]
 
 \section{Dynaaminen ohjelmointi}
 
