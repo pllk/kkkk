@@ -10,36 +10,26 @@ vakiokertoimilla,
 
 \section{Käsitteitä}
 
-Olkoon $M$ matriisi, jonka koko on $n \times m$,
-missä $n$ on korkeus (rivien määrä)
-ja $m$ on leveys (sarakkeiden määrä).
-Merkintä $M[i,j]$ tarkoittaa matriisin alkiota,
-joka on rivillä $i$ sarakkeessa $j$,
-kun $1 \le i \le n$ ja $1 \le j \le m$.
-
-Esimerkiksi matriisin
+Tarkastellaan esimerkkinä seuraavaa matriisia:
 \[
-M = 
+A = 
  \begin{bmatrix}
   6 & 13 & 7 & 4 \\
   7 & 0 & 8 & 2 \\
   9 & 5 & 4 & 18 \\
  \end{bmatrix}
 \]
+Matriisi $A$ on kokoa $3 \times 4$,
+eli siinä on 3 riviä ja 4 saraketta.
+Merkitään $A[i,j]$ alkiota,
+joka on rivillä $i$ sarakkeessa $j$.
+Esimerkiksi $A[2,3]=8$ ja $A[3,1]=9$.
 
-koko on $3 \times 4$,
-eli sen korkeus on 3 ja leveys on 4.
-Esimerkiksi $M[2,3]=8$,
-koska rivillä 2 sarakkeessa 3
-on luku 8.
-
-Matriisin $M$ \textit{transpoosi} $M^T$ syntyy,
-kun matriisin rivit ja sarakkeet vaihdetaan keskenään
-eli $M^T[i,j]=M[j,i]$.
-Esimerkiksi yllä olevan matriisin transpoosi
-on seuraava:
+Matriisin $A$ transpoosi $A^T$ syntyy,
+kun matriisin rivit ja sarakkeet vaihdetaan
+keskenään eli $A^T[i,j]=A[j,i]$:
 \[
-M^T = 
+A^T = 
  \begin{bmatrix}
   6 & 7 & 9 \\
   13 & 0 & 5 \\
@@ -48,12 +38,12 @@ M^T =
  \end{bmatrix}
 \]
 
-Matriisi $M$ on \textit{neliömatriisi}, jos matriisi
-on kokoa $n \times n$ eli sen korkeus ja leveys ovat samat.
+Matriisi on \textit{neliömatriisi}, jos sen
+korkeus ja leveys ovat samat.
 Esimerkiksi seuraava matriisi on neliömatriisi:
 
 \[
-M = 
+A = 
  \begin{bmatrix}
   3 & 12 & 4  \\
   5 & 9 & 15  \\
@@ -61,15 +51,16 @@ M =
  \end{bmatrix}
 \]
 
-\subsubsection{Matriisisumma}
+\subsubsection{Yhteenlasku}
 
 Matriisien $A$ ja $B$ summa $A+B$ on määritelty,
 jos matriisit ovat yhtä suuret.
-Tuloksena oleva summamatriisi $S$ on yhtä suuri kuin
+Tuloksena oleva summamatriisi on
+samaa kokoa kuin
 matriisit $A$ ja $B$ ja sen alkiot
 lasketaan kaavalla
 
-\[ S[i,j]=A[i,j]+B[i,j]. \]
+\[ (A+B)[i,j]=A[i,j]+B[i,j]. \]
 
 Esimerkiksi
 
@@ -96,43 +87,22 @@ Esimerkiksi
 \]
 Matriisisumma on vaihdannainen ja liitännäinen,
 eli pätee $A+B=B+A$ ja $A+(B+C)=(A+B)+C$.
-% Lukua 0 vastaa nollamatriisi $O$,
-% jolle pätee $M+O=M$ ja $O+M=M$.
-% Nollamatriisin jokainen alkio on 0.
-% Esimerkiksi
-% 
-% \[
-%  \begin{bmatrix}
-%   6 & 1 & 4 \\
-%   3 & 9 & 2 \\
-%  \end{bmatrix}
-% +
-%  \begin{bmatrix}
-%   0 & 0 & 0 \\
-%   0 & 0 & 0 \\
-%  \end{bmatrix}
-% =
-%  \begin{bmatrix}
-%   6 & 1 & 4 \\
-%   3 & 9 & 2 \\
-%  \end{bmatrix}.
-% \]
 
-\subsubsection{Matriisitulo}
+\subsubsection{Kertolasku}
 
-Matriisien $A$ ja $B$ tulo $A \cdot B$ on määritelty,
+Matriisien $A$ ja $B$ tulo $AB$ on määritelty,
 jos matriisi $A$ on kokoa $a \times n$
 ja matriisi $B$ on kokoa $n \times b$,
 eli matriisin $A$ leveys on sama kuin matriisin
 $B$ korkeus.
-Tulomatriisi $T$
+Tulomatriisi
 on kokoa $a \times b$
 ja sen alkiot lasketaan kaavalla
 \[
-T[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j].
+AB[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j].
 \]
 
-Kaavan tulkintana on, että kukin $T$:n alkio
+Kaavan tulkintana on, että kukin $AB$:n alkio
 saadaan summana, joka muodostuu $A$:n ja
 $B$:n alkioparien tuloista seuraavan
 kuvan mukaisesti:
@@ -144,7 +114,7 @@ kuvan mukaisesti:
 \draw (5,4) grid (10,8);
 
 \node at (2,-1) {$A$};
-\node at (7.5,-1) {$T$};
+\node at (7.5,-1) {$AB$};
 \node at (11,6) {$B$};
 
 \draw[thick,->,red,line width=2pt] (0,1.5) -- (4,1.5);
@@ -191,7 +161,7 @@ ja jokainen muu alkio on 0.
 Esimerkiksi $3 \times 3$ -yksikkömatriisi on
 seuraavanlainen:
 \[
- \begin{bmatrix}
+ I = \begin{bmatrix}
   1 & 0 & 0 \\
   0 & 1 & 0 \\
   0 & 0 & 1 \\
@@ -237,25 +207,12 @@ ennallaan. Esimerkiksi
  \end{bmatrix}.
 \]
 
-Matriisitulon määritelmästä seuraa kuutiollinen
-algoritmi, joka on riittävän nopea kisakoodauksessa:
+\subsubsection{Potenssilasku}
 
-\begin{lstlisting}
-for (int i = 1; i <= a; i++) {
-    for (int j = 1; j <= b; j++) {
-        for (int k = 1; k <= n; k++) {
-            T[i][j] += A[i][k]*B[k][j];
-        }
-    }
-}
-\end{lstlisting}
-
-\subsubsection{Matriisipotenssi}
-
-Matriisin $M$ potenssi $M^k$ on
-määritelty, jos $M$ on neliömatriisi.
+Matriisin $A$ potenssi $A^k$ on
+määritelty, jos $A$ on neliömatriisi.
 Määritelmä nojautuu kertolaskuun:
-\[ M^k = \underbrace{M \cdot M \cdot M \cdots M}_{\textrm{$k$ kertaa}} \]
+\[ A^k = \underbrace{A \cdot A \cdot A \cdots A}_{\textrm{$k$ kertaa}} \]
 Esimerkiksi
 
 \[
@@ -280,7 +237,7 @@ Esimerkiksi
   33 & 114 \\
  \end{bmatrix}.
 \]
-Lisäksi $M^0$ tuottaa ykkösmatriisin. Esimerkiksi
+Lisäksi $A^0$ tuottaa ykkösmatriisin. Esimerkiksi
 \[
  \begin{bmatrix}
   2 & 5 \\
@@ -292,7 +249,7 @@ Lisäksi $M^0$ tuottaa ykkösmatriisin. Esimerkiksi
  \end{bmatrix}.
 \]
 
-Matriisin $M^k$ voi laskea tehokkaasti ajassa
+Matriisin $A^k$ voi laskea tehokkaasti ajassa
 $O(n^3 \log k)$ soveltamalla luvun 21.2
 tehokasta potenssilaskua. Esimerkiksi
 \[
@@ -320,12 +277,20 @@ niin $\det(A)=A[1,1]$.
 Muuten determinaatti lasketaan rekursiivisesti
 kaavalla
 
-\[\det(A)=\sum_{i=1}^n A[1,i] \cdot det(A') \cdot (-1)^{i+1},\]
+\[\det(A)=\sum_{j=1}^n A[1,j] C[1,j],\]
 
-missä $A'$ tarkoittaa matriisia $A$,
-josta on poistettu rivi 1 ja sarake $i$.
-Huomaa myös, että $(-1)^{i+1}$ on $1$,
-jos $i$ on pariton, ja muuten $-1$.
+missä $C[i,j]$ on matriisin $A$ kofaktori
+kohdassa $[i,j]$.
+Kofaktori lasketaan kaavalla
+
+\[C[i,j] = (-1)^{i+j} A'[i,j],\]
+
+missä $A'$ on matriisi $A$, josta on poistettu
+rivi $i$ ja sarake $j$.
+Kofaktorissa olevan kertoimen $(-1)^{i+j}$ ansiosta
+joka toinen determinantti
+lisätään summaan positiivisena
+ja joka toinen negatiivisena.
 
 Esimerkiksi
 
@@ -373,30 +338,39 @@ ja
 
 Determinantti kertoo, onko matriisille
 $A$ olemassa käänteismatriisia
-$A^{-1}$, jolle pätee $A \cdot A^{-1} = I$.
-Osoittautuu, että käänteismatriisi on olemassa
-tarkalleen silloin, kun $\det(A) \neq 0$.
+$A^{-1}$, jolle pätee $A \cdot A^{-1} = I$,
+missä $I$ on ykkösmatriisi.
+Osoittautuu, että $A^{-1}$ on olemassa
+tarkalleen silloin, kun $\det(A) \neq 0$,
+ja sen voi laskea kaavalla
+
+\[A^{-1}[i,j] = \frac{C[j,i]}{det(A)}.\]
+
 Esimerkiksi
 
 \[
 \underbrace{
  \begin{bmatrix}
-  3 & 4 \\
-  1 & 6 \\
+  2 & 4 & 3\\
+  5 & 1 & 6\\
+  7 & 2 & 4\\
  \end{bmatrix}
 }_{A}
 \cdot
 \underbrace{
+ \frac{1}{81}
  \begin{bmatrix}
-  \frac{3}{7} & -\frac{2}{7} \\
-  -\frac{1}{14} & \frac{3}{14} \\
+   -8 & -10 & 21 \\
+   22 & -13 & 3 \\
+   3 & 24 & -18 \\
  \end{bmatrix}
 }_{A^{-1}}
 =
 \underbrace{
  \begin{bmatrix}
-  1 & 0 \\
-  0 & 1 \\
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
  \end{bmatrix}
 }_{I}.
 \]
@@ -446,12 +420,12 @@ Ideana on esittää rekursiivinen kaava $k \times k$
  \begin{bmatrix}
   f(i+1) \\
   f(i+2) \\
- \end{bmatrix}.
+ \end{bmatrix}
  \]
-Tämä tarkoittaa, että matriisille $X$ annetaan
+eli $X$:lle annetaan
 ''syötteenä'' $k$ peräkkäistä funktion $f$ arvoa
-kohdasta $i$ alkaen ja kertolaskun tuloksena
-on $k$ peräkkäistä arvoa kohdasta $i+1$ alkaen.
+kohdasta $i$ alkaen ja $X$ muodostaa niistä
+$k$ peräkkäistä arvoa kohdasta $i+1$ alkaen.
 Fibonaccin lukujen tapauksessa tällainen matriisi on
 
 \[ X = 
@@ -797,8 +771,9 @@ L= \begin{bmatrix}
 
 Nyt virittävien puiden määrä on determinantti
 matriisista, joka saadaan poistamasta matriisista $L$
-ylin rivi ja ylin sarake.
-Tässä verkossa
+jokin rivi ja jokin sarake.
+Esimerkiksi jos poistamme ylimmän rivin ja
+vasemman sarakkeen, tuloksena on
 
 \[ \det(
 \begin{bmatrix}
