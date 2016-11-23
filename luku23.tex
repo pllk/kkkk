@@ -1,12 +1,12 @@
 \chapter{Matriisit}
 
-Matriisi on kaksiulotteinen taulukko,
+Matriisi on kaksiulotteista taulukkoa
+vastaava matemaattinen käsite,
 jolle on määritelty laskutoimituksia.
-Tässä luvussa näemme, miten matriisien
-avulla voi optimoida dynaamista ohjelmointia.
-Osoittautuu, että jos dynaamisen ohjelmoinnin rekursiossa
-lasketaan yhteen kiinteä määrä aiempia arvoja
-vakiokertoimilla,
+Tässä luvussa tutustumme ensin matriisilaskennan
+perusteisiin, minkä jälkeen opimme, kuinka
+matriiseja voi hyödyntää dynaamisessa ohjelmoinnissa
+ja verkkojen käsittelyssä.
 
 \section{Käsitteitä}
 
@@ -25,7 +25,7 @@ Merkitään $A[i,j]$ alkiota,
 joka on rivillä $i$ sarakkeessa $j$.
 Esimerkiksi $A[2,3]=8$ ja $A[3,1]=9$.
 
-Matriisin $A$ transpoosi $A^T$ syntyy,
+Matriisin $A$ \textit{transpoosi} $A^T$ syntyy,
 kun matriisin rivit ja sarakkeet vaihdetaan
 keskenään eli $A^T[i,j]=A[j,i]$:
 \[
@@ -51,19 +51,17 @@ A =
  \end{bmatrix}
 \]
 
-\subsubsection{Yhteenlasku}
+\subsubsection{Perusoperaatiot}
 
 Matriisien $A$ ja $B$ summa $A+B$ on määritelty,
 jos matriisit ovat yhtä suuret.
-Tuloksena oleva summamatriisi on
+Tuloksena oleva matriisi on
 samaa kokoa kuin
-matriisit $A$ ja $B$ ja sen alkiot
-lasketaan kaavalla
-
-\[ (A+B)[i,j]=A[i,j]+B[i,j]. \]
+matriisit $A$ ja $B$ ja sen jokainen
+alkio on vastaavissa kohdissa
+olevien alkioiden summa.
 
 Esimerkiksi
-
 \[
  \begin{bmatrix}
   6 & 1 & 4 \\
@@ -85,17 +83,37 @@ Esimerkiksi
   11 & 10 & 5 \\
  \end{bmatrix}.
 \]
-Matriisisumma on vaihdannainen ja liitännäinen,
-eli pätee $A+B=B+A$ ja $A+(B+C)=(A+B)+C$.
 
-\subsubsection{Kertolasku}
+Matriisin $A$ kertominen luvulla $x$ tarkoittaa,
+että jokainen matriisin alkio kerrotaan luvulla $x$.
+
+Esimerkiksi
+\[
+ 2 \cdot \begin{bmatrix}
+  6 & 1 & 4 \\
+  3 & 9 & 2 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  2 \cdot 6 & 2\cdot1 & 2\cdot4 \\
+  2\cdot3 & 2\cdot9 & 2\cdot2 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  12 & 2 & 8 \\
+  6 & 18 & 4 \\
+ \end{bmatrix}.
+\]
+
+
+\subsubsection{Matriisitulo}
 
 Matriisien $A$ ja $B$ tulo $AB$ on määritelty,
 jos matriisi $A$ on kokoa $a \times n$
 ja matriisi $B$ on kokoa $n \times b$,
 eli matriisin $A$ leveys on sama kuin matriisin
 $B$ korkeus.
-Tulomatriisi
+Tuloksena oleva matriisi
 on kokoa $a \times b$
 ja sen alkiot lasketaan kaavalla
 \[
@@ -207,7 +225,13 @@ ennallaan. Esimerkiksi
  \end{bmatrix}.
 \]
 
-\subsubsection{Potenssilasku}
+Matriisitulon laskeminen vie aikaa $O(n^3)$
+käyttäen suoraviivaista algoritmia,
+kun $A$ ja $B$ ovat kokoa $n \times n$.
+Myös nopeampia algoritmeja on olemassa,
+mutta ne eivät ole tarpeen kisakoodauksessa.
+
+\subsubsection{Matriisipotenssi}
 
 Matriisin $A$ potenssi $A^k$ on
 määritelty, jos $A$ on neliömatriisi.
@@ -279,7 +303,7 @@ kaavalla
 
 \[\det(A)=\sum_{j=1}^n A[1,j] C[1,j],\]
 
-missä $C[i,j]$ on matriisin $A$ kofaktori
+missä $C[i,j]$ on matriisin $A$ \textit{kofaktori}
 kohdassa $[i,j]$.
 Kofaktori lasketaan kaavalla
 
@@ -392,7 +416,7 @@ ohjelmoinnilla ajassa $O(kn)$
 laskemalla kaikki arvot $f(0),f(1),\ldots,f(n)$ järjestyksessä.
 Tätä ratkaisua voi kuitenkin tehostaa merkittävästi
 matriisien avulla.
-Opimme seuraavaksi, miten arvon $f(n)$
+Seuraavaksi näemme, miten arvon $f(n)$
 voi laskea ajassa $O(k^3 \log n)$.
 
 \subsubsection{Fibonaccin luvut}
@@ -538,9 +562,9 @@ X =
 \]
 Matriisin $k-1$ ensimmäisen rivin jokainen alkio on 0,
 paitsi yksi alkio on 1.
-Näiden rivien tarkoituksena on kopioida
-arvo $f(i+1)$ arvon $f(i)$ tilalle,
-arvo $f(i+2)$ arvon $f(i+1)$ tilalle jne.
+Nämä rivit kopioivat
+arvon $f(i+1)$ arvon $f(i)$ tilalle,
+arvon $f(i+2)$ arvon $f(i+1)$ tilalle jne.
 Viimeinen rivi sisältää rekursiokaavan kertoimet,
 joiden avulla muodostuu uusi arvo $f(i+k)$.
 
@@ -782,6 +806,9 @@ vasemman sarakkeen, tuloksena on
   0 & -1 & 2 \\
  \end{bmatrix}
 ) =3.\]
+
+Determinantista tulee aina sama riippumatta siitä,
+mikä rivi ja sarake matriisista $L$ poistetaan.
 
 Huomaa, että Kirchhoffin lauseen erikoistapauksena on
 luvun 22.6 Cayleyn kaava, koska voidaan osoittaa, että
