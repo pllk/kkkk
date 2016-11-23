@@ -727,8 +727,97 @@ eli esimerkiksi lyhin 4 kaaren pituinen polku
 solmusta 2 solmuun 5 on pituudeltaan 8.
 Tämä polku on $2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$.
 
-
 \subsection{Kirchhoffin lause}
 
+Kirchhoffin lause laskee verkon virittävien puiden määrän
+verkkoa vastaavan matriisin determinantista.
+Tarkastellaan esimerkkinä seuraavaa verkkoa:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (1,1) {$3$};
+\node[draw, circle] (4) at (3,1) {$4$};
 
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (1) -- (4);
+\end{tikzpicture}
+\end{center}
+Tällä verkolla on kolme virittävää puuta:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1a) at (1,3) {$1$};
+\node[draw, circle] (2a) at (3,3) {$2$};
+\node[draw, circle] (3a) at (1,1) {$3$};
+\node[draw, circle] (4a) at (3,1) {$4$};
+
+\path[draw,thick,-] (1a) -- (2a);
+%\path[draw,thick,-] (1a) -- (3a);
+\path[draw,thick,-] (3a) -- (4a);
+\path[draw,thick,-] (1a) -- (4a);
+
+\node[draw, circle] (1b) at (1+4,3) {$1$};
+\node[draw, circle] (2b) at (3+4,3) {$2$};
+\node[draw, circle] (3b) at (1+4,1) {$3$};
+\node[draw, circle] (4b) at (3+4,1) {$4$};
+
+\path[draw,thick,-] (1b) -- (2b);
+\path[draw,thick,-] (1b) -- (3b);
+%\path[draw,thick,-] (3b) -- (4b);
+\path[draw,thick,-] (1b) -- (4b);
+
+\node[draw, circle] (1c) at (1+8,3) {$1$};
+\node[draw, circle] (2c) at (3+8,3) {$2$};
+\node[draw, circle] (3c) at (1+8,1) {$3$};
+\node[draw, circle] (4c) at (3+8,1) {$4$};
+
+\path[draw,thick,-] (1c) -- (2c);
+\path[draw,thick,-] (1c) -- (3c);
+\path[draw,thick,-] (3c) -- (4c);
+%\path[draw,thick,-] (1c) -- (4c);
+\end{tikzpicture}
+\end{center}
+
+Muodostetaan verkosta Laplacen matriisi $L$,
+jossa $L[i,i]$ on solmun $i$ aste ja
+$L[i,j]=-1$, jos solmujen $i$ ja $j$ välillä on kaari,
+ja muuten $L[i,j]=0$.
+Tässä tapauksessa matriisista tulee
+
+\[
+L= \begin{bmatrix}
+  3 & -1 & -1 & -1 \\
+  -1 & 1 & 0 & 0 \\
+  -1 & 0 & 2 & -1 \\
+  -1 & 0 & -1 & 2 \\
+ \end{bmatrix}.
+\]
+
+Nyt virittävien puiden määrä on determinantti
+matriisista, joka saadaan poistamasta matriisista $L$
+ylin rivi ja ylin sarake.
+Tässä verkossa
+
+\[ \det(
+\begin{bmatrix}
+  1 & 0 & 0 \\
+  0 & 2 & -1 \\
+  0 & -1 & 2 \\
+ \end{bmatrix}
+) =3.\]
+
+Huomaa, että Kirchhoffin lauseen erikoistapauksena on
+luvun 22.6 Cayleyn kaava, koska voidaan osoittaa, että
+täydellisessä $n$ solmun verkossa
+
+\[ \det(
+\begin{bmatrix}
+  n-1 & -1 & \cdots & -1 \\
+  -1 & n-1 & \cdots & -1 \\
+  \vdots & \vdots & \ddots & \vdots \\
+  -1 & -1 & \cdots & n-1 \\
+ \end{bmatrix}
+) =n^{n-2}.\]
 
