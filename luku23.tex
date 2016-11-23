@@ -591,20 +591,19 @@ X^n \cdot
 \]
 
 
-\section{Verkko matriisina}
+\section{Verkkojen käsittely}
 
-Matriisin potenssilaskulla
+\subsection{Polkujen määrät}
+
+Matriisipotenssilla
 on mielenkiintoinen vaikutus
-painottoman
 verkon vierusmatriisin sisältöön.
-Kun $V$ on vierusmatriisi,
-jossa jokainen arvo on 0 tai 1,
+Kun $V$ on painottoman verkon vierusmatriisi,
 niin $V^n$ kertoo,
-montako $n$:n pituista polkua
+montako $n$ kaaren pituista polkua
 eri solmuista on toisiinsa.
 
 Esimerkiksi verkon
-\\
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
@@ -628,48 +627,108 @@ Esimerkiksi verkon
 vierusmatriisi on
 
 \[
-V=
-\left( \begin{array}{cccccc}
-0 & 0 & 0 & 1 & 0 & 0 \\
-1 & 0 & 0 & 0 & 1 & 1 \\
-0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 1 & 0 \end{array} \right).
+V= \begin{bmatrix}
+  0 & 0 & 0 & 1 & 0 & 0 \\
+  1 & 0 & 0 & 0 & 1 & 1 \\
+  0 & 1 & 0 & 0 & 0 & 0 \\
+  0 & 1 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 1 & 0 & 1 & 0 \\
+ \end{bmatrix}.
 \]
 
-Nyt esimerkiksi matriisi $V^3$ kertoo
-3:n pituisten polkujen määrät:
+Nyt esimerkiksi matriisi
 \[
-V^3=
-\left( \begin{array}{cccccc}
-1 & 0 & 0 & 0 & 1 & 1 \\
-0 & 2 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 1 & 1 & 0 \\
-0 & 0 & 1 & 1 & 1 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 \\
-1 & 0 & 0 & 0 & 1 & 1 \end{array} \right).
+V^4= \begin{bmatrix}
+  0 & 0 & 1 & 1 & 1 & 0 \\
+  2 & 0 & 0 & 0 & 2 & 2 \\
+  0 & 2 & 0 & 0 & 0 & 0 \\
+  0 & 2 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 1 & 1 & 1 & 0 \\
+ \end{bmatrix}
 \]
 
-Esimerkiksi $(V^3)_{1,5}=1$,
-koska solmusta 1 pääsee solmuun 5
-kulkemalla polkua $1 \rightarrow 4 \rightarrow 2 \rightarrow 5$.
-Vastaavasti $(V^3)_{2,2}=2$,
-koska solmusta 2 pääsee itseensä
-kulkemalla polkuja
-$2 \rightarrow 1 \rightarrow 4 \rightarrow 2$
-sekä $2 \rightarrow 6 \rightarrow 3 \rightarrow 2$.
+kertoo, montako 4 kaaren pituista polkua
+solmuista on toisiinsa.
+Esimerkiksi $V^4[2,5]=2$,
+koska solmusta 2 solmuun 5 on olemassa
+4 kaaren pituiset polut
+$2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$
+ja 
+$2 \rightarrow 6 \rightarrow 3 \rightarrow 2 \rightarrow 5$.
 
-Samantapaista ideaa voi käyttää myös
-laskemaan painotetussa verkossa,
-mikä on lyhin $k$ kaaren pituinen polku
-kunkin solmun välillä.
-Tämän saavuttamiseksi riittää muuttaa matriisikertolaskun
-kaavassa yhteenlasku minimiksi
-ja kertolasku yhteenlaskuksi,
-jolloin kaavasta tulee
+\subsection{Lyhimmät polut}
+
+Samantapaisella idealla voi laskea painotetussa verkossa
+kullekin solmuparille,
+mikä on lyhin $n$ kaaren pituinen polku.
+Tarkastellaan esimerkkinä seuraavaa verkkoa:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (1,1) {$4$};
+\node[draw, circle] (3) at (3,3) {$2$};
+\node[draw, circle] (4) at (5,3) {$3$};
+\node[draw, circle] (5) at (3,1) {$5$};
+\node[draw, circle] (6) at (5,1) {$6$};
+
+\path[draw,thick,->,>=latex] (1) -- node[font=\small,label=left:4] {} (2);
+\path[draw,thick,->,>=latex] (2) -- node[font=\small,label=left:1] {} (3);
+\path[draw,thick,->,>=latex] (3) -- node[font=\small,label=north:2] {} (1);
+\path[draw,thick,->,>=latex] (4) -- node[font=\small,label=north:4] {} (3);
+\path[draw,thick,->,>=latex] (3) -- node[font=\small,label=left:1] {} (5);
+\path[draw,thick,->,>=latex] (3) -- node[font=\small,label=left:2] {} (6);
+\path[draw,thick,->,>=latex] (6) -- node[font=\small,label=right:3] {} (4);
+\path[draw,thick,->,>=latex] (6) -- node[font=\small,label=below:2] {} (5);
+\end{tikzpicture}
+\end{center}
+
+Muodostetaan verkosta vierusmatriisi, jossa arvo
+$\infty$ tarkoittaa, että kaarta ei ole,
+ja muut arvot ovat kaarten pituuksia.
+Matriisista tulee
+\[
+V= \begin{bmatrix}
+  \infty & \infty & \infty & 4 & \infty & \infty \\
+  2 & \infty & \infty & \infty & 1 & 2 \\
+  \infty & 4 & \infty & \infty & \infty & \infty \\
+  \infty & 1 & \infty & \infty & \infty & \infty \\
+  \infty & \infty & \infty & \infty & \infty & \infty \\
+  \infty & \infty & 3 & \infty & 2 & \infty \\
+ \end{bmatrix}.
+\]
+
+Nyt ideana on laskea matriisitulo kaavan
+\[
+AB[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j]
+\]
+sijasta kaavalla
+\[
+AB[i,j] = \min_{k=1}^n A[i,k] + B[k,j],
+\]
+eli summa muuttuu minimiksi ja tulo summaksi.
+Tämän seurauksena matriisipotenssi
+selvittää lyhimmät polkujen pituudet solmujen
+välillä. Esimerkiksi
 
 \[
-(AB)_{i,j} = \min_{k=1}^n (A_{i,k}+B_{k,j}).
+V^4= \begin{bmatrix}
+  \infty & \infty & 10 & 11 & 9 & \infty \\
+  9 & \infty & \infty & \infty & 8 & 9 \\
+  \infty & 11 & \infty & \infty & \infty & \infty \\
+  \infty & 8 & \infty & \infty & \infty & \infty \\
+  \infty & \infty & \infty & \infty & \infty & \infty \\
+  \infty & \infty & 12 & 13 & 11 & \infty \\
+ \end{bmatrix}
 \]
+eli esimerkiksi lyhin 4 kaaren pituinen polku
+solmusta 2 solmuun 5 on pituudeltaan 8.
+Tämä polku on $2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$.
+
+
+\subsection{Kirchhoffin lause}
+
+
 
