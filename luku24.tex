@@ -407,43 +407,102 @@ vaikka tehtävä ei itsessään liittyisi todennäköisyyteen.
 Satunnaisalgoritmit ovat algoritmeja, joiden toiminta
 perustuu satunnaisuuteen.
 
-Hyvä satunnaisalgoritmi tuottaa suurella todennäköisyydellä
-oikean vastauksen tehokkaasti.
-Satunnaisalgoritmin analysoinnissa tarvitsee
-todennäköisyyslaskentaa, jotta voi näyttää,
-että algoritmi toimii riittävän hyvin.
+\textit{Monte Carlo -algoritmi} on satunnaisalgoritmi,
+joka saattaa tuottaa joskus väärän vastauksen.
+Jotta algoritmi olisi käyttökelpoinen,
+väärän vastauksen todennäköisyyden tulee olla pieni.
 
-\textit{Tehtävä:} Annettuna on taulukko, jossa on $n$ lukua.
-Tiedät, että yli puolet taulukon luvuista on samaa lukua $x$,
-ja tehtäväsi on etsiä luku $x$.
+\textit{Las Vegas -algoritmi} on satunnaisalgoritmi,
+joka tuottaa aina oikean tuloksen mutta jonka
+suoritusaika vaihtelee satunnaisesti.
+Tavoitteena on, että algoritmi toimisi nopeasti
+suurella todennäköisyydellä.
 
-Tehtävän ratkaisuun on olemassa yksinkertainen
-satunnaisalgoritmi: valitse taulukosta satunnainen luku
-ja tarkista, esiintyykö se yli $n/2$ kertaa.
-Jos esiintyy, $x$ on löytynyt, ja muuten toista samaa uudestaan.
+\subsection{Alkion etsiminen}
 
-Koska ainakin puolet taulukon luvuista on lukua $x$,
-todennäköisyys, että valittu luku ei ole $x$, on alle $1/2$.
-Niinpä $k$:n valinnan jälkeen todennäköisyys,
-että $x$ on löytynyt, on ainakin $1-(1/2)^k$.
-Tämä lähestyy nopeasti lukua 1:
+\begin{task}
+Annettuna on taulukko, jossa on $n$ alkiota.
+Tehtäväsi on selvittää, mikä alkio on järjestetyssä
+taulukossa kohdassa $k$.
+\end{task}
 
-\begin{center}
-\begin{tabular}{rr}
-$k$ & \phantom{XXXXX} $1-(1/2)^k$ \\
-\hline
-1 & $0{,}500000$ \\
-2 & $0{,}750000$ \\
-3 & $0{,}875000$ \\
-4 & $0{,}937500$ \\
-5 & $0{,}968750$ \\
-$\cdots$ \\
-10 & $0{,}999023$ \\
-$\cdots$ \\
-20 & $0{,}999999$ \\
-\end{tabular}
-\end{center}
+Helppo ratkaisu tehtävään on järjestää
+taulukko ajassa $O(n \log n)$, minkä jälkeen
+haluttu alkio on kohdassa $k$.
+Mutta onko tarpeen järjestää koko taulukkoa
+yhden alkion selvittämiseksi?
 
-Oikea $x$ löytyy lähes varmasti muutaman valinnan jälkeen,
-joten algoritmin aikavaativuus on käytännössä $O(n)$.
+Osoittautuu, että tehtävän voi ratkaista myös
+satunnaisalgoritmilla.
+Algoritmi on Las Vegas -tyyppinen:
+sen aikavaativuus on yleensä $O(n)$,
+mutta pahimmassa tapauksessa $O(n^2)$.
 
+Ideana on valita taulukosta satunnainen alkio $x$
+ja siirtää $x$:ää pienemmät alkiot
+taulukon vasempaan osaan ja loput alkiot
+taulukon oikeaan osaan.
+Tämä vie aikaa $O(n)$, kun taulukossa on $n$ alkiota.
+Oletetaan, että vasemmassa osassa on $a$
+alkiota ja oikeassa osassa on $b$ alkiota.
+
+Nyt jos $a=k-1$, alkio $x$ on haluttu alkio.
+Jos $a>k-1$, etsitään rekursiivisesti
+vasemmasta osasta, mikä on kohdassa $k$ oleva alkio.
+Jos taas $a<k-1$, etsitään rekursiivisesti
+oikeasta osasta, mikä on kohdassa $k-1-a$ oleva alkio.
+Haku jatkuu vastaavasti, kunnes alkio on löytynyt.
+
+Koska jokainen alkion $x$:n valinta
+suunnilleen puolittaa taulukon,
+alkion etsiminen vie aikaa $n+n/2+n/4+n/8+\cdots=O(n)$.
+
+Algoritmin pahin tapaus on silti $O(n^2)$,
+koska on mahdollista,
+että $x$ valitaan sattumalta aina niin,
+että se on taulukon pienin alkio.
+Silloin taulukko pienenee joka vaiheessa
+vain yhden alkion verran.
+Tämän todennäköisyys on kuitenkin erittäin pieni,
+eikä näin tapahdu koskaan käytännössä.
+
+\subsection{Matriisitulon tarkastaminen}
+
+\begin{task}
+Annettuna on kolme $n \times n$ -kokoista matriisia
+$A$, $B$ ja $C$.
+Tehtäväsi on selvittää, päteekö $AB=C$.
+\end{task}
+
+Tehtävän voi ratkaista laskemalla matriisitulon
+$AB$ ja tarkastamalla, onko se sama kuin $C$.
+Matriisitulon laskemiseen menee aikaa
+$O(n^3)$ perusalgoritmilla, mutta voisi toivoa,
+että ratkaisun tarkastaminen olisi helpompaa
+kuin sen laskeminen alusta alkaen uudestaan.
+
+Tehtävän voi ratkaista Monte Carlo -algoritmilla,
+jonka aikavaativuus on vain $O(n^2)$.
+Idea on yksinkertainen: valitaan satunnainen
+$n \times 1$ -matriisi $X$ ja tarkastetaan,
+ovatko matriisit $ABX$ ja $CX$ samat.
+Jos nämä matriisit ovat samat, niin ilmoitetaan,
+että myös matriisit $AB$ ja $C$ ovat samat.
+
+Matriisien $ABX$ ja $CX$
+laskeminen vie aikaa $O(n^2)$,
+koska matriisin $ABX$ voi laskea osissa $A(BX)$,
+ja matriisien vertaaminen vie aikaa $O(n)$.
+Niinpä algoritmin aikavaativuus on $O(n^2)$.
+
+Algoritmin heikkoutena on, että on pieni mahdollisuus,
+että algoritmi erehtyy.
+Jos algoritmi toteaa, että matriisit eivät ole samat,
+vastaus on aina oikein.
+Kuitenkin jos algoritmi pitää matriiseja samoina,
+on mahdollista, että ne ovat eri matriisit ja
+$X$ on vain sattumalta sellainen, että
+$ABX$ ja $CX$ ovat samat.
+
+
+\subsection{Verkon väritys}
