@@ -484,25 +484,118 @@ kuin sen laskeminen alusta alkaen uudestaan.
 Tehtävän voi ratkaista Monte Carlo -algoritmilla,
 jonka aikavaativuus on vain $O(n^2)$.
 Idea on yksinkertainen: valitaan satunnainen
-$n \times 1$ -matriisi $X$ ja tarkastetaan,
-ovatko matriisit $ABX$ ja $CX$ samat.
-Jos nämä matriisit ovat samat, niin ilmoitetaan,
-että myös matriisit $AB$ ja $C$ ovat samat.
+$n \times 1$ -matriisi $X$ ja lasketaan
+matriisit $ABX$ ja $CX$.
+Jos $ABX=CX$, ilmoitetaan, että $AB=C$,
+ja muuten ilmoitetaan, että $AB \neq C$.
 
-Matriisien $ABX$ ja $CX$
-laskeminen vie aikaa $O(n^2)$,
-koska matriisin $ABX$ voi laskea osissa $A(BX)$,
-ja matriisien vertaaminen vie aikaa $O(n)$.
-Niinpä algoritmin aikavaativuus on $O(n^2)$.
+Algoritmin aikavaativuus on $O(n^2)$,
+koska matriisien $ABX$ ja $CX$ laskeminen
+vie aikaa $O(n^2)$.
+Matriisin $ABX$ tapauksessa laskennan
+voi suorittaa osissa $A(BX)$, jolloin riittää
+kertoa kahdesti $n \times n$- ja $n \times 1$-kokoiset
+matriisit.
 
 Algoritmin heikkoutena on, että on pieni mahdollisuus,
-että algoritmi erehtyy.
-Jos algoritmi toteaa, että matriisit eivät ole samat,
-vastaus on aina oikein.
-Kuitenkin jos algoritmi pitää matriiseja samoina,
-on mahdollista, että ne ovat eri matriisit ja
-$X$ on vain sattumalta sellainen, että
-$ABX$ ja $CX$ ovat samat.
+että algoritmi erehtyy, kun se ilmoittaa, että $AB=C$.
+Esimerkiksi 
+\[
+ \begin{bmatrix}
+  2 & 4 \\
+  1 & 6 \\
+ \end{bmatrix}
+\neq
+ \begin{bmatrix}
+  0 & 5 \\
+  7 & 4 \\
+ \end{bmatrix},
+\]
+mutta
+\[
+ \begin{bmatrix}
+  2 & 4 \\
+  1 & 6 \\
+ \end{bmatrix}
+ \begin{bmatrix}
+  1 \\
+  3 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  0 & 5 \\
+  7 & 4 \\
+ \end{bmatrix}
+ \begin{bmatrix}
+  1 \\
+  3 \\
+ \end{bmatrix}.
+\]
+Käytännössä tämän todennäköisyys on kuitenkin hyvin
+pieni ja tarvittaessa tarkastuksen voi tehdä usealla
+satunnaisella matriisilla $X$ ennen vastauksen
+$AB=C$ ilmoittamista.
 
+\subsection{Verkon värittäminen}
 
-\subsection{Verkon väritys}
+\begin{task}
+Annettuna on verkko, jossa on $n$ solmua ja $m$ kaarta.
+Etsi tapa värittää verkon solmut kahdella värillä
+niin, että ainakin $\lfloor m/2 \rfloor$ kaaressa
+päätesolmut ovat eri väriset.
+\end{task}
+
+Esimerkiksi verkossa
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1,3) {$1$};
+\node[draw, circle] (2) at (4,3) {$2$};
+\node[draw, circle] (3) at (1,1) {$3$};
+\node[draw, circle] (4) at (4,1) {$4$};
+\node[draw, circle] (5) at (6,2) {$5$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (2) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+\end{tikzpicture}
+\end{center}
+yksi kelvollinen väritys on seuraava:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle, fill=blue!40] (1) at (1,3) {$1$};
+\node[draw, circle, fill=red!40] (2) at (4,3) {$2$};
+\node[draw, circle, fill=red!40] (3) at (1,1) {$3$};
+\node[draw, circle, fill=blue!40] (4) at (4,1) {$4$};
+\node[draw, circle, fill=blue!40] (5) at (6,2) {$5$};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (1) -- (4);
+\path[draw,thick,-] (3) -- (4);
+\path[draw,thick,-] (2) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+\end{tikzpicture}
+\end{center}
+Yllä olevassa verkossa on 7 kaarta ja niistä 5:ssä
+päätesolmut ovat eri väriset,
+joten väritys on kelvollinen.
+
+Tehtävä on mahdollista ratkaista satunnaisalgoritmilla
+muodostamalla satunnaisia värityksiä niin kauan,
+kunnes syntyy kelvollinen väritys.
+Satunnaisessa värityksessä jokaisen solmun väri on
+valittu toisistaan riippumatta niin,
+että kummankin värin todennäköisyys on $1/2$.
+
+Satunnaisessa värityksessä todennäköisyys, että yksittäisen kaaren päätesolmut
+ovat eri väriset on $1/2$. Niinpä odotusarvo, monessako kaaressa
+päätesolmut ovat eri väriset, on $1/2 \cdot m \ge \lfloor m/2 \rfloor$.
+
+Koska satunnainen väritys on odotusarvoisesti kelvollinen,
+jokin kelvollinen väritys löytyy käytännössä nopeasti
+muodostamalla satunnaisia värityksiä.
