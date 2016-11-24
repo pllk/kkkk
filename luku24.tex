@@ -36,11 +36,13 @@ Tapahtuman todennäköisyyden laskemiseen on
 kaksi tavallista laskutapaa. Tutustumme niihin
 seuraavan tehtävän avulla:
 
-\textit{Tehtävä:} Korttipakassa on 52 korttia, jotka jakaantuvat
+\begin{task}
+Korttipakassa on 52 korttia, jotka jakaantuvat
 neljään maahan (hertta, risti, ruutu, pata).
 Kussakin maassa on 13 korttia, joiden arvot ovat $1,2,\ldots,13$.
 Sinulle jaetaan kolme korttia pakasta.
 Mikä on todennäköisyys, että jokaisen kortin arvo on sama?
+\end{task}
 
 \subsubsection*{Laskutapa 1}
 
@@ -67,7 +69,7 @@ Toinen tapa laskea todennäköisyys on simuloida prosessia,
 jossa tapahtuma syntyy.
 Tässä tapauksessa pakasta nostetaan kolme korttia,
 joten prosessissa on kolme vaihetta.
-Ideana on vaatia, että prosessin jokainen vaihe onnistuu.
+Vaatimuksena on, että prosessin jokainen vaihe onnistuu.
 
 Ensimmäisen kortin nosto onnistuu varmasti,
 koska mikä tahansa kortti kelpaa.
@@ -111,7 +113,7 @@ $A \cap B$ tarkoittaa
 Komplementin $\bar A$
 todennäköisyys lasketaan $P(\bar A)=1-P(A)$.
 Joskus tehtävän ratkaisu on kätevää
-laskea vastatapahtuman kautta.
+laskea komplementin kautta.
 Esimerkiksi todennäköisyys saada
 10 nopan heitossa ainakin
 kerran silmäluku 6 on $1-(5/6)^{10}$,
@@ -176,6 +178,41 @@ koska erilaisia heittotapoja on 36
 ja niistä summan 10 tuottavat heitot
 $[4,6]$, $[5,5]$ ja $[6,4]$.
 
+\subsection{Odotusarvo}
+
+Odotusarvo $E[X]$ kertoo, mikä satunnaismuuttujan $X$
+arvo on keskimääräisessä tilanteessa.
+Odotusarvo lasketaan summana
+
+\[\sum_x P(X=x)x,\]
+
+missä $x$ saa kaikki mahdolliset satunnaismuuttujan arvot.
+
+Esimerkiksi yhden nopan heitossa silmäluvun odotusarvo
+on $1/6 \cdot 1 + 1/6 \cdot 2 + 1/6 \cdot 3 + 1/6 \cdot 4 + 1/6 \cdot 5 + 1/6 \cdot 6 = 7/2$.
+
+\subsubsection*{Lineaarisuus}
+
+Usein hyödyllinen odotusarvon ominaisuus on \textit{lineaarisuus}.
+Sen ansiosta summa $E[X_1+X_2+\cdots+X_n]$ voidaan laskea $E[X_1]+E[X_2]+\cdots+E[X_n]$.
+Kaava pätee myös silloin, kun satunnaismuuttujat riippuvat toisistaan.
+
+Esimerkiksi kahden nopan heitossa silmälukujen summan odotusarvo on
+$E[X_1+X_2]=E[X_1]+E[X_2]=7/2+7/2=7$.
+
+Seuraava tehtävä on hieman vaativampi:
+
+\begin{task}
+Pöydällä on $n$ hattua ja $n$ palloa.
+Jokainen pallo sijoitetaan satunnaisesti johonkin hattuun.
+Mikä on odotusarvo, montako hattua on tyhjiä?
+\end{task}
+
+Todennäköisyys, että yksittäinen hattu on tyhjä,
+on $(\frac{n-1}{n})^n$, koska mikään pallo ei saa mennä sinne.
+Odotusarvon lineaarisuuden ansiosta tyhjien hattujen
+määrän odotusarvo on $n \cdot (\frac{n-1}{n})^n$.
+
 \subsection{Jakaumat}
 
 Satunnaismuuttujan jakauma kertoo,
@@ -197,10 +234,13 @@ Tutustumme seuraavaksi muutamaan usein esiintyvään jakaumaan.
 \subsubsection*{Tasajakauma}
 
 Tasajakaumassa satunnaismuuttuja
-saa arvoja väliltä $a,a+1,\ldots,b$
+saa arvoja väliltä $a \ldots b$
 ja jokaisen arvon todennäköisyys on sama.
 Esimerkiksi yhden nopan heitto tuottaa tasajakauman,
 jossa $P(X=x)=1/6$, kun $x=1,2,\ldots,6$.
+
+Tasajakaumassa $X$:n odotusarvo on
+\[E[X] = \frac{a+b}{2}.\]
 
 \subsubsection*{Binomijakauma}
 
@@ -222,6 +262,9 @@ Esimerkiksi jos heitetään 10 kertaa noppaa,
 todennäköisyys saada tarkalleen 3 kertaa silmäluku 6
 on $(1/6)^3 (5/6)^7 {10 \choose 3}$.
 
+Binomijakaumassa $X$:n odotusarvo on
+\[E[X] = pn.\]
+
 \subsubsection*{Geometrinen jakauma}
 
 Geometrinen jakauma kuvaa tilannetta,
@@ -241,55 +284,28 @@ Esimerkiksi jos heitetään noppaa,
 kunnes tulee silmäluku 6, todennäköisyys
 heittää tarkalleen 4 kertaa on $(5/6)^3 1/6$.
 
-\subsection{Odotusarvo}
+Geometrisessa jakaumassa $X$:n odotusarvo on
+\[E[X]=\frac{1}{p}.\]
 
-Odotusarvo $E[X]$ kertoo, mikä satunnaismuuttujan $X$
-arvo on keskimääräisessä tilanteessa.
-Odotusarvo lasketaan summana
+\section{Markovin ketju}
 
-\[\sum_x P(X=x)x,\]
+Markovin ketju on satunnaisprosessi,
+joka muodostuu tiloista ja niiden välisistä siirtymistä.
+Jokaisesta tilasta tiedetään, millä todennäköisyydellä
+siitä siirrytään toisiin tiloihin.
+Luonteva tapa esittää Markovin ketju on
+muodostaa verkko, jonka solmut ovat tiloja
+ja kaaret niiden välisiä siirtymiä.
 
-missä $x$ saa kaikki mahdolliset satunnaismuuttujan arvot.
-
-Esimerkiksi yhden nopan heitossa silmäluvun odotusarvo
-on $1/6 \cdot 1 + 1/6 \cdot 2 + 1/6 \cdot 3 + 1/6 \cdot 4 + 1/6 \cdot 5 + 1/6 \cdot 6 = 7/2$.
-
-\subsubsection*{Lineaarisuus}
-
-Usein hyödyllinen odotusarvon ominaisuus on lineaarisuus.
-Sen ansiosta summa $E[X_1+X_2+\cdots+X_n]$ voidaan laskea $E[X_1]+E[X_2]+\cdots+E[X_n]$.
-Kaava pätee myös silloin, kun satunnaismuuttujat riippuvat toisistaan.
-
-Esimerkiksi kahden nopan heitossa silmälukujen summan odotusarvo on
-$E[X_1+X_2]=E[X_1]+E[X_2]=7/2+7/2=7$.
-
-Seuraava tehtävä on hieman vaativampi:
-
-\textit{Tehtävä:} Pöydällä on $n$ hattua ja $n$ palloa.
-Jokainen pallo sijoitetaan satunnaisesti johonkin hattuun.
-Mikä on odotusarvo, montako hattua on tyhjiä?
-
-Todennäköisyys, että yksittäinen hattu on tyhjä,
-on $(\frac{n-1}{n})^n$, koska mikään pallo ei saa mennä sinne.
-Odotusarvon lineaarisuuden ansiosta tyhjien hattujen
-määrän odotusarvo on $n \cdot (\frac{n-1}{n})^n$.
-
-\section{Satunnaisprosessi}
-
-Satunnaisprosessi muodostuu tiloista,
-joiden välillä liikutaan kaaria pitkin.
-Jokaiseen kaareen liittyy todennäköisyys, joka tarkoittaa,
-miten todennäköisesti tilasta valitaan tämä kaari.
-Luonteva tapa esittää satunnaisprosessi on
-muodostaa verkko, jonka solmut ovat prosessin tiloja.
-
-\textit{Tehtävä:} Rakennuksessa on $n$ kerrosta.
-Aloitat kerroksesta 1 ja liikut joka vuorolla
+\begin{task}
+Rakennuksessa on $n$ kerrosta.
+Aloitat kerroksesta 1 ja liikut joka askeleella
 satunnaisesti kerroksen ylöspäin tai alaspäin.
 Poikkeuksena kerroksesta 1 liikut aina ylöspäin
 ja kerroksesta $n$ aina alaspäin.
 Mikä on todennäköisyys, että olet $m$
-vuoron jälkeen kerroksessa $k$?
+askeleen jälkeen kerroksessa $k$?
+\end{task}
 
 Tehtävässä kukin rakennuksen kerros
 on yksi tiloista, ja kerrosten välillä liikutaan
@@ -318,29 +334,71 @@ Esimerkiksi jos $n=5$, verkosta tulee:
 \end{tikzpicture}
 \end{center}
 
-Satunnaisprosessin tila voidaan esittää taulukkona
+Markovin ketjun tilajakauma on vektori
 $[p_1,p_2,\ldots,p_n]$, missä $p_k$ tarkoittaa
 todennäköisyyttä olla tällä hetkellä tilassa $k$.
 Todennäköisyyksille pätee aina $p_1+p_2+\cdots+p_n=1$.
 
-Esimerkissä tilana on ensin $[1,0,0,0,0]$,
+Esimerkissä jakauma on ensin $[1,0,0,0,0]$,
 koska on varmaa, että kulku alkaa kerroksesta 1.
-Seuraava tila on $[0,1,0,0,0]$,
+Seuraava jakauma on $[0,1,0,0,0]$,
 koska kerroksesta 1 pääsee vain kerrokseen 2.
 Tämän jälkeen on mahdollisuus mennä joko ylöspäin
-tai alaspäin, joten seuraava tila on $[1/2,0,1/2,0,0]$ jne.
+tai alaspäin, joten seuraava jakauma on $[1/2,0,1/2,0,0]$ jne.
 
-Tehokas tapa simuloida satunnaisprosessia on käyttää dynaamista
-ohjelmointia.
-Ideana on käydä joka vuorolla läpi kaikki tilat
+Tehokas tapa simuloida kulkua Markovin ketjussa
+on käyttää dynaamista ohjelmointia.
+Ideana on pitää yllä tilajakaumaa
+ja käydä joka vuorolla läpi kaikki tilat
 ja jokaisesta tilasta kaikki mahdollisuudet jatkaa eteenpäin.
-Tämän simuloinnin aikavaativuus on $O(n^2 m)$,
-missä $n$ on tilojen määrä ja $m$ on askelten määrä.
 
-Tilasiirtymät voi esittää myös matriisina,
-mikä mahdollistaa tehokkaan matriisipotenssin käyttämisen.
-Tästä menetelmästä voi olla hyötyä, jos $m$ on suuri,
-koska aikavaativuudeksi tulee $O(n^3 \log m)$.
+Markovin ketjun tilasiirtymät voi esittää myös matriisina,
+jonka avulla voi päivittää tilajakaumaa askeleen eteenpäin.
+Tässä tapauksessa matriisi on
+
+\[ 
+ \begin{bmatrix}
+  0 & 1/2 & 0 & 0 & 0 \\
+  1 & 0 & 1/2 & 0 & 0 \\
+  0 & 1/2 & 0 & 1/2 & 0 \\
+  0 & 0 & 1/2 & 0 & 1 \\
+  0 & 0 & 0 & 1/2 & 0 \\
+ \end{bmatrix}.
+\]
+
+Ideana on, että matriisilla voi kertoa tilajakaumaa esittävän
+vektorin, jolloin saadaan seuraava tilajakauma.
+Esimerkiksi jakaumasta $[1,0,0,0,0]$ pääsee jakaumaan
+$[0,1,0,0,0]$ seuraavasti:
+
+\[ 
+ \begin{bmatrix}
+  0 & 1/2 & 0 & 0 & 0 \\
+  1 & 0 & 1/2 & 0 & 0 \\
+  0 & 1/2 & 0 & 1/2 & 0 \\
+  0 & 0 & 1/2 & 0 & 1 \\
+  0 & 0 & 0 & 1/2 & 0 \\
+ \end{bmatrix}
+ \begin{bmatrix}
+  1 \\
+  0 \\
+  0 \\
+  0 \\
+  0 \\
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  0 \\
+  1 \\
+  0 \\
+  0 \\
+  0 \\
+ \end{bmatrix}.
+\]
+
+Tähän matriisiin voi soveltaa edelleen tehokasta
+matriisipotenssia, jonka avulla voi laskea nopeasti,
+mikä on jakauma $m$ askeleen jälkeen.
 
 \section{Satunnaisalgoritmit}
 
