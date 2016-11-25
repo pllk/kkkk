@@ -35,6 +35,9 @@ jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 
 \subsubsection{Maksimivirtaus}
 
+\index{virtaus}
+\index{maksimivirtaus}
+
 Virtaus (\textit{flow})
 lähtee liikkeelle alkusolmusta ja päätyy loppusolmuun.
 Kunkin kaaren paino on kapasiteetti,
@@ -83,6 +86,9 @@ rakenteesta johtuen ei ole tapaa
 kuljettaa enempää virtausta verkossa.
 
 \subsubsection{Minimileikkaus}
+
+\index{leikkaus}
+\index{minimileikkaus}
 
 Leikkaus (\textit{cut}) jakaa verkon solmut
 kahteen osaan niin, että alkusolmu ja loppusolmu
@@ -145,6 +151,8 @@ Algoritmi auttaa myös ymmärtämään,
 minimileikkaus ovat yhtä suuret.
 
 \section{Ford-Fulkersonin algoritmi}
+
+\index{Ford-Fulkersonin algoritmi}
 
 Ford-Fulkersonin algoritmi etsii verkon maksimivirtauksen.
 Algoritmin ideana on aloittaa tilanteesta,
@@ -412,6 +420,8 @@ että jokainen polku
 kasvattaa virtausta vain 1:llä ja algoritmi toimii hitaasti.
 Seuraavaksi käymme läpi kaksi tapaa polun valintaan,
 jotka estävät tämän ilmiön.
+
+\index{Edmonds-Karpin algoritmi}
 
 \textit{Edmonds-Karpin algoritmi} on
 Ford-Fulkersonin algoritmin toteutus,
@@ -720,6 +730,8 @@ kun sama solmu ei saa esiintyä monessa polussa.
 
 \section{Maksimiparitus}
 
+\index{maksimiparitus}
+
 Verkon paritus (\textit{matching}) on kokoelma kaaria,
 jotka on valittu niin, että jokainen verkon solmu
 esiintyy enintään yhden paritukseen kuuluvan kaaren päätesolmuna.
@@ -838,6 +850,8 @@ joten maksimiparitus on myös 3.
 
 \subsection{Hallin lause}
 
+\index{Hallin lause}
+
 Hallin lause antaa ehdon, milloin kaksijakoiseen
 verkkoon voidaan muodostaa paritus,
 joka sisältää kaikki toisen puolen solmut.
@@ -916,6 +930,10 @@ Esimerkiksi yllä molemmat solmut 2 ja 4 tulisi
 yhdistää solmuun 7, mutta tämä ei ole mahdollista.
 
 \subsection{Kőnigin lause}
+
+\index{Kőnigin lause}
+\index{solmupeite}
+\index{riippumaton joukko}
 
 Solmupeite (\textit{vertex cover}) on sellainen joukko
 verkon solmuja, että jokaisesta verkon kaaresta ainakin
@@ -1020,6 +1038,8 @@ suurin riippumaton joukko on seuraava:
 \end{center}
 
 \section{Polkupeitteet}
+
+\index{polkupeite}
 
 Polkupeite (\textit{path cover}) on joukko verkon polkuja,
 jotka on valittu niin, että jokainen verkon solmu kuuluu
@@ -1197,6 +1217,8 @@ kun alkuperäisessä verkossa solmusta $a$ pääsee
 solmuun $b$ (mahdollisesti usean kaaren kautta).
 
 \subsection{Dilworthin lause}
+
+\index{Dilworthin lause}
 
 Dilworthin lauseen mukaan suunnatun, syklittömän
 verkon pienin yleinen polkupeite

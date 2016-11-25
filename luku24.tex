@@ -8,7 +8,7 @@ simulointi dynaamisen ohjelmoinnin avulla.
 Joskus taas tehtävän voi ratkaista satunnaisalgoritmilla,
 joka toimii todennäköisesti hyvin.
 
-\section{Perusasiat}
+\section{Perustekniikat}
 
 Todennäköisyys on luku väliltä $0 \ldots 1$,
 joka kuvaa sitä, miten todennäköinen jokin
@@ -160,6 +160,8 @@ koska tässä tapauksessa $P(B|A)=P(B)$.
 
 \section{Satunnaismuuttuja}
 
+\index{satunnaismuuttuja}
+
 Satunnaismuuttuja on arvo, joka syntyy satunnaisen
 prosessin tuloksena.
 Satunnaismuuttujaa merkitään yleensä
@@ -177,6 +179,8 @@ ja niistä summan 10 tuottavat heitot
 $(4,6)$, $(5,5)$ ja $(6,4)$.
 
 \subsection{Odotusarvo}
+
+\index{odotusarvo}
 
 Odotusarvo $E[X]$ kertoo, mikä satunnaismuuttujan $X$
 arvo on keskimääräisessä tilanteessa.
@@ -280,6 +284,8 @@ Geometrisessa jakaumassa $X$:n odotusarvo on
 \[E[X]=\frac{1}{p}.\]
 
 \section{Markovin ketju}
+
+\index{Markovin ketju}
 
 Markovin ketju on satunnaisprosessi,
 joka muodostuu tiloista ja niiden välisistä siirtymistä.
@@ -397,15 +403,21 @@ mikä on jakauma $m$ askeleen jälkeen.
 
 \section{Satunnaisalgoritmit}
 
+\index{satunnaisalgoritmi}
+
 Joskus tehtävässä voi hyödyntää satunnaisuutta,
 vaikka tehtävä ei itsessään liittyisi todennäköisyyteen.
 Satunnaisalgoritmit ovat algoritmeja, joiden toiminta
 perustuu satunnaisuuteen.
 
+\index{Monte Carlo -algoritmi}
+
 \textit{Monte Carlo -algoritmi} on satunnaisalgoritmi,
 joka saattaa tuottaa joskus väärän tuloksen.
 Jotta algoritmi olisi käyttökelpoinen,
 väärän vastauksen todennäköisyyden tulee olla pieni.
+
+\index{Las Vegas -algoritmi}
 
 \textit{Las Vegas -algoritmi} on satunnaisalgoritmi,
 joka tuottaa aina oikean tuloksen mutta jonka

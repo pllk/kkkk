@@ -17,6 +17,9 @@ ja syklien etsimiseen on olemassa tehokkaita algoritmeja.
 
 \section{Topologinen järjestys}
 
+\index{topologinen järjestys}
+\index{sykli}
+
 Topologinen järjestys
 (\textit{topological sort}) on tapa
 järjestää suunnatun verkon solmut niin,
@@ -372,6 +375,8 @@ joiden kautta tulee kaksi ja yksi polkua solmusta 4 alkaen.
 
 \subsection{Dijkstran sovellukset}
 
+\index{Dijkstran algoritmi}
+
 Dijkstran algoritmin sivutuotteena syntyy suunnattu, syklitön verkko,
 joka kertoo jokaiselle alkuperäisen verkon solmulle,
 mitä tapoja alkusolmusta on päästä kyseiseen solmuun lyhintä
@@ -445,6 +450,8 @@ on olemassa solmusta 1 solmuun 5:
 
 
 \section{Funktionaaliset verkot}
+
+\index{funktionaalinen verkko}
 
 Funktionaalinen verkko (\textit{functional graph})
 on suunnattu verkko, jonka jokaisesta solmusta lähtee
@@ -560,6 +567,8 @@ kuluu aikaa $O(\log k)$.
 
 \subsection{Syklin etsiminen}
 
+\index{sykli}
+
 Toinen kiinnostava kysymys funktionaalisessa verkossa on,
 kuinka monta askelta solmusta $x$ tulee kulkea
 ennen sykliin pääsemistä ja mikä on syklin pituus.
@@ -581,6 +590,8 @@ Tästä on merkittävää hyötyä, jos $n$ on suuri.
 Tutustumme seuraavaksi kahteen tällaiseen algoritmiin.
 
 \subsubsection{Algoritmi 1 (Floyd)}
+
+\index{Floydin algoritmi}
 
 Floydin algoritmi kulkee verkossa eteenpäin rinnakkain
 kahdesta kohdasta.
@@ -626,6 +637,8 @@ while (a != b) {
 \end{lstlisting}
 
 \subsubsection{Algoritmi 2 (Brent)}
+
+\index{Brentin algoritmi}
 
 Brentin algoritmi
 muodostuu peräkkäisistä vaiheista, joissa osoitin $a$ pysyy

@@ -39,6 +39,8 @@ eikä koodia tarvitse kehittää kilpailun jälkeen.
 
 \section{Ohjelmointikielet}
 
+\index{ohjelmointikieli}
+
 Tällä hetkellä yleisimmät koodauskisoissa
 käytetyt kielet ovat C++, Python ja Java.
 Esimerkiksi vuoden 2016 Google Code Jamissa
@@ -125,6 +127,8 @@ ja näyttää varoituksia
 mahdollisista virheistä (\texttt{-Wall}).
 
 \section{Syöte ja tuloste}
+
+\index{syöte ja tuloste}
 
 Useimmissa kisoissa käytetään
 standardivirtoja syötteen lukemiseen ja tulosteen
@@ -240,6 +244,8 @@ tiedostoon ''output.txt''.
 
 \subsection{Kokonaisluvut}
 
+\index{kokonaisluku}
+
 Tavallisin kokonaislukutyyppi kisakoodauksessa on \texttt{int}.
 Tämä on 32-bittinen tyyppi,
 jonka sallittu lukuväli on $-2^{31} \ldots 2^{31}-1$
@@ -283,6 +289,8 @@ $-2^{127} \ldots 2^{127}-1$ eli noin $-10^{38} \ldots 10^{38}$.
 Tämä tyyppi ei kuitenkaan ole käytettävissä kaikissa kisajärjestelmissä.
 
 \subsection{Vastaus modulona}
+
+\index{modulolaskenta}
 
 Joskus tehtävän vastaus on hyvin suuri kokonaisluku,
 mutta vastaus riittää tulostaa ''modulo $M$''
@@ -343,6 +351,8 @@ kun modulo voi olla negatiivinen
 koodissa olevien vähennyslaskujen vuoksi.
 
 \subsection{Liukuluvut}
+
+\index{liukuluku}
 
 Tavalliset liukulukutyypit kisakoodauksessa
 ovat 64-bittinen \texttt{double}
@@ -448,6 +458,8 @@ typedef pair<int,int> pi;
 \end{lstlisting}
 
 \subsection{Makrot}
+
+\index{makro}
 
 Esikääntäjän komennolla \texttt{\#define}
 voi määritellä makroja, joiden avulla voi lyhentää
@@ -614,6 +626,8 @@ $a_1,a_2,\ldots,a_n$.
 
 \subsection{Joukot}
 
+\index{joukko}
+
 Joukko on kokoelma alkioita.
 Esimerkiksi joukko $\{2,4,7\}$
 sisältää alkiot 2, 4 ja 7.
@@ -657,6 +671,8 @@ kahdella tavalla: joko $\mathbb{N}=\{0,1,2,\ldots\}$
 tai $\mathbb{N}=\{1,2,3,...\}$.
 
 \subsection{Logiikka}
+
+\index{logiikka}
 
 Loogisen lausekkeen arvo on joko 1 (tosi) tai 0 (epätosi).
 Tärkeimmät loogiset operaatiot ovat
@@ -714,6 +730,8 @@ Tämänkin lausekkeen arvo on tosi.
 
 \subsection{Logaritmi}
 
+\index{logaritmi}
+
 Logaritmi merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
 Logaritmi on potenssilaskun käänteisoperaatio:
 $\log_k(x)=a$ tarkalleen silloin, kun $k^a=x$.
@@ -748,6 +766,8 @@ $\lfloor \log_{10}(x)\rfloor + 1$.
 
 \subsubsection{Aritmeettinen summa}
 
+\index{aritmeettinen summa}
+
 Aritmeettisessa summassa jokaisen vierekkäisen
 summattavan luvun erotus on vakio.
 Esimerkiksi $3+7+11+15$ on aritmeettinen summa,
@@ -767,6 +787,8 @@ Aritmeettisen summan erikoistapaus on
 \[1+2+3+\cdots+n = \frac{n(n+1)}{2}.\]
 
 \subsubsection{Geometrinen summa}
+
+\index{geometrinen summa}
 
 Geometrisessa summassa jokaisen vierekkäisen
 summattavan luvun suhde on vakio.
@@ -790,6 +812,8 @@ Geometrisen summan erikoistapaus on usein kätevä kaava
 \[1+2+4+8+\ldots+2^n=2^{n+1}-1.\]
 
 \subsubsection{Harmoninen summa}
+
+\index{harmoninen summa}
 
 Harmoninen summa on
 \[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\ldots+\frac{1}{n}.\]

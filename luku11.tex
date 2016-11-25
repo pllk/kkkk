@@ -16,6 +16,10 @@ sekä erilaisia tapoja pitää verkkoa muistissa algoritmeissa.
 
 \section{Käsitteitä}
 
+\index{verkko}
+\index{solmu}
+\index{kaari}
+
 Verkko (\textit{graph})
 muodostuu solmuista (\textit{node} tai \textit{vertex})
 ja niiden välisistä kaarista (\textit{edge}).
@@ -60,6 +64,8 @@ polkuja solmusta 1 solmuun 5 ovat:
 \end{itemize}
 
 \subsubsection{Yhtenäisyys}
+
+\index{yhtenäisyys}
 
 Verkko on yhtenäinen (\textit{connected}), jos siinä on polku
 mistä tahansa solmusta mihin tahansa solmuun.
@@ -219,6 +225,9 @@ Jälkimmäinen polku on lyhin polku solmusta 1 solmuun 5.
 
 \subsubsection{Naapurit ja asteet}
 
+\index{naapuri}
+\index{aste}
+
 Kaksi solmua ovat naapureita (\textit{neighbor}),
 jos ne ovat vierekkäin eli niiden välillä on kaari.
 Solmun aste (\textit{degree}) on
@@ -283,6 +292,9 @@ lähtöaste on 1 ja tuloaste on 2.
 \end{center}
 
 \subsubsection{Väritykset}
+
+\index{väritys}
+\index{kaksijakoisuus}
 
 Verkon värityksessä (\textit{coloring}) jokaiselle solmulle valitaan
 tietty väri niin, että millään kahdella
@@ -373,6 +385,8 @@ millä tavoin algoritmi käsittelee sitä.
 Seuraavaksi käymme läpi kolme tavallista vaihtoehtoa.
 
 \subsection{Vieruslistat}
+
+\index{vieruslista}
 
 Tavallisin tapa pitää verkkoa muistissa on
 luoda jokaisesta solmusta vieruslista (\textit{adjacency list}),
@@ -467,6 +481,8 @@ for (auto u : v[s]) {
 \end{lstlisting}
 
 \subsection{Vierusmatriisi}
+
+\index{vierusmatriisi}
 
 Vierusmatriisi (\textit{adjacency matrix})
 on kaksiulotteinen taulukko,
@@ -589,6 +605,8 @@ vastaa seuraava vierusmatriisi:
 \end{center}
 
 \subsection{Kaarilista}
+
+\index{kaarilista}
 
 Kaarilista (\textit{edge list}) sisältää kaikki verkon kaaret.
 Kaarilista on hyvä tapa tallentaa verkko,

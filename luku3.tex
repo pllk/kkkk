@@ -1,5 +1,7 @@
 \chapter{Järjestäminen}
 
+\index{järjestäminen}
+
 Järjestäminen (\textit{sorting})
 on keskeinen algoritmiikan ongelma.
 Moni tehokas algoritmi
@@ -88,6 +90,8 @@ on järjestettynä seuraava:
 \end{center}
 
 \subsection{Kuplajärjestäminen}
+
+\index{kuplajärjestäminen}
 
 Kuplajärjestäminen (\textit{bubble sort})
 on yksinkertainen järjestämisalgoritmi,
@@ -265,6 +269,8 @@ algoritmin aikavaativuus on $O(n^2)$.
 
 \subsection{Inversiot}
 
+\index{inversio}
+
 Kuplajärjestäminen on esimerkki algoritmista,
 joka perustuu taulukon vierekkäisten alkioiden
 vaihtamiseen.
@@ -324,6 +330,8 @@ koska sen täytyy tehdä pahimmassa tapauksessa
 $\frac{n(n-1)}{2} = O(n^2)$ vaihtoa.
 
 \subsection{Lomitusjärjestäminen}
+
+\index{lomitusjärjestäminen}
 
 Lomitusjärjestäminen (\textit{mergesort})
 on tehokas $O(n \log n)$-aikainen järjestämisalgoritmi.
@@ -480,6 +488,9 @@ vie yhteensä $O(n)$ aikaa.
 
 \subsection{Järjestämisen alaraja}
 
+\index{pikajärjestäminen}
+\index{kekojärjestäminen}
+
 Lomitusjärjestämisen lisäksi on olemassa useita muitakin
 $O(n \log n)$-aikaisia järjestämis\-algoritmeja,
 kuten pikajärjestäminen (\textit{quicksort})
@@ -546,6 +557,8 @@ Puun korkeuden tulee olla tämän vuoksi vähintään
 \[ \log_2(n!) = \log_2(1)+\log_2(2)+\cdots+\log_2(n) = O(n \log n).\]
 
 \subsection{Laskemisjärjestäminen}
+
+\index{laskemisjärjestäminen}
 
 Järjestämisen alaraja $O(n \log n)$ ei koske algoritmeja,
 jotka eivät perustu alkioiden vertailuun vaan hyödyntävät
@@ -766,6 +779,8 @@ sort(v.begin(), v.end(), cmp);
 \end{lstlisting}
 
 \section{Binäärihaku}
+
+\index{binäärihaku}
 
 Tavallinen tapa etsiä alkiota $x$ taulukosta \texttt{t}
 on käyttää \texttt{for}-silmukkaa, joka käy läpi

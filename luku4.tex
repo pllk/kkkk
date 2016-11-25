@@ -1,5 +1,7 @@
 \chapter{Tietorakenteet}
 
+\index{tietorakenne}
+
 Tietorakenne (\textit{data structure})
 on tapa säilyttää tietoa tietokoneen muistissa.
 Sopivan tietorakenteen valinta on tärkeää,
@@ -19,6 +21,8 @@ rakenteisiin, joita ei ole valmiina C++:ssa.
 \section{Dynaaminen taulukko}
 
 \subsection{Vektori}
+
+\index{vektori}
 
 Vektori (\texttt{vector})
 on C++:n tavallisin dynaaminen taulukko.
@@ -99,6 +103,8 @@ keskimäärin $O(1)$.
 
 \subsection{Merkkijono}
 
+\index{merkkijono}
+
 Myös merkkijono (\texttt{string}) on dynaaminen taulukko,
 jota pystyy käsittelemään lähes samaan
 tapaan kuin vektoria.
@@ -124,6 +130,8 @@ cout << c << "\n"; // tiva
 \end{lstlisting}
 
 \section{Joukko}
+
+\index{joukko}
 
 Joukko (\textit{set}) on tietorakenne,
 joka muodostuu siinä olevista alkioista.
@@ -219,6 +227,8 @@ cout << s.count(5) << "\n"; // 2
 
 \section{Hakemisto}
 
+\index{hakemisto}
+
 Hakemisto (\textit{map}) on taulukon yleistys,
 joka sisältää joukon avain-arvo-pareja.
 Siinä missä taulukossa avaimet ovat aina peräkkäiset
@@ -276,6 +286,8 @@ for (auto x : m) {
 \end{lstlisting}
 
 \section{Iteraattorit ja välit}
+
+\index{iteraattori}
 
 Monet C++:n standardikirjaston funktiot
 käsittelevät tietorakenteiden iteraattoreita
@@ -433,6 +445,8 @@ on joko $a$:n osoittama alkio tai tätä edellinen alkio.
 
 \subsection{Bittijoukko}
 
+\index{bittijoukko}
+
 Bittijoukko (\texttt{bitset}) on taulukko,
 jonka jokaisen alkion arvo on 0 tai 1.
 Bittijoukon etuna on, että jokainen alkio
@@ -475,6 +489,8 @@ cout << (a^b) << "\n"; // 1001101110
 
 \subsection{Pakka}
 
+\index{pakka}
+
 Pakka (\texttt{deque}) on dynaaminen taulukko,
 jonka kokoa pystyy muuttamaan tehokkaasti
 sekä alku- että loppupäässä.
@@ -505,6 +521,8 @@ aikavaativuus on keskimäärin $O(1)$ molemmissa päissä.
 
 \subsubsection{Pino}
 
+\index{pino}
+
 Pino (\texttt{stack}) on tietorakenne,
 joka tarjoaa kaksi $O(1)$-aikaista
 operaatiota:
@@ -525,6 +543,8 @@ s.pop();
 cout << s.top(); // 2
 \end{lstlisting}
 \subsubsection{Jono}
+
+\index{jono}
 
 Jono (\texttt{queue}) on kuin pino,
 mutta alkion lisäys tapahtuu jonon loppuun
@@ -553,6 +573,9 @@ kevyempiä ja hieman tehokkaampia rakenteita,
 jos niiden operaatiot riittävät algoritmin toteuttamiseen.
 
 \subsection{Prioriteettijono}
+
+\index{prioriteettijono}
+\index{keko}
 
 Prioriteettijono (\texttt{priority\_queue})
 pitää yllä joukkoa alkioista.
