@@ -318,8 +318,17 @@ jos $n$ on alkuluku.
 
 \section{Modulolaskenta}
 
-Modulolaskennan peruslaskusäännöt ovat:
+Modulolaskennassa lukualuetta rajoitetaan
+niin, että käytössä ovat vain luvut $0,1,2,\ldots,m-1$,
+missä $m$ on vakio.
+Ideana on, että lukua $x$ kuvaa luku $x \bmod m$
+eli luvun $x$ jakojäännös luvulla $m$.
+Esimerkiksi jos $m=17$, niin lukua $75$ kuvaa luku
+$75 \bmod 17 = 7$.
 
+Useissa laskutoimituksissa jakojäännöksen voi laskea
+ennen laskutoimitusta.
+Modulolaskennan peruskaavat ovat seuraavat:
 \[
 \begin{array}{rcl}
 (x+y) \bmod m & = & (x \bmod m + y \bmod m) \bmod m \\
@@ -391,8 +400,8 @@ jakolaskun laskemisen modulossa,
 koska jakolasku luvulla $x$ vastaa
 kertolaskua luvulla $x^{-1}$.
 Tarkastellaan esimerkkinä jakolaskua $36/6 \bmod 17$.
-Nyt $36 \bmod 17 = 2$ ja $6^{-1} \bmod 17 = 3$.
-Niinpä laskun tulos on $2 \cdot 3 \bmod 17 = 6$. 
+Nyt $36 \bmod 17 = 2$ ja $6^{-1} \bmod 17 = 3$,
+joten laskun tulos on $2 \cdot 3 \bmod 17 = 6$. 
 
 Tärkeä huomio on, että
 modulon käänteislukua ei ole aina olemassa.
@@ -406,7 +415,6 @@ Osoittautuu, että $x^{-1} \bmod m$
 on olemassa tarkalleen silloin,
 kun $x$ ja $m$ ovat suhteelliset alkuluvut.
 
-\noindent
 Jos modulon käänteisluku on olemassa,
 sen saa laskettua kaavalla
 \[
@@ -431,6 +439,22 @@ Toisaalta Eulerin lauseen perusteella
 x^{\varphi(m)} \bmod m =  xx^{\varphi(m)-1} \bmod m = 1.
 \]
 Niinpä lukujen $x^{-1}$ ja $x^{\varphi(m)-1}$ on oltava samat.
+
+\subsubsection{Modulot tietokoneessa}
+
+Jos koodissa käytetään \texttt{unsigned}-tyyppistä muuttujaa,
+sen arvo lasketaan modulo $2^k$, missä $k$ on muuttujan bittien määrä.
+Esimerkiksi \texttt{unsigned int} -tyyp\-pi\-sen muuttujan
+arvo lasketaan modulo $2^{32}$.
+
+Seuraava koodi esittelee asiaa:
+
+\begin{lstlisting}
+unsigned int x = 123456789;
+cout << x*x << "\n"; // 2537071545
+\end{lstlisting}
+
+Koodi laskee laskun $(123456789^2) \bmod 2^{32} = 2537071545$.
 
 \section{Yhtälönratkaisu}
 
@@ -548,3 +572,109 @@ Kun luku $x$ on yhtälöryhmän ratkaisu,
 niin myös kaikki luvut muotoa
 $x+m_1 m_2 \cdots m_n$ ovat ratkaisuja.
 
+\section{Muita tuloksia}
+
+\subsubsection{Lagrangen lause}
+
+\index{Lagrangen lause}
+
+Lagrangen lauseen mukaan jokainen positiivinen kokonaisluku voidaan
+esittää neljän neliöluvun summana eli muodossa $a^2+b^2+c^2+d^2$.
+
+Esimerkiksi lukujen $1 \ldots 10$ esitykset ovat seuraavat:
+
+\begin{center}
+\begin{tabular}{ll}
+luku & esitys \\
+\hline
+1 & $0^2+0^2+0^2+1^2$ \\
+2 & $0^2+0^2+1^2+1^2$ \\
+3 & $0^2+1^2+1^2+1^2$ \\
+4 & $0^2+0^2+0^2+2^2$ \\
+5 & $0^2+0^2+1^2+2^2$ \\
+6 & $0^2+1^2+1^2+2^2$ \\
+7 & $1^2+1^2+1^2+2^2$ \\
+8 & $0^2+0^2+0^2+3^2$ \\
+9 & $0^2+0^2+1^2+3^2$ \\
+10 & $0^2+0^2+2^2+3^2$ \\
+\end{tabular}
+\end{center}
+Huomaa, että kaikkia positiivisia lukuja ei voi esittää
+muodossa $a^2+b^2+c^2$: esimerkiksi luvun 7
+esittäminen vaatii neljä neliölukua.
+
+\subsubsection{Zeckendorfin lause}
+
+\index{Zeckendorfin lause}
+\index{Fibonaccin luku}
+
+Zeckendorfin lauseen mukaan jokainen positiivinen kokonaisluku voidaan
+esittää Fibonaccin lukujen summana niin, että
+mitkään kaksi lukua eivät ole samat eivätkä peräkkäiset
+Fibonaccin luvut.
+
+Esimerkiksi lukujen $1 \ldots 10$ esitykset ovat seuraavat:
+
+\begin{center}
+\begin{tabular}{ll}
+luku & esitys \\
+\hline
+1 & $1$ \\
+2 & $2$ \\
+3 & $3$ \\
+4 & $1+3$ \\
+5 & $5$ \\
+6 & $1+5$ \\
+7 & $2+5$ \\
+8 & $8$ \\
+9 & $1+8$ \\
+10 & $2+8$ \\
+\end{tabular}
+\end{center}
+
+\subsubsection{Pythagoraan kolmikot}
+
+\index{Pythagoraan kolmikko}
+\index{Eukleideen kaava}
+
+Pythagoraan kolmikko on lukukolmikko $(a,b,c)$,
+joka toteuttaa Pythagoraan lauseen $a^2+b^2=c^2$
+eli $a$, $b$ ja $c$ voivat olla suorakulmaisen
+kolmion sivujen pituudet.
+Esimerkiksi $(3,4,5)$ on Pythagoraan kolmikko.
+
+Jos $(a,b,c)$ on Pythagoraan kolmikko,
+niin myös kaikki kolmikot muotoa $(ka,kb,kc)$
+ovat Pythagoraan kolmikoita,
+missä $k>1$.
+Pythagoraan kolmikko on primitiivinen,
+jos $a$, $b$ ja $c$ ovat suhteellisia alkulukuja,
+ja primitiivisista kolmikoista voi muodostaa
+kaikki muut kolmikot kertoimen $k$ avulla.
+
+Eukleideen kaava on tehokas menetelmä muodostaa
+Pythagoraan kolmikoita.
+Sen mukaan jokainen primitiivinen
+Pythagoraan kolmikko on muotoa
+\[(n^2-m^2,2nm,n^2+m^2),\]
+missä $0<m<n$, $n$ ja $m$ ovat suhteelliset
+alkuluvut ja ainakin toinen luvuista $n$ ja $m$ on parillinen.
+Esimerkiksi valitsemalla $m=1$ ja $n=2$ syntyy
+pienin mahdollinen Pythagoraan kolmikko
+\[(2^2-1^2,2\cdot2\cdot1,2^2+1^2)=(3,4,5).\]
+
+\subsubsection{Wilsonin lause}
+
+\index{Wilsonin lause}
+
+Wilsonin lauseen mukaan luku $n$ on alkuluku
+tarkalleen silloin, kun
+\[(n-1)! \bmod n = n-1.\]
+Esimerkiksi luku 11 on alkuluku, koska
+\[10! \bmod 11 = 10\]
+ja luku 12 ei ole alkuluku, koska
+\[11! \bmod 12 = 0 \neq 11.\]
+Wilsonin lause on yksi tapa tarkastaa, onko luku alkuluku vai ei.
+Tämä ei ole kuitenkaan käytännössä hyvä tapa,
+koska luvun $(n-1)!$ laskeminen on työlästä,
+jos $n$ on suuri luku.
