@@ -1,13 +1,40 @@
 \chapter{Lukuteoria}
 
-Lukuteoria on kokonaislukuja tutkiva matematiikan ala,
-jonka keskeinen teema on lukujen jaollisuus.
-Tyypillinen lukuteorian tehtävä on selvittää,
-onko luku alkuluku tai mitkä ovat sen alkutekijät.
-Tässä luvussa tutustumme kisakoodauksessa usein
-tarvittaviin lukuteorian algoritmeihin.
+Lukuteoria on kokonaislukuja tutkiva
+matematiikan ala, jonka keskeinen
+käsite on lukujen jaollisuus.
+Lukuteoriassa on kiehtovaa, että monet kokonaislukuihin
+liittyvät kysymykset ovat hyvin vaikeita ratkaista,
+vaikka ne saattavat näyttää päältä päin yksinkertaisilta.
 
-\section{Jaollisuus ja alkuluvut}
+Tarkastellaan esimerkkinä seuraavaa yhtälöä:
+\[x^3 + y^3 + z^3 = 33\]
+On helppoa löytää kolme reaalilukua $x$, $y$ ja $z$,
+jotka toteuttavat yhtälön. Voimme valita
+esimerkiksi
+\[
+\begin{array}{lcl}
+x = 0, \\
+y = 0, \\
+z = \sqrt[3]{33}.\\
+\end{array}
+\]
+Sen sijaan kukaan ei tiedä, onko olemassa
+kolmea kokonaislukua $x$, $y$ ja $z$,
+jotka toteuttaisivat yhtälön, vaan kyseessä
+on avoin lukuteorian ongelma.
+
+Tässä luvussa tutustumme lukuteorian peruskäsitteisiin ja
+-algoritmeihin.
+Lähdemme liikkeelle lukujen jaollisuudesta,
+johon liittyvät keskeiset algoritmit ovat
+alkuluvun tarkastaminen sekä luvun jakaminen tekijöihin.
+
+\section{Jaollisuus}
+
+\index{jaollisuus}
+\index{jakaja}
+\index{tekijä}
 
 Luku $a$ on luvun $b$ jakaja eli tekijä,
 jos $b$ on jaollinen $a$:lla.
@@ -16,28 +43,33 @@ niin merkitään $a \mid b$,
 ja muuten merkitään $a \nmid b$.
 Esimerkiksi luvun 24 jakajat ovat 1, 2, 3, 4, 6, 8, 12 ja 24.
 
-Luku $n$ on alkuluku, jos sen ainoat jakajat ovat 1 ja $n$.
+\index{alkuluku}
+\index{alkutekijähajotelma}
+
+Luku $n$ on alkuluku, jos sen ainoat 
+positiiviset jakajat ovat 1 ja $n$.
 Esimerkiksi luvut 7, 19 ja 41 ovat alkulukuja.
 Luku 35 taas ei ole alkuluku, koska $5 \cdot 7 = 35$.
 Jokaiselle luvulle $n>1$ on olemassa yksikäsitteinen
 alkutekijähajotelma
-\[ n = p_1^{a_1} p_2^{a_2} \cdots p_k^{a_k},\]
-jossa $p_1,p_2,\ldots,p_k$ ovat alkulukuja.
-Alkutekijähajotelman avulla saa laskettua
-luvun $n$ jakajien määrän kaavalla,
-\[m(n)=\prod_{i=1}^k (a_i+1)\]
-jakajien summan kaavalla
-\[s(n)=\prod_{i=1}^k \frac{p_i^{a_i+1}-1}{p_i-1}.\]
-sekä jakajien tulon kaavalla
-\[t(n)=n^{m(n)/2}.\]
+\[ n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k},\]
+missä $p_1,p_2,\ldots,p_k$ ovat alkulukuja
+ja $\alpha_1,\alpha_2,\ldots,\alpha_k$ ovat positiivisia
+kokonaislukuja. Esimerkiksi
+\[1176 = 2^3 \cdot 3^1 \cdot 7^2.\]
+Luvun $n$ jakajien määrä on
+\[\tau(n)=\prod_{i=1}^k (\alpha_i+1),\]
+jakajien summa on
+\[\sigma(n)=\prod_{i=1}^k \frac{p_i^{a_i+1}-1}{p_i-1}\]
+sekä jakajien tulo on
+\[\pi(n)=n^{\tau(n)/2}.\]
 
-Esimerkiksi luvun $1176$ alkutekijähajotelma on
-$2^3 \cdot 3^1 \cdot 7^2$,
+Esimerkiksi luvun $1176$
 jakajien määrä on $(3+1)(1+1)(2+1)=24$,
-summa on $\frac{2^4-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^3-1}{7-1} = 3420$
-ja tulo on $1176^{12}$.
+jakajien summa on $\frac{2^4-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^3-1}{7-1} = 3420$
+ja jakajien tulo on $1176^{12}$.
 
-\subsection{Perusalgoritmit}
+\subsubsection{Perusalgoritmit}
 
 Jos luku $n$ ei ole alkuluku,
 niin sen voi esittää muodossa $a \cdot b$,
@@ -47,16 +79,16 @@ tekijä välillä $2 \ldots \sqrt n$.
 Tämän havainnon avulla voi tarkastaa ajassa $O(\sqrt n)$,
 onko luku alkuluku vai ei,
 sekä myös selvittää ajassa $O(\sqrt n)$
-luvun alkutekijähajotelman.
+luvun alkutekijät.
 
-Seuraava funktio \texttt{prime} selvittää,
+Seuraava funktio \texttt{alkuluku} selvittää,
 onko annettu luku $n$ alkuluku.
 Funktio koettaa jakaa lukua kaikilla luvuilla
 välillä $2 \ldots \sqrt n$, ja jos mikään
 luvuista ei jaa $n$:ää, niin $n$ on alkuluku.
 
 \begin{lstlisting}
-bool prime(int n) {
+bool alkuluku(int n) {
     if (n < 2) return false;
     for (int x = 2; x*x <= n; x++) {
         if (n%x == 0) return false;
@@ -66,9 +98,9 @@ bool prime(int n) {
 \end{lstlisting}
 
 \noindent
-Seuraava funktio \texttt{factors} muodostaa
+Seuraava funktio \texttt{tekijat} muodostaa
 vektorin, joka sisältää luvun $n$
-alkutekijähajotelman.
+alkutekijät.
 Funktio jakaa $n$:ää sen alkutekijöillä ja lisää
 niitä samaan aikaan vektoriin.
 Prosessi päättyy, kun jäljellä on luku $n$,
@@ -76,7 +108,7 @@ jolla ei ole tekijää välillä $2 \ldots \sqrt n$.
 Jos $n>1$, se on alkuluku ja viimeinen tekijä.
 
 \begin{lstlisting}
-vector<int> factors(int n) {
+vector<int> tekijat(int n) {
     vector<int> f;
     for (int x = 2; x*x <= n; x++) {
         while (n%x == 0) {
@@ -89,37 +121,41 @@ vector<int> factors(int n) {
 }
 \end{lstlisting}
 
-Huomaa, että funktio lisää jokaisen alkutekijän
-niin monta kertaa, kuin se jakaa luvun.
+Huomaa, että funktio lisää jokaisen
+alkutekijän vektoriin
+niin monta kertaa, kuin kyseinen
+alkutekijä jakaa luvun.
 Esimerkiksi $24=2^3 \cdot 3$,
-joten funktio tuottaa vektorin $[2,2,2,3]$.
+joten funktio muodostaa vektorin $[2,2,2,3]$.
 
-\subsection{Eratostheneen seula}
+\subsubsection{Eratostheneen seula}
+
+\index{Eratostheneen seula}
 
 Eratostheneen seula on esilaskenta-algoritmi,
 jonka suorituksen jälkeen mistä tahansa
 välin $2 \ldots n$ luvusta pystyy tarkastamaan
-tehokkaasti, onko se alkuluku,
+nopeasti, onko se alkuluku,
 sekä etsimään yhden luvun alkutekijän,
 jos luku ei ole alkuluku.
 
 Algoritmi luo taulukon $\texttt{a}$,
-jossa $\texttt{a}[k]=0$ tarkoittaa,
+jossa on käytössä indeksit $2,3,\ldots,n$.
+Taulukossa $\texttt{a}[k]=0$ tarkoittaa,
 että $k$ on alkuluku,
 ja $\texttt{a}[k] \neq 0$ tarkoittaa,
 että $k$ ei ole alkuluku.
 Jälkimmäisessä tapauksessa $\texttt{a}[k]$
 on yksi $k$:n alkutekijöistä.
 
-Eratostheneen seula käy läpi välin
-$2 \ldots n$ lukuja yksi kerrallaan.
-Aina kun uusi alkuluku $x$ löytyy,
+Algoritmi käy läpi välin
+$2 \ldots n$ luvut yksi kerrallaan.
+Aina kun vastaan tulee uusi alkuluku $x$,
 niin algoritmi merkitsee taulukkoon, että $x$:n moninkerrat
 $2x,3x,4x,\ldots$ eivät ole alkulukuja,
 koska niillä on alkutekijä $x$.
 
-\noindent
-Esimerkiksi jos väli on $2 \ldots 20$,
+Esimerkiksi jos $n=20$,
 taulukosta tulee:
 
 \begin{center}
@@ -172,7 +208,7 @@ taulukosta tulee:
 \end{center}
 
 \noindent
-Seuraava koodi toteuttaa
+Seuraava koodi muodostaa
 Eratostheneen seulan.
 Koodi olettaa, että jokainen taulukon \texttt{a}
 alkio on aluksi 0.
@@ -188,26 +224,38 @@ for (int x = 2; x <= n; x++) {
 
 \noindent
 Algoritmin sisäsilmukka suoritetaan
-$n/i$ kertaa tietyllä $i$:n arvolla,
-joten algoritmin ajankäyttöä arvioi harmoninen summa
-$\sum_{i=2}^n n/i = n/2 + n/3 + n/4 + \cdots + n/n$.
-Harmonisen summan suuruus on luokkaa $O(n \log n)$,
-mikä on yläraja algoritmin ajankäytölle.
-Todellisuudessa Eratostheneen seula on vielä nopeampi,
-koska sisäsilmukka suoritetaan vain,
-jos luku on alkuluku.
+$n/x$ kertaa tietyllä $x$:n arvolla,
+joten yläraja algoritmin ajankäytölle
+on harmoninen summa
 
-\subsection{Eukleideen algoritmi}
+\index{harmoninen summa}
+
+\[\sum_{x=2}^n n/x = n/2 + n/3 + n/4 + \cdots + n/n = O(n \log n).\]
+
+Todellisuudessa algoritmi on vielä nopeampi,
+koska sisäsilmukka suoritetaan vain,
+jos luku $x$ on alkuluku.
+Voidaan osoittaa, että algoritmin aikavaativuus
+on vain $O(n \log \log n)$ eli hyvin lähellä $O(n)$.
+
+\subsubsection{Eukleideen algoritmi}
+
+\index{suurin yhteinen tekijä}
+\index{pienin yhteinen moninkerta}
+\index{Eukleideen algoritmi}
 
 Lukujen $a$ ja $b$ suurin yhteinen tekijä eli $\textrm{syt}(a,b)$
 on suurin luku, jolla sekä $a$ että $b$ on jaollinen.
-Esimerkiksi $\textrm{syt}(30,42)=6$.
-Vastaavasti pienin yhteinen moninkerta eli $\textrm{pym}(a,b)$
-on pienin luku, joka on jaollinen sekä $a$:lla että $b$:llä.
-Näiden lukujen välillä on yhteys $\textrm{pym}(a,b)=ab/\textrm{syt}(a,b)$.
+Lukujen $a$ ja $b$ pienin yhteinen moninkerta eli $\textrm{pym}(a,b)$
+on puolestaan pienin luku, joka on jaollinen sekä $a$:lla että $b$:llä.
+Esimerkiksi $\textrm{syt}(24,36)=12$ ja
+$\textrm{pym}(24,36)=72$.
 
+Suurimman yhteisen tekijän ja pienimmän yhteisen
+moninkerran välillä on yhteys
+\[\textrm{pym}(a,b)=\frac{ab}{\textrm{syt}(a,b)}.\]
 Eukleideen algoritmi on tehokas tapa etsiä
-lukujen $a$ ja $b$ suurin yhteinen tekijä $\textrm{syt}(a,b)$.
+suurin yhteinen tekijä.
 Se laskee suurimman yhteisen tekijän kaavalla
 \begin{equation*}
     \textrm{syt}(a,b) = \begin{cases}
@@ -217,14 +265,23 @@ Se laskee suurimman yhteisen tekijän kaavalla
 \end{equation*}
 
 \noindent
-Esimerkiksi $\textrm{syt}(24,36) = \textrm{syt}(36,24)
-= \textrm{syt}(24,12) = \textrm{syt}(12,0)=12$.
-Eukleideen algoritmi on tehokas
-algoritmi, ja on mahdollista osoittaa,
-että sen aikavaativuus on vain $O(\log n)$,
-kun $n=\min(a,b)$.
+Esimerkiksi
+\[\textrm{syt}(24,36) = \textrm{syt}(36,24)
+= \textrm{syt}(24,12) = \textrm{syt}(12,0)=12.\]
+Eukleideen algoritmin aikavaativuus
+on $O(\log n)$, kun $n=\min(a,b)$.
+Pahin tapaus algoritmille on, jos luvut ovat
+peräkkäiset Fibonaccin luvut.
+Silloin algoritmi käy läpi kaikki pienemmät
+peräkkäiset Fibonaccin luvut.
+Esimerkiksi
+\[\textrm{syt}(13,8)=\textrm{syt}(8,5)
+=\textrm{syt}(5,3)=\textrm{syt}(3,2)=\textrm{syt}(2,1)=\textrm{syt}(1,0)=1.\]
 
-\subsection{Eulerin totienttifunktio}
+\subsubsection{Eulerin totienttifunktio}
+
+\index{suhteellinen alkuluku}
+\index{Eulerin totienttifunktio}
 
 Luvut $a$ ja $b$ ovat suhteelliset alkuluvut,
 jos $\textrm{syt}(a,b)=1$.
@@ -237,7 +294,7 @@ alkulukuja 12:n kanssa.
 
 Totienttifunktion arvon $\varphi(n)$ pystyy laskemaan
 luvun $n$ alkutekijähajotelmasta kaavalla
-\[ \varphi(n) = \prod_{i=1}^k p_i^{a_i-1}(p_i-1). \]
+\[ \varphi(n) = \prod_{i=1}^k p_i^{\alpha_i-1}(p_i-1). \]
 Esimerkiksi $\varphi(12)=2^1 \cdot (2-1) \cdot 3^0 \cdot (3-1)=4$.
 Huomaa myös, että $\varphi(n)=n-1$,
 jos $n$ on alkuluku.
