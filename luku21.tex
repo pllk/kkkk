@@ -56,18 +56,35 @@ alkutekijähajotelma
 missä $p_1,p_2,\ldots,p_k$ ovat alkulukuja
 ja $\alpha_1,\alpha_2,\ldots,\alpha_k$ ovat positiivisia
 kokonaislukuja. Esimerkiksi
-\[1176 = 2^3 \cdot 3^1 \cdot 7^2.\]
+\[84 = 2^2 \cdot 3^1 \cdot 7^1.\]
 Luvun $n$ jakajien määrä on
 \[\tau(n)=\prod_{i=1}^k (\alpha_i+1),\]
-jakajien summa on
-\[\sigma(n)=\prod_{i=1}^k \frac{p_i^{a_i+1}-1}{p_i-1}\]
-sekä jakajien tulo on
-\[\pi(n)=n^{\tau(n)/2}.\]
+koska alkutekijän $p_i$ kohdalla on $\alpha_i+1$
+tapaa valita, montako kertaa alkutekijä
+esiintyy jakajassa.
+Esimerkiksi luvun 84 jakajat ovat
+\[\{1,2,3,4,6,7,12,14,21,28,42,84\}\]
+ja niiden määrä on $\tau(84)=3 \cdot 2 \cdot 2 = 12$.
 
-Esimerkiksi luvun $1176$
-jakajien määrä on $(3+1)(1+1)(2+1)=24$,
-jakajien summa on $\frac{2^4-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^3-1}{7-1} = 3420$
-ja jakajien tulo on $1176^{12}$.
+Luvun $n$ jakajien summa on
+\[\sigma(n)=\prod_{i=1}^k (1+p_1+\ldots+p_1^{\alpha_i}) = \prod_{i=1}^k \frac{p_i^{a_i+1}-1}{p_i-1},\]
+jossa jälkimmäinen muoto perustuu geometriseen summaan.
+Esimerkiksi luvun 84 jakajien summa on
+\[\sigma(84)=\frac{2^3-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^2-1}{7-1} = 7 \cdot 4 \cdot 8 = 224.\]
+Luvun $n$ jakajien tulo on
+\[\pi(n)=n^{\tau(n)/2},\]
+koska jakajista voi muodostaa
+$\tau(n)/2$ paria, joiden jokaisen tulona on $n$.
+Esimerkiksi luvun 84 jakajista muodostuu parit
+$1 \cdot 84$, $2 \cdot 42$, $3 \cdot 28$, jne.,
+ja jakajien tulo on $\pi(84)=84^6=351298031616$.
+
+\index{täydellinen luku}
+
+Luku $n$ on \textit{täydellinen}, jos $n=\sigma(n)-n$
+eli luku on sen pienempien jakajien summa.
+Esimerkiksi luku 28 on täydellinen,
+koska $28 = 1+2+4+7+14$.
 
 \subsubsection{Perusalgoritmit}
 
@@ -509,15 +526,14 @@ modulo $m$ ja
 Näitä merkintöjä käyttäen yhtälöryhmän ratkaisu on
 \[x = a_1 X_1 {X_1}^{-1}_{m_1} + a_2 X_2 {X_2}^{-1}_{m_2} + \cdots + a_n X_n {X_n}^{-1}_{m_n}.\]
 
-Ideana ratkaisussa on, että osan
-$a_k X_k {X_k}^{-1}_{m_k}$
-jakojäännös $m_k$:lla on $a_k$,
-koska $X_k$ ja sen käänteisluku kumoavat toisensa.
+Ideana ratkaisussa on, että
+\[a_k X_k {X_k}^{-1}_{m_k} \bmod m_k = a_k,\]
+koska
+\[X_k {X_k}^{-1}_{m_k} \bmod m_k = 1.\]
 Samaan aikaan kaikki muut ratkaisun osat ovat jaollisia luvulla
 $m_k$, eli ne eivät vaikuta jakojäännökseen ja
 koko summan jakojäännös $m_k$:lla on $a_k$.
 
-\noindent
 Esimerkiksi yhtälöryhmän
 \[
 \begin{array}{lcl}
