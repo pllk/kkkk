@@ -304,15 +304,15 @@ jos $n$ on alkuluku.
 Modulolaskennan peruslaskusäännöt ovat:
 
 \[
-\begin{array}{lcl}
-(x+y) \bmod M & = & (x \bmod M + y \bmod M) \bmod M \\
-(x-y) \bmod M & = & (x \bmod M - y \bmod M) \bmod M \\
-(x \cdot y) \bmod M & = & (x \bmod M \cdot y \bmod M) \bmod M \\
-(x^k) \bmod M & = & (x \bmod M)^k \bmod M \\
+\begin{array}{rcl}
+(x+y) \bmod m & = & (x \bmod m + y \bmod m) \bmod m \\
+(x-y) \bmod m & = & (x \bmod m - y \bmod m) \bmod m \\
+(x \cdot y) \bmod m & = & (x \bmod m \cdot y \bmod m) \bmod m \\
+(x^k) \bmod m & = & (x \bmod m)^k \bmod m \\
 \end{array}
 \]
 
-\subsection{Tehokas potenssilasku}
+\subsubsection{Tehokas potenssilasku}
 
 Modulolaskennassa tulee usein tarvetta laskea
 tehokkaasti potenssilasku $x^n$.
@@ -332,76 +332,103 @@ Tämän ansiosta potenssilaskun aikavaativuus on $O(\log n)$,
 koska $n$:n koko puolittuu aina silloin,
 kun $n$ on parillinen.
 
-\subsection{Eulerin lause}
+Seuraava funktio laskee luvun $x^n$ modulo $m$:
 
-Eulerin lauseen mukaan
-\[x^{\varphi(M)} \bmod M = 1,\]
-kun $x$ ja $M$ ovat suhteelliset alkuluvut.
-Kun $M$ on alkuluku, saadaan lause
-\[x^{M-1} \bmod M = 1,\]
-jonka seurauksena
-\[(x^k) \bmod M =  (x^{k \bmod (M-1)}) \bmod M,\]
-kun $x$ ja $M$ ovat suhteelliset alkuluvut.
+\begin{lstlisting}
+int pot(int x, int n, int m) {
+    if (n == 0) return 1%m;
+    int u = pot(x,n/2,m);
+    u = (u*u)%m;
+    if (n%2 == 1) u = (u*x)%m;
+    return u;
+}
+\end{lstlisting}
 
-\subsection{Modulon käänteisluku}
+\subsubsection{Fermat'n pieni lause ja Eulerin lause}
 
-Luvun $x$ käänteisluku modulo $M$
+\index{Fermat'n pieni lause}
+\index{Eulerin lause}
+
+Fermat'n pienen lauseen mukaan
+\[x^{m-1} \bmod m = 1,\]
+kun $m$ on alkuluku ja $x$ ja $m$ ovat suhteelliset alkuluvut.
+Tällöin myös
+\[x^k \bmod m = (x^{k \bmod (m-1)}) \bmod m.\]
+Yleisemmin Eulerin lauseen mukaan
+\[x^{\varphi(m)} \bmod m = 1,\]
+kun $x$ ja $m$ ovat suhteelliset alkuluvut.
+Fermat'n pieni lause seuraa Eulerin lauseesta,
+koska jos $m$ on alkuluku, niin $\varphi(m)=m-1$.
+
+\subsubsection{Modulon käänteisluku}
+
+Luvun $x$ käänteisluku modulo $m$
 tarkoittaa sellaista lukua $x^{-1}$,
 että
-\[ x x^{-1} \bmod M = 1. \]
-Esimerkiksi jos $x=6$ ja $M=17$,
-niin $x^{-1}=3$, koska $(6\cdot3) \bmod 17=1$.
+\[ x x^{-1} \bmod m = 1. \]
+Esimerkiksi jos $x=6$ ja $m=17$,
+niin $x^{-1}=3$, koska $6\cdot3 \bmod 17=1$.
 
 Modulon käänteisluku mahdollistaa
-jakolaskun laskemisen modulossa
-olevilla luvuilla,
+jakolaskun laskemisen modulossa,
 koska jakolasku luvulla $x$ vastaa
 kertolaskua luvulla $x^{-1}$.
-Esimerkiksi lasku $36/6=6$ laskettuna
-modulo 17 on $2 \cdot 3 = 6$.
+Tarkastellaan esimerkkinä jakolaskua $36/6 \bmod 17$.
+Nyt $36 \bmod 17 = 2$ ja $6^{-1} \bmod 17 = 3$.
+Niinpä laskun tulos on $2 \cdot 3 \bmod 17 = 6$. 
 
-Toisin kuin tavallinen jakolasku,
-modulon jakolasku ei ole aina mahdollista suorittaa.
-Käänteisluku $x^{-1}$ modulossa $M$
-on olemassa vain silloin,
-kun $x$ ja $M$ ovat suhteellisia alkulukuja.
+Tärkeä huomio on, että
+modulon käänteislukua ei ole aina olemassa.
+Esimerkiksi jos $x=2$ ja $m=4$,
+yhtälölle
+\[ x x^{-1} \bmod m = 1. \]
+ei ole ratkaisua, koska kaikki luvun 2
+moninkerrat ovat parillisia eikä jakojäännös
+4:llä voi koskaan olla 1.
+Osoittautuu, että $x^{-1} \bmod m$
+on olemassa tarkalleen silloin,
+kun $x$ ja $m$ ovat suhteelliset alkuluvut.
 
-Modulon käänteisluvun saa laskettua kaavalla
+\noindent
+Jos modulon käänteisluku on olemassa,
+sen saa laskettua kaavalla
 \[
-x^{-1} = x^{\varphi(M)-1}.
+x^{-1} = x^{\varphi(m)-1}.
 \]
-
-Jos $M$ on alkuluku, kaavasta tulee
+Erityisesti jos $m$ on alkuluku, kaavasta tulee
 \[
-x^{-1} = x^{M-2}.
+x^{-1} = x^{m-2}.
 \]
+Esimerkiksi jos $x=6$ ja $m=17$, niin
+\[x^{-1}=6^{17-2} \bmod 17 = 3.\]
+Tämän kaavan ansiosta modulon käänteisluvun pystyy
+laskemaan nopeasti tehokkaan potenssilaskun avulla.
 
-Esimerkiksi jos $x=6$ ja $M=17$, niin
-$x^{-1}=6^{17-2} \bmod 17 = 3$.
-
-Modulon käänteisluvun kaava perustuu Eulerin
-lauseeseen.
-Modulon käänteisluvulle täytyy päteä
+Modulon käänteisluvun kaavan voi perustella Eulerin lauseen avulla.
+Ensinnäkin käänteisluvulle täytyy päteä
 \[
-x x^{-1} \bmod M = 1.
+x x^{-1} \bmod m = 1.
 \]
-Toisaalta Eulerin kaavan perusteella
+Toisaalta Eulerin lauseen perusteella
 \[
-xx^{\varphi(M)-1} \bmod M = 1,
+x^{\varphi(m)} \bmod m =  xx^{\varphi(m)-1} \bmod m = 1.
 \]
-eli lukujen $x^{-1}$ ja $x^{\varphi(M)-1}$ on oltava samat.
+Niinpä lukujen $x^{-1}$ ja $x^{\varphi(m)-1}$ on oltava samat.
 
 \section{Yhtälönratkaisu}
 
-\subsection{Diofantoksen yhtälö}
+\index{Diofantoksen yhtälö}
 
 Diofantoksen yhtälö on muotoa
 \[ ax + by = c, \]
 missä $a$, $b$ ja $c$ ovat vakioita
 ja tehtävänä on ratkaista muuttujat $x$ ja $y$.
-Kaikki luvut yhtälössä ovat kokonaislukuja.
+Jokaisen yhtälössä esiintyvän luvun tulee
+olla kokonaisluku.
 Esimerkiksi jos yhtälö on $5x+2y=11$, yksi ratkaisu
 on valita $x=3$ ja $y=-2$.
+
+\index{Eukleideen algoritmi}
 
 Diofantoksen yhtälön voi ratkaista
 tehokkaasti Eukleideen algoritmin avulla,
@@ -410,9 +437,9 @@ pystyy löytämään luvun $\textrm{syt}(a,b)$
 lisäksi luvut $x$ ja $y$,
 jotka toteuttavat yhtälön
 \[
-ax + by = \textrm{syt}(a,b) \cdot z.
+ax + by = \textrm{syt}(a,b).
 \]
-Alkuperäisen yhtälön ratkaisu on olemassa, jos $c$ on
+Diofantoksen yhtälön ratkaisu on olemassa, jos $c$ on
 jaollinen $\textrm{syt}(a,b)$:llä,
 ja muussa tapauksessa yhtälöllä ei ole ratkaisua.
 
@@ -421,7 +448,7 @@ ja muussa tapauksessa yhtälöllä ei ole ratkaisua.
 Etsitään esimerkkinä luvut $x$ ja $y$,
 jotka toteuttavat yhtälön
 \[
-39x + 15y = 12,
+39x + 15y = 12.
 \]
 Yhtälöllä on ratkaisu, koska $\textrm{syt}(39,15)=3$
 ja $3 \mid 12$.
@@ -454,40 +481,43 @@ Diofantoksen yhtälön ratkaisu ei ole yksikäsitteinen,
 vaan yhdestä ratkaisusta on mahdollista muodostaa
 äärettömästi muita ratkaisuja.
 Kun yhtälön ratkaisu on $(x,y)$,
-niin myös $(x+k b/s,y-k a/s)$ on ratkaisu,
-missä $s=\textrm{syt}(a,b)$ ja $k$
-on mikä tahansa kokonaisluku.
+niin myös
+\[(x+\frac{kb}{\textrm{syt}(a,b)},y-\frac{ka}{\textrm{syt}(a,b)})\]
+on ratkaisu, missä $k$ on mikä tahansa kokonaisluku.
 
-\subsection{Kiinalainen jäännöslause}
+\subsubsection{Kiinalainen jäännöslause}
+
+\index{kiinalainen jäännöslause}
 
 Kiinalainen jäännöslause ratkaisee yhtälöryhmän muotoa
 \[
 \begin{array}{lcl}
-x & = & a_1 \bmod M_1 \\
-x & = & a_2 \bmod M_2 \\
+x & = & a_1 \bmod m_1 \\
+x & = & a_2 \bmod m_2 \\
 \cdots \\
-x & = & a_n \bmod M_n \\
+x & = & a_n \bmod m_n \\
 \end{array}
 \]
-missä kaikki parit luvuista $M_1,M_2,\ldots,M_n$
+missä kaikki parit luvuista $m_1,m_2,\ldots,m_n$
 ovat suhteellisia alkulukuja.
 
-Olkoon $x^{-1}_M$ luvun $x$ käänteisluku
-modulo $M$ ja
+Olkoon $x^{-1}_m$ luvun $x$ käänteisluku
+modulo $m$ ja
 
-\[ X_k = \frac{M_1 M_2 \cdots M_n}{M_k}.\]
+\[ X_k = \frac{m_1 m_2 \cdots m_n}{m_k}.\]
 
 Näitä merkintöjä käyttäen yhtälöryhmän ratkaisu on
-\[x = a_1 X_1 {X_1}^{-1}_{M_1} + a_2 X_2 {X_2}^{-1}_{M_2} + \cdots + a_n X_n {X_n}^{-1}_{M_n}.\]
+\[x = a_1 X_1 {X_1}^{-1}_{m_1} + a_2 X_2 {X_2}^{-1}_{m_2} + \cdots + a_n X_n {X_n}^{-1}_{m_n}.\]
 
-Ideana on, että jokaisessa yhtälön osassa
-$a_k X_k {X_k}^{-1}_{M_k}$
-jakojäännös $M_k$:lla on $a_k$,
+Ideana ratkaisussa on, että osan
+$a_k X_k {X_k}^{-1}_{m_k}$
+jakojäännös $m_k$:lla on $a_k$,
 koska $X_k$ ja sen käänteisluku kumoavat toisensa.
-Samaan aikaan kaikki muut yhtälön osat ovat jaollisia luvulla
-$M_k$, eli ne eivät vaikuta jakojäännökseen ja
-koko summan jakojäännös $M_k$:lla on $a_k$.
+Samaan aikaan kaikki muut ratkaisun osat ovat jaollisia luvulla
+$m_k$, eli ne eivät vaikuta jakojäännökseen ja
+koko summan jakojäännös $m_k$:lla on $a_k$.
 
+\noindent
 Esimerkiksi yhtälöryhmän
 \[
 \begin{array}{lcl}
@@ -498,8 +528,7 @@ x & = & 2 \bmod 3 \\
 \]
 ratkaisu on
 \[ 3 \cdot 21 \cdot 1 + 4 \cdot 15 \cdot 1 + 2 \cdot 35 \cdot 2 = 263.\]
-
 Kun luku $x$ on yhtälöryhmän ratkaisu,
 niin myös kaikki luvut muotoa
-$x+M_1 M_2 \cdots M_n$ ovat ratkaisuja.
+$x+m_1 m_2 \cdots m_n$ ovat ratkaisuja.
 
