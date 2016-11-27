@@ -201,142 +201,6 @@ kaikki parittomat tilat ovat häviötiloja.
 
 \section{Nim-peli}
 
-\section{Sprague–Grundyn lause}
-
-\begin{itemize}[noitemsep]
-\item pelissä on kaksi pelaajaa, jotka tekevät vuorotellen siirtoja
-\item peli muodostuu tiloista ja mahdolliset siirrot tilasta
-eivät riipu siitä, kumpi pelaaja on vuorossa
-\item peli päättyy, kun toinen pelaaja ei voi tehdä siirtoa
-\item pelissä on äärellinen määrä tiloja ja sama tila ei voi
-esiintyä uudestaan (eli peli päättyy ennemmin tai myöhemmin)
-\item pelaajien saatavilla on kaikki tieto tiloista
-ja siirroista eikä pelissä ole satunnaisuutta
-\end{itemize}
-
-
-\section{Kääntöpeli}
-
-\section{Pelin tila}
-
-Pelin tila kertoo, missä vaiheessa peli on
-sillä hetkellä. Jokaiseen tilaan liittyy
-mahdollisia siirtoja, jotka johtavat toisiin tiloihin.
-Tavoitteena on usein laskea pelin tilasta,
-kumpi pelaaja voittaa, jos molemmat pelaavat
-optimaalisesti.
-Tutustumme seuraavaksi kahteen usein esiintyvään pelityyppiin.
-
-
-\subsection{Voitto ja häviö}
-
-Monissa peleissä pelaajat tekevät siirtoja
-vuorotellen, kunnes siirtoa ei pysty enää tekemään.
-Pelistä riippuen viimeisen siirron tekijä
-voittaa tai häviää pelin.
-Näin on esimerkiksi seuraavassa pelissä:
-
-\textit{Tikkupeli:} Pöydällä on $n$ tikkua kasassa,
-ja pelaajat poistavat vuorotellen kasasta tikkuja.
-Pelaaja saa poistaa kerrallaan 1, 2 tai 3 tikkua.
-Pelin voittaa se, joka poistaa viimeisen tikun.
-
-Tällaisessa pelissä jokainen pelin tila on joko
-voittotila tai häviötila.
-Voittotilassa oleva pelaaja pystyy
-voittamaan pelin,
-ja häviötilassa oleva pelaaja häviää pelin,
-jos vastustaja toimii optimaalisesti.
-
-Tikkupelissä pelin tila on tikkujen määrä pöydällä.
-Tila 0 on häviötila, koska tikkuja ei voi poistaa.
-Tilat 1, 2 ja 3 ovat voittotiloja,
-koska niissä voi poistaa 1, 2 tai 3 tikkua,
-jolloin vastustaja häviää pelin.
-Tila 4 on taas häviötila, koska 1, 2 tai 3 tikun
-poistaminen johtaa tilaan,
-joka on vastustajalle voittotila.
-
-Seuraava taulukko näyttää tikkupelin tilojen luokittelun,
-kun tikkuja on $0,1,\ldots,15$.
-Merkki V tarkoittaa voittotilaa ja merkki H tarkoittaa häviötilaa.
-
-\begin{center}
-\begin{tabular}{rrrrrrrrrrrrrrrr}
-0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15\\
-\hline
-H & V & V & V & H & V & V & V & H & V & V & V & H & V & V & V \\
-\end{tabular}
-\end{center}
-
-Kuten taulukosta voi huomata,
-tikkupelissä on helppoa päätellä,
-onko tila voittotila vai häviötila.
-Jos kasassa on 4:llä jaollinen määrä tikkuja,
-tila on häviötila,
-ja muuten tila on voittotila.
-
-Yleisessä tapauksessa pätee, että tila on
-voittotila, jos siitä pääsee jollakin siirrolla häviötilaan,
-ja tila on häviötila,
-jos kaikki mahdolliset siirrot vievät voittotiloihin.
-Tällä päättelyllä pystyy luokittelemaan minkä tahansa vastaavan
-pelin tilat voitto- ja häviötiloihin.
-
-\subsection{Pisteiden keräys}
-
-Joissakin peleissä pelaajat keräävät pisteitä
-pelin aikana ja tavoitteena on maksimoida
-tai minimoida pisteiden yhteismäärä.
-Tällöin pelien tilojen väliset siirrot
-tuottavat pisteitä.
-Näin on seuraavassa pelissä:
-
-\textit{Poistopeli:} Annettuna on taulukko,
-jossa on $n$ lukua.
-Vuorossa oleva pelaaja poistaa
-taulukosta ensimmäisen tai viimeisen
-luvun, kunnes taulukko on tyhjä.
-Pelaajan tavoitteena on
-maksimoida poistettujen lukujen summa.
-
-Tässä pelissä pelin tila on jäljellä oleva
-taulukon väli. Jokaiseen tilaan liittyy
-lisätietona suurin
-pistemäärä, jonka kyseisestä tilasta aloittava pelaaja
-voi saada. Esimerkiksi pelin tilan
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-\draw (0,0) grid (4,1);
-
-\node at (0.5,0.5) {$4$};
-\node at (1.5,0.5) {$5$};
-\node at (2.5,0.5) {$1$};
-\node at (3.5,0.5) {$3$};
-\end{tikzpicture}
-\end{center}
-suurin pistemäärä on 8.
-Aloittajan optimaalinen pelitapa on poistaa ensin luku 3.
-Sitten vastustaja poistaa luvun 1 tai 4,
-jonka jälkeen aloittaja saa poistettua luvun 5.
-Aloittaja saa siis yhteensä $3+5=8$ pistettä.
-
-Poistopelin optimaalisen pelitavan saa selville
-dynaamisella ohjelmoinnilla, jossa jokaiselle
-taulukon välille lasketaan suurin mahdollinen
-aloittajan pistemäärä.
-Vastaavalla tavalla voi lähestyä muitakin
-pelejä, joissa kerätään pisteitä,
-jos tilojen määrä on riittävän pieni.
-
-Huomaa, että ahne strategia, joka poistaa aina
-suuremman luvun, ei tuota välttämättä suurinta
-pistemäärää. Esimerkiksi yllä olevassa pelissä
-ahne strategia tuottaa pistemäärän 7,
-vaikka pistemäärä 8 on mahdollinen.
-
-\section{Nim-peli}
-
 Nim-peli on yksinkertainen peli,
 joka on tärkeässä asemassa peliteoriassa,
 koska monia pelejä voi pelata samalla
@@ -344,36 +208,39 @@ strategialla kuin nim-peliä.
 Tutustumme aluksi nim-peliin ja yleistämme
 strategian sitten muihin peleihin.
 
-\textit{Nim-peli:} Pelissä on $n$ kasaa tikkuja,
-joissa kussakin on tietty määrä tikkuja.
-Joka vuorolla pelaaja valitsee yhden epätyhjän kasan
+Nim-pelissä on $n$ kasaa tikkuja,
+joista kussakin on tietty määrä tikkuja.
+Pelaajat poistavat kasoista tikkuja vuorotellen.
+Joka vuorolla pelaaja valitsee yhden kasan,
+jossa on vielä tikkuja,
 ja poistaa siitä minkä tahansa määrän tikkuja.
 Pelin voittaa se, joka poistaa viimeisen tikun.
 
 Nim-pelin tila on muotoa $[x_1,x_2,\ldots,x_n]$,
 jossa $x_k$ on tikkujen määrä kasassa $k$.
-Esimerkiksi $[10,12,5]$ tarkoittaa nim-peliä,
+Esimerkiksi $(10,12,5)$ tarkoittaa peliä,
 jossa on kolme kasaa ja tikkujen määrät ovat 10, 12 ja 5.
-Tila $[0,0,\ldots,0]$ on häviötila,
+Tila $(0,0,\ldots,0)$ on häviötila,
 koska siitä ei voi poistaa mitään tikkua,
-ja peli päättyy aina siihen.
+ja peli päättyy aina tähän tilaan.
 
-\subsection{Analyysi}
+\subsubsection{Analyysi}
 
 Osoittautuu, että nim-pelin tilan luonteen
 kertoo xor-summa $x_1 \oplus x_2 \oplus \cdots \oplus x_n$,
 missä $\oplus$ tarkoittaa xor-operaatiota.
 Jos xor-summa on 0, tila on häviötila,
 ja muussa tapauksessa tila on voittotila.
-Esimerkiksi tilan $[10,12,5]$ xor-summa on
+Esimerkiksi tilan $(10,12,5)$ xor-summa on
 $10 \oplus 12 \oplus 5 = 3$, joten tila on voittotila.
 
 Mutta miten xor-summa liittyy nim-peliin?
 Tämä selviää tutkimalla, miten xor-summa muuttuu,
 kun nim-pelin tila muuttuu.
 
-\subsubsection*{Häviötilat}
-
+~\\
+\noindent
+\textit{Häviötilat:}
 Pelin päätöstila $[0,0,\ldots,0]$ on häviötila,
 ja sen xor-summa on 0, kuten kuuluukin.
 Muissa häviötiloissa mikä tahansa siirto johtaa
@@ -381,20 +248,22 @@ voittotilaan, koska yksi luvuista $x_k$ muuttuu
 ja samalla pelin xor-summa muuttuu
 eli siirron jälkeen xor-summasta tulee jokin muu kuin 0.
 
-\subsubsection*{Voittotilat}
-
+~\\
+\noindent
+\textit{Voittotilat:}
 Voittotilasta pääsee häviötilaan muuttamalla
 jonkin kasan $k$ tikkujen määräksi $x_k \oplus s$,
 missä $s$ on pelin xor-summa.
 Vaatimuksena on, että $x_k \oplus s < x_k$,
 koska kasasta voi vain poistaa tikkuja.
-Sopiva kasa $x_k$ on jokin sellainen,
+Sopiva kasa $x_k$ on sellainen,
 jossa on ykkösbitti samassa kohdassa kuin
 $s$:n vasemmanpuoleisin ykkösbitti.
 
-\subsubsection*{Esimerkki}
-
-Tila $[10,12,5]$ on voittotila,
+~\\
+\noindent
+Tarkastellaan esimerkkinä tilaa $(10,2,5)$.
+Tämä tila on voittotila,
 koska sen xor-summa on 3.
 Täytyy siis olla olemassa siirto,
 jolla tilasta pääsee häviötilaan.
@@ -432,7 +301,8 @@ Kasan uudeksi sisällöksi täytyy saada
 $10 \oplus 3 = 9$ tikkua,
 mikä onnistuu poistamalla 1 tikku
 10 tikun kasasta.
-Tämän jälkeen tilanne on:
+Tämän seurauksena tilaksi tulee $(9,12,5)$,
+joka on häviötila, kuten pitääkin:
 
 \begin{center}
 \begin{tabular}{r|r}
@@ -444,7 +314,7 @@ Tämän jälkeen tilanne on:
 \end{tabular}
 \end{center}
 
-\subsection{Misääripeli}
+\subsubsection{Misääripeli}
 
 Misääripelissä nim-pelin tavoite on käänteinen,
 eli pelin häviää se, joka poistaa viimeisen tikun.
@@ -467,6 +337,24 @@ ja kyseinen tila on voittotila,
 koska siinä on tarkalleen yksi kasa,
 jossa on yli 1 tikkua,
 joten xor-summa ei ole 0.
+
+\section{Sprague–Grundyn lause}
+
+\begin{itemize}[noitemsep]
+\item pelissä on kaksi pelaajaa, jotka tekevät vuorotellen siirtoja
+\item peli muodostuu tiloista ja mahdolliset siirrot tilasta
+eivät riipu siitä, kumpi pelaaja on vuorossa
+\item peli päättyy, kun toinen pelaaja ei voi tehdä siirtoa
+\item pelissä on äärellinen määrä tiloja ja sama tila ei voi
+esiintyä uudestaan (eli peli päättyy ennemmin tai myöhemmin)
+\item pelaajien saatavilla on kaikki tieto tiloista
+ja siirroista eikä pelissä ole satunnaisuutta
+\end{itemize}
+
+
+\section{Kääntöpeli}
+
+
 
 \section{Muunnos nimiksi}
 
