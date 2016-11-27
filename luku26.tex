@@ -110,7 +110,7 @@ että $x[i]=y[i]$, kun $i<k$, ja $x[k]<y[k]$.
 \index{trie}
 
 Trie on puurakenne,
-joka pitää yllä merkkijonojoukkoa.
+joka pitää yllä joukkoa merkkijonoa.
 Merkkijonot tallennetaan puuhun
 juuresta lähtevinä merkkien ketjuina.
 Jos useammalla merkkijonolla on sama alkuosa,
@@ -156,18 +156,29 @@ Tämä merkki on tarpeen,
 koska merkkijono voi olla toisen merkkijonon alkuosa,
 kuten tässä puussa merkkijonot \texttt{SUU} ja \texttt{SUURI}.
 
-Triessä merkkijonon lisäyksen ja hakemisen
-aikavaativuus on $O(n)$, kun $n$ on merkkijonon pituus.
-Molemmissa operaatioissa ideana on lähteä liikkeelle juuresta
-ja kulkea alaspäin merkkijonon merkkien mukaisesti.
-Lisäyksessä puuhun lisätään tarvittaessa
-uusia solmuja.
+Triessä merkkijono lisääminen ja hakeminen
+vievät aikaa $O(n)$, kun $n$ on merkkijonon pituus.
+Molemmat operaatiot voi toteuttaa lähtemällä liikkeelle juuresta
+ja kulkemalla alaspäin ketjua merkkien mukaisesti.
+Tarvittaessa puuhun lisätään uusia solmuja.
 
 Triestä on mahdollista etsiä
 sekä merkkijonoja että merkkijonojen alkuosia.
 Lisäksi puun solmuissa voi pitää kirjaa,
 monessako merkkijonossa on solmua vastaava alkuosa,
 mikä lisää trien käyttömahdollisuuksia.
+
+Trie on kätevää tallentaa taulukkona
+\begin{lstlisting}
+int t[N][A];
+\end{lstlisting}
+missä $N$ on solmujen suurin mahdollinen määrä
+(eli tallennettavien merkkijonojen yhteispituus)
+ja $A$ on aakkoston koko.
+Ideana on numeroida solmut $1,2,3,\ldots$ niin,
+että juuren numero on 1.
+Nyt $\texttt{t}[s][c]$ kertoo,
+mihin solmuun solmusta $s$ pääsee merkillä $c$.
 
 \section{Merkkijonohajautus}
 
