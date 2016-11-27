@@ -1,11 +1,221 @@
 \chapter{Peliteoria}
 
-Peliteoria etsii tapoja pelata pelejä voitokkaasti.
 Tässä luvussa keskitymme kahden pelaajan peleihin,
-joissa pelaajat tekevät siirtoja vuorotellen.
-Osoittautuu, että monia tällaisia pelejä voi mallintaa
-nim-pelin avulla, johon on olemassa yksinkertainen
-voittostrategia.
+joissa molemmat pelaajat tekevät
+samanlaisia siirtoja eikä pelissä ole satunnaisuutta.
+Tavoitteemme on etsiä strategia, jota käyttäen
+pelaaja pystyy voittamaan pelin toisen pelaajan
+toimista riippumatta, jos tämä on mahdollista.
+
+Osoittautuu, että kaikki tällaiset pelit ovat
+pohjimmiltaan samanlaisia ja niiden analyysi on
+mahdollista nim-teorian avulla.
+Perehdymme aluksi yksinkertaisiin tikkupeleihin,
+joissa pelaajat poistavat tikkuja kasoista,
+ja yleistämme sitten näiden pelien teorian kaikkiin peleihin.
+
+\section{Pelin tilat}
+
+Tarkastellaan peliä, jossa kasassa on $n$ tikkua.
+Pelaajat $A$ ja $B$ siirtävät vuorotellen ja
+pelaaja $A$ aloittaa.
+Jokaisella siirrolla pelaajan tulee poistaa
+1, 2 tai 3 tikkua kasasta.
+Pelin voittaa se pelaaja, joka poistaa viimeisen tikun.
+
+Esimerkiksi jos $n=10$, peli saattaa edetä seuraavasti:
+\begin{enumerate}[noitemsep]
+\item Pelaaja $A$ poistaa 2 tikkua (jäljellä 8 tikkua).
+\item Pelaaja $B$ poistaa 3 tikkua (jäljellä 5 tikkua).
+\item Pelaaja $A$ poistaa 1 tikun (jäljellä 4 tikkua).
+\item Pelaaja $B$ poistaa 2 tikkua (jäljellä 2 tikkua).
+\item Pelaaja $A$ poistaa 2 tikkua ja voittaa.
+\end{enumerate}
+Tämä peli muodostuu tiloista $0,1,2,\ldots,n$,
+missä tilan numero vastaa sitä, montako tikkua
+kasassa on jäljellä.
+Tietyssä tilassa olevan pelaajan valittavana on,
+montako tikkua hän poistaa kasasta.
+
+\subsubsection{Voittotila ja häviötila}
+
+\index{voittotila}
+\index{häviötila}
+
+\textit{Voittotila} on tila, jossa oleva pelaaja voittaa
+pelin varmasti, jos hän pelaa optimaalisesti.
+Vastaavasti \textit{häviötila} on tila,
+jossa oleva pelaaja häviää varmasti, jos vastustaja
+pelaa optimaalisesti.
+Osoittautuu, että pelin tilat on mahdollista luokitella
+niin, että jokainen tila on joko voittotila tai häviötila.
+
+Yllä olevassa pelissä tila 0 on selkeästi häviötila,
+koska siinä oleva pelaaja häviää pelin suoraan.
+Tilat 1, 2 ja 3 taas ovat voittotiloja,
+koska niissä oleva pelaaja voi poistaa
+1, 2 tai 3 tikkua ja voittaa pelin.
+Vastaavasti tila 4 on häviötila, koska mikä tahansa
+siirto johtaa toisen pelaajan voittoon.
+
+Yleisemmin voidaan havaita, että jos tilasta on
+jokin häviötilaan johtava siirto, niin tila on voittotila,
+ja muussa tapauksessa tila on häviötila.
+Tämän ansiosta voidaan luokitella kaikki pelin tilat
+alkaen varmoista häviötiloista, joista ei ole siirtoja
+mihinkään muuhun tilaan.
+
+Seuraavassa on pelin tilojen $0 \ldots 15$ luokittelu
+($V$ tarkoittaa voittotilaa ja $H$ tarkoittaa häviötilaa):
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,0) grid (16,1);
+
+\node at (0.5,0.5) {$H$};
+\node at (1.5,0.5) {$V$};
+\node at (2.5,0.5) {$V$};
+\node at (3.5,0.5) {$V$};
+\node at (4.5,0.5) {$H$};
+\node at (5.5,0.5) {$V$};
+\node at (6.5,0.5) {$V$};
+\node at (7.5,0.5) {$V$};
+\node at (8.5,0.5) {$H$};
+\node at (9.5,0.5) {$V$};
+\node at (10.5,0.5) {$V$};
+\node at (11.5,0.5) {$V$};
+\node at (12.5,0.5) {$H$};
+\node at (13.5,0.5) {$V$};
+\node at (14.5,0.5) {$V$};
+\node at (15.5,0.5) {$V$};
+
+\footnotesize
+\node at (0.5,1.4) {$0$};
+\node at (1.5,1.4) {$1$};
+\node at (2.5,1.4) {$2$};
+\node at (3.5,1.4) {$3$};
+\node at (4.5,1.4) {$4$};
+\node at (5.5,1.4) {$5$};
+\node at (6.5,1.4) {$6$};
+\node at (7.5,1.4) {$7$};
+\node at (8.5,1.4) {$8$};
+\node at (9.5,1.4) {$9$};
+\node at (10.5,1.4) {$10$};
+\node at (11.5,1.4) {$11$};
+\node at (12.5,1.4) {$12$};
+\node at (13.5,1.4) {$13$};
+\node at (14.5,1.4) {$14$};
+\node at (15.5,1.4) {$15$};
+\end{tikzpicture}
+\end{center}
+
+Tämän pelin analyysi on yksinkertainen:
+tila $k$ on häviötila, jos $k$ on jaollinen 4:llä,
+ja muuten tila $k$ on voittotila.
+Optimaalinen tapa pelata peliä on
+valita aina sellainen siirto, että vastustajalle
+jää 4:llä jaollinen määrä tikkuja,
+kunnes lopulta tikut loppuvat ja vastustaja on hävinnyt.
+
+Tämä pelitapa edellyttää luonnollisesti sitä,
+että tikkujen määrä omalla siirrolla ei ole
+4:llä jaollinen. Jos näin kuitenkin on, mitään ei ole
+tehtävissä vaan vastustaja voittaa
+pelin varmasti, jos hän pelaa optimaalisesti.
+
+\subsubsection{Tilaverkko}
+
+Tarkastellaan sitten toisenlaista tikkupeliä,
+jossa tilassa $k$ saa poistaa minkä tahansa
+määrän tikkuja $x$, kunhan $k$ on jaollinen $x$:llä
+ja $x$ on pienempi kuin $k$.
+Esimerkiksi tilassa 8 on sallittua poistaa
+1, 2 tai 4 tikkua, mutta tilassa 7
+ainoa mahdollinen siirto on poistaa 1 tikku.
+
+Esitetään pelin tilat $1 \ldots 9$ tilaverkkona, jossa solmut ovat pelin tiloja
+ja kaaret kuvaavat mahdollisia siirtoja tilojen välillä:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {$1$};
+\node[draw, circle] (2) at (2,0) {$2$};
+\node[draw, circle] (3) at (3.5,-1) {$3$};
+\node[draw, circle] (4) at (1.5,-2) {$4$};
+\node[draw, circle] (5) at (3,-2.75) {$5$};
+\node[draw, circle] (6) at (2.5,-4.5) {$6$};
+\node[draw, circle] (7) at (0.5,-3.25) {$7$};
+\node[draw, circle] (8) at (-1,-4) {$8$};
+\node[draw, circle] (9) at (1,-5.5) {$9$};
+
+\path[draw,thick,->,>=latex] (2) -- (1);
+\path[draw,thick,->,>=latex] (3) edge [bend right=20] (2);
+\path[draw,thick,->,>=latex] (4) edge [bend left=20] (2);
+\path[draw,thick,->,>=latex] (4) edge [bend left=20] (3);
+\path[draw,thick,->,>=latex] (5) edge [bend right=20] (4);
+\path[draw,thick,->,>=latex] (6) edge [bend left=20] (5);
+\path[draw,thick,->,>=latex] (6) edge [bend left=20] (4);
+\path[draw,thick,->,>=latex] (6) edge [bend right=40] (3);
+\path[draw,thick,->,>=latex] (7) edge [bend right=20] (6);
+\path[draw,thick,->,>=latex] (8) edge [bend right=20] (7);
+\path[draw,thick,->,>=latex] (8) edge [bend right=20] (6);
+\path[draw,thick,->,>=latex] (8) edge [bend left=20] (4);
+\path[draw,thick,->,>=latex] (9) edge [bend left=20] (8);
+\path[draw,thick,->,>=latex] (9) edge [bend right=20] (6);
+\end{tikzpicture}
+\end{center}
+
+Tämä peli päättyy aina tilaan 1, joka on häviötila,
+koska siinä ei voi tehdä mitään siirtoja.
+Pelin tilojen $1 \ldots 9$ luokittelu on seuraava:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (1,0) grid (10,1);
+
+\node at (1.5,0.5) {$H$};
+\node at (2.5,0.5) {$V$};
+\node at (3.5,0.5) {$H$};
+\node at (4.5,0.5) {$V$};
+\node at (5.5,0.5) {$H$};
+\node at (6.5,0.5) {$V$};
+\node at (7.5,0.5) {$H$};
+\node at (8.5,0.5) {$V$};
+\node at (9.5,0.5) {$H$};
+
+\footnotesize
+\node at (1.5,1.4) {$1$};
+\node at (2.5,1.4) {$2$};
+\node at (3.5,1.4) {$3$};
+\node at (4.5,1.4) {$4$};
+\node at (5.5,1.4) {$5$};
+\node at (6.5,1.4) {$6$};
+\node at (7.5,1.4) {$7$};
+\node at (8.5,1.4) {$8$};
+\node at (9.5,1.4) {$9$};
+\end{tikzpicture}
+\end{center}
+
+Yllättävää kyllä, tässä pelissä kaikki
+parilliset tilat ovat voittotiloja ja
+kaikki parittomat tilat ovat häviötiloja.
+
+\section{Nim-peli}
+
+\section{Sprague–Grundyn lause}
+
+\begin{itemize}[noitemsep]
+\item pelissä on kaksi pelaajaa, jotka tekevät vuorotellen siirtoja
+\item peli muodostuu tiloista ja mahdolliset siirrot tilasta
+eivät riipu siitä, kumpi pelaaja on vuorossa
+\item peli päättyy, kun toinen pelaaja ei voi tehdä siirtoa
+\item pelissä on äärellinen määrä tiloja ja sama tila ei voi
+esiintyä uudestaan (eli peli päättyy ennemmin tai myöhemmin)
+\item pelaajien saatavilla on kaikki tieto tiloista
+ja siirroista eikä pelissä ole satunnaisuutta
+\end{itemize}
+
+
+\section{Kääntöpeli}
 
 \section{Pelin tila}
 
