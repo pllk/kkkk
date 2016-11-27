@@ -457,19 +457,24 @@ pystyy tekemään testisyötteen, joka aiheuttaa varmasti törmäyksen.
 \section{Z-algoritmi}
 
 \index{Z-algoritmi}
+\index{Z-taulukko}
 
-Usein vaihtoehtoinen tekniikka merkkijonohajautukselle
-on Z-algoritmi, joka laskee jokaiselle
-merkkijonon kohdalle,
+Z-algoritmi muodostaa merkkijonosta Z-taulukon,
+joka kertoo jokaiselle merkkijonon kohdalle,
 mikä on pisin kyseisestä kohdasta alkava osajono,
 joka on myös merkkijonon alkuosa.
+Z-algoritmin avulla voi ratkaista tehokkaasti
+monia merkkijonotehtäviä.
 
-Toisin kuin merkkijonohajautus, Z-algoritmi toimii
+Z-algoritmi ja merkkijonohajautus ovat usein
+vaihtoehtoisia tekniikoita, ja on makuasia,
+kumpaa algoritmia käyttää.
+Toisin kuin hajautus, Z-algoritmi toimii
 varmasti oikein eikä siinä ole törmäysten riskiä.
 Toisaalta Z-algoritmi on vaikeampi toteuttaa eikä
 se sovellu kaikkeen samaan kuin hajautus.
 
-\subsubsection*{Toiminta}
+\subsubsection*{Algoritmin toiminta}
 
 Z-algoritmi muodostaa merkkijonolle Z-taulukon,
 jonka jokaisessa kohdassa lukee,
@@ -554,8 +559,8 @@ merkkijonon alkua ja osajonon alkua toisiinsa.
 
 Suoraviivaisesti toteutettuna
 tällaisen algoritmin aikavaativuus olisi $O(n^2)$,
-koska yhteiset alkuosat voivat olla pitkiä,
-mutta Z-algoritmissa on yksi tärkeä
+koska yhteiset alkuosat voivat olla pitkiä.
+Z-algoritmissa on kuitenkin yksi tärkeä
 optimointi, jonka ansiosta algoritmin
 aikavaativuus on vain $O(n)$.
 
@@ -873,9 +878,9 @@ aluetta merkkijonossa.
 \end{center}
 
 Nyt algoritmi alkaa vertailla merkkejä
-kohdasta $y+1$ alkaen merkki kerrallaan.
-Algoritmi ei voi hyödyntää aiempaa tietoa
-Z-taulukossa, koska se ei ole vielä aiemmin
+kohdasta $y+1=12$ alkaen merkki kerrallaan.
+Algoritmi ei voi hyödyntää valmiina
+Z-taulukossa olevaa tietoa, koska se ei ole vielä aiemmin
 tutkinut merkkijonoa näin pitkälle.
 Tuloksena osajonon pituudeksi tulee 7
 ja väli $[x,y]$ päivittyy vastaavasti:
@@ -1020,34 +1025,107 @@ arvot suoraan Z-taulukon alusta:
 
 \subsubsection{Z-taulukon käyttö}
 
-Z-taulukossa olevan tiedon avulla pystyy ratkaisemaan
+Z-taulukon avulla pystyy ratkaisemaan
 tehokkaasti monia merkkijonotehtäviä.
 Ratkaistaan esimerkkinä seuraava tehtävä:
 \begin{task}
-Annettuna on merkkijono $t$,
+Annettuna on merkkijono $a$,
 jossa on $n$ merkkiä,
-sekä merkkijono $p$,
-jossa on $m$ merkkiä ($m \le n$).
+sekä merkkijono $b$,
+jossa on $m$ merkkiä.
 Tehtäväsi on selvittää, montako kertaa
-merkkijono $p$ esiintyy merkkijonon $t$ osajonona.
+merkkijono $b$ esiintyy merkkijonon $a$ osajonona.
 \end{task}
 
 \noindent
-Ideana on luoda uusi merkkijono muotoa $p$\texttt{\#}$t$,
-jossa merkkijonojen $p$ ja $t$ välissä on
+Usein esiintyvä idea Z-algoritmin yhteydessä
+on muodostaa merkkijono,
+jonka osana on useita välimerkeillä
+erotettuja merkkijonoja.
+Tässä tehtävässä sopiva merkkijono on
+$b$\texttt{\#}$a$,
+jossa merkkijonojen $b$ ja $a$ välissä on
 erikoismerkki \texttt{\#},
 jota ei esiinny merkkijonoissa.
-Tämän merkkijonon Z-taulukko ilmaisee kohdat,
-joissa $p$ esiintyy $t$:ssä,
-koska tarkalleen niissä kohdissa taulukossa on luku $m$.
-Algoritmin aikavaativuus on $O(n)$.
 
-\subsubsection{Toteutus}
+Merkkijonon $b$\texttt{\#}$a$ hyötynä on,
+että sitä vastaava Z-taulukko kertoo,
+missä kohdissa merkkijonoa $a$
+esiintyy merkkijono $b$.
+Tällaiset kohdat ovat tarkalleen ne
+Z-taulukon kohdat, joissa on luku $m$.
+Algoritmin aikavaativuus on $O(n)$,
+koska riittää muodostaa Z-taulukko ja käydä se läpi.
+
+\begin{samepage}
+Esimerkiksi jos $a=$\texttt{HATTIVATTI} ja $b=$\texttt{ATT},
+niin Z-taulukosta tulee:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,0) grid (14,2);
+
+\node at (0.5, 1.5) {A};
+\node at (1.5, 1.5) {T};
+\node at (2.5, 1.5) {T};
+\node at (3.5, 1.5) {\#};
+\node at (4.5, 1.5) {H};
+\node at (5.5, 1.5) {A};
+\node at (6.5, 1.5) {T};
+\node at (7.5, 1.5) {T};
+\node at (8.5, 1.5) {I};
+\node at (9.5, 1.5) {V};
+\node at (10.5, 1.5) {A};
+\node at (11.5, 1.5) {T};
+\node at (12.5, 1.5) {T};
+\node at (13.5, 1.5) {I};
+
+\node at (0.5, 0.5) {--};
+\node at (1.5, 0.5) {0};
+\node at (2.5, 0.5) {0};
+\node at (3.5, 0.5) {0};
+\node at (4.5, 0.5) {0};
+\node at (5.5, 0.5) {3};
+\node at (6.5, 0.5) {0};
+\node at (7.5, 0.5) {0};
+\node at (8.5, 0.5) {0};
+\node at (9.5, 0.5) {0};
+\node at (10.5, 0.5) {3};
+\node at (11.5, 0.5) {0};
+\node at (12.5, 0.5) {0};
+\node at (13.5, 0.5) {0};
+
+\footnotesize
+\node at (0.5, 2.5) {1};
+\node at (1.5, 2.5) {2};
+\node at (2.5, 2.5) {3};
+\node at (3.5, 2.5) {4};
+\node at (4.5, 2.5) {5};
+\node at (5.5, 2.5) {6};
+\node at (6.5, 2.5) {7};
+\node at (7.5, 2.5) {8};
+\node at (8.5, 2.5) {9};
+\node at (9.5, 2.5) {10};
+\node at (10.5, 2.5) {11};
+\node at (11.5, 2.5) {12};
+\node at (12.5, 2.5) {13};
+\node at (13.5, 2.5) {14};
+\end{tikzpicture}
+\end{center}
+\end{samepage}
+
+Taulukon kohdissa 6 ja 11 on luku 3,
+mikä tarkoittaa, että \texttt{ATT}
+esiintyy vastaavissa kohdissa merkkijonossa
+\texttt{HATTIVATTI}.
+
+\subsubsection{Algoritmin toteutus}
 
 Seuraavassa on lyhyt Z-algoritmin toteutus,
 joka palauttaa Z-taulukon vektorina.
-Huomaa että toisin kuin Z-algoritmin käsittelyssä,
-tässä merkkijonossa ja taulukossa on 0-indeksointi.
+Huomaa, että tässä toteutuksessa merkkijonossa
+ja taulukossa on 0-indeksointi
+toisin kuin yllä olevissa esimerkeissä.
 
 \begin{lstlisting}
 vector<int> z(string s) {
@@ -1063,5 +1141,3 @@ vector<int> z(string s) {
     return z;
 }
 \end{lstlisting}
-
-
