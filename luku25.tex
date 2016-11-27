@@ -201,6 +201,8 @@ kaikki parittomat tilat ovat häviötiloja.
 
 \section{Nim-peli}
 
+\index{nim-peli}
+
 Nim-peli on yksinkertainen peli,
 joka on tärkeässä asemassa peliteoriassa,
 koska monia pelejä voi pelata samalla
@@ -340,38 +342,81 @@ joten xor-summa ei ole 0.
 
 \section{Sprague–Grundyn lause}
 
+\index{Sprague–Grundyn lause}
+
+Sprague–Grundyn lause yleistää nim-pelin strategian
+kaikkiin peleihin, jotka täyttävät
+seuraavat vaatimukset:
+
 \begin{itemize}[noitemsep]
 \item pelissä on kaksi pelaajaa, jotka tekevät vuorotellen siirtoja
 \item peli muodostuu tiloista ja mahdolliset siirrot tilasta
 eivät riipu siitä, kumpi pelaaja on vuorossa
 \item peli päättyy, kun toinen pelaaja ei voi tehdä siirtoa
-\item pelissä on äärellinen määrä tiloja ja sama tila ei voi
-esiintyä uudestaan (eli peli päättyy ennemmin tai myöhemmin)
+\item peli päättyy varmasti ennemmin tai myöhemmin
 \item pelaajien saatavilla on kaikki tieto tiloista
 ja siirroista eikä pelissä ole satunnaisuutta
 \end{itemize}
+Ideana on laskea kullekin pelin tilalle Grundy-luku,
+joka vastaa tikkujen määrää nim-pelin kasassa.
+Kun kaikkien tilojen Grundy-luvut ovat tiedossa,
+peliä voi pelata aivan kuin se olisi nim-peli.
 
+\subsubsection{Grundy-luku}
 
-\section{Kääntöpeli}
+\index{Grundy-luku}
 
+Pelin tilan Grundy-luku määritellään seuraavasti:
+\begin{itemize}[noitemsep]
+\item jos tilasta ei voi tehdä mitään siirtoa,
+sen Grundy-luku on 0
+\item muuten Grundy-luku on pienin ei-negatiivinen kokonaisluku,
+joka ei ole sellaisen tilan Grundy-luku,
+johon tilasta pääsee yhdellä siirrolla
+\end{itemize}
+Esimerkiksi tilaverkossa
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {\phantom{0}};
+\node[draw, circle] (2) at (2,0) {\phantom{0}};
+\node[draw, circle] (3) at (4,0) {\phantom{0}};
+\node[draw, circle] (4) at (1,-2) {\phantom{0}};
+\node[draw, circle] (5) at (3,-2) {\phantom{0}};
+\node[draw, circle] (6) at (5,-2) {\phantom{0}};
 
+\path[draw,thick,->,>=latex] (2) -- (1);
+\path[draw,thick,->,>=latex] (3) -- (2);
+\path[draw,thick,->,>=latex] (5) -- (4);
+\path[draw,thick,->,>=latex] (6) -- (5);
+\path[draw,thick,->,>=latex] (4) -- (1);
+\path[draw,thick,->,>=latex] (4) -- (2);
+\path[draw,thick,->,>=latex] (5) -- (2);
+\path[draw,thick,->,>=latex] (6) -- (2);
+\end{tikzpicture}
+\end{center}
+Grundy-luvut ovat seuraavat:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {0};
+\node[draw, circle] (2) at (2,0) {1};
+\node[draw, circle] (3) at (4,0) {0};
+\node[draw, circle] (4) at (1,-2) {2};
+\node[draw, circle] (5) at (3,-2) {0};
+\node[draw, circle] (6) at (5,-2) {2};
 
-\section{Muunnos nimiksi}
-
-Nim-pelin hienoutena on, että mikä tahansa peli,
-jossa kaksi pelaajaa tekee siirtoja vuorotellen
-ja viimeinen siirto ratkaisee voittajan,
-voidaan muuttaa nim-peliksi
-ja siinä pystyy käyttämään samaa strategiaa kuin nim-pelissä.
-Tämä tulos tunnetaan nimellä Sprague–Grundyn lause.
-
-\subsection{Grundy-luku}
-
-Pelin tilan Grundy-luku on pienin ei-negatiivinen kokonaisluku,
-joka ei ole minkään sellaisen tilan Grundy-luku,
-johon tilasta pääsee yhdellä siirrolla.
-Jos tilasta ei pääse mihinkään tilaan,
-sen Grundy-luku on 0.
+\path[draw,thick,->,>=latex] (2) -- (1);
+\path[draw,thick,->,>=latex] (3) -- (2);
+\path[draw,thick,->,>=latex] (5) -- (4);
+\path[draw,thick,->,>=latex] (6) -- (5);
+\path[draw,thick,->,>=latex] (4) -- (1);
+\path[draw,thick,->,>=latex] (4) -- (2);
+\path[draw,thick,->,>=latex] (5) -- (2);
+\path[draw,thick,->,>=latex] (6) -- (2);
+\end{tikzpicture}
+\end{center}
+Jos tila on häviötila, sen Grundy-luku on 0.
+Jos taas tila on voittotila, sen Grundy-luku
+on jokin positiivinen luku.
 
 Grundy-luku vastaa tikkujen määrää nim-kasassa.
 Jos Grundy-luku on 0, tilasta pääsee vain tiloihin,
@@ -379,10 +424,11 @@ joiden Grundy-luku ei ole 0.
 Jos taas Grundy-luku on $x>0$, siitä pääsee tiloihin,
 joiden Grundy-luku on $0,1,\ldots,x-1$.
 
-\subsubsection*{Esimerkki}
-
-\textit{Sokkelopeli:} Sokkelossa on pelihahmo,
-jota pelaajat siirtävät vuorotellen.
+~\\
+\noindent
+Tarkastellaan esimerkkinä peliä,
+jossa pelaajat siirtävät vuorotellen
+pelihahmoa sokkelossa.
 Jokainen sokkelon ruutu on lattiaa tai seinää.
 Kullakin siirrolla hahmon tulee liikkua jokin
 määrä askeleita vasemmalle tai jokin
@@ -416,7 +462,7 @@ jossa @ on pelihahmo ja * merkitsee ruutua, johon hahmo voi siirtyä.
 \end{center}
 
 Sokkelopelin tiloja ovat kaikki sokkelon
-lattiaruudut. Äskeisessä esimerkissä
+lattiaruudut. Tässä tapauksessa
 tilojen Grundy-luvut ovat seuraavat:
 
 \begin{center}
@@ -442,9 +488,15 @@ tilojen Grundy-luvut ovat seuraavat:
 \end{tikzpicture}
 \end{center}
 
-Tämän muunnoksen jälkeen sokkelopelin
+Tämän seurauksena sokkelopelin
 tila käyttäytyy
 samalla tavalla kuin nim-pelin kasa.
+Esimerkiksi oikean alakulman ruudun
+Grundy-luku on 2,
+joten kyseessä on voittotila.
+Voittoon johtava siirto on joko liikkua neljä
+askelta vasemmalle tai kaksi askelta ylöspäin.
+
 Huomaa, että toisin kuin nim-pelissä,
 tilasta saattaa päästä toiseen tilaan,
 jonka Grundy-luku on suurempi.
@@ -452,7 +504,7 @@ Tällaisen siirron voi kuitenkin
 aina peruuttaa niin,
 että Grundy-luku palautuu samaksi.
 
-\subsection{Alipelit}
+\subsubsection{Alipelit}
 
 Oletetaan seuraavaksi, että peli muodostuu
 alipeleistä ja jokaisella vuorolla
@@ -467,10 +519,11 @@ Peliä pystyy pelaamaan nim-pelin
 tapaan selvittämällä kaikkien alipelien Grundy-luvut
 ja laskemalla niiden xor-summa.
 
-\subsubsection*{Esimerkki}
-
-Kolmen sokkelon pelissä joka siirrolla pelaaja
-valitsee yhden sokkeloista ja siirtää siinä olevaa hahmoa.
+~\\
+\noindent
+Tarkastellaan esimerkkinä kolmen sokkelon peliä.
+Tässä pelissä pelaaja valitsee joka siirrolla
+yhden sokkeloista ja siirtää siinä olevaa hahmoa.
 Pelin aloitustilanne voi olla seuraavanlainen:
 
 \begin{center}
@@ -582,59 +635,57 @@ Sopiva aloitussiirto on liikkua vasemmassa sokkelossa
 2 askelta ylöspäin, jolloin xor-summaksi
 tulee $0 \oplus 3 \oplus 3 = 0$.
 
-\subsection{Jakautuminen}
+\subsubsection{Jakautuminen}
 
-Joskus pelissä on joukko alipelejä,
-joista jokainen voi jakautua uusiksi alipeleiksi.
-Kuten ennenkin, jokainen alipeli vastaa
-nim-pelin kasaa ja alipelien joukon Grundy-luku
-saadaan laskemalla xor-summa alipelien Grundy-luvuista.
-
-Alipelin Grundy-luku selviää käymällä
-läpi kaikki tavat, miten alipeli voi jakautua.
-Jokainen jakotapa luo alipelien joukon,
-jonka Grundy-luvun saa laskettua xor-summalla.
-Alipelin Grundy-luku on pienin luku,
-joka ei ole mikään näistä xor-summista.
-Sama jatkuu rekursiivisesti pienempiin alipeleihin.
-
-\subsubsection*{Esimerkki}
-
-Tarkastellaan lopuksi seuraavaa peliä:
-
-\textit{Bittipeli:} Annettuna on joukko
-bittijonoja. Joka vuorolla pelaaja valitsee
-jonkin bittijonon ja jakaa sen kahteen
-osaan niin, että kumpaankin osaan
-jää sekä bitti 0 että bitti 1.
-Pelin voittaja on se, joka tekee viimeisen siirron.
-
-Esimerkiksi pelissä $\{1101001\}$
-on kolme mahdollista siirtoa, jotka tuottavat
-alipelit $\{110,1001\}$, $\{1101,001\}$ ja $\{11010,01\}$.
-Pelin Grundy-luku on pienin kokonaisluku,
-joka ei ole minkään alipelin Grundy-luku.
-
-Alipelin $\{110,1001\}$ Grundy-luku on
-alipelien $\{110\}$ ja $\{1001\}$ Grundy-lukujen
-xor-summa. Alipelin $\{110\}$ Grundy-luku on 0,
-koska mitään siirtoa ei voi tehdä.
-Alipelin $\{1001\}$ Grundy-luku on 1,
-koska ainoa siirto luo alipelin $\{10,01\}$,
-jonka Grundy-luku on 0.
-Niinpä alipelin $\{110,1001\}$ Grundy-luku on $0 \oplus 1 = 1$.
-
-Vastaavasti saadaan, että
-alipelien $\{1101,001\}$ ja $\{11010,01\}$
-Grundy-luvut ovat 0 ja 1.
-Pelin $\{1101001\}$ Grundy-luku on siis 2,
-koska siinä on kolme mahdollista siirtoa,
-jotka tuottavat alipelit, joiden Grundy-luvut
-ovat 1, 0 ja 1.
-
-Tässä tapauksessa aloittaja voittaa
-jakamalla bittijonon $\{1101,001\}$. Tämän jälkeen vastustaja
-ei voi tehdä mitään siirtoa ja peli on päättynyt.
-
-%\endinput
+% Joskus pelissä on joukko alipelejä,
+% joista jokainen voi jakautua uusiksi alipeleiksi.
+% Kuten ennenkin, jokainen alipeli vastaa
+% nim-pelin kasaa ja alipelien joukon Grundy-luku
+% saadaan laskemalla xor-summa alipelien Grundy-luvuista.
+% 
+% Alipelin Grundy-luku selviää käymällä
+% läpi kaikki tavat, miten alipeli voi jakautua.
+% Jokainen jakotapa luo alipelien joukon,
+% jonka Grundy-luvun saa laskettua xor-summalla.
+% Alipelin Grundy-luku on pienin luku,
+% joka ei ole mikään näistä xor-summista.
+% Sama jatkuu rekursiivisesti pienempiin alipeleihin.
+% 
+% \subsubsection*{Esimerkki}
+% 
+% Tarkastellaan lopuksi seuraavaa peliä:
+% 
+% \textit{Bittipeli:} Annettuna on joukko
+% bittijonoja. Joka vuorolla pelaaja valitsee
+% jonkin bittijonon ja jakaa sen kahteen
+% osaan niin, että kumpaankin osaan
+% jää sekä bitti 0 että bitti 1.
+% Pelin voittaja on se, joka tekee viimeisen siirron.
+% 
+% Esimerkiksi pelissä $\{1101001\}$
+% on kolme mahdollista siirtoa, jotka tuottavat
+% alipelit $\{110,1001\}$, $\{1101,001\}$ ja $\{11010,01\}$.
+% Pelin Grundy-luku on pienin kokonaisluku,
+% joka ei ole minkään alipelin Grundy-luku.
+% 
+% Alipelin $\{110,1001\}$ Grundy-luku on
+% alipelien $\{110\}$ ja $\{1001\}$ Grundy-lukujen
+% xor-summa. Alipelin $\{110\}$ Grundy-luku on 0,
+% koska mitään siirtoa ei voi tehdä.
+% Alipelin $\{1001\}$ Grundy-luku on 1,
+% koska ainoa siirto luo alipelin $\{10,01\}$,
+% jonka Grundy-luku on 0.
+% Niinpä alipelin $\{110,1001\}$ Grundy-luku on $0 \oplus 1 = 1$.
+% 
+% Vastaavasti saadaan, että
+% alipelien $\{1101,001\}$ ja $\{11010,01\}$
+% Grundy-luvut ovat 0 ja 1.
+% Pelin $\{1101001\}$ Grundy-luku on siis 2,
+% koska siinä on kolme mahdollista siirtoa,
+% jotka tuottavat alipelit, joiden Grundy-luvut
+% ovat 1, 0 ja 1.
+% 
+% Tässä tapauksessa aloittaja voittaa
+% jakamalla bittijonon $\{1101,001\}$. Tämän jälkeen vastustaja
+% ei voi tehdä mitään siirtoa ja peli on päättynyt.
 
