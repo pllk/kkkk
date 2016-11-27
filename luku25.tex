@@ -366,14 +366,17 @@ peliä voi pelata aivan kuin se olisi nim-peli.
 
 \index{Grundy-luku}
 
-Pelin tilan Grundy-luku määritellään seuraavasti:
-\begin{itemize}[noitemsep]
-\item jos tilasta ei voi tehdä mitään siirtoa,
-sen Grundy-luku on 0
-\item muuten Grundy-luku on pienin ei-negatiivinen kokonaisluku,
-joka ei ole sellaisen tilan Grundy-luku,
-johon tilasta pääsee yhdellä siirrolla
-\end{itemize}
+Pelin tilan Grundy-luku määritellään rekursiivisesti
+kaavalla
+\[\textrm{mex}(\{g_1,g_2,\ldots,g_n\}),\]
+jossa $g_1,g_2,\ldots,g_n$ ovat niiden tilojen
+Grundy-luvut, joihin tilasta pääsee yhdellä siirrolla,
+ja funktio mex antaa pienimmän ei-negatiivisen
+luvun, jota ei esiinny joukossa.
+Esimerkiksi $\textrm{mex}(\{0,1,3\})=2$.
+Jos tilasta ei voi tehdä mitään siirtoa,
+sen Grundy-luku on 0, koska $\textrm{mex}(\emptyset)=0$.
+
 Esimerkiksi tilaverkossa
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -418,11 +421,12 @@ Jos tila on häviötila, sen Grundy-luku on 0.
 Jos taas tila on voittotila, sen Grundy-luku
 on jokin positiivinen luku.
 
-Grundy-luku vastaa tikkujen määrää nim-kasassa.
-Jos Grundy-luku on 0, tilasta pääsee vain tiloihin,
+Grundy-luvun hyötynä on,
+että se vastaa tikkujen määrää nim-kasassa.
+Jos Grundy-luku on 0, niin tilasta pääsee vain tiloihin,
 joiden Grundy-luku ei ole 0.
-Jos taas Grundy-luku on $x>0$, siitä pääsee tiloihin,
-joiden Grundy-luku on $0,1,\ldots,x-1$.
+Jos taas Grundy-luku on $x>0$, niin tilasta pääsee tiloihin,
+joiden Grundy-luvut kattavat välin $0,1,\ldots,x-1$.
 
 ~\\
 \noindent
@@ -631,25 +635,60 @@ Sokkeloiden ruutujen Grundy-luvut ovat:
 Aloitustilanteessa Grundy-lukujen xor-summa on
 $2 \oplus 3 \oplus 3 = 2$, joten
 aloittaja pystyy voittamaan pelin.
-Sopiva aloitussiirto on liikkua vasemmassa sokkelossa
+Voittoon johtava siirto on liikkua vasemmassa sokkelossa
 2 askelta ylöspäin, jolloin xor-summaksi
 tulee $0 \oplus 3 \oplus 3 = 0$.
 
 \subsubsection{Jakautuminen}
 
-% Joskus pelissä on joukko alipelejä,
-% joista jokainen voi jakautua uusiksi alipeleiksi.
-% Kuten ennenkin, jokainen alipeli vastaa
-% nim-pelin kasaa ja alipelien joukon Grundy-luku
-% saadaan laskemalla xor-summa alipelien Grundy-luvuista.
-% 
-% Alipelin Grundy-luku selviää käymällä
-% läpi kaikki tavat, miten alipeli voi jakautua.
-% Jokainen jakotapa luo alipelien joukon,
-% jonka Grundy-luvun saa laskettua xor-summalla.
-% Alipelin Grundy-luku on pienin luku,
-% joka ei ole mikään näistä xor-summista.
-% Sama jatkuu rekursiivisesti pienempiin alipeleihin.
+Joskus siirto pelissä jakaa pelin alipeleihin,
+jotka ovat toisistaan riippumattomia.
+Tällöin pelin Grundy-luku on
+
+\[\textrm{mex}(\{g_1, g_2, \ldots, g_n \}),\]
+missä $n$ on siirtojen määrä ja
+\[g_k = a_{k,1} \oplus a_{k,2} \oplus \ldots \oplus a_{k,m},\]
+missä siirron $k$ tuottamien alipelien
+Grundy-luvut ovat $a_{k,1},a_{k,2},\ldots,a_{k,m}$.
+
+\index{Grundyn peli}
+
+Esimerkki tällaisesta pelistä on \textit{Grundyn peli}.
+Pelin alkutilanteessa on kasa, jossa on $n$ tikkua.
+Joka vuorolla pelaaja valitsee jonkin kasan
+ja jakaa sen kahdeksi epätyhjäksi kasaksi
+niin, että kasoissa on eri määrä tikkuja.
+Pelin voittaja on se, joka tekee viimeisen jaon.
+
+Merkitään $f(n)$ Grundy-lukua kasalle,
+jossa on $n$ tikkua.
+Grundy-luku muodostuu käymällä läpi tavat
+jakaa kasa kahdeksi kasaksi.
+Esimerkiksi tapauksessa $n=8$ mahdolliset jakotavat
+ovat $1+7$, $2+6$ ja $3+5$, joten
+\[f(8)=\textrm{mex}(\{f(1) \oplus f(7), f(2) \oplus f(6), f(3) \oplus f(5)\}).\]
+Tässä pelissä luvun $f(n)$ laskeminen vaatii lukujen
+$f(1),\ldots,f(n-1)$ laskemista.
+Pohjatapauksina $f(1)=f(2)=0$, koska 1 ja 2 tikun
+kasaa ei ole mahdollista jakaa mitenkään.
+Ensimmäiset Grundy-luvut ovat:
+\[
+\begin{array}{lcl}
+f(1) & = & 0 \\
+f(2) & = & 0 \\
+f(3) & = & 1 \\
+f(4) & = & 0 \\
+f(5) & = & 2 \\
+f(6) & = & 1 \\
+f(7) & = & 0 \\
+f(8) & = & 2 \\
+\end{array}
+\]
+Tapauksen $n=8$ Grundy-luku on 2, joten peli on mahdollista
+voittaa.
+Voittosiirto on muodostaa kasat $1+7$,
+koska $f(1) \oplus f(7) = 0$.
+
 % 
 % \subsubsection*{Esimerkki}
 % 
