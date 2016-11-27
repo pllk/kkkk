@@ -196,6 +196,7 @@ vertaaminen merkki kerrallaan.
 \subsubsection*{Hajautusarvo}
 
 \index{hajautusarvo}
+\index{polynominen hajautus}
 
 Merkkijonon hajautusarvo (\textit{hash value})
 on luku, joka lasketaan merkkijonon merkeistä
@@ -209,10 +210,10 @@ Tavallinen tapa toteuttaa merkkijonohajautus
 on käyttää polynomista hajautusta.
 Siinä hajautusarvo lasketaan kaavalla
 
-\[(c_1 A^{n-1} + c_2 A^{n-2} + \cdots + c_n A^0) \bmod B  ,\]
+\[(c[1] A^{n-1} + c[2] A^{n-2} + \cdots + c[n] A^0) \bmod B  ,\]
 
 missä merkkijonon merkkien koodit ovat
-$c_1,c_2,\ldots,c_n$ ja $A$ ja $B$ ovat etukäteen
+$c[1],c[2],\ldots,c[n]$ ja $A$ ja $B$ ovat etukäteen
 valitut vakiot.
 
 Esimerkiksi merkkijonon \texttt{KISSA} merkkien koodit ovat:
@@ -241,89 +242,102 @@ Jos $A=3$ ja $B=97$, merkkijonon \texttt{KISSA} hajautusarvoksi tulee
 
 \subsubsection*{Esikäsittely}
 
-\index{summataulukko}
+Merkkijonohajautuksen esikäsittely
+muodostaa tietoa, jonka avulla 
+voi laskea tehokkaasti merkkijonon
+osajonojen hajautusarvoja.
+Osoittautuu, että polynomisessa hajautuksessa
+$O(n)$-aikaisen esikäsittelyn jälkeen voi laskea
+minkä tahansa osajonon hajautusarvon
+ajassa $O(1)$.
 
-Polynomisessa hajautuksessa
-voi esikäsittelyn jälkeen laskea minkä tahansa
-merkkijonon osajonon hajautusarvon $O(1)$-ajassa.
-Ideana on muodostaa kaksi taulukkoa:
-taulukko $s$ kertoo jokaisen merkkijonon
-alku\-osan hajautusarvon ja taulukko $p$
-sisältää lukuja muotoa $A^k \bmod B$.
-
-Taulukko $s$ lasketaan rekursiolla
+Ideana on muodostaa taulukko $h$,
+jossa $h[k]$ on hajautusarvo merkkijonon
+alkuosalle kohtaan $k$ asti.
+Taulukon voi muodostaa rekursiolla seuraavasti:
 \[
 \begin{array}{lcl}
-s_0 & = & 0 \\
-s_k & = & (s_{k-1} A + c_k) \bmod B \\
+h[0] & = & 0 \\
+h[k] & = & (h[k-1] A + c[k]) \bmod B \\
 \end{array}
 \]
-ja taulukko $p$ lasketaan rekursiolla
+Lisäksi muodostetaan taulukko $p$,
+jossa $p[k]=A^k \bmod B$:
 \[
 \begin{array}{lcl}
-p_0 & = & 1 \\
-p_k & = & (p_{k-1} A) \bmod B. \\
+p[0] & = & 1 \\
+p[k] & = & (p[k-1] A) \bmod B. \\
 \end{array}
 \]
-Tämän jälkeen funktio
-\[h(a,b)=(s_b-s_{a-1} p_{b-a+1}) \bmod B \]
-laskee hajautusarvon osajonolle,
-joka alkaa kohdasta $a$ ja päättyy kohtaan $b$.
+Näiden taulukoiden muodostaminen vie aikaa $O(n)$.
+Tämän jälkeen hajautusarvo merkkijonon osajonolle,
+joka alkaa kohdasta $a$ ja päättyy kohtaan $b$,
+voidaan laskea $O(1)$-ajassa kaavalla
+\[(h[b]-h[a-1] p[b-a+1]) \bmod B.\]
 
 \subsubsection*{Hajautuksen käyttö}
 
 Hajautusarvot tarjoavat nopean tavan merkkijonojen
 vertailuun.
 Ideana on vertailla merkkijonojen koko sisällön
-sijaan niiden hajautusarvoja.
+sijasta niiden hajautusarvoja.
 Jos hajautusarvot ovat samat,
 myös merkkijonot ovat \textit{todennäköisesti} samat,
 ja jos taas hajautusarvot eivät ole samat,
 merkkijonot eivät ole samat.
 
 Hajautuksen avulla pystyy usein tehostamaan
-suoraviivaista algoritmia niin, että siitä tulee
+raa'an voiman algoritmia niin, että siitä tulee
 tehokas. Näin on esimerkiksi seuraavassa tehtävässä:
 
 \begin{task}
-Annettuna on merkkijono $t$,
+Annettuna on merkkijono $a$,
 jossa on $n$ merkkiä,
-sekä merkkijono $p$,
-jossa on $m$ merkkiä ($m \le n$).
+sekä merkkijono $b$,
+jossa on $m$ merkkiä.
 Tehtäväsi on selvittää, montako kertaa
-merkkijono $p$ esiintyy merkkijonon $t$ osajonona.
+merkkijono $b$ esiintyy merkkijonon $a$ osajonona.
 \end{task}
 
-Suoraviivainen algoritmi tehtävään käy
-läpi kaikki mahdolliset kohdat,
-joissa $p$ voi esiintyä $t$:n osajonona.
-Mahdollisia kohtia on $O(n)$ ja yksi vertailu
-vie aikaa $O(m)$, joten aikavaativuus on $O(nm)$.
-Hajautuksen avulla kuitenkin vertailu vie aikaa
-vain $O(1)$, jolloin algoritmin aikavaativuudeksi tulee $O(n)$.
+Raa'an voiman algoritmi tehtävään
+on käydä läpi kaikki mahdolliset kohdat,
+joissa $b$ voi esiintyä $a$:n osajonona,
+ja vertailla jokaisessa kohdassa $a$:n ja $b$:n merkkejä.
+Mahdollisia kohtia on $O(n)$ ja kukin vertailu
+vie aikaa $O(m)$, joten algoritmin aikavaativuus on $O(nm)$.
 
-Hajautuksen avulla voi myös tutkia merkkijonojen
-suuruusjärjestystä:
+Algoritmia on mahdollista tehostaa hajautuksen avulla,
+koska algoritmissa vertaillaan merkkijonojen osajonoja.
+Hajautusta käyttäen kukin vertailu vie aikaa vain $O(1)$
+ja tuloksena on algoritmi, jonka aikavaativuus on $O(n)$.
+Tämä on tehokkain mahdollinen algoritmi tehtävään.
+
+Yhdistämällä hajautus ja binäärihaku on mahdollista
+vertailla myös osajonojen aakkosjärjestystä.
+Tätä voi hyödyntää seuraavassa tehtävässä:
 
 \begin{task}
 Annettuna on merkkijono,
 jossa on $n$ merkkiä,
-sekä kokonaisluku $m \le n$.
+sekä kokonaisluku $m$.
 Tehtäväsi on etsiä merkkijonon
-aakkosjärjestyksessä ensimmäinen osajono,
+aakkosjärjestyksessä pienin osajono,
 jonka pituus on $m$.
 \end{task}
 
-Suoraviivainen $O(nm)$-aikainen algoritmi
-käy läpi kaikki
-$m$-pituiset osajonot ja pitää muistissa
-pienintä osajonoa.
+Raa'an voiman algoritmi käy läpi
+merkkijonon $m$-pituiset osajonot
+ja pitää muistissa pienintä löydettyä osajonoa.
+Algoritmin aikavaativuus on $O(nm)$,
+koska tarkastettavia osajonoja on $O(n)$ ja jokaisen osajonon kohdalla
+tehdään $O(m)$-aikainen vertailu aiempaan osajonoon.
+
 Hajautuksen avulla kahden osajonon
-suuruusjärjestyksen voi selvittää logaritmisessa
-ajassa etsimällä ensin binäärihaulla
-osajonojen yhteisen alkuosan pituuden
+aakkosjärjestyksen voi selvittää logaritmisessa
+ajassa etsimällä ensin binäärihaulla,
+kuinka pitkä on osajonojen yhteinen alkuosa,
 ja vertaamalla sitten alkuosan jälkeistä merkkiä.
-Aikavaativuudeksi tulee $O(n \log m)$.
+Niinpä algoritmin aikavaativuudeksi tulee $O(n \log m)$.
 
 \subsubsection*{Törmäykset ja parametrit}
 
@@ -338,9 +352,9 @@ ja algoritmi voi toimia väärin.
 
 Törmäyksen riski on aina olemassa,
 koska erilaisia merkkijonoja on enemmän kuin
-erilaisia hajautusarvoja,
-mutta riskin saa pieneksi valitsemalla
-vakiot $A$ ja $B$ huolellisesti.
+erilaisia hajautusarvoja.
+Riskin saa kuitenkin pieneksi valitsemalla
+hajautuksen vakiot $A$ ja $B$ huolellisesti.
 Vakioiden valinnassa on kaksi tavoitetta:
 hajautusarvojen tulisi
 jakautua tasaisesti merkkijonoille
@@ -348,8 +362,8 @@ ja
 erilaisten hajautusarvojen määrän tulisi
 olla riittävän suuri.
 
-Hyvä ratkaisu on valita vakioiksi satunnaisia suuria
-alkulukuja. Tyypillinen tapa on valita vakiot
+Hyvä ratkaisu on valita vakioiksi suuria
+satunnaislukuja. Tavallinen tapa on valita vakiot
 läheltä lukua $10^9$, esimerkiksi
 
 \[
@@ -359,9 +373,9 @@ B & = & 972663749 \\
 \end{array}
 \]
 
-Tällainen valinta takaa käytännössä sen,
-että hajautusarvot jakautuvat riittävän
-tasaisesti välille $0 \ldots B-1$.
+Tällainen valinta takaa sen,
+että hajautusarvot jakautuvat
+riittävän tasaisesti välille $0 \ldots B-1$.
 Suuruusluokan $10^9$ etuna on,
 että \texttt{long long} -tyyppi riittää
 hajautusarvojen käsittelyyn koodissa,
@@ -376,7 +390,9 @@ että kaikki hajautusarvot esiintyvät yhtä usein.
 
 \textit{Tapaus 2:} Merkkijonoa $x$ verrataan merkkijonoihin
 $y_1,y_2,\ldots,y_n$.
-Yhden tai useamman törmäyksen todennäköisyys on $1-1(1-1/B)^n$.
+Yhden tai useamman törmäyksen todennäköisyys on
+
+\[1-(1-1/B)^n.\]
 
 \textit{Tapaus 3:} Merkkijonoja $x_1,x_2,\ldots,x_n$
 verrataan kaikkia keskenään.
@@ -399,16 +415,30 @@ $10^{18}$ & $0.000000$ & $0.000000$ & $0.000001$ \\
 \end{tabular}
 \end{center}
 
-Taulukosta näkee, että valinta $B \approx 10^9$
-riittää tapauksissa 1 ja 2,
-koska törmäyksen riski on vähäinen.
-Sen sijaan tapauksessa 3 tilanne on toinen:
-törmäys tapahtuu lähes varmasti
+Taulukosta näkee, että tapauksessa 1
+törmäyksen riski on olematon
+valinnalla $B \approx 10^9$.
+Tapauksessa 2 riski on olemassa, mutta se on silti edelleen vähäinen.
+Tapauksessa 3 tilanne on kuitenkin täysin toinen:
+törmäys tapahtuu käytännössä varmasti
 vielä valinnalla $B \approx 10^9$.
 
-Kätevä tapa pienentää törmäyksen riskiä on laskea
+\index{syntymäpäiväparadoksi}
+
+Tapauksen 3 ilmiö tunnetaan nimellä
+\textit{syntymäpäiväparadoksi}.
+Jos huoneessa on $n$ henkilöä, on suuri
+todennäköisyys, että jollain kahdella
+henkilöllä on sama syntymäpäivä, vaikka
+$n$ olisi melko pieni.
+Vastaavasti hajautuksessa kun kaikkia
+hajautusarvoja verrataan keskenään,
+käy helposti niin, että jotkin
+kaksi ovat sattumalta samoja.
+
+Hyvä tapa pienentää törmäyksen riskiä on laskea
 monta hajautusarvoa eri parametreilla
-ja vertailla niitä kaikkia.
+ja verrata niitä kaikkia.
 On hyvin pieni todennäköisyys,
 että törmäys tapahtuisi samaan aikaan
 kaikissa hajautusarvoissa.
@@ -422,7 +452,7 @@ jolloin modulo $B$ tulee laskettua
 automaattisesti, kun muuttujan arvo pyörähtää ympäri.
 Tämä ei ole kuitenkaan hyvä valinta,
 koska muotoa $2^x$ olevaa moduloa vastaan
-pystyy tekemään testisyötteen, joka aiheuttaa törmäyksen.
+pystyy tekemään testisyötteen, joka aiheuttaa varmasti törmäyksen.
 
 \section{Z-algoritmi}
 
