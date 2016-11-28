@@ -4,8 +4,89 @@ Geometrisissä tehtävissä on usein haasteena keksiä,
 mistä suunnasta ongelmaa kannattaa lähestyä,
 jotta ratkaisun saa koodattua mukavasti ja
 erikoistapauksia tulee mahdollisimman vähän.
-Tässä luvussa tutustumme tekniikoihin, jotka helpottavat
-geometristen algoritmien toteutusta.
+
+Tarkastellaan esimerkkinä tehtävää,
+jossa tulee laskea nelikulmion pinta-ala,
+kun annettuna on sen kulmapisteet.
+Esimerkiksi syöte voi olla:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.45]
+
+\draw[fill] (6,2) circle [radius=0.1];
+\draw[fill] (5,6) circle [radius=0.1];
+\draw[fill] (2,5) circle [radius=0.1];
+\draw[fill] (1,1) circle [radius=0.1];
+\draw[thick] (6,2) -- (5,6) -- (2,5) -- (1,1) -- (6,2);
+
+% \node at (6,2-0.8) {$(6,2)$};
+% \node at (5,6+0.8) {$(5,6)$};
+% \node at (2,5+0.8) {$(2,5)$};
+% \node at (1,1-0.8) {$(1,1)$};
+\end{tikzpicture}
+\end{center}
+Yksi tapa lähestyä tehtävää on jakaa nelikulmio
+kahdeksi kolmioksi:
+\begin{center}
+\begin{tikzpicture}[scale=0.45]
+
+\draw[fill] (6,2) circle [radius=0.1];
+\draw[fill] (5,6) circle [radius=0.1];
+\draw[fill] (2,5) circle [radius=0.1];
+\draw[fill] (1,1) circle [radius=0.1];
+
+\draw[thick] (6,2) -- (5,6) -- (2,5) -- (1,1) -- (6,2);
+\draw[dashed,thick] (2,5) -- (6,2);
+
+% \node at (6,2-0.8) {$(6,2)$};
+% \node at (5,6+0.8) {$(5,6)$};
+% \node at (2,5+0.8) {$(2,5)$};
+% \node at (1,1-0.8) {$(1,1)$};
+\end{tikzpicture}
+\end{center}
+Tämän jälkeen riittää laskea yhteen kolmioiden
+pinta-alat. Yleisen kolmion pinta-alan voi laskea
+kaavalla
+\[\frac{ab \sin \gamma}{2},\]
+missä $a$ ja $b$ ovat kahden kolmion sivun pituudet
+ja $\gamma$ on niiden välinen kulma.
+
+Tämä on mahdollinen tapa ratkaista tehtävä,
+mutta siinä on muutamia ongelmia.
+Ensimmäinen ongelma on, että pinta-ala
+lasketaan kulmien avulla, mikä on vaivalloista
+ja aiheuttaa epätarkkuutta.
+Toinen ongelma on yllättävämpi:
+ei ole selvää, mikä on yleinen tapa jakaa
+nelikulmio kahdeksi kolmioksi.
+
+Esimerkiksi ei ole aina toimiva tapa vetää jakoviiva
+kahden kulmapisteen välille, koska tällainen
+jakoviiva voi mennä nelikulmion ulkopuolelle:
+\begin{center}
+\begin{tikzpicture}[scale=0.45]
+
+\draw[fill] (6,2) circle [radius=0.1];
+\draw[fill] (3,2) circle [radius=0.1];
+\draw[fill] (2,5) circle [radius=0.1];
+\draw[fill] (1,1) circle [radius=0.1];
+\draw[thick] (6,2) -- (3,2) -- (2,5) -- (1,1) -- (6,2);
+
+\draw[dashed,thick] (2,5) -- (6,2);
+
+% \node at (6,2-0.8) {$(6,2)$};
+% \node at (5,6+0.8) {$(5,6)$};
+% \node at (2,5+0.8) {$(2,5)$};
+% \node at (1,1-0.8) {$(1,1)$};
+\end{tikzpicture}
+\end{center}
+
+Osoittautuu, että tehtävän ratkaisuun on olemassa
+huomattavasti parempi tapa.
+Tässä luvussa opimme yleisen kaavan,
+jonka avulla voi laskea minkä tahansa suorakulmion
+(esimerkiksi nelikulmion) pinta-alan tarkasti
+ilman kulmien laskemista ja erikoistapauksia.
 
 \section{Kompleksiluvut}
 
@@ -17,7 +98,7 @@ tai vektoria origosta pisteeseen $(x,y)$.
 
 Esimerkiksi luku $4+2i$ tarkoittaa seuraavaa
 pistettä ja vektoria:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
 
