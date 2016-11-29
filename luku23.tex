@@ -1,16 +1,11 @@
 \chapter{Matriisit}
 
+\index{matriisi}
+
 Matriisi on kaksiulotteista taulukkoa
 vastaava matemaattinen käsite,
 jolle on määritelty laskutoimituksia.
-Tässä luvussa tutustumme ensin matriisilaskennan
-perusteisiin, minkä jälkeen opimme, kuinka
-matriiseja voi hyödyntää dynaamisessa ohjelmoinnissa
-ja verkkojen käsittelyssä.
-
-\section{Käsitteitä}
-
-Tarkastellaan esimerkkinä seuraavaa matriisia:
+Esimerkiksi
 \[
 A = 
  \begin{bmatrix}
@@ -19,11 +14,30 @@ A =
   9 & 5 & 4 & 18 \\
  \end{bmatrix}
 \]
-Matriisi $A$ on kokoa $3 \times 4$,
-eli siinä on 3 riviä ja 4 saraketta.
-Merkitään $A[i,j]$ alkiota,
-joka on rivillä $i$ sarakkeessa $j$.
-Esimerkiksi $A[2,3]=8$ ja $A[3,1]=9$.
+on matriisi, jossa on 3 riviä ja 4 saraketta
+eli se on kokoa $3 \times 4$.
+Matriisin alkioihin on mahdollista
+viitata merkinnällä $[i,j]$,
+jossa $i$ on rivi ja $j$ on sarake.
+Esimerkiksi yllä olevassa matriisissa
+$A[2,3]=8$ ja $A[3,1]=9$.
+
+\index{vektori}
+
+Matriisin erikoistapaus on \textit{vektori},
+joka on kokoa $n \times 1$ oleva yksiulotteinen matriisi.
+Esimerkiksi
+\[
+V =
+\begin{bmatrix}
+4 \\
+7 \\
+5 \\
+\end{bmatrix}
+\]
+on vektori, jossa on 3 alkiota.
+
+\index{transpoosi}
 
 Matriisin $A$ \textit{transpoosi} $A^T$ syntyy,
 kun matriisin rivit ja sarakkeet vaihdetaan
@@ -38,6 +52,8 @@ A^T =
  \end{bmatrix}
 \]
 
+\index{neliömatriisi}
+
 Matriisi on \textit{neliömatriisi}, jos sen
 korkeus ja leveys ovat samat.
 Esimerkiksi seuraava matriisi on neliömatriisi:
@@ -51,7 +67,7 @@ A =
  \end{bmatrix}
 \]
 
-\subsubsection{Perusoperaatiot}
+\section{Laskutoimitukset}
 
 Matriisien $A$ ja $B$ summa $A+B$ on määritelty,
 jos matriisit ovat yhtä suuret.
@@ -105,8 +121,9 @@ Esimerkiksi
  \end{bmatrix}.
 \]
 
-
 \subsubsection{Matriisitulo}
+
+\index{matriisitulo}
 
 Matriisien $A$ ja $B$ tulo $AB$ on määritelty,
 jos matriisi $A$ on kokoa $a \times n$
@@ -173,6 +190,8 @@ eli ei ole voimassa $A \cdot B = B \cdot A$.
 Kuitenkin matriisitulo
 on liitännäinen, eli on voimassa $A \cdot (B \cdot C)=(A \cdot B) \cdot C$.
 
+\index{ykkösmatriisi}
+
 \textit{Ykkösmatriisi} on neliömatriisi,
 jonka lävistäjän jokainen alkio on 1
 ja jokainen muu alkio on 0.
@@ -186,9 +205,9 @@ seuraavanlainen:
  \end{bmatrix}
 \]
 
+\begin{samepage}
 Ykkösmatriisilla kertominen säilyttää matriisin
 ennallaan. Esimerkiksi
-
 \[
  \begin{bmatrix}
   1 & 0 & 0 \\
@@ -224,6 +243,7 @@ ennallaan. Esimerkiksi
   8 & 6 \\
  \end{bmatrix}.
 \]
+\end{samepage}
 
 Matriisitulon laskeminen vie aikaa $O(n^3)$
 käyttäen suoraviivaista algoritmia,
@@ -232,6 +252,8 @@ Myös nopeampia algoritmeja on olemassa,
 mutta ne eivät ole tarpeen kisakoodauksessa.
 
 \subsubsection{Matriisipotenssi}
+
+\index{matriisipotenssi}
 
 Matriisin $A$ potenssi $A^k$ on
 määritelty, jos $A$ on neliömatriisi.
@@ -305,6 +327,8 @@ kaavalla
 
 \[\det(A)=\sum_{j=1}^n A[1,j] C[1,j],\]
 
+\index{kofaktori}
+
 missä $C[i,j]$ on matriisin $A$ \textit{kofaktori}
 kohdassa $[i,j]$.
 Kofaktori lasketaan kaavalla
@@ -318,8 +342,8 @@ joka toinen determinantti
 lisätään summaan positiivisena
 ja joka toinen negatiivisena.
 
+\begin{samepage}
 Esimerkiksi
-
 \[
 \det(
  \begin{bmatrix}
@@ -328,6 +352,7 @@ Esimerkiksi
  \end{bmatrix}
 ) = 3 \cdot 6 - 4 \cdot 1 = 14 
 \]
+\end{samepage}
 
 ja
 
@@ -362,8 +387,10 @@ ja
 ) = 81.
 \]
 
+\index{käänteismatriisi}
+
 Determinantti kertoo, onko matriisille
-$A$ olemassa käänteismatriisia
+$A$ olemassa \textit{käänteismatriisia}
 $A^{-1}$, jolle pätee $A \cdot A^{-1} = I$,
 missä $I$ on ykkösmatriisi.
 Osoittautuu, että $A^{-1}$ on olemassa
@@ -438,9 +465,9 @@ f(n) & = & f(n-1)+f(n-2) \\
 \]
 Tässä tapauksessa $k=2$ ja $c_1=c_2=1$.
 
+\begin{samepage}
 Ideana on esittää rekursiivinen kaava $k \times k$
 -kokoisena neliömatriisina $X$, jolle pätee
-
 \[ X \cdot
  \begin{bmatrix}
   f(i) \\
@@ -452,6 +479,7 @@ Ideana on esittää rekursiivinen kaava $k \times k$
   f(i+2) \\
  \end{bmatrix}
  \]
+\end{samepage}
 eli $X$:lle annetaan
 ''syötteenä'' $k$ peräkkäistä funktion $f$ arvoa
 kohdasta $i$ alkaen ja $X$ muodostaa niistä
@@ -574,9 +602,9 @@ arvon $f(i+2)$ arvon $f(i+1)$ tilalle jne.
 Viimeinen rivi sisältää rekursiokaavan kertoimet,
 joiden avulla muodostuu uusi arvo $f(i+k)$.
 
+\begin{samepage}
 Nyt arvon $f(n)$ pystyy laskemaan ajassa $O(k^3 \log n)$
 kaavalla
-
 \[
  \begin{bmatrix}
   f(n) \\
@@ -593,11 +621,9 @@ X^n \cdot
   f(k-1) \\
  \end{bmatrix}.
 \]
-
+\end{samepage}
 
 \section{Verkkojen käsittely}
-
-\subsection{Polkujen määrät}
 
 Matriisipotenssilla
 on mielenkiintoinen vaikutus
@@ -662,13 +688,17 @@ $2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$
 ja 
 $2 \rightarrow 6 \rightarrow 3 \rightarrow 2 \rightarrow 5$.
 
-\subsection{Lyhimmät polut}
+\subsubsection{Lyhimmät polut}
 
 Samantapaisella idealla voi laskea painotetussa verkossa
 kullekin solmuparille,
-mikä on lyhin $n$ kaaren pituinen polku.
-Tarkastellaan esimerkkinä seuraavaa verkkoa:
+mikä on lyhin $n$ kaaren pituinen polku solmujen välillä.
+Tämä vaatii matriisitulon määritelmän muuttamista
+niin, että siinä ei lasketa polkujen yhteismäärää
+vaan minimoidaan polun pituutta.
 
+\begin{samepage}
+Tarkastellaan esimerkkinä seuraavaa verkkoa:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
@@ -688,6 +718,7 @@ Tarkastellaan esimerkkinä seuraavaa verkkoa:
 \path[draw,thick,->,>=latex] (6) -- node[font=\small,label=below:2] {} (5);
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 Muodostetaan verkosta vierusmatriisi, jossa arvo
 $\infty$ tarkoittaa, että kaarta ei ole,
@@ -731,7 +762,7 @@ eli esimerkiksi lyhin 4 kaaren pituinen polku
 solmusta 2 solmuun 5 on pituudeltaan 8.
 Tämä polku on $2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$.
 
-\subsection{Kirchhoffin lause}
+\subsubsection{Kirchhoffin lause}
 
 \index{Kirchhoffin lause}
 \index{virittävä puu!yhteismäärä}
