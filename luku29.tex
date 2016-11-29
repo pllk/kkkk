@@ -47,11 +47,12 @@ $a$, $b$ ja $c$ ja $s=(a+b+c)/2$.
 \index{Heronin kaava}
 
 Tämä on mahdollinen tapa ratkaista tehtävä,
-mutta siinä on yllättävä ongelma:
+mutta siinä on ongelma:
 miten löytää kelvollinen tapa vetää jakoviiva?
+Osoittautuu, että
+mitkä tahansa vastakkaiset pisteet eivät kelpaa.
 Esimerkiksi seuraavassa nelikulmiossa
-jakoviiva menee nelikulmion ulkopuolelle,
-jos viivan vetää väärien pisteiden välille:
+jakoviiva menee nelikulmion ulkopuolelle:
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
 
@@ -92,9 +93,9 @@ $(x_1,y_1)$,
 $(x_2,y_2)$,
 $(x_3,y_3)$ ja
 $(x_4,y_4)$.
-Tutustumme tämän luvun lopussa kaavan yleistykseen,
-jonka avulla voi laskea minkä tahansa
-monikulmion pinta-alan.
+Tämä kaava on helppo laskea, siinä ei ole erikoistapauksia
+ja osoittautuu, että kaava on mahdollista yleistää
+\textit{kaikille} monikulmioille.
 
 \section{Kompleksiluvut}
 
@@ -438,8 +439,8 @@ jonka määrittävät pisteet $s_1$ ja $s_2$:
 
 Pisteiden $s_1$, $s_2$ ja $p$ muodostaman kolmion
 pinta-ala on toisaalta $\frac{1}{2} |s_2-s_1| d$ ja toisaalta
-$\frac{1}{2} ((s_1-p) \times (s_2-p))$,
-joten etäisyys on
+$\frac{1}{2} ((s_1-p) \times (s_2-p))$.
+Niinpä haluttu etäisyys on
 
 \[ d = \frac{(s_1-p) \times (s_2-p)}{|s_2-s_1|} .\]
 
