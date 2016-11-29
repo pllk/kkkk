@@ -2,25 +2,14 @@
 
 \index{vahvasti yhtenäisyys}
 
-Suunnatussa verkossa yhtenäisyyden
-käsite on monimutkaisempi
-kuin suuntaamattomassa verkossa,
-koska kaaria voi kulkea vain yhteen suuntaan.
-Vahvasti yhtenäisyys tarkoittaa,
-että kunkin solmuparin välillä on
-olemassa polku kumpaankin suuntaan.
+Suunnatussa verkossa yhtenäisyys ei takaa sitä,
+että kahden solmun välillä olisi olemassa polkua,
+koska kaarten suunnat rajoittavat liikkumista.
+Niinpä suunnattuja verkkoja varten on mielekästä
+määritellä uusi käsite,
+joka vaatii enemmän verkon yhtenäisyydeltä.
 
-Jos verkko ei ole vahvasti yhtenäinen,
-sen voi kuitenkin jakaa vahvasti yhtenäisiin
-komponentteihin. Komponenttien muodostama
-verkko on suunnattu syklitön verkko,
-joka kuvaa alkuperäisen verkon syvärakenteen.
-Tässä luvussa opimme tehokkaan algoritmin tämän
-toteuttamiseen.
-
-\section{Käsitteitä}
-
-Verkko on vahvasti yhtenäinen
+Verkko on \textit{vahvasti} yhtenäinen
 (\textit{strongly connected}),
 jos mistä tahansa solmusta on olemassa polku
 kaikkiin muihin solmuihin.
@@ -57,11 +46,10 @@ koska esimerkiksi solmusta 2 ei ole
 polkua solmuun 1.
 
 Verkon vahvasti yhtenäiset komponentit
-(\textit{strongly connected components})
 jakavat verkon solmut mahdollisimman
-suuriin vahvasti yhtenäisiin aliverkkoihin.
-Vahvasti yhtenäiset komponentit
-muodostavat komponenttiverkon,
+suuriin vahvasti yhtenäisiin osiin.
+Verkon vahvasti yhtenäiset komponentit
+muodostavat syklittömän komponenttiverkon,
 joka kuvaa alkuperäisen verkon syvärakennetta.
 
 Esimerkiksi verkon
@@ -140,10 +128,18 @@ Komponentit ovat $A=\{1,2\}$,
 $B=\{3,6,7\}$, $C=\{4\}$ sekä $D=\{5\}$.
 
 Komponenttiverkko on syklitön suunnattu verkko,
-jonka käsittely on tietyissä tapauksissa
-alkuperäistä verkkoa helpompaa.
-Esimerkiksi komponenttiverkkoon voi soveltaa
-luvun 16.2 tyylistä dynaamista ohjelmointia.
+jonka käsittely on alkuperäistä verkkoa
+helpompaa, koska siinä ei ole syklejä.
+Niinpä komponenttiverkolle voi muodostaa
+luvun 16 tapaan topologisen järjestyksen
+ja soveltaa sen jälkeen dynaamista ohjelmintia
+verkon käsittelyyn.
+
+Tutustumme seuraavaksi algoritmiin,
+jonka avulla voi etsiä tehokkaasti verkon
+vahvasti yhtenäiset komponentit.
+Tämän jälkeen näemme, kuinka algoritmia voi
+käyttää logiikan 2SAT-ongelman ratkaisemiseen.
 
 \section{Kosarajun algoritmi}
 
