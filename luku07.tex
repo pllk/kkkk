@@ -10,8 +10,19 @@ että tehtävä jakautuu osaongelmiin,
 jotka voidaan käsitellä toisistaan riippumattomasti.
 
 Dynaamisella ohjelmoinnilla on kaksi käyttötarkoitusta:
-(1) optimiratkaisun etsiminen ja
-(2) ratkaisujen määrän laskeminen.
+
+\begin{itemize}
+\item
+\textit{Optimiratkaisun etsiminen}:
+Haluamme etsiä ratkaisun, joka on
+jollain tavalla suurin mahdollinen
+tai pienin mahdollinen.
+\item
+\textit{Ratkaisuiden määrän laskeminen}:
+Haluamme laskea, kuinka monta mahdollista
+ratkaisua on olemassa yhteensä.
+\end{itemize}
+
 Tutustumme dynaamiseen ohjelmointiin ensin
 optimiratkaisun etsimisen kautta ja käytämme sitten
 samaa ideaa ratkaisujen määrän laskemiseen.
@@ -24,7 +35,9 @@ erilaisissa tehtävissä.
 Tämä luku esittelee joukon
 perusesimerkkejä, joista on hyvä lähteä liikkeelle.
 
-\section{Optimiratkaisun etsiminen}
+\section{Kolikkotehtävä}
+
+Aloitamme dynaamisen ohjelmoinnin tutun tehtävän kautta:
 
 \begin{task}
 Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$,
@@ -46,7 +59,7 @@ Nyt on aika ratkaista tehtävä tehokkaasti
 dynaamisella ohjelmoinnilla niin,
 että algoritmi toimii millä tahansa kolikoilla.
 
-\subsection{Rekursiivinen esitys}
+\subsubsection{Rekursiivinen esitys}
 
 \index{rekursioyhtälö}
 
@@ -79,6 +92,7 @@ f(6) & = & 2 \\
 f(7) & = & 2 \\
 f(8) & = & 2 \\
 f(9) & = & 3 \\
+f(10) & = & 3 \\
 \end{array}
 \]
 
@@ -102,23 +116,24 @@ Vastaavasti jos valitaan kolikko 3 tai 4,
 täytyy muodostaa rahamäärä $x-3$ tai $x-4$.
 
 Niinpä rekursiivinen kaava on
-
 \[f(x) = \min(f(x-1),f(x-3),f(x-4))+1,\]
-
 missä funktio $\min$ valitsee pienimmän parametreistaan.
 Yleisemmin jos kolikot ovat $\{c_1,c_2,\ldots,c_k\}$,
 rekursiivinen kaava on
-
 \[f(x) = \min(f(x-c_1),f(x-c_2),\ldots,f(x-c_k))+1.\]
-
-Funktion pohjatapauksena on $f(0)=0$.
-Lisäksi on hyvä määritellä $f(x)=\infty$, jos $x<0$.
-Tämän ideana on, että negatiivisen rahamäärän
+Funktion pohjatapauksena on
+\[f(0)=0,\]
+koska rahamäärän 0 muodostamiseen ei tarvita
+yhtään kolikkoa.
+Lisäksi on hyvä määritellä
+\[f(x)=\infty,\hspace{8px}\textrm{jos $x<0$}.\]
+Tämä tarkoittaa, että negatiivisen rahamäärän
 muodostaminen vaatii äärettömästi kolikoita,
 mikä estää sen, että rekursio muodostaisi
 ratkaisun, johon kuuluu negatiivinen rahamäärä.
 
-C++:lla funktion määrittely näyttää seuraavalta:
+Nyt voimme toteuttaa funktion C++:lla suoraan
+rekursiivisen määritelmän perusteella:
 
 \begin{lstlisting}
 int f(int x) {
@@ -141,7 +156,7 @@ muodostaa rahamäärä.
 Seuraavaksi esiteltävä muistitaulukko tekee
 funktiosta tehokkaan.
 
-\subsection{Muistitaulukko}
+\subsubsection{Muistitaulukko}
 
 Dynaaminen ohjelmointi tehostaa
 rekursiivisen funktion laskentaa
@@ -199,25 +214,13 @@ kun funktiota kutsutaan seuraavan kerran parametrilla $x$.
 
 Tuloksena olevan algoritmin aikavaativuus on $O(xk)$,
 kun rahamäärä on $x$ ja kolikoiden määrä on $k$.
-Huomaa kiinnostava piirre aikavaativuudessa:
-algoritmin tehokkuuteen vaikuttaa,
-kuinka suuri luku rahamäärä $x$ on.
-Käytännössä $x$:n tulee olla niin pieni,
-että on mahdollista varata sen kokoinen taulukko.
+Käytännössä ratkaisu on mahdollista toteuttaa,
+jos $x$ on niin pieni, että on mahdollista varata 
+riittävän suuri muistitaulukko.
 
-\subsection{Silmukkatoteutus}
-
-Dynaamisen ohjelmoinnin ratkaisu on
-mahdollista toteuttaa rekursion sijasta
-myös silmukalla,
-joka muodostaa taulukon \texttt{d}.
-Siinä missä rekursio laskee arvoja
-''ylhäältä alaspäin'',
-silmukka laskee niitä ''alhaalta ylöspäin''.
-
-\noindent
-Tässä tehtävässä silmukasta tulee:
-
+Huomaa, että muistitaulukon voi muodostaa
+myös suoraan silmukalla ilman rekursiota
+laskemalla arvot pienimmästä suurimpaan:
 \begin{lstlisting}
 d[0] = 0;
 for (int i = 1; i <= x; i++) {
@@ -230,25 +233,25 @@ for (int i = 1; i <= x; i++) {
 }
 \end{lstlisting}
 
-Silmukan jälkeen taulukko \texttt{d}
-sisältää vastaukset rahamäärille
-$0,1,\ldots,x$.
 Silmukkatoteutus on lyhyempi ja
 hieman tehokkaampi kuin rekursiototeutus,
 minkä vuoksi kokeneet kisakoodarit
 toteuttavat dynaamisen ohjelmoinnin
-laskennan usein silmukan avulla.
+usein silmukan avulla.
+Kuitenkin silmukkatoteutuksen taustalla
+on sama rekursiivinen idea kuin ennenkin.
 
-\subsection{Ratkaisun muodostus}
+\subsubsection{Ratkaisun muodostaminen}
 
-Joskus optimiratkaisun arvon lisäksi
-pitää muodostaa yksi mahdollinen ratkaisu.
+Joskus optimiratkaisun arvon selvittämisen lisäksi
+täytyy muodostaa näytteeksi yksi mahdollinen optimiratkaisu.
 Tässä tehtävässä tämä tarkoittaa,
 että ohjelman täytyy antaa esimerkki
 tavasta valita kolikot,
-joista muodostuu rahamäärä $x$.
+joista muodostuu rahamäärä $x$
+käyttäen mahdollisimman vähän kolikoita.
 
-Ratkaisun muodostus onnistuu lisäämällä
+Ratkaisun muodostaminen onnistuu lisäämällä
 koodiin uuden taulukon, joka kertoo
 kullekin rahamäärälle,
 mikä kolikko siitä tulee poistaa
@@ -281,8 +284,10 @@ while (x > 0) {
 }
 \end{lstlisting}
 
-\section{Ratkaisujen määrän laskeminen}
+\subsubsection{Ratkaisuiden määrän laskeminen}
 
+Tarkastellaan sitten tehtävän muunnelmaa,
+jossa laskettavana on ratkaisuiden yhteismäärä:
 \begin{task}
 Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$,
 ja tehtäväsi on muodostaa kolikoista rahamäärä $x$.
@@ -294,8 +299,8 @@ Monellako eri tavalla voit muodostaa rahamäärän?
 Esimerkiksi jos kolikot ovat $\{1,3,4\}$ ja rahamäärä on 5,
 niin ratkaisuja on 6:
 
-\begin{multicols}{2}
-\begin{itemize}
+%\begin{multicols}{2}
+\begin{itemize}[noitemsep]
 \item $1+1+1+1+1$
 \item $1+1+3$
 \item $1+3+1$
@@ -303,7 +308,7 @@ niin ratkaisuja on 6:
 \item $1+4$
 \item $4+1$
 \end{itemize}
-\end{multicols}
+%\end{multicols}
 
 Ratkaisujen määrän laskeminen tapahtuu melko samalla tavalla
 kuin optimiratkaisun etsiminen.
@@ -349,7 +354,6 @@ f(8) & = & 25 \\
 f(9) & = & 40 \\
 \end{array}
 \]
-\newpage
 Seuraava koodi laskee funktion $f(x)$ arvon
 dynaamisella ohjelmoinnilla täyttämällä taulukon
 \texttt{d} rahamäärille $0 \ldots x$:
@@ -378,9 +382,14 @@ jälkeen rivi
         d[i] %= M;
 \end{lstlisting}
 
-\section{Esimerkkejä}
+Nyt olemme käyneet läpi kaikki dynaamisen ohjelmoinnin
+perusasiat ja voimme alkaa tutustua
+tarkemmin tekniikan mahdollisuuksiin.
+Käymme seuraavaksi läpi joukon esimerkkejä,
+jotka näyttävät, millä tavoin dynaamista ohjelmointia
+voi hyödyntää erilaisissa tilanteissa.
 
-\subsection{Pisin nouseva alijono}
+\section{Pisin nouseva alijono}
 
 \index{pisin nouseva alijono}
 
@@ -393,6 +402,7 @@ Tehtäväsi on selvittää,
 kuinka pitkä on taulukon pisin nouseva alijono.
 \end{task}
 
+\begin{samepage}
 Esimerkiksi taulukossa
 
 \begin{center}
@@ -418,6 +428,7 @@ Esimerkiksi taulukossa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 \noindent
 pisin nouseva alijono sisältää 4 lukua:
@@ -506,7 +517,7 @@ Yllättävää kyllä, tehtävään on olemassa
 myös $O(n \log n)$-aikainen ratkaisu.
 Keksitkö, miten tämä onnistuu?
 
-\subsection{Reitti ruudukossa}
+\section{Reitinhaku ruudukossa}
 
 \begin{task}
 Annettuna on $n \times n$ -kokoinen ruudukko,
@@ -594,7 +605,7 @@ joka tuottaa suuremman summan:
 
 \[ f(y,x) = \max(f(y,x-1),f(y-1,x))+r(y,x)\]
 
-\subsection{Repunpakkaus}
+\section{Repunpakkaus}
 
 \index{repunpakkaus}
 
@@ -607,6 +618,7 @@ niin, että painojen summa on enintään $x$
 ja arvojen summa on mahdollisimman suuri.
 \end{task}
 
+\begin{samepage}
 Esimerkiksi jos tavarat ovat
 
 \begin{center}
@@ -619,6 +631,7 @@ C & 8 & 5 \\
 D & 5 & 3 \\
 \end{tabular}
 \end{center}
+\end{samepage}
 
 ja suurin sallittu yhteispaino on 12,
 niin paras ratkaisu on pakata reppuun tavarat $B$ ja $D$.
@@ -678,7 +691,7 @@ mutta arvot eivät vaikuta.
 Ratkaisussa 2 vuorostaan tavaroiden arvot vaikuttavat aikavaativuuteen
 mutta painot eivät vaikuta.
 
-\subsection{Editointietäisyys}
+\section{Editointietäisyys}
 
 \index{editointietäisyys}
 
@@ -873,7 +886,7 @@ mistä tulee yksi operaatio.
 Editointietäisyys on siis yhden suurempi
 kuin merkkijonoilla \texttt{PAL} ja \texttt{TAL}, jne.
 
-\subsection{Laatoitukset}
+\section{Laatoitukset}
 
 Joskus dynaamisen ohjelmoinnin tila on monimutkaisempi kuin
 kiinteä yhdistelmä lukuja. Näin on seuraavassa tehtävässä:
