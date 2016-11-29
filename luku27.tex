@@ -1,5 +1,7 @@
 \chapter{Neliöjuurialgoritmit}
 
+\index{neliöjuuri}
+
 Neliöjuurialgoritmi on algoritmi,
 jonka aikavaativuudessa esiintyy neliöjuuri.
 Neliöjuurta voi ajatella ''köyhän miehen logaritmina'':
@@ -8,22 +10,29 @@ mutta huonompi kuin $O(\log n)$.
 Toisaalta neliöjuurialgoritmit toimivat
 käytännössä hyvin ja niiden vakiokertoimet ovat pieniä.
 
-\section{Summakysely}
+Tarkastellaan esimerkkinä tuttua ongelmaa,
+jossa toteutettavana on summakysely taulukkoon.
+Halutut operaatiot ovat:
 
-Aloitamme tutusta ongelmasta,
-jossa toteutettavana on kaksi operaatiota
-lukutaulukkoon: alkion muuttaminen ja
-välin summan laskeminen.
-Olemme aiemmin ratkaisseet tämän tehtävän
-segmenttipuulla, mutta vaihtoehtoinen
-lähestymistapa tehtävään on käyttää neliöjuurirakennetta.
+\begin{enumerate}
+\item[(1)] muuta kohdassa $x$ olevaa lukua
+\item[(2)] laske välin $[a,b]$ lukujen summa
+\end{enumerate}
+
+Olemme aiemmin ratkaisseet tehtävän
+binääri-indeksipuun ja segmenttipuun avulla,
+jolloin kummankin operaation aikavaativuus on $O(\log n)$.
+Nyt ratkaisemme tehtävän toisella
+tavalla neliöjuurirakennetta käyttäen,
+jolloin summan laskenta vie aikaa $O(\sqrt n)$
+ja luvun muuttaminen vie aikaa $O(1)$.
 
 Ideana on jakaa taulukko $\sqrt n$-kokoisiin
 väleihin niin, että jokaiseen väliin
 tallennetaan lukujen summa välillä.
 Seuraavassa on esimerkki taulukosta ja
 sitä vastaavista $\sqrt n$-väleistä:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (16,1);
@@ -61,7 +70,7 @@ sitä vastaavista $\sqrt n$-väleistä:
 Kun taulukon luku muuttuu,
 tämän yhteydessä täytyy laskea uusi summa
 vastaavalle $\sqrt n$-välille:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (5,0) rectangle (6,1);
@@ -101,7 +110,7 @@ vastaavalle $\sqrt n$-välille:
 Välin summan laskeminen taas tapahtuu muodostamalla
 summa reunoissa olevista yksittäisistä luvuista
 sekä keskellä olevista $\sqrt n$-väleistä:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (4,1);
@@ -154,15 +163,7 @@ Välin summa taas lasketaan kolmessa osassa:
 \end{itemize}
 
 Jokaisen osan summan laskeminen vie aikaa $O(\sqrt n)$,
-joten koko summan laskemisen aikavaativuus on
-$O(\sqrt n)$.
-
-Vertailun vuoksi
-segmenttipuuta käyttäen sekä luvun muuttaminen
-että välin summan laskenta vievät aikaa $O(\log n)$.
-Neliöjuurirakenne mahdollistaa siis luvun
-muuttamisen segmenttipuuta nopeammin, mutta summan laskemiseen
-kuluu enemmän aikaa.
+joten summan laskemisen aikavaativuus on yhteensä $O(\sqrt n)$.
 
 Neliöjuurialgoritmeissa parametri $\sqrt n$
 johtuu siitä, että se saattaa kaksi asiaa tasapainoon.
@@ -183,7 +184,7 @@ joista jokaisella on $n/k > \sqrt n$ alkiota.
 
 \section{Eräkäsittely}
 
-Eräkäsittelyssä algoritmin
+Eräkäsittelyssä algoritmin suorittamat
 operaatiot jaetaan eriin,
 jotka käsitellään omina kokonaisuuksina.
 Erien välissä tehdään yksittäinen työläs toimenpide,
@@ -201,9 +202,9 @@ Eräkäsittelyä voi käyttää esimerkiksi seuraavassa tehtävässä:
 
 \begin{task}
 Ruudukossa on $k \times k$ ruutua,
-jotka kaikki ovat aluksi valkoisia.
+jotka ovat aluksi valkoisia.
 Tehtäväsi on suorittaa $n$ operaatiota ruudukkoon.
-Tyypin 1 operaatio värittää ruudun $(y,x)$ mustaksi,
+Tyypin 1 operaatio värittää ruudun $(y,x)$ mustaksi
 ja tyypin 2 operaatio etsii ruudusta $(y,x)$ lähimmän
 mustan ruudun.
 Ruutujen $(y_1,x_1)$ ja $(y_2,x_2)$
@@ -289,8 +290,9 @@ Algoritmin kokonaisaikavaativuus on $O(n \sqrt n)$,
 koska sekä tapaus 1 että tapaus 2 vievät aikaa
 yhteensä $O(n \sqrt n)$.
 
-
 \section{Mo'n algoritmi}
+
+\index{Mo'n algoritmi}
 
 Mo'n algoritmi soveltuu tehtäviin,
 joissa taulukkoon tehdään välikyselyitä ja
