@@ -2,31 +2,16 @@
 
 \index{virittävä puu!pienin ja suurin}
 
-Tässä luvussa tutustumme algoritmeihin,
-jotka muodostavat verkon pienimmän tai suurimman
-virittävän puun.
-Tällaisessa puussa on joukko verkon kaaria
-niin, että kaikki verkon solmut ovat yhteydessä
-toisiinsa kaarten kautta ja lisäksi
-kaarten painojen summa on pienin tai suurin mahdollinen.
-
-Osoittautuu, että virittävien puiden etsiminen
-on siinä mielessä helppo ongelma,
-että monenlaiset ahneet menetelmät tuottavat
-optimaalisen ratkaisun.
-Käymme läpi kaksi algoritmia, jotka molemmat valitsevat
-puuhun mukaan kaaria ahneesti niiden painojen perusteella.
-
-\section{Käsitteitä}
-
 Virittävä puu (\textit{spanning tree}) on kokoelma
 verkon kaaria,
 joka kytkee kaikki
 verkon solmut toisiinsa.
-Kuten puut yleensä,
+Kuten puut yleensäkin,
 virittävä puu on yhtenäinen ja syklitön.
-Esimerkiksi verkossa
+Virittävän puun muodostamiseen
+on yleensä monia tapoja.
 
+Esimerkiksi verkossa
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -45,9 +30,7 @@ Esimerkiksi verkossa
 \path[draw,thick,-] (3) -- node[font=\small,label=left:3] {} (6);
 \end{tikzpicture}
 \end{center}
-
 yksi mahdollinen virittävä puu on seuraava:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -59,10 +42,7 @@ yksi mahdollinen virittävä puu on seuraava:
 \path[draw,thick,-] (1) -- node[font=\small,label=above:3] {} (2);
 \path[draw,thick,-] (2) -- node[font=\small,label=above:5] {} (3);
 \path[draw,thick,-] (3) -- node[font=\small,label=above:9] {} (4);
-%\path[draw,thick,-] (1) -- node[font=\small,label=below:5] {} (5);
 \path[draw,thick,-] (5) -- node[font=\small,label=below:2] {} (6);
-%\path[draw,thick,-] (6) -- node[font=\small,label=below:7] {} (4);
-%\path[draw,thick,-] (2) -- node[font=\small,label=left:6] {} (5);
 \path[draw,thick,-] (3) -- node[font=\small,label=left:3] {} (6);
 \end{tikzpicture}
 \end{center}
@@ -119,15 +99,23 @@ painoltaan 32:
 \end{tikzpicture}
 \end{center}
 
-Huomaa, että virittävät puut eivät ole yksikäsitteisiä
-vaan voi olla monta tapaa muodostaa pienin tai suurin
-virittävä puu.
+Huomaa, että voi olla monta erilaista
+tapaa muodostaa pienin tai
+suurin virittävä puu, eli puut eivät ole yksikäsitteisiä.
 
-Sekä pienimmän että suurimman virittävän puun voi etsiä tehokkaasti
-ahneilla algoritmeilla.
-Keskitymme seuraavaksi pienimmän virittävän puun etsimiseen,
-mutta samoja algoritmeja voi käyttää myös suurimman virittävän
-puun etsimiseen käsittelemällä kaaret käänteisessä järjestyksessä.
+Tässä luvussa tutustumme algoritmeihin,
+jotka muodostavat verkon pienimmän tai suurimman
+virittävän puun.
+Osoittautuu, että virittävien puiden etsiminen
+on siinä mielessä helppo ongelma,
+että monenlaiset ahneet menetelmät tuottavat
+optimaalisen ratkaisun.
+
+Käymme läpi kaksi algoritmia, jotka molemmat valitsevat
+puuhun mukaan kaaria painojärjestyksessä.
+Keskitymme pienimmän virittävän puun etsimiseen,
+mutta samoilla algoritmeilla voi muodostaa myös suurimman virittävän
+puun käsittelemällä kaaret käänteisessä järjestyksessä.
 
 \section{Kruskalin algoritmi}
 
