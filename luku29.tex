@@ -505,11 +505,14 @@ joten piste on ulkopuolella.
 \section{Monikulmion pinta-ala}
 
 Yleinen kaava monikulmion pinta-alan laskemiseen on
-\[\frac{1}{2} |\sum_{i=1}^{i=n-1} (p_i \times p_{i+1})|, \]
-missä monikulmion kärkipisteet ovat
-järjestyksessä $p_1,p_2,\ldots,p_n$
-ja ensimmäinen ja viimeinen kärkipiste
-ovat samat eli $p_1=p_n$.
+\[\frac{1}{2} |\sum_{i=1}^{n-1} (p_i \times p_{i+1})| =
+\frac{1}{2} |\sum_{i=1}^{n-1} (x_i y_{i+1} - x_{i+1} y_i)|, \]
+kun kärkipisteet ovat
+$p_1=(x_1,y_1)$, $p_2=(x_2,y_2)$, $\ldots$, $p_n=(x_n,y_n)$
+järjestettynä niin,
+että $p_i$ ja $p_{i+1}$ ovat vierekkäiset kärkipisteet
+monikulmion reunalla
+ja ensimmäinen ja viimeinen kärkipiste ovat samat eli $p_1=p_n$.
 
 Esimerkiksi monikulmion
 \begin{center}
@@ -529,6 +532,42 @@ Esimerkiksi monikulmion
 \end{center}
 pinta-ala on
 \[\frac{|(2\cdot5-4\cdot5)+(5\cdot3-5\cdot7)+(7\cdot1-3\cdot4)+(4\cdot3-1\cdot4)+(4\cdot4-3\cdot2)|}{2} = 17/2.\]
+Kaavassa on ideana käydä läpi puolisuunnikkaita,
+joiden yläreuna on yksi monikulmion sivuista ja
+alareuna on vaakataso. Esimerkiksi:
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\path[draw,fill=lightgray] (5,5.4) -- (7,3.4) -- (7,0) -- (5,0) -- (5,5.4);
+\filldraw (4,1.4) circle (2pt);
+\filldraw (7,3.4) circle (2pt);
+\filldraw (5,5.4) circle (2pt);
+\filldraw (2,4.4) circle (2pt);
+\filldraw (4,3.4) circle (2pt);
+\node (1) at (4,1) {(4,1)};
+\node (2) at (7.2,3) {(7,3)};
+\node (3) at (5,5.8) {(5,5)};
+\node (4) at (2,4) {(2,4)};
+\node (5) at (3.5,3) {(4,3)};
+\path[draw] (4,1.4) -- (7,3.4) -- (5,5.4) -- (2,4.4) -- (4,3.4) -- (4,1.4);
+\draw (0,0) -- (10,0);
+\end{tikzpicture}
+\end{center}
+Tällaisen puolisuunnikkaan pinta-ala on
+\[(x_{i+1}-x_{i}) \frac{y_i+y_{i+1}}{2},\]
+kun kärkipisteet ovat $p_i$ ja $p_{i+1}$.
+Jos $x_{i+1}>x_{i}$, niin pinta-ala on positiivinen,
+ja jos $x_{i+1}<x_{i}$, niin pinta-ala on negatiivinen.
+
+Monikulmion pinta-ala saadaan laskemalla yhteen kaikkien
+tällaisten puolisuunnikkaiden pinta-alat, mistä tulee:
+
+\[|\sum_{i=1}^{n-1} (x_{i+1}-x_{i}) \frac{y_i+y_{i+1}}{2}| =
+\frac{1}{2} |\sum_{i=1}^{n-1} (x_i y_{i+1} - x_{i+1} y_i)|.\]
+
+Huomaa, että pinta-alan kaavassa on itseisarvo,
+koska monikulmion kiertosuunnasta (myötä- tai vastapäivään)
+riippuen tuloksena oleva pinta-ala on joko
+positiivinen tai negatiivinen.
 
 \subsubsection{Pickin lause}
 
@@ -539,9 +578,7 @@ monikulmion pinta-ala,
 kun kaikki monikulmion kärkipisteet
 ovat kokonaislukupisteissä.
 Pickin lauseen mukaan monikulmion pinta-ala on
-
-\[ a + b/2 -1, \]
-
+\[ a + b/2 -1,\]
 missä $a$ on kokonaislukupisteiden määrä monikulmion sisällä
 ja $b$ on kokonaislukupisteiden määrä monikulmion reunalla.
 
