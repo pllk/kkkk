@@ -1,17 +1,24 @@
 \chapter{Virtauslaskenta}
 
-Virtauslaskenta on verkkoteorian osa-alue,
-jonka keskeinen ongelma on verkon maksimivirtauksen laskeminen.
-Tässä luvussa tutustumme ensin algoritmiin,
-jonka avulla voi laskea verkon maksimivirtauksen,
-ja sen jälkeen perehdymme erilaisiin virtauslaskennan sovelluksiin.
+Virtauslaskennan keskeiset ongelmat ovat:
 
-\section{Käsitteitä}
+\begin{itemize}
+\item \textit{Maksimivirtauksen etsiminen}:
+Kuinka paljon virtausta on mahdollista kuljettaa
+verkon alkusolmusta loppusolmuun kaaria pitkin?
+\item \textit{Maksimileikkauksen etsiminen}:
+Mikä on yhteispainoltaan pienin joukko kaaria,
+joiden poistaminen erottaa alkusolmun loppusolmusta?
+\end{itemize}
+
+Osoittautuu, että nämä ongelmat vastaavat toisiaan
+ja ne on mahdollista ratkaista samanaikaisesti
+toistensa avulla.
 
 Oletamme, että annettuna on suunnattu,
 painotettu verkko, 
 jossa on valittu tietty alkusolmu ja loppusolmu.
-Käytämme esimerkkinä seuraavaa verkkoa,
+Tarkastellaan esimerkkinä seuraavaa verkkoa,
 jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 
 \begin{center}
@@ -746,7 +753,7 @@ jossa verkko on kaksijakoinen.
 Tällöin maksimiparituksen pystyy etsimään
 helposti virtauslaskennan avulla.
 
-\subsection{Maksimiparituksen etsiminen}
+\subsubsection{Maksimiparituksen etsiminen}
 
 Kaksijakoinen verkko voidaan esittää aina niin,
 että kukin verkon solmu on vasemmalla tai oikealle
@@ -848,7 +855,7 @@ polku ottaa mukaan uuden kaaren paritukseen.
 Tässä tapauksessa maksimivirtaus on 3,
 joten maksimiparitus on myös 3.
 
-\subsection{Hallin lause}
+\subsubsection{Hallin lause}
 
 \index{Hallin lause}
 
@@ -929,7 +936,7 @@ kaikille $X$:n solmuille ei riitä paria oikealta.
 Esimerkiksi yllä molemmat solmut 2 ja 4 tulisi
 yhdistää solmuun 7, mutta tämä ei ole mahdollista.
 
-\subsection{Kőnigin lause}
+\subsubsection{Kőnigin lause}
 
 \index{Kőnigin lause}
 \index{solmupeite}
@@ -1055,7 +1062,7 @@ esiintyä useammassa polussa.
 Kummassakin tapauksessa pienin polkupeite löytyy
 samanlaisella idealla.
 
-\subsection{Solmuerillinen peite}
+\subsubsection{Solmuerillinen peite}
 
 Tarkastellaan esimerkkinä seuraavaa verkkoa:
 
@@ -1178,7 +1185,7 @@ solmujen määrä ja $c$ on maksimiparituksen kaarten määrä.
 Esimerkiksi yllä olevassa verkossa pienimmän
 polkupeitteen koko on $7-4=3$.
 
-\subsection{Yleinen peite}
+\subsubsection{Yleinen peite}
 
 Yleisessä polkupeitteessä sama solmu voi kuulua moneen polkuun,
 minkä ansiosta tarvittava polkujen määrä saattaa olla pienempi.
@@ -1216,7 +1223,7 @@ että siinä on kaari $a \rightarrow b$ aina silloin,
 kun alkuperäisessä verkossa solmusta $a$ pääsee
 solmuun $b$ (mahdollisesti usean kaaren kautta).
 
-\subsection{Dilworthin lause}
+\subsubsection{Dilworthin lause}
 
 \index{Dilworthin lause}
 
