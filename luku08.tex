@@ -30,7 +30,7 @@ yhteen suuntaan, mikä takaa, että algoritmi toimii tehokkaasti.
 Tutustumme seuraavaksi kahden osoittimen tekniikkaan
 kahden esimerkkitehtävän kautta.
 
-\subsection{Välin summa}
+\subsubsection{Esimerkki 1}
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ positiivista kokonaislukua.
@@ -207,7 +207,7 @@ Koska sekä vasen että oikea osoitin liikkuvat
 $O(n)$ askelta algoritmin aikana,
 algoritmin aikavaativuus on $O(n)$.
 
-\subsection{Kahden luvun summa}
+\subsubsection{Esimerkki 2}
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ kokonaislukua.
@@ -375,25 +375,16 @@ että lukujen summa olisi yhteensä $x$.
 Binäärihaku suoritetaan $n$ kertaa ja
 jokainen binäärihaku vie aikaa $O(\log n)$.
 
-\section{Tietorakenteen operaatiot}
+\section{Lähin pienempi edeltäjä}
+
+\index{lähin pienempi edeltäjä}
 
 Tasoitetun analyysin avulla arvioidaan usein
 tietorakenteeseen tehtävien operaatioiden määrää.
 Algoritmin operaatiot voivat jakautua epätasaisesti
 niin, että useimmat operaatiot tehdään tietyssä
 algoritmin vaiheessa ja muuten niitä tehdään vähän.
-Oleellinen asia on operaatioiden kokonaismäärä.
-
-Tutustumme seuraavaksi kahteen klassiseen algoritmiin,
-joiden tehokkuuden arvioinnissa on hyötyä
-tasoitetusta analyysista.
-Molemmat algoritmit käyvät läpi taulukon ja
-pitävät yllä tietorakennetta, jossa on ketju
-taulukon lukuja laskevassa järjestyksessä.
-
-\subsection{Lähin pienempi edeltäjä}
-
-\index{lähin pienempi edeltäjä}
+Näin on seuraavassa tehtävässä:
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ lukua.
@@ -562,8 +553,7 @@ Niinpä jokainen luku aiheuttaa $O(1)$
 ketjuun liittyvää operaatiota, ja tämän
 seurauksena algoritmin kokonaisaikavaativuus on $O(n)$.
 
-
-\subsection{Liukuvan ikkunan minimi}
+\section{Liukuvan ikkunan minimi}
 
 \index{liukuvan ikkunan minimi}
 
