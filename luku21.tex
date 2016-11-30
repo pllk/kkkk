@@ -1,5 +1,7 @@
 \chapter{Lukuteoria}
 
+\index{lukuteoria}
+
 Lukuteoria on kokonaislukuja tutkiva
 matematiikan ala, jonka keskeinen
 käsite on lukujen jaollisuus.
@@ -30,7 +32,7 @@ Lähdemme liikkeelle lukujen jaollisuudesta,
 johon liittyvät keskeiset algoritmit ovat
 alkuluvun tarkastaminen sekä luvun jakaminen tekijöihin.
 
-\section{Jaollisuus}
+\section{Alkuluvut ja tekijät}
 
 \index{jaollisuus}
 \index{jakaja}
@@ -72,7 +74,7 @@ jossa jälkimmäinen muoto perustuu geometriseen summaan.
 Esimerkiksi luvun 84 jakajien summa on
 \[\sigma(84)=\frac{2^3-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^2-1}{7-1} = 7 \cdot 4 \cdot 8 = 224.\]
 Luvun $n$ jakajien tulo on
-\[\pi(n)=n^{\tau(n)/2},\]
+\[\mu(n)=n^{\tau(n)/2},\]
 koska jakajista voi muodostaa
 $\tau(n)/2$ paria, joiden jokaisen tulona on $n$.
 Esimerkiksi luvun 84 jakajista muodostuu parit
@@ -86,6 +88,60 @@ Luku $n$ on \textit{täydellinen}, jos $n=\sigma(n)-n$
 eli luku on sen pienempien jakajien summa.
 Esimerkiksi luku 28 on täydellinen,
 koska $28 = 1+2+4+7+14$.
+
+\subsubsection{Alkulukujen määrä}
+
+On helppoa osoittaa, että alkulukuja on äärettömästi.
+Jos nimittäin alkulukuja olisi äärellinen määrä,
+voisimme muodostaa joukon $P=\{p_1,p_2,\ldots,p_n\}$,
+joka sisältää kaikki alkuluvut.
+Esimerkiksi $p_1=2$, $p_2=3$, $p_3=5$, jne.
+
+Nyt kuitenkin voisimme muodostaa uuden alkuluvun
+\[p_1 p_2 \cdots p_n+1,\]
+joka on kaikkia $P$:n lukuja suurempi.
+Koska tätä lukua ei ole joukossa $P$,
+syntyy ristiriita, ja alkulukujen määrän on
+pakko olla ääretön.
+
+\subsubsection{Alkulukujen tiheys}
+
+Alkulukujen tiheys tarkoittaa, kuinka usein alkulukuja
+esiintyy muiden lukujen joukossa.
+Merkitään funktiolla $\pi(n)$, 
+montako alkulukua on välillä $1 \ldots n$.
+Esimerkiksi $\pi(10)=4$, koska välillä $1 \ldots 10$
+on alkuluvut 2, 3, 5 ja 7.
+
+On mahdollista osoittaa, että
+\[\pi(n) \approx \frac{n}{\ln n},\]
+mikä tarkoittaa, että alkulukuja esiintyy
+melko usein. Esimerkiksi alkulukujen määrä
+välillä $1 \ldots 10^6$ on $\pi(10^6)=78498$
+ja $10^6 / \ln 10^6 \approx 72382$.
+
+\subsubsection{Konjektuureja}
+
+Alkulukuihin liittyy useita konjektuureja
+eli lauseita, joiden uskotaan olevan tosia mutta
+joita kukaan ei ole onnistunut todistamaan tähän mennessä.
+Kuuluisia konjektuureja ovat seuraavat:
+
+\begin{itemize}
+\index{Goldbachin konjektuuri}
+\item \textit{Goldbachin konjektuuri}:
+Jokainen parillinen kokonaisluku $n>2$ voidaan esittää
+muodossa $n=a+b$ niin, että $a$ ja $b$
+ovat alkulukuja.
+\index{alkulukupari}
+\item \textit{Alkulukuparit}:
+On olemassa äärettömästi pareja muotoa $(p,p+2)$,
+joissa sekä $p$ että $p+2$ on alkuluku.
+\index{Legendren konjektuuri}
+\item \textit{Legendren konjektuuri}:
+Lukujen $n^2$ ja $(n+1)^2$ välillä on aina alkuluku,
+kun $n$ on mikä tahansa positiivinen kokonaisluku.
+\end{itemize}
 
 \subsubsection{Perusalgoritmit}
 
@@ -320,7 +376,8 @@ jos $n$ on alkuluku.
 \section{Modulolaskenta}
 
 Modulolaskennassa lukualuetta rajoitetaan
-niin, että käytössä ovat vain luvut $0,1,2,\ldots,m-1$,
+niin, että käytössä ovat vain
+kokonaisluvut $0,1,2,\ldots,m-1$,
 missä $m$ on vakio.
 Ideana on, että lukua $x$ kuvaa luku $x \bmod m$
 eli luvun $x$ jakojäännös luvulla $m$.
@@ -328,8 +385,7 @@ Esimerkiksi jos $m=17$, niin lukua $75$ kuvaa luku
 $75 \bmod 17 = 7$.
 
 Useissa laskutoimituksissa jakojäännöksen voi laskea
-ennen laskutoimitusta.
-Modulolaskennan peruskaavat ovat seuraavat:
+ennen laskutoimitusta, minkä ansiosta saadaan seuraavat kaavat:
 \[
 \begin{array}{rcl}
 (x+y) \bmod m & = & (x \bmod m + y \bmod m) \bmod m \\
@@ -359,7 +415,7 @@ Tämän ansiosta potenssilaskun aikavaativuus on $O(\log n)$,
 koska $n$:n koko puolittuu aina silloin,
 kun $n$ on parillinen.
 
-Seuraava funktio laskee luvun $x^n$ modulo $m$:
+Seuraava funktio laskee luvun $x^n \bmod m$:
 
 \begin{lstlisting}
 int pot(int x, int n, int m) {
@@ -443,19 +499,24 @@ Niinpä lukujen $x^{-1}$ ja $x^{\varphi(m)-1}$ on oltava samat.
 
 \subsubsection{Modulot tietokoneessa}
 
-Jos koodissa käytetään \texttt{unsigned}-tyyppistä muuttujaa,
-sen arvo lasketaan modulo $2^k$, missä $k$ on muuttujan bittien määrä.
-Esimerkiksi \texttt{unsigned int} -tyyp\-pi\-sen muuttujan
-arvo lasketaan modulo $2^{32}$.
+Tietokone käsittelee etumerkittömiä kokonaislukuja
+modulo $2^k$, missä $k$ on luvun bittien määrä.
+Usein näkyvä seuraus tästä on luvun arvon pyörähtäminen
+ympäri, jos luku kasvaa liian suureksi.
 
-Seuraava koodi esittelee asiaa:
+Esimerkiksi C++:ssa \texttt{unsigned int} -tyyppinen
+arvo lasketaan modulo $2^{32}$.
+Seuraava koodi määrittelee muuttujan
+tyyppiä \texttt{unsigned int},
+joka saa arvon $123456789$.
+Sitten muuttujan arvo kerrotaan itsellään,
+jolloin tuloksena on luku 
+$123456789^2 \bmod 2^{32} = 2537071545$.
 
 \begin{lstlisting}
 unsigned int x = 123456789;
 cout << x*x << "\n"; // 2537071545
 \end{lstlisting}
-
-Koodi laskee laskun $(123456789^2) \bmod 2^{32} = 2537071545$.
 
 \section{Yhtälönratkaisu}
 
@@ -679,19 +740,3 @@ Wilsonin lause on yksi tapa tarkastaa, onko luku alkuluku vai ei.
 Tämä ei ole kuitenkaan käytännössä hyvä tapa,
 koska luvun $(n-1)!$ laskeminen on työlästä,
 jos $n$ on suuri luku.
-
-\subsubsection{Goldbachin konjektuuri}
-
-\index{Goldbachin konjektuuri}
-
-Goldbachin konjektuurin mukaan jokainen
-parillinen kokonaisluku $n>2$
-voidaan esittää summana $n=a+b$,
-missä $a$ ja $b$ ovat alkulukuja.
-Esimerkiksi $12=5+7$ ja $30=7+23$.
-
-Koska tulos on \textit{konjektuuri}, sitä ei ole
-onnistuttu todistamaan, mutta useimmat uskovat,
-että väite pätee.
-Tietokoneen avulla on tarkastettu, että konjektuuri pätee
-lukuun $4 \cdot 10^{18}$ asti.
