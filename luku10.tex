@@ -7,14 +7,6 @@ bittiesitykseen sekä bittioperaatioihin,
 jotka muokkaavat luvun bittejä.
 Osoittautuu, että näistä operaatioista on
 monenlaista hyötyä algoritmien ohjelmoinnissa.
-% 
-% Tyypillinen tekniikka
-% on luvun bittiesityksen rinnastaminen joukon
-% osajoukkoon.
-% Tällöin joukko-operaatiot voi toteuttaa
-% tehokkaasti bittioperaatioina ja
-% bittiesitystä voi käyttää esimerkiksi
-% dynaamisen ohjelmoinnin tilana.
 
 \section{Luvun bittiesitys}
 
@@ -31,26 +23,8 @@ bittien määrä on kiinteä ja riippuu käytetystä tietotyypistä.
 Esimerkiksi C++:n \texttt{int}-tyyppi on tavallisesti 32-bittinen,
 jolloin \texttt{int}-luku tallennetaan 32 bittinä.
 Tällöin esimerkiksi luvun 43 bittiesitys \texttt{int}-lukuna on seuraava:
-\begin{center}
-\begin{tikzpicture}[scale=0.4]
-\draw (0,0) grid (32,2);
-\scriptsize
-\node at (31.5,0.5) {1};
-\node at (30.5,0.5) {1};
-\node at (29.5,0.5) {0};
-\node at (28.5,0.5) {1};
-\node at (27.5,0.5) {0};
-\node at (26.5,0.5) {1};
-\foreach \i in {6,...,31}
-{
-    \node at (31.5-\i,0.5) {0};
-}
-\foreach \i in {0,...,31}
-{
-    \node at (31.5-\i,1.5) {\i};
-}
-\end{tikzpicture}
-\end{center}
+
+\[00000000000000000000000000101011\]
 
 Luvun bittiesitys on joko etumerkillinen (\textit{signed})
 tai etumerkitön (\textit{unsigned}).
@@ -70,26 +44,7 @@ tulokseen yksi.
 
 Esimerkiksi luvun $-43$ esitys \texttt{int}-lukuna on seuraava:
 
-\begin{center}
-\begin{tikzpicture}[scale=0.4]
-\draw (0,0) grid (32,2);
-\scriptsize
-\node at (31.5,0.5) {1};
-\node at (30.5,0.5) {0};
-\node at (29.5,0.5) {1};
-\node at (28.5,0.5) {0};
-\node at (27.5,0.5) {1};
-\node at (26.5,0.5) {0};
-\foreach \i in {6,...,31}
-{
-    \node at (31.5-\i,0.5) {1};
-}
-\foreach \i in {0,...,31}
-{
-    \node at (31.5-\i,1.5) {\i};
-}
-\end{tikzpicture}
-\end{center}
+\[11111111111111111111111111010101\]
 
 Etumerkillisen ja etumerkittömän bittiesityksen
 yhteys on, että etumerkillisen luvun $-x$
@@ -334,7 +289,7 @@ osajoukkoon vie vain yhden bitin tilaa.
 Lisäksi bittimuodossa tallennettua joukkoa
 on tehokasta käsitellä bittioperaatioilla.
 
-\subsection{Joukon käsittely}
+\subsubsection{Joukon käsittely}
 
 Seuraavan koodin muuttuja $x$
 sisältää joukon $\{0,1,2,\ldots,31\}$
@@ -398,7 +353,7 @@ Koodin tulostus on seuraava:
 1 3 4 6 8 9
 \end{lstlisting}
 
-\subsection{Osajoukkojen läpikäynti}
+\subsubsection{Osajoukkojen läpikäynti}
 
 Seuraava koodi käy läpi joukon $\{0,1,\ldots,n-1\}$ osajoukot:
 
@@ -433,9 +388,7 @@ do {
 Yllä olevien koodien tavoin tämä koodi käy osajoukot
 läpi bittiesityksen suuruusjärjestyksessä.
 
-\section{Dynaaminen ohjelmointi}
-
-\subsection{Permutaatioista osajoukoiksi}
+\section{Permutaatioista osajoukoiksi}
 
 Dynaamisen ohjelmoinnin avulla on usein mahdollista
 muuttaa permutaatioiden läpikäynti osajoukkojen läpikäynniksi.
@@ -524,7 +477,7 @@ for (int i = 0; i < n; i++) {
 }
 \end{lstlisting}
 
-\subsection{Osajoukkojen määrät}
+\section{Sisäkkäiset osajoukot}
 
 Dynaamisen ohjelmoinnin avulla voi ratkaista
 myös seuraavan tehtävän:
