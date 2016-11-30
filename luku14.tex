@@ -2,15 +2,6 @@
 
 \index{puu}
 
-Jos verkko on rakenteeltaan puu, sen käsittely on yleistä
-verkkoa helpompaa.
-Esimerkiksi lyhin polku kahden puun solmun välillä
-löytyy aina syvyyshaulla, koska puussa ei ole silmukoita.
-Tässä luvussa opimme lisää puiden käsittelystä ja
-näemme, miten puihin voi soveltaa dynaamista ohjelmointia.
-
-\section{Käsitteitä}
-
 Puu (\textit{tree}) on yhtenäinen, syklitön ja suuntaamaton verkko,
 jossa on $n$ solmua ja $n-1$ kaarta.
 Jokaisen kahden puun solmun välillä on yksikäsitteinen polku.
@@ -81,9 +72,7 @@ kaikki solmut, joihin solmusta pääsee kulkemalla alaspäin puussa.
 Esimerkiksi solmun 4 alipuussa
 ovat solmut 4, 3 ja 7.
 
-\section{Perustekniikat}
-
-\subsection{Läpikäynti}
+\section{Puun läpikäynti}
 
 Puun läpikäyntiin voi käyttää syvyyshakua ja
 leveyshakua samaan
@@ -122,9 +111,9 @@ dfs(x, 0);
 Ensimmäisessä kutsussa $e=0$, koska läpikäynti
 saa edetä juuresta kaikkiin suuntiin alaspäin.
 
-\subsection{Dynaaminen ohjelmointi}
+\subsubsection{Dynaaminen ohjelmointi}
 
-Puun läpikäyntiin voi yhdistää dynaamista
+Puun läpikäyntiin voi myös yhdistää dynaamista
 ohjelmointia ja laskea sen avulla jotain tietoa puusta.
 Dynaamisen ohjelmoinnin avulla voi esimerkiksi
 laskea ajassa $O(n)$ jokaiselle solmulle,
@@ -152,9 +141,7 @@ void dfs(int s, int e) {
 }
 \end{lstlisting}
 
-\section{Etäisyydet}
-
-\subsection{Läpimitta}
+\section{Läpimitta}
 
 \index{läpimitta}
 
@@ -333,7 +320,7 @@ Niinpä tämä solmu on aina sopiva
 valinta läpimittaa vastaavan polun
 toiseksi päätesolmuksi.
 
-\subsection{Kaikki etäisyydet}
+\section{Solmujen etäisyydet}
 
 Vaikeampi tehtävä on laskea
 jokaiselle puun solmulle
