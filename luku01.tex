@@ -1,10 +1,10 @@
 \chapter{Johdanto}
 
 Kisakoodauksessa yhdistyy kaksi asiaa:
-(1) algoritmien suunnittelu ja
-(2) algoritmien toteutus.
+algoritmien suunnittelu ja
+algoritmien toteutus.
 
-Algoritmien suunnittelu on loogista ongelmanratkaisua,
+\textit{Algoritmien suunnittelu} on loogista ongelmanratkaisua,
 joka on lähellä matematiikkaa.
 Se vaatii kykyä analysoida ongelmia ja
 ratkaista niitä luovasti.
@@ -20,7 +20,7 @@ tekniikoita sekä omia oivalluksia.
 Kisakoodauksessa esiintyvät menetelmät ovat myös
 algoritmiikan tieteellisen tutkimuksen perusta.
 
-Algoritmien toteutus edellyttää hyvää ohjelmointitaitoa.
+\textit{Algoritmien toteutus} edellyttää hyvää ohjelmointitaitoa.
 Kisakoodauksessa tehtävän ratkaisun arvostelu tapahtuu
 testaamalla toteutettua algoritmia
 joukolla testisyötteitä.
@@ -35,9 +35,7 @@ ratkaisut ovat lyhyitä
 (yleensä enintään joitakin satoja rivejä)
 eikä koodia tarvitse kehittää kilpailun jälkeen.
 
-
-
-\section{Ohjelmointikielet}
+\section{Ohjelmointikielen valinta}
 
 \index{ohjelmointikieli}
 
@@ -79,7 +77,7 @@ jota voi nykyään käyttää useimmissa kisoissa.
 Jos et vielä osaa ohjelmoida C++:lla,
 nyt on hyvä hetki alkaa opetella.
 
-\section{Koodipohja}
+\subsubsection{C++-koodipohja}
 
 Tyypillinen C++-koodin pohja kisakoodausta varten
 näyttää seuraavalta:
@@ -242,8 +240,6 @@ tiedostoon ''output.txt''.
 
 \section{Lukujen käsittely}
 
-\subsection{Kokonaisluvut}
-
 \index{kokonaisluku}
 
 Tavallisin kokonaislukutyyppi kisakoodauksessa on \texttt{int}.
@@ -288,20 +284,20 @@ tyypin \texttt{\_\_int128\_t}, jonka lukuväli on
 $-2^{127} \ldots 2^{127}-1$ eli noin $-10^{38} \ldots 10^{38}$.
 Tämä tyyppi ei kuitenkaan ole käytettävissä kaikissa kisajärjestelmissä.
 
-\subsection{Vastaus modulona}
+\subsubsection{Vastaus modulona}
 
 \index{modulolaskenta}
 
 Joskus tehtävän vastaus on hyvin suuri kokonaisluku,
-mutta vastaus riittää tulostaa ''modulo $M$''
-eli vastauksen jakojäännös luvulla $M$
+mutta vastaus riittää tulostaa ''modulo $m$''
+eli vastauksen jakojäännös luvulla $m$
 (esimerkiksi ''modulo $10^9+7$'').
 Ideana on, että vaikka todellinen vastaus
 voi olla suuri luku,
 tehtävässä riittää käyttää tyyppejä \texttt{int} ja \texttt{long long}.
 
-Luvun $x$ jakojäännöstä $M$:llä
-merkitään $x \bmod M$.
+Luvun $x$ jakojäännöstä $m$:llä
+merkitään $x \bmod m$.
 Esimerkiksi $12 \bmod 5 = 2$,
 koska 12:n jakojäännös 5:llä on 2.
 
@@ -312,9 +308,9 @@ eli seuraavat kaavat pätevät:
 
 \[
 \begin{array}{rcr}
-(a+b) \bmod M & = & (a \bmod M + b \bmod M) \bmod M \\
-(a-b) \bmod M & = & (a \bmod M - b \bmod M) \bmod M \\
-(a \cdot b) \bmod M & = & (a \bmod M \cdot b \bmod M) \bmod M
+(a+b) \bmod m & = & (a \bmod m + b \bmod m) \bmod m \\
+(a-b) \bmod m & = & (a \bmod m - b \bmod m) \bmod m \\
+(a \cdot b) \bmod m & = & (a \bmod m \cdot b \bmod m) \bmod m
 \end{array}
 \]
 
@@ -323,34 +319,34 @@ jokaisen laskun vaiheen jälkeen voi ottaa modulon
 eivätkä luvut kasva liian suuriksi.
 
 Esimerkiksi seuraava koodi
-laskee luvun $n$ kertoman modulo $M$:
+laskee luvun $n$ kertoman modulo $m$:
 
 \begin{lstlisting}
 long long x = 1;
 for (int i = 2; i <= n i++) {
-    x = (x*i)%M;
+    x = (x*i)%m;
 }
 cout << x << "\n";
 \end{lstlisting}
 
 Yleensä vastaus modulona tulee antaa niin,
-että se on aina välillä $0\ldots M-1$.
+että se on aina välillä $0\ldots m-1$.
 Kuitenkin C++:ssa ja muissa
 kielissä negatiivisen
 luvun modulo on nolla tai negatiivinen.
 Helppo tapa varmistaa, että modulo ei ole negatiivinen,
-on laskea ensin modulo ja lisätä sitten $M$,
+on laskea ensin modulo ja lisätä sitten $m$,
 jos tulos on negatiivinen:
 
 \begin{lstlisting}
-x = x%M;
-if (x < 0) x += M;
+x = x%m;
+if (x < 0) x += m;
 \end{lstlisting}
 Tämä on tarpeen kuitenkin vain silloin,
 kun modulo voi olla negatiivinen
 koodissa olevien vähennyslaskujen vuoksi.
 
-\subsection{Liukuluvut}
+\subsubsection{Liukuluvut}
 
 \index{liukuluku}
 
@@ -414,17 +410,10 @@ tarkasti kokonaislukuja tiettyyn rajaan asti.
 Esimerkiksi \texttt{double}-tyypillä voi esittää
 tarkasti kaikki kokonaisluvut, joiden itseisarvo
 on enintään $2^{53}$.
-% 
-% Huomaa, että hyvin lähellä nollaa olevien liukulukujen
-% käsittely voi olla yllättävän hidasta.
-% Tällaisia liukulukuja kutsutaan subnormaaleiksi,
-% ja niillä laskeminen on hidasta joissakin järjestelmissä.
-% Yleensä toimiva ratkaisu on muuttaa tietyn rajan
-% alittavat luvut nollaksi.
 
 \section{Koodin lyhentäminen}
 
-\subsection{Tyyppinimet}
+\index{\texttt{typedef}}
 
 Komennolla \texttt{typedef} voi antaa lyhyemmän
 nimen tyypille.
@@ -457,9 +446,9 @@ typedef vector<int> vi;
 typedef pair<int,int> pi;
 \end{lstlisting}
 
-\subsection{Makrot}
-
+\subsubsection{Makrot}
 \index{makro}
+\index{\texttt{\#define}}
 
 Esikääntäjän komennolla \texttt{\#define}
 voi määritellä makroja, joiden avulla voi lyhentää
@@ -599,32 +588,29 @@ mikä helpottaa virheen etsimistä koodista.
 
 \section{Matematiikka}
 
-\subsection{Merkintöjä}
-
 Summa $\sum_{x=a}^b$ käy läpi välin $a \ldots b$ kokonaisluvut.
 Jokaisen luvun kohdalla summaan lisätään
 yleensä $x$:stä riippuvan lausekkeen arvo.
-Esimerkiksi $\sum_{x=1}^n x$
-vastaa summaa $1+2+3+\ldots+n$
-ja $\sum_{x=1}^n x^2$
-vastaa summaa $1^2+2^2+3^2+\ldots+n^2$.
-
+Esimerkiksi
+\[\sum_{x=1}^n x = 1+2+3+\ldots+n\]
+ja
+\[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2.\]
 Vastaavasti tulo $\prod_{x=a}^b$
 käy läpi välin $a \ldots b$ kokonaisluvut.
-Esimerkiksi $\prod_{x=1}^n x$ vastaa tuloa
-$1 \cdot 2 \cdot 3 \cdot \cdots \cdot n$ (eli kertomaa $n!$).
+Esimerkiksi luvun $n$ kertoma $n!$ voidaan ilmaista muodossa
+
+\[n! = \prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdot \cdots \cdot n.\]
 
 Merkinnät $\lfloor x \rfloor$ ja $\lceil x \rceil$
 pyöristävät luvun $x$ kokonaisluvuksi alaspäin ja ylöspäin.
-Esimerkiksi $\lfloor \pi \rfloor = 3$ ja $\lceil \pi \rceil = 4$,
-missä $\pi = 3{,}14159\ldots$
+Esimerkiksi $\lfloor 5/2 \rfloor = 2$ ja $\lceil 5/2 \rceil = 3$.
 
 Merkinnät $\min(a_1,a_2,\ldots,a_n)$ ja
 $\max(a_1,a_2,\ldots,a_n)$ valitsevat
 pienimmän ja suurimman alkioista
 $a_1,a_2,\ldots,a_n$.
 
-\subsection{Joukot}
+\subsubsection{Joukot}
 
 \index{joukko}
 
@@ -670,7 +656,7 @@ Joukko $\mathbb{N}$ voidaan määritellä
 kahdella tavalla: joko $\mathbb{N}=\{0,1,2,\ldots\}$
 tai $\mathbb{N}=\{1,2,3,...\}$.
 
-\subsection{Logiikka}
+\subsubsection{Logiikka}
 
 \index{logiikka}
 
@@ -728,7 +714,7 @@ niin on olemassa luvut $a$ ja $b$,
 joiden tulo on $x$ ja jotka molemmat ovat suurempia kuin 1.
 Tämänkin lausekkeen arvo on tosi.
 
-\subsection{Logaritmi}
+\subsubsection{Logaritmi}
 
 \index{logaritmi}
 
@@ -762,43 +748,42 @@ määrän halutussa lukujärjestelmässä.
 Esimerkiksi luvun $x$ numeroiden määrä 10-jär\-jes\-tel\-mäs\-sä on
 $\lfloor \log_{10}(x)\rfloor + 1$.
 
-\subsection{Summakaavat}
-
-\subsubsection{Aritmeettinen summa}
+\subsubsection{Summakaavat}
 
 \index{aritmeettinen summa}
-
-Aritmeettisessa summassa jokaisen vierekkäisen
-summattavan luvun erotus on vakio.
-Esimerkiksi $3+7+11+15$ on aritmeettinen summa,
+\begin{samepage}
+\textit{Aritmeettinen summa} on summalauseke,
+jossa jokaisen vierekkäisen luvun erotus on vakio.
+Esimerkiksi
+\[3+7+11+15\]
+on aritmeettinen summa,
 jossa vakio on 4.
 Siinä pätee siis $7-3=4$, $11-7=4$ ja $15-11=4$.
-
 Aritmeettinen summa voidaan laskea kaavalla
 \[\frac{n(a+b)}{2},\]
-missä summan ensimmäinen luku on $a$,
+jossa summan ensimmäinen luku on $a$,
 viimeinen luku on $b$ ja lukujen määrä on $n$.
 Esimerkiksi
-\[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36\]
+\[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
 Kaava perustuu siihen, että summa muodostuu $n$ luvusta
 ja luvun suuruus on keskimäärin $(a+b)/2$.
-
+\end{samepage}
 Aritmeettisen summan erikoistapaus on
 \[1+2+3+\cdots+n = \frac{n(n+1)}{2}.\]
 
-\subsubsection{Geometrinen summa}
-
 \index{geometrinen summa}
-
-Geometrisessa summassa jokaisen vierekkäisen
+\noindent
+\textit{Geometrinen summa} on summalauseke,
+jossa jokaisen vierekkäisen
 summattavan luvun suhde on vakio.
-Esimerkiksi $3+6+12+24$ on geometrinen summa,
+Esimerkiksi
+\[3+6+12+24\]
+on geometrinen summa,
 jossa vakio on 2.
 Siinä pätee $6/3=2$, $12/6=2$ ja $24/12=2$.
-
 Geometrinen summa voidaan laskea kaavalla
 \[\frac{bx-a}{x-1},\]
-missä summan ensimmäinen luku on $a$,
+jossa summan ensimmäinen luku on $a$,
 viimeinen luku on $b$ ja vierekkäisten lukujen suhde on $x$.
 Esimerkiksi
 \[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
@@ -810,12 +795,12 @@ josta kaava seuraa ratkaisemalla yhtälön
 \[ xS-S = bx-a.\]
 Geometrisen summan erikoistapaus on usein kätevä kaava
 \[1+2+4+8+\ldots+2^n=2^{n+1}-1.\]
-
-\subsubsection{Harmoninen summa}
+Geometrisen summan sukulainen on
+\[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
 
 \index{harmoninen summa}
-
-Harmoninen summa on
+\noindent
+\textit{Harmoninen summa} on
 \[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\ldots+\frac{1}{n}.\]
 Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
 Summaa voi näet arvioida ylöspäin
@@ -827,15 +812,19 @@ Esimerkiksi tapauksessa $n=6$ arvioksi tulee
 Tämän seurauksena summa jakaantuu $\log_2(n)+1$ samaa
 rationaalilukua toistavaan osaan, joista jokaisen summa on enintään 1.
 
-\subsubsection{Muita kaavoja}
+\subsubsection{Fibonaccin luvut}
 
-Jokaiselle muotoa $\sum_{x=1}^n x^k$ olevalle summalle
-on olemassa oma kaavansa, kun $k$ on vakio.
-Mitä suurempi $k$ on, sitä monimutkaisempi kaava on.
-
-Esimerkiksi
-\[1^2+2^2+3^2+\cdots+n^2 = \frac{n(n+1)(2n+1)}{6}\]
-ja
-\[1^3+2^3+3^3+\cdots+n^3 = \frac{n^2(n+1)^2}{4}.\]
-Geometrisen summan sukulainen on
-\[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
+Fibonaccin luvut esiintyvät monissa erilaisissa yhteyksissä.
+Ne määritellään seuraavasti rekursiivisesti:
+\[
+\begin{array}{lcl}
+f(0) & = & 0 \\
+f(1) & = & 1 \\
+f(n) & = & f(n-1)+f(n-2) \\
+\end{array}
+\]
+Ensimmäiset Fibonaccin luvut ovat
+\[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots\]
+Fibonaccin lukujen laskemiseen on olemassa myös
+suljetun muodon kaava
+\[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
