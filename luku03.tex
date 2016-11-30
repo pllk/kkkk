@@ -89,7 +89,7 @@ on järjestettynä seuraava:
 \end{tikzpicture}
 \end{center}
 
-\subsection{Kuplajärjestäminen}
+\subsubsection{Kuplajärjestäminen}
 
 \index{kuplajärjestäminen}
 
@@ -267,7 +267,7 @@ läpikäynnin jälkeen.
 Koska jokainen läpikäynti vie aikaa $O(n)$,
 algoritmin aikavaativuus on $O(n^2)$.
 
-\subsection{Inversiot}
+\subsubsection{Inversiot}
 
 \index{inversio}
 
@@ -329,7 +329,7 @@ on aina ainakin $O(n^2)$,
 koska sen täytyy tehdä pahimmassa tapauksessa
 $\frac{n(n-1)}{2} = O(n^2)$ vaihtoa.
 
-\subsection{Lomitusjärjestäminen}
+\subsubsection{Lomitusjärjestäminen}
 
 \index{lomitusjärjestäminen}
 
@@ -486,7 +486,7 @@ osataulukoista muodostuu $O(\log n)$ tasoa
 ja kullakin tasolla osataulukoiden lomitus
 vie yhteensä $O(n)$ aikaa.
 
-\subsection{Järjestämisen alaraja}
+\subsubsection{Järjestämisen alaraja}
 
 \index{pikajärjestäminen}
 \index{kekojärjestäminen}
@@ -556,7 +556,7 @@ Puun korkeuden tulee olla tämän vuoksi vähintään
 
 \[ \log_2(n!) = \log_2(1)+\log_2(2)+\cdots+\log_2(n) = O(n \log n).\]
 
-\subsection{Laskemisjärjestäminen}
+\subsubsection{Laskemisjärjestäminen}
 
 \index{laskemisjärjestäminen}
 
@@ -649,6 +649,8 @@ kirjanpidon taulukon indeksöinnissä.
 
 \section{Järjestäminen C++:ssa}
 
+\index{\texttt{sort}}
+
 C++:n standardikirjastossa on \texttt{sort}-funktio,
 jonka avulla voi järjestää helposti taulukoita
 ja muita tietorakenteita.
@@ -657,7 +659,7 @@ järjestämiseen algoritmeissa,
 koska funktio on toteutettu tehokkaasti ja toimivasti.
 Tutustumme seuraavaksi funktion käyttämiseen tarkemmin.
 
-\subsection{Peruskäyttö}
+\subsubsection{Peruskäyttö}
 
 Seuraava koodi järjestää vektorin \texttt{v}
 luvut pienimmästä suurimpaan:
@@ -697,7 +699,7 @@ että sen merkit järjestetään aakkosjärjestykseen.
 Esimerkiksi merkkijono ''apina''
 on järjestettynä ''aainp''.
 
-\subsection{Vertailuoperaattori}
+\subsubsection{Vertailuoperaattori}
 
 Funktion \texttt{sort} käyttäminen vaatii,
 että järjestettävien alkioiden
@@ -757,7 +759,7 @@ struct P {
 };
 \end{lstlisting}
 
-\subsection{Vertailufunktio}
+\subsubsection{Vertailufunktio}
 
 On myös mahdollista antaa
 \texttt{sort}-funktiolle ulkopuolinen vertailufunktio.
@@ -809,9 +811,7 @@ Algoritmi hyödyntää tietoa taulukon
 järjestyksestä,
 minkä ansiosta hakuun kuluu aikaa vain $O(\log n)$.
 
-\subsection{Binäärihaun toteutus}
-
-\subsubsection{Menetelmä 1}
+\subsubsection{Toteutus 1}
 
 Perinteinen tapa toteuttaa binäärihaku muistuttaa sanan etsimistä
 sanakirjasta. Haku puolittaa joka askeleella hakualueen taulukossa,
@@ -840,7 +840,7 @@ Aluksi väli on $1 \ldots n$ eli koko taulukko.
 Välin koko puolittuu algoritmin joka vaiheessa,
 joten aikavaativuus on $O(\log n)$.
 
-\subsubsection{Menetelmä 2}
+\subsubsection{Toteutus 2}
 
 Vaihtoehtoinen tapa toteuttaa binäärihaku
 perustuu taulukon tehostettuun läpikäyntiin.
@@ -872,7 +872,7 @@ Algoritmin aikavaativuus on $O(\log n)$,
 koska \texttt{while}-silmukassa oleva koodi suoritetaan
 aina enintään kahdesti.
 
-\subsection{Muutoskohdan etsiminen}
+\subsubsection{Muutoskohdan etsiminen}
 
 Käytännössä binäärihakua tarvitsee koodata
 harvoin alkion etsimiseen taulukosta,
@@ -933,7 +933,7 @@ Usein ratkaisun kelvollisuuden voi tarkastaa
 ajassa $O(n)$, jolloin kokonaisaikavaativuus
 on $O(n \log z)$.
 
-\subsection{Huippuarvon etsiminen}
+\subsubsection{Huippuarvon etsiminen}
 
 Binäärihaulla voi myös etsiä
 suurimman arvon funktiolle,
