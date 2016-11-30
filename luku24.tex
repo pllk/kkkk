@@ -1,14 +1,6 @@
 \chapter{Todennäköisyys}
 
-Tässä luvussa tutustumme todennäköisyyslaskennan
-perustekniikoihin, joista on monenlaista
-hyötyä ohjelmointikisoissa.
-Tyypillinen tehtävän aihe on satunnaisprosessin
-simulointi dynaamisen ohjelmoinnin avulla.
-Joskus taas tehtävän voi ratkaista satunnaisalgoritmilla,
-joka toimii todennäköisesti hyvin.
-
-\section{Perustekniikat}
+\index{todennäköisyys}
 
 Todennäköisyys on luku väliltä $0 \ldots 1$,
 joka kuvaa sitä, miten todennäköinen jokin
@@ -30,10 +22,8 @@ $P(\textrm{''silmäluku on 4''})=1/6$,
 $P(\textrm{''silmäluku ei ole 6''})=5/6$
 ja $P(\textrm{''silmäluku on parillinen''})=1/2$.
 
-\subsection{Laskutavat}
-
 Todennäköisyyden laskemiseen on
-kaksi tavallista menetelmää. Tutustumme niihin
+kaksi tavallista tapaa. Tutustumme niihin
 seuraavan tehtävän avulla:
 
 \begin{task}
@@ -84,79 +74,138 @@ Todennäköisyys koko prosessin onnistumiselle on
 
 \[1 \cdot \frac{3}{51} \cdot \frac{2}{50} = \frac{1}{425}.\]
 
-\subsection{Tapahtumat}
+\section{Tapahtumat}
 
-Todennäköisyyden tapahtuma voidaan
-esittää joukkona $A \subset X$,
-missä $X$ sisältää kaikki alkeistapaukset.
-Esimerkiksi nopan heitossa alkeistapaukset
-ovat nopan silmäluvut eli $X=\{1,2,\ldots,6\}$.
-Nyt esimerkiksi joukko
-$A=\{2,4,6\}$ vastaa tapahtumaa ''silmäluku on parillinen''.
+Todennäköisyyden tapahtuma
+voidaan esittää joukkona
+\[A \subset X,\]
+missä $X$ sisältää kaikki mahdolliset alkeistapaukset
+ja $A$ on jokin alkeistapausten osajoukko.
+Esimerkiksi nopanheitossa alkeistapaukset ovat
+\[X = \{x_1,x_2,x_3,x_4,x_5,x_6\},\]
+missä $x_k$ tarkoittaa silmälukua $k$.
+Nyt esimerkiksi tapahtumaa ''silmäluku on parillinen''
+vastaa joukko
+\[A = \{x_2,x_4,x_6\}.\]
+Jokaista alkeistapahtumaa $x$
+vastaa todennäköisyys $p(x)$.
+Nyt joukkoa $A$ vastaavan tapahtuman
+todennäköisyys $P(A)$ voidaan
+laskea alkeistapahtumien todennäköisyyksien
+summana kaavalla
+\[P(A) = \sum_{x \in A} p(x).\]
+Esimerkiksi nopanheitossa $p(x)=1/6$
+jokaiselle alkeistapahtumalle $x$, joten
+tapahtuman ''silmäluku on parillinen''
+todennäköisyys on
+\[p(x_2)+p(x_4)+p(x_6)=1/2.\]
+Alkeistapahtumat tulee aina valita niin,
+että kaikkien alkeistapahtumien
+todennäköisyyksien summa on 1 eli $P(X)=1$.
 
-Merkitään $P(A)$ joukon $A$
-esittämän tapahtuman todennäköisyyttä.
-Tämä saadaan laskemalla yhteen
-joukkoon kuuluvien alkeistapahtumien todennäköisyydet.
-Esimerkiksi nopan heitossa jokaisen
-alkeistapauksen todennäköisyys on $1/6$
-ja $P(A)=1/6+1/6+1/6=1/2$, kun $A=\{2,4,6\}$.
+Koska todennäköisyyden tapahtumat ovat joukkoja,
+niihin voi soveltaa jouk\-ko-opin operaatioita:
 
-Komplementti $\bar A$
-tarkoittaa tapahtumaa ''$A$ ei tapahdu''.
-Yhdiste $A \cup B$
-tarkoittaa ''$A$ tai $B$ tapahtuu'',
-ja leikkaus
-$A \cap B$ tarkoittaa
-''$A$ ja $B$ tapahtuvat''.
+\begin{itemize}
+\item Komplementti $\bar A$ tarkoittaa
+tapahtumaa ''$A$ ei tapahdu''. 
+Esimerkiksi nopanheitossa tapahtuman
+$A=\{x_2,x_4,x_6\}$ komplementti on
+$\bar A = \{x_1,x_3,x_5\}$.
+\item Yhdiste $A \cup B$ tarkoittaa
+tapahtumaa ''$A$ tai $B$ tapahtuu''.
+Esimerkiksi tapahtumien $A=\{x_2,x_5\}$
+ja $B=\{x_4,x_5,x_6\}$ yhdiste on
+$A \cup B = \{x_2,x_4,x_5,x_6\}$.
+\item Leikkaus $A \cap B$ tarkoittaa
+tapahtumaa ''$A$ ja $B$ tapahtuvat''.
+Esimerkiksi tapahtumien $A=\{x_2,x_5\}$
+ja $B=\{x_4,x_5,x_6\}$ leikkaus on
+$A \cap B = \{x_5\}$.
+\end{itemize}
 
-\subsubsection*{Komplementti}
+\subsubsection{Komplementti}
 
 Komplementin $\bar A$
-todennäköisyys lasketaan $P(\bar A)=1-P(A)$.
+todennäköisyys lasketaan kaavalla
+\[P(\bar A)=1-P(A).\]
 Joskus tehtävän ratkaisu on kätevää
-laskea komplementin kautta.
+laskea komplementin kautta
+miettimällä tilannetta käänteisesti.
 Esimerkiksi todennäköisyys saada
-kymmenen nopan heitossa ainakin
-kerran silmäluku 6 on $1-(5/6)^{10}$,
-missä $5/6$ on todennäköisyys, että silmäluku ei ole 6.
+silmäluku 6 ainakin kerran,
+kun noppaa heitetään kymmenen kertaa,
+on
+\[1-(5/6)^{10}.\]
+Tässä $5/6$ on todennäköisyys,
+että yksittäisen heiton silmäluku ei ole 6,
+ja $(5/6)^{10}$ on todennäköisyys, että yksikään
+silmäluku ei ole 6 kymmenessä heitossa.
+Tämän komplementti tuottaa halutun tuloksen.
 
-\subsubsection*{Yhdiste}
+\subsubsection{Yhdiste}
 
 Yhdisteen $A \cup B$ todennäköisyys lasketaan kaavalla 
-
 \[P(A \cup B)=P(A)+P(B)-P(A \cap B).\]
-
-Esimerkiksi jos $A=\textrm{''silmäluku on parillinen''}$
-ja $B=\textrm{''silmäluku on alle 5''}$,
-niin tapahtuman $A \cup B$ todennäköisyys
-on $P(A)+P(B)-P(A \cap B)=1/2+2/3-1/3=5/6$.
-Joukko $A \cup B$ sisältää tapaukset $\{1,2,3,4,6\}$.
+Esimerkiksi nopanheitossa tapahtumien
+\[A=\textrm{''silmäluku on parillinen''}\]
+ja
+\[B=\textrm{''silmäluku on alle 4''}\]
+yhdisteen
+\[A \cup B=\textrm{''silmäluku on parillinen tai alle 4''}\]
+todennäköisyys on
+\[P(A \cup B) = P(A)+P(B)-P(A \cap B)=1/2+2/3-1/3=5/6.\]
 
 Jos tapahtumat $A$ ja $B$ ovat erilliset eli $A \cap B$ on tyhjä,
 yhdisteen $A \cup B$ todennäköisyys on yksinkertaisesti
 
 \[P(A \cup B)=P(A)+P(B).\]
 
-\subsubsection*{Leikkaus}
+\subsubsection{Ehdollinen todennäköisyys}
 
-Leikkauksen $A \cap B$ todennäköisyys lasketaan kaavalla
-\[P(A \cap B)=P(A)P(B|A),\]
-missä $P(B|A)$ on $B$:n todennäköisyys
-olettaen, että $A$ on tapahtunut.
+\index{ehdollinen todennäköisyys}
 
-Esimerkiksi jos $A=\textrm{''silmäluku on parillinen''}$
-ja $B=\textrm{''silmäluku ei ole 6''}$,
-niin tapahtuman $A \cap B$ todennäköisyys
-on $P(A)P(B|A)=1/2 \cdot 2/3 = 1/3$.
-Joukko $A \cap B$ sisältää tapaukset $\{2,4\}$.
+Ehdollinen todennäköisyys
+\[P(A | B) = \frac{P(A \cap B)}{P(B)}\]
+on tapahtuman $A$ todennäköisyys
+olettaen, että tapahtuma $B$ tapahtuu.
+Tällöin todennäköisyyden laskennassa otetaan
+huomioon vain ne alkeistapaukset,
+jotka kuuluvat joukkoon $B$.
 
+Äskeisen esimerkin joukkoja käyttäen
+\[P(A | B)= 1/3,\]
+koska joukon $B$ alkeistapahtumat ovat
+$\{x_1,x_2,x_3\}$ ja niistä yhdessä
+silmäluku on parillinen.
+Tämä on todennäköisyys saada parillinen silmäluku,
+jos tiedetään, että silmäluku on välillä $1 \ldots 3$.
 
-Jos tapahtumat $A$ ja $B$ ovat riippumattomat
-eli $A$:n tapahtuminen ei vaikuta $B$:n todennäköisyyteen
-ja päinvastoin, leikkauksen todennäköisyys on
-\[P(A \cap B)=P(A)P(B),\]
-koska tässä tapauksessa $P(B|A)=P(B)$.
+\subsubsection{Leikkaus}
+
+\index{riippumattomuus}
+
+Ehdollisen todennäköisyyden avulla
+leikkauksen $A \cap B$ todennäköisyys
+voidaan laskea kaavalla
+\[P(A \cap B)=P(A)P(B|A).\]
+Tapahtumat $A$ ja $B$ ovat riippumattomat, jos
+\[P(A|B)=P(A),\]
+jolloin $B$:n tapahtuminen ei vaikuta $A$:n
+todennäköisyyteen ja päinvastoin.
+Tässä tapauksessa leikkauksen
+todennäköisyys on
+\[P(A \cap B)=P(A)P(B).\]
+Esimerkiksi pelikortin nostamisessa
+tapahtumat
+\[A = \textrm{''kortin maa on risti''}\]
+ja
+\[B = \textrm{''kortin arvo on 4''}\]
+ovat riippumattomat.
+Niinpä tapahtuman
+\[A \cap B = \textrm{''kortti on ristinelonen''}\]
+todennäköisyys on
+\[P(A \cap B)=P(A)P(B)=1/4 \cdot 1/13 = 1/52.\]
 
 \section{Satunnaismuuttuja}
 
@@ -167,7 +216,8 @@ prosessin tuloksena.
 Satunnaismuuttujaa merkitään yleensä
 suurella kirjaimella.
 Esimerkiksi kahden nopan heitossa yksi mahdollinen
-satunnaismuuttuja on $X=$''silmälukujen summa''.
+satunnaismuuttuja on
+\[X=\textrm{''silmälukujen summa''}.\]
 Esimerkiksi jos heitot ovat $(4,6)$,
 niin $X$ saa arvon 10.
 
@@ -178,7 +228,7 @@ koska erilaisia heittotapoja on 36
 ja niistä summan 10 tuottavat heitot
 $(4,6)$, $(5,5)$ ja $(6,4)$.
 
-\subsection{Odotusarvo}
+\subsubsection{Odotusarvo}
 
 \index{odotusarvo}
 
@@ -191,8 +241,6 @@ missä $x$ saa kaikki mahdolliset satunnaismuuttujan arvot.
 Esimerkiksi nopan heitossa silmäluvun odotusarvo on
 
 \[1/6 \cdot 1 + 1/6 \cdot 2 + 1/6 \cdot 3 + 1/6 \cdot 4 + 1/6 \cdot 5 + 1/6 \cdot 6 = 7/2.\]
-
-\subsubsection*{Lineaarisuus}
 
 Usein hyödyllinen odotusarvon ominaisuus on \textit{lineaarisuus}.
 Sen ansiosta summa $E[X_1+X_2+\cdots+X_n]$ voidaan laskea $E[X_1]+E[X_2]+\cdots+E[X_n]$.
@@ -213,7 +261,9 @@ on $(\frac{n-1}{n})^n$, koska mikään pallo ei saa mennä sinne.
 Odotusarvon lineaarisuuden ansiosta tyhjien hattujen
 määrän odotusarvo on $n \cdot (\frac{n-1}{n})^n$.
 
-\subsection{Jakaumat}
+\subsubsection{Jakaumat}
+
+\index{jakauma}
 
 Satunnaismuuttujan jakauma kertoo,
 millä todennäköisyydellä satunnaismuuttuja
@@ -230,10 +280,9 @@ $P(X=x)$ & $1/36$ & $2/36$ & $3/36$ & $4/36$ & $5/36$ & $6/36$ & $5/36$ & $4/36$
 }
 \end{center}
 Tutustumme seuraavaksi muutamaan usein esiintyvään jakaumaan.
-
-\subsubsection*{Tasajakauma}
-
-Tasajakaumassa satunnaismuuttuja
+\index{tasajakauma}
+~\\
+\textit{Tasajakauman} satunnaismuuttuja
 saa arvoja väliltä $a \ldots b$
 ja jokaisen arvon todennäköisyys on sama.
 Esimerkiksi yhden nopan heitto tuottaa tasajakauman,
@@ -241,10 +290,9 @@ jossa $P(X=x)=1/6$, kun $x=1,2,\ldots,6$.
 
 Tasajakaumassa $X$:n odotusarvo on
 \[E[X] = \frac{a+b}{2}.\]
-
-\subsubsection*{Binomijakauma}
-
-Binomijakauma kuvaa tilannetta, jossa tehdään $n$
+\index{binomijakauma}
+~\\
+\textit{Binomijakauma} kuvaa tilannetta, jossa tehdään $n$
 yritystä ja joka yrityksessä onnistumisen
 todennäköisyys on $p$. Satunnaismuuttuja $X$
 on onnistuneiden yritysten määrä.
@@ -262,10 +310,9 @@ on $(1/6)^3 (5/6)^7 {10 \choose 3}$.
 
 Binomijakaumassa $X$:n odotusarvo on
 \[E[X] = pn.\]
-
-\subsubsection*{Geometrinen jakauma}
-
-Geometrinen jakauma kuvaa tilannetta,
+\index{geometrinen jakauma}
+~\\
+\textit{Geometrinen jakauma} kuvaa tilannetta,
 jossa onnistumisen todennäköisyys on $p$
 ja yrityksiä tehdään, kunnes tulee ensimmäinen
 onnistuminen. Satunnaismuuttuja $X$ on
@@ -425,7 +472,10 @@ suoritusaika vaihtelee satunnaisesti.
 Tavoitteena on, että algoritmi toimisi nopeasti
 suurella todennäköisyydellä.
 
-\subsection{Alkion etsiminen}
+Tutustumme seuraavaksi kolmeen esimerkkitehtävään,
+jotka voi ratkaista satunnaisuuden avulla.
+
+\subsubsection{Esimerkki 1}
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ alkiota.
@@ -476,7 +526,9 @@ vain yhden alkion verran.
 Tämän todennäköisyys on kuitenkin erittäin pieni,
 eikä näin tapahdu käytännössä.
 
-\subsection{Matriisitulon tarkastaminen}
+\subsubsection{Esimerkki 2}
+
+\index{matriisitulo}
 
 \begin{task}
 Annettuna on kolme $n \times n$ -kokoista matriisia
@@ -548,7 +600,9 @@ tekemällä tarkastuksen usealla
 satunnaisella matriisilla $X$ ennen vastauksen
 $AB=C$ ilmoittamista.
 
-\subsection{Verkon värittäminen}
+\subsubsection{Esimerkki 3}
+
+\index{väritys}
 
 \begin{task}
 Annettuna on verkko, jossa on $n$ solmua ja $m$ kaarta.
