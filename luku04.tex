@@ -20,14 +20,16 @@ rakenteisiin, joita ei ole valmiina C++:ssa.
 
 \section{Dynaaminen taulukko}
 
-\subsection{Vektori}
-
 \index{vektori}
+\index{\texttt{vector}}
 
-Vektori (\texttt{vector})
-on C++:n tavallisin dynaaminen taulukko.
-Se on kuin taulukko, mutta alkioiden
-määrää voi muuttaa suorituksen aikana.
+Dynaaminen taulukko on taulukko,
+jonka kokoa pystyy muuttamaan
+ohjelman suorituksen aikana.
+C++:n tavallisin dynaaminen taulukko
+on vektori (\texttt{vector}).
+Sitä voi käyttää hyvin samalla tavalla
+kuin tavallista taulukkoa.
 
 Seuraava koodi luo tyhjän vektorin
 ja lisää siihen kolme lukua:
@@ -56,6 +58,7 @@ for (int i = 0; i < v.size(); i++) {
 }
 \end{lstlisting}
 
+\begin{samepage}
 Vektorin voi käydä myös läpi lyhyemmin näin:
 
 \begin{lstlisting}
@@ -63,6 +66,7 @@ for (auto x : v) {
     cout << x << "\n";
 }
 \end{lstlisting}
+\end{samepage}
 
 Funktio \texttt{back} hakee vektorin viimeisen alkion,
 ja funktio \texttt{pop\_back} poistaa vektorin
@@ -101,9 +105,10 @@ Näin tapahtuu kuitenkin niin harvoin, että vektorin
 funktion \texttt{push\_back} aikavaativuus on
 keskimäärin $O(1)$.
 
-\subsection{Merkkijono}
+\subsubsection{Merkkijono}
 
 \index{merkkijono}
+\index{\texttt{string}}
 
 Myös merkkijono (\texttt{string}) on dynaaminen taulukko,
 jota pystyy käsittelemään lähes samaan
@@ -132,6 +137,9 @@ cout << c << "\n"; // tiva
 \section{Joukko}
 
 \index{joukko}
+\index{\texttt{set}}
+\index{\texttt{unordered\_set}}
+
 
 Joukko (\textit{set}) on tietorakenne,
 joka muodostuu siinä olevista alkioista.
@@ -190,6 +198,9 @@ s.insert(5);
 cout << s.count(5) << "\n"; // 1
 \end{lstlisting}
 
+\index{\texttt{multiset}}
+\index{\texttt{unordered\_multiset}}
+
 C++ sisältää myös rakenteet
 \texttt{multiset} ja \texttt{unordered\_multiset},
 jotka toimivat muuten samalla tavalla kuin \texttt{set}
@@ -228,6 +239,8 @@ cout << s.count(5) << "\n"; // 2
 \section{Hakemisto}
 
 \index{hakemisto}
+\index{\texttt{map}}
+\index{\texttt{unordered\_map}}
 
 Hakemisto (\textit{map}) on taulukon yleistys,
 joka sisältää joukon avain-arvo-pareja.
@@ -317,7 +330,7 @@ Huomaa epäsymmetria iteraattoreissa:
 kun taas \texttt{s.end()} osoittaa tietorakenteen ulkopuolelle.
 Iteraattoreiden rajaama joukon väli on siis puoliavoin.
 
-\subsection{Taulukon välit}
+\subsubsection{Taulukon välit}
 
 Iteraattoreita tarvitsee
 C++:n standardikirjaston funktioissa, jotka käsittelevät
@@ -346,7 +359,7 @@ reverse(t, t+n);
 random_shuffle(t, t+n);
 \end{lstlisting}
 
-\subsection{Joukon iteraattorit}
+\subsubsection{Joukon iteraattorit}
 
 Iteraattoreita tarvitsee usein joukon
 alkioiden käsittelyssä.
@@ -443,9 +456,10 @@ on joko $a$:n osoittama alkio tai tätä edellinen alkio.
 
 \section{Muita tietorakenteita}
 
-\subsection{Bittijoukko}
+\subsubsection{Bittijoukko}
 
 \index{bittijoukko}
+\index{\texttt{bitset}}
 
 Bittijoukko (\texttt{bitset}) on taulukko,
 jonka jokaisen alkion arvo on 0 tai 1.
@@ -487,9 +501,10 @@ cout << (a|b) << "\n"; // 1011111110
 cout << (a^b) << "\n"; // 1001101110
 \end{lstlisting}
 
-\subsection{Pakka}
+\subsubsection{Pakka}
 
 \index{pakka}
+\index{\texttt{deque}}
 
 Pakka (\texttt{deque}) on dynaaminen taulukko,
 jonka kokoa pystyy muuttamaan tehokkaasti
@@ -517,11 +532,10 @@ vektoria raskaampi rakenne.
 Kuitenkin lisäyksen ja poiston
 aikavaativuus on keskimäärin $O(1)$ molemmissa päissä.
 
-\subsection{Pino ja jono}
-
 \subsubsection{Pino}
 
 \index{pino}
+\index{\texttt{stack}}
 
 Pino (\texttt{stack}) on tietorakenne,
 joka tarjoaa kaksi $O(1)$-aikaista
@@ -545,6 +559,7 @@ cout << s.top(); // 2
 \subsubsection{Jono}
 
 \index{jono}
+\index{\texttt{queue}}
 
 Jono (\texttt{queue}) on kuin pino,
 mutta alkion lisäys tapahtuu jonon loppuun
@@ -572,10 +587,11 @@ Kuitenkin \texttt{stack} ja \texttt{queue} ovat
 kevyempiä ja hieman tehokkaampia rakenteita,
 jos niiden operaatiot riittävät algoritmin toteuttamiseen.
 
-\subsection{Prioriteettijono}
+\subsubsection{Prioriteettijono}
 
 \index{prioriteettijono}
 \index{keko}
+\index{\texttt{priority\_queue}}
 
 Prioriteettijono (\texttt{priority\_queue})
 pitää yllä joukkoa alkioista.
@@ -625,7 +641,7 @@ ja jonosta pystyy hakemaan ja poistamaan pienimmän alkion:
 priority_queue<int,vector<int>,greater<int>> q;
 \end{lstlisting}
 
-\section{Erilaiset ratkaisutavat}
+\section{Tietorakenne vs. järjestäminen}
 
 Monen tehtävän voi ratkaista tehokkaasti joko
 sopivilla tietorakenteilla tai järjestämisellä.
