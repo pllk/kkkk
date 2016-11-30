@@ -825,48 +825,48 @@ kun haettavana on yksittäinen
 lyhin polku verkossa.
 Tämä vaatii kuitenkin, että verkko on pieni
 ja kuutiollinen aikavaativuus on riittävä.
-
-\section{Yhteenveto}
-
-Olemme käyneet läpi useita algoritmeja,
-joilla voi etsiä lyhimmän polun verkossa
-solmusta $a$ solmuun $b$.
-Jokaisella algoritmilla on jokin etu verrattuna
-muihin algoritmeihin.
-Seuraava kaavio auttaa sopivan algoritmin valinnassa:
-
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-\draw (1,0) rectangle (9,1.5);
-\node at (5,0.75) {riittääkö $O(n^3)$-algoritmi?};
-
-\draw[thick,->] (5,0) -- (1,-2);
-\draw[thick,->] (5,0) -- (9,-2);
-\node at (1,-1) {kyllä};
-\node at (9,-1) {ei};
-\draw (-2,-2) rectangle (4,-3);
-\node at (1,-2.5) {Floyd-Warshall};
-\draw (5,-2) rectangle (13,-3.5);
-\node at (9,-2.75) {onko kaarilla painot?};
-
-\draw[thick,->] (9,-3.5) -- (5,-5.5);
-\draw[thick,->] (9,-3.5) -- (13,-5.5);
-\node at (5,-4.5) {kyllä};
-\node at (13,-4.5) {ei};
-\draw (10,-5.5) rectangle (16,-6.5);
-\node at (13,-6) {leveyshaku};
-\draw (1,-5.5) rectangle (9,-7);
-\node at (5,-6.25) {onko negatiivisia kaaria?};
-
-\draw[thick,->] (5,-7) -- (1,-9);
-\draw[thick,->] (5,-7) -- (9,-9);
-\node at (1,-8) {kyllä};
-\node at (9,-8) {ei};
-\draw (-2,-9) rectangle (4,-10);
-\node at (1,-9.5) {Bellman-Ford};
-\draw (6,-9) rectangle (12,-10);
-\node at (9,-9.5) {Dijkstra};
-
-
-\end{tikzpicture}
-\end{center}
+% 
+% \section{Yhteenveto}
+% 
+% Olemme käyneet läpi useita algoritmeja,
+% joilla voi etsiä lyhimmän polun verkossa
+% solmusta $a$ solmuun $b$.
+% Jokaisella algoritmilla on jokin etu verrattuna
+% muihin algoritmeihin.
+% Seuraava kaavio auttaa sopivan algoritmin valinnassa:
+% 
+% \begin{center}
+% \begin{tikzpicture}[scale=0.7]
+% \draw (1,0) rectangle (9,1.5);
+% \node at (5,0.75) {riittääkö $O(n^3)$-algoritmi?};
+% 
+% \draw[thick,->] (5,0) -- (1,-2);
+% \draw[thick,->] (5,0) -- (9,-2);
+% \node at (1,-1) {kyllä};
+% \node at (9,-1) {ei};
+% \draw (-2,-2) rectangle (4,-3);
+% \node at (1,-2.5) {Floyd-Warshall};
+% \draw (5,-2) rectangle (13,-3.5);
+% \node at (9,-2.75) {onko kaarilla painot?};
+% 
+% \draw[thick,->] (9,-3.5) -- (5,-5.5);
+% \draw[thick,->] (9,-3.5) -- (13,-5.5);
+% \node at (5,-4.5) {kyllä};
+% \node at (13,-4.5) {ei};
+% \draw (10,-5.5) rectangle (16,-6.5);
+% \node at (13,-6) {leveyshaku};
+% \draw (1,-5.5) rectangle (9,-7);
+% \node at (5,-6.25) {onko negatiivisia kaaria?};
+% 
+% \draw[thick,->] (5,-7) -- (1,-9);
+% \draw[thick,->] (5,-7) -- (9,-9);
+% \node at (1,-8) {kyllä};
+% \node at (9,-8) {ei};
+% \draw (-2,-9) rectangle (4,-10);
+% \node at (1,-9.5) {Bellman-Ford};
+% \draw (6,-9) rectangle (12,-10);
+% \node at (9,-9.5) {Dijkstra};
+% 
+% 
+% \end{tikzpicture}
+% \end{center}
