@@ -1,19 +1,21 @@
 \chapter{Suunnatut verkot}
 
-Tämä luku käsittelee kahta suunnattuihin
-verkkoihin liittyvää aihetta.
-Ensin keskitymme verkkoihin, joissa ei ole silmukoita.
-Tämä mahdollistaa topologisen järjestyksen
-muodostamisen verkon solmuille,
-minkä ansiosta verkossa voi edelleen
-käyttää dynaamista ohjelmointia.
+Tässä luvussa tutustumme kahteen suunnattujen
+verkkojen alaluokkaan:
 
-Tämän jälkeen tutustumme funktionaalisiin
-verkkoihin eli verkkoihin, joissa jokaisesta solmusta
-lähtee tasan yksi kaari.
-Tällaisessa verkossa jokaisella solmulla on
-yksikäsitteinen seuraaja ja verkossa etenemiseen
-ja syklien etsimiseen on olemassa tehokkaita algoritmeja.
+\begin{itemize}
+\item \textit{Syklitön verkko}:
+Tällaisessa verkossa ei ole yhtään sykliä,
+eli mistään solmusta ei ole polkua takaisin
+solmuun itseensä.
+\item \textit{Seuraajaverkko}:
+Tällaisessa verkossa jokaisen solmun lähtöaste on 1
+eli kullakin solmulla on yksikäsitteinen seuraaja.
+\end{itemize}
+Osoittautuu, että kummassakin tapauksessa
+verkon käsittely on yleistä verkkoa helpompaa
+ja voimme käyttää tehokkaita algoritmeja, jotka
+hyödyntävät oletuksia verkon rakenteesta.
 
 \section{Topologinen järjestys}
 
@@ -25,11 +27,6 @@ Topologinen järjestys
 järjestää suunnatun verkon solmut niin,
 että jos solmusta $a$ pääsee solmuun $b$,
 niin $a$ on ennen $b$:tä järjestyksessä.
-Esimerkiksi jos solmut ovat kursseja
-ja kaaret ovat kurssien esitietovaatimukset,
-topologinen järjestys antaa
-tavan suorittaa kaikki kurssit.
-
 Esimerkiksi verkon
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -49,7 +46,6 @@ Esimerkiksi verkon
 \path[draw,thick,->,>=latex] (3) -- (6);
 \end{tikzpicture}
 \end{center}
-
 yksi topologinen järjestys on
 $(4, 1, 5, 2, 3, 6)$:
 \begin{center}
@@ -72,9 +68,12 @@ $(4, 1, 5, 2, 3, 6)$:
 \end{center}
 
 Topologinen järjestys on olemassa
-aina silloin, kun verkossa ei ole sykliä.
+aina silloin, kun verkko on syklitön.
 Jos taas verkossa on sykli,
-topologista järjestystä ei voi muodostaa.
+topologista järjestystä ei voi muodostaa,
+koska mitään syklissä olevaa solmua ei voi
+valita ennen toista topologiseen järjestykseen.
+
 Seuraavaksi näemme, miten syvyyshaun avulla
 voi muodostaa topologisen järjestyksen tai
 todeta, että tämä ei ole mahdollista syklin takia.
@@ -120,8 +119,6 @@ solmuun 6 asti:
 \node[draw, circle] (5) at (3,3) {$5$};
 \node[draw, circle,fill=gray!80] (6) at (5,3) {$6$};
 
-%\path[draw,thick,->,>=latex] (1) -- (2);
-%\path[draw,thick,->,>=latex] (2) -- (3);
 \path[draw,thick,->,>=latex] (4) -- (1);
 \path[draw,thick,->,>=latex] (4) -- (5);
 \path[draw,thick,->,>=latex] (5) -- (2);
@@ -182,7 +179,7 @@ Seuraavaksi syvyyshaun toinen vaihe alkaa solmusta 4:
 
 Tämän seurauksena listaksi tulee $(6,3,2,1,5,4)$.
 Kaikki solmut on käyty läpi, joten topologinen järjestys on valmis.
-Se on lista käänteisenä eli $(4,5,1,2,3,6)$:
+Topologinen järjestys on lista käänteisenä eli $(4,5,1,2,3,6)$:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -262,31 +259,40 @@ Tässä tapauksessa sykli on $2 \rightarrow 3 \rightarrow 5 \rightarrow 2$.
 
 \section{Dynaaminen ohjelmointi}
 
-Jos suunnatussa verkossa ei ole sykliä, sen solmuihin voi
-soveltaa dynaamista ohjelmointia topologisessa järjestyksessä.
-Dynaamisen ohjelmoinnin avulla voi vastata esimerkiksi seuraaviin
+Jos suunnattu verkko on syklitön,
+siihen voi soveltaa dynaamista ohjelmointia.
+Tämän avulla voi vastata tehokkaasti
+ajassa $O(n+m)$ esimerkiksi seuraaviin
 kysymyksiin koskien verkossa olevia polkuja solmusta $a$ solmuun $b$:
 
 \begin{itemize}
 \item montako erilaista polkua on olemassa?
-\item mikä on pienin/suurin mahdollinen määrä kaaria polulla?
+\item mikä on lyhin/pisin polku?
+\item mikä on pienin/suurin määrä kaaria polulla?
 \item mitkä solmut esiintyvät varmasti polulla?
 \end{itemize}
+
+Huomaa, että yleisessä verkossa
+monien tällaisten kysymysten ratkaisemiseen
+ei tunneta mitään tehokasta algoritmia
+tai ongelmat eivät ole edes mielekkäitä.
+Esimerkiksi pisimmän polun etsiminen
+solmusta $a$ solmuun $b$ on NP-vaikea ongelma
+yleisessä verkossa.
 
 Tutustumme seuraavaksi tekniikkaan käyttäen
 esimerkkinä polkujen määrän laskemista verkossa.
 
-\subsection{Polkujen määrä}
+\subsubsection{Polkujen määrän laskeminen}
 
 \begin{task}
-Annettuna on suunnattu verkko, jossa ei ole sykliä.
+Annettuna on suunnattu, syklitön verkko.
 Tehtäväsi on laskea, montako polkua on olemassa
 solmusta $a$ solmuun $b$.
 \end{task}
 
 \begin{samepage}
 Esimerkiksi verkossa
-
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -306,15 +312,12 @@ Esimerkiksi verkossa
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-
 on 3 polkua solmusta 4 solmuun 6:
-
 \begin{itemize}
 \item $4 \rightarrow 1 \rightarrow 2 \rightarrow 3 \rightarrow 6$
 \item $4 \rightarrow 5 \rightarrow 2 \rightarrow 3 \rightarrow 6$
 \item $4 \rightarrow 5 \rightarrow 3 \rightarrow 6$
 \end{itemize}
-
 Ideana on käydä läpi verkon solmut topologisessa järjestyksessä
 ja laskea kunkin solmun kohdalla yhteen eri suunnista
 tulevien polkujen määrät.
@@ -338,7 +341,6 @@ Verkon topologinen järjestys on seuraava:
 \path[draw,thick,->,>=latex] (3) -- (6);
 \end{tikzpicture}
 \end{center}
-
 Tuloksena ovat seuraavat lukumäärät:
 
 \begin{center}
@@ -373,7 +375,7 @@ joten solmuun 2 päättyy kaksi polkua solmusta 4 alkaen.
 Vastaavasti solmuun 3 pääsee solmuista 2 ja 5,
 joiden kautta tulee kaksi ja yksi polkua solmusta 4 alkaen.
 
-\subsection{Dijkstran sovellukset}
+\subsubsection{Dijkstran algoritmin sovellukset}
 
 \index{Dijkstran algoritmi}
 
@@ -448,25 +450,77 @@ on olemassa solmusta 1 solmuun 5:
 \end{tikzpicture}
 \end{center}
 
+\subsubsection{Ongelman esitys verkkona}
 
-\section{Funktionaaliset verkot}
+Itse asiassa mikä tahansa dynaamisen ohjelmoinnin
+ongelma voidaan esittää suunnattuna, syklittömänä verkkona.
+Tällaisessa verkossa solmuja ovat dynaamisen
+ohjelmoinnin tilat ja kaaret kuvaavat,
+miten tilat riippuvat toisistaan.
 
+Tarkastellaan esimerkkinä seuraavaa tuttua tehtävää:
+
+\begin{task}
+Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$,
+ja tehtäväsi on muodostaa kolikoista rahamäärä $x$.
+Jokaista kolikkoa on saatavilla rajattomasti.
+Mikä on pienin määrä kolikoita,
+joilla rahamäärän voi muodostaa?
+\end{task}
+
+Tehtävästä voidaan muodostaa verkko, jossa solmut
+kuvaavat rahamääriä ja kaaret kuvaavat
+valittavia kolikoita.
+Esimerkiksi jos kolikot ovat $\{1,3,4\}$
+ja $x=6$, niin verkosta tulee seuraava:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (0) at (0,0) {$0$};
+\node[draw, circle] (1) at (2,0) {$1$};
+\node[draw, circle] (2) at (4,0) {$2$};
+\node[draw, circle] (3) at (6,0) {$3$};
+\node[draw, circle] (4) at (8,0) {$4$};
+\node[draw, circle] (5) at (10,0) {$5$};
+\node[draw, circle] (6) at (12,0) {$6$};
+
+\path[draw,thick,->] (0) -- (1);
+\path[draw,thick,->] (1) -- (2);
+\path[draw,thick,->] (2) -- (3);
+\path[draw,thick,->] (3) -- (4);
+\path[draw,thick,->] (4) -- (5);
+\path[draw,thick,->] (5) -- (6);
+
+\path[draw,thick,->] (0) edge [bend right=30] (3);
+\path[draw,thick,->] (1) edge [bend right=30] (4);
+\path[draw,thick,->] (2) edge [bend right=30] (5);
+\path[draw,thick,->] (3) edge [bend right=30] (6);
+
+\path[draw,thick,->] (0) edge [bend left=30] (4);
+\path[draw,thick,->] (1) edge [bend left=30] (5);
+\path[draw,thick,->] (2) edge [bend left=30] (6);
+\end{tikzpicture}
+\end{center}
+
+\section{Tehokas eteneminen}
+
+\index{seuraajaverkko}
 \index{funktionaalinen verkko}
 
-Funktionaalinen verkko (\textit{functional graph})
-on suunnattu verkko, jonka jokaisesta solmusta lähtee
-tasan yksi kaari ulospäin.
-Funktionaalinen verkko muodostuu yhdestä tai
-useammasta komponentista, joista jokaisessa
-on yksi sykli ja joukko siihen johtavia polkuja.
+Seuraavaksi oletamme, että
+suunnaton verkko on \textit{seuraajaverkko},
+jolloin jokaisen solmun lähtöaste on 1
+eli siitä lähtee tasan yksi kaari ulospäin.
+Niinpä verkko muodostuu yhdestä tai useammasta
+komponentista, joista jokaisessa on yksi sykli
+ja joukko siihen johtavia polkuja.
 
-Termi ''funktionaalinen'' johtuu siitä,
-että jokaista funktionaalista verkkoa vastaa
-funktio $f$, joka määrittelee verkon kaaret.
+Seuraajaverkosta käytetään joskus myös nimeä
+\textit{funktionaalinen verkko}.
+Tämä johtuu siitä, että jokaista seuraajaverkkoa
+vastaa funktio $f$, joka määrittelee verkon kaaret.
 Funktion parametrina on verkon solmu ja
 se palauttaa solmusta lähtevän kaaren kohdesolmun.
-Verkon kaaret ovat siis muotoa $(x,f(x))$,
-missä $s=1,2,\ldots,n$.
 
 \begin{samepage}
 Esimerkiksi funktio
@@ -506,9 +560,7 @@ määrittelee seuraavan verkon:
 \end{tikzpicture}
 \end{center}
 
-\subsection{Nopea eteneminen}
-
-Koska funktionaalisessa verkossa jokaisella solmulla
+Koska seuraajaverkon jokaisella solmulla
 on yksikäsitteinen seuraaja, voimme määritellä funktion $f(x,k)$,
 joka kertoo solmun, johon päätyy solmusta $x$
 kulkemalla $k$ askelta.
@@ -534,16 +586,27 @@ koska solmusta 4 päätyy solmuun 2 kulkemalla 6 askelta:
 \end{tikzpicture}
 \end{center}
 
-Suoraviivainen tapa laskea funktion $f(x,k)$ arvo
-on käydä läpi polku verkossa askel askeleelta, mihin kuluu aikaa $O(k)$.
-Sopivan esikäsittelyn avulla kuitenkin minkä tahansa
-funktion arvon pystyy laskemaan ajassa $O(\log k)$.
+Suoraviivainen tapa laskea arvo $f(x,k)$
+on käydä läpi polku askel askeleelta, mihin kuluu aikaa $O(k)$.
+Sopivan esikäsittelyn avulla voimme laskea kuitenkin
+minkä tahansa arvon $f(x,k)$ ajassa $O(\log u)$,
+missä $u$ on suurin mahdollinen $k$:n arvo,
+jonka laskeminen tulee olla mahdollista.
 
-Ideana on laskea etukäteen funktion $f(x,k)$ arvot, kun $k$ on 2:n potenssi.
-Tämä onnistuu tehokkaasti, koska $f(x,1)=f(x)$ ja $f(x,k)=f(f(x,k/2),k/2)$.
-Esilaskenta vie aikaa $O(n \log k)$, koska jokaisesta solmusta
-lasketaan $O(\log k)$ arvoa.
-Esimerkin tapauksessa muodostuu seuraava taulukko:
+Ideana on laskea etukäteen kaikki arvot $f(x,k)$, kun $k$ on 2:n potenssi
+ja enintään $u$.
+Tämä onnistuu tehokkaasti, koska voimme käyttää rekursiota
+
+\begin{equation*}
+    f(x,k) = \begin{cases}
+               f(x)              & k = 1\\
+               f(f(x,k/2),k/2)   & k > 1\\
+           \end{cases}
+\end{equation*}
+
+Arvojen $f(x,k)$ esilaskenta vie aikaa $O(n \log u)$,
+koska jokaisesta solmusta lasketaan $O(\log u)$ arvoa.
+Esimerkin tapauksessa taulukko alkaa muodostua seuraavasti:
 
 \begin{center}
 \begin{tabular}{r|rrrrrrrrr}
@@ -559,37 +622,63 @@ $\cdots$ \\
 
 Tämän jälkeen funktion $f(x,k)$ arvon saa laskettua
 esittämällä luvun $k$ summana 2:n potensseja.
-Esimerkiksi $11=8+2+1$, joten $f(x,11)=f(f(f(x,8),2),1)$.
-Niinpä yllä olevassa verkossa 
-$f(4,11)=f(f(f(4,8),2),1)=5$.
-Polussa on aina $O(\log k)$ osaa, joten laskemiseen
+Esimerkiksi jos haluamme laskea arvon $f(x,11)$,
+muodostamme ensin esityksen $11=8+2+1$.
+Tämän ansiosta
+\[f(x,11)=f(f(f(x,8),2),1).\]
+Esimerkiksi yllä olevassa verkossa 
+\[f(4,11)=f(f(f(4,8),2),1)=5.\]
+Tällaisessa esityksessä on aina
+$O(\log k)$ osaa, joten arvon $f(x,k)$ laskemiseen
 kuluu aikaa $O(\log k)$.
 
-\subsection{Syklin etsiminen}
+\section{Syklin tunnistaminen}
 
 \index{sykli}
+\index{syklin tunnistaminen}
 
-Toinen kiinnostava kysymys funktionaalisessa verkossa on,
-kuinka monta askelta solmusta $x$ tulee kulkea
-ennen sykliin pääsemistä ja mikä on syklin pituus.
-Esimerkiksi yllä olevassa verkossa solmusta 9
-pääsee sykliin kulkemalla yhden askeleen
-ja sykliin kuuluu kolme solmua (1, 3 ja 7).
+Kiinnostavia kysymyksiä seuraajaverkossa ovat,
+minkä solmun kohdalla saavutaan sykliin
+solmusta $x$ lähdettäessä
+ja montako solmua kyseiseen sykliin kuuluu.
+Esimerkiksi verkossa
 
-Helppo tapa etsiä sykli on alkaa kulkea verkossa
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (5) at (0,0) {$5$};
+\node[draw, circle] (4) at (-2,0) {$4$};
+\node[draw, circle] (6) at (-1,1.5) {$6$};
+\node[draw, circle] (3) at (-4,0) {$3$};
+\node[draw, circle] (2) at (-6,0) {$2$};
+\node[draw, circle] (1) at (-8,0) {$1$};
+
+\path[draw,thick,->] (1) -- (2);
+\path[draw,thick,->] (2) -- (3);
+\path[draw,thick,->] (3) -- (4);
+\path[draw,thick,->] (4) -- (5);
+\path[draw,thick,->] (5) -- (6);
+\path[draw,thick,->] (6) -- (4);
+\end{tikzpicture}
+\end{center}
+solmusta 1 lähdettäessä ensimmäinen sykliin kuuluva
+solmu on solmu 4 ja syklissä on kolme solmua
+(solmut 4, 5 ja 6).
+
+Helppo tapa tunnistaa sykli on alkaa kulkea verkossa
 solmusta $x$ alkaen ja pitää kirjaa kaikista vastaan tulevista
 solmuista. Kun jokin solmu tulee vastaan toista kertaa,
 sykli on löytynyt. Tämän menetelmän aikavaativuus on $O(n)$
 ja muistia kuluu myös $O(n)$.
 
-Osoittautuu kuitenkin, että ongelman ratkaisuun on
+Osoittautuu kuitenkin, että syklin tunnistamiseen on
 olemassa parempia algoritmeja.
 Niissä aikavaativuus on edelleen $O(n)$,
 mutta muistia kuluu vain $O(1)$.
 Tästä on merkittävää hyötyä, jos $n$ on suuri.
-Tutustumme seuraavaksi kahteen tällaiseen algoritmiin.
+Tunnetuin tällainen algoritmi on
+\textit{Floydin algoritmi}, johon tutustumme seuraavaksi.
 
-\subsubsection{Algoritmi 1 (Floyd)}
+\subsubsection{Floydin algoritmi}
 
 \index{Floydin algoritmi}
 
@@ -613,7 +702,7 @@ ja osoitin $b$ on kulkenut $2k$ askelta,
 missä $k$ on jaollinen syklin pituudella.
 Niinpä ensimmäinen sykliin kuuluva solmu löytyy siirtämällä
 osoitin $a$ alkuun ja liikuttamalla osoittimia
-rinnakkain eteenpäin, kunnes ne kohtaavat.
+rinnakkain eteenpäin, kunnes ne kohtaavat:
 
 \begin{lstlisting}
 a = x;
@@ -635,54 +724,54 @@ while (a != b) {
     c++;
 }
 \end{lstlisting}
-
-\subsubsection{Algoritmi 2 (Brent)}
-
-\index{Brentin algoritmi}
-
-Brentin algoritmi
-muodostuu peräkkäisistä vaiheista, joissa osoitin $a$ pysyy
-paikallaan ja osoitin $b$ liikkuu $k$ askelta
-Alussa $k=1$ ja $k$:n arvo kaksinkertaistuu
-joka vaiheen alussa.
-Lisäksi $a$ siirretään $b$:n kohdalle vaiheen alussa.
-Näin jatketaan, kunnes osoittimet kohtaavat.
-
-\begin{lstlisting}
-a = x;
-b = f(x);
-c = k = 1;
-while (a != b) {
-    if (c == k) {
-        a = b;
-        c = 0;
-        k *= 2;
-    }
-    b = f(b);
-    c++;
-}
-\end{lstlisting}
-
-Nyt tiedossa on, että syklin pituus on $c$.
-Tämän jälkeen ensimmäinen sykliin kuuluva solmu löytyy
-palauttamalla ensin osoittimet alkuun,
-siirtämällä sitten osoitinta $b$ eteenpäin $c$ askelta
-ja liikuttamalla lopuksi osoittimia rinnakkain,
-kunnes ne osoittavat samaan solmuun.
-
-\begin{lstlisting}
-a = b = x;
-for (int i = 0; i < c; i++) b = f(b);
-while (a != b) {
-    a = f(a);
-    b = f(b);
-}
-\end{lstlisting}
-
-Nyt $a$ ja $b$ osoittavat ensimmäiseen sykliin kuuluvaan solmuun.
-
-Brentin algoritmin etuna Floydin algoritmiin verrattuna on,
-että se kutsuu funktiota $f$ harvemmin.
-Floydin algoritmi kutsuu funktiota $f$ ensimmäisessä silmukassa
-kolmesti joka kierroksella, kun taas Brentin algoritmi
-kutsuu funktiota $f$ vain kerran kierrosta kohden.
+% 
+% \subsubsection{Algoritmi 2 (Brent)}
+% 
+% \index{Brentin algoritmi}
+% 
+% Brentin algoritmi
+% muodostuu peräkkäisistä vaiheista, joissa osoitin $a$ pysyy
+% paikallaan ja osoitin $b$ liikkuu $k$ askelta
+% Alussa $k=1$ ja $k$:n arvo kaksinkertaistuu
+% joka vaiheen alussa.
+% Lisäksi $a$ siirretään $b$:n kohdalle vaiheen alussa.
+% Näin jatketaan, kunnes osoittimet kohtaavat.
+% 
+% \begin{lstlisting}
+% a = x;
+% b = f(x);
+% c = k = 1;
+% while (a != b) {
+%     if (c == k) {
+%         a = b;
+%         c = 0;
+%         k *= 2;
+%     }
+%     b = f(b);
+%     c++;
+% }
+% \end{lstlisting}
+% 
+% Nyt tiedossa on, että syklin pituus on $c$.
+% Tämän jälkeen ensimmäinen sykliin kuuluva solmu löytyy
+% palauttamalla ensin osoittimet alkuun,
+% siirtämällä sitten osoitinta $b$ eteenpäin $c$ askelta
+% ja liikuttamalla lopuksi osoittimia rinnakkain,
+% kunnes ne osoittavat samaan solmuun.
+% 
+% \begin{lstlisting}
+% a = b = x;
+% for (int i = 0; i < c; i++) b = f(b);
+% while (a != b) {
+%     a = f(a);
+%     b = f(b);
+% }
+% \end{lstlisting}
+% 
+% Nyt $a$ ja $b$ osoittavat ensimmäiseen sykliin kuuluvaan solmuun.
+% 
+% Brentin algoritmin etuna Floydin algoritmiin verrattuna on,
+% että se kutsuu funktiota $f$ harvemmin.
+% Floydin algoritmi kutsuu funktiota $f$ ensimmäisessä silmukassa
+% kolmesti joka kierroksella, kun taas Brentin algoritmi
+% kutsuu funktiota $f$ vain kerran kierrosta kohden.
