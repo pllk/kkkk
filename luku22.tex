@@ -321,34 +321,43 @@ Jos $m=2$, multinomikertoimen kaava vastaa binomikertoimen kaavaa.
 Catalanin luku $C_n$ ilmaisee,
 montako tapaa on muodostaa kelvollinen sulkulauseke
 $n$ alkusulusta ja $n$ loppusulusta.
+
 Esimerkiksi $C_3=5$, koska 3 alkusulusta
-ja 3 loppusulusta voidaan muodostaa
-kelvolliset sulkulausekkeet
-\texttt{()()()}, \texttt{(())()},
-\texttt{()(())}, \texttt{((()))} ja \texttt{(()())}.
+ja 3 loppusulusta on mahdollista muodostaa
+seuraavat kelvolliset sulkulausekkeet:
+
+\begin{itemize}[noitemsep]
+\item \texttt{()()()}
+\item \texttt{(())()}
+\item \texttt{()(())}
+\item \texttt{((()))}
+\item \texttt{(()())}
+\end{itemize}
 
 \subsubsection{Sulkulausekkeet}
 
-Sulkulauseke on kelvollinen,
-jos sitä vastaa jokin
-matemaattinen lauseke,
-josta on poistettu
-kaikki merkit sulkuja lukuun ottamatta.
-Esimerkiksi yllä mainittu sulkulauseke \texttt{(())()}
-on kelvollinen, koska sitä vastaa
-esimerkiksi matemaattinen lauseke $(2 \cdot (4+5)+3)\cdot(1+3)$.
+\index{sulkulauseke}
 
-Kelvollisen sulkulausekkeen voi tunnistaa käymällä
-läpi lausekkeen merkit vasemmalta oikealle ja
-pitämällä yllä laskuria, jonka arvo on aluksi 0.
-Merkki \texttt{(} kasvattaa laskuria ja
-merkki \texttt{)} vähentää laskuria.
-Sulkulauseke on kelvollinen, jos laskurin arvo
-on aina vähintään 0 ja lopuksi tarkalleen 0.
+Mikä sitten tarkkaan ottaen on
+\textit{kelvollinen sulkulauseke}?
+Seuraavat säännöt kuvailevat täsmällisesti
+kaikki kelvolliset sulkulausekkeet:
 
-Huomaa myös, että kelvollisen sulkulausekkeen
-jokaisessa alkuosassa alkusulkujen määrä on
-sama tai suurempi kuin loppusulkujen määrä.
+\begin{itemize}
+\item Sulkulauseke \texttt{()} on kelvollinen.
+\item Jos sulkulauseke $A$ on kelvollinen,
+niin myös sulkulauseke \texttt{(}$A$\texttt{)}
+on kelvollinen.
+\item Jos sulkulausekkeet $A$ ja $B$ ovat kelvollisia,
+niin myös sulkulauseke $AB$ on kelvollinen.
+\end{itemize}
+
+Toinen tapa luonnehtia kelvollista sulkulauseketta on,
+että jos valitaan mikä tahansa lausekkeen alkuosa,
+niin merkkiä \texttt{(} esiintyy ainakin yhtä monta
+kertaa kuin merkkiä \texttt{)}.
+Lisäksi koko lausekkeessa merkkejä \texttt{(}
+ja \texttt{)} tulee esiintyä tarkalleen yhtä monta kertaa.
 
 \subsubsection{Laskutapa 1}
 
