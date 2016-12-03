@@ -1,14 +1,18 @@
 \chapter{Puukyselyt}
 
-Tyypillisiä puukyselyitä ovat
-puun polkuihin ja alipuihin
-liittyvät kyselyt.
-Tämä luku esittelee
-tekniikoita, joiden avulla on mahdollista
-toteuttaa puukyselyjä tehokkaasti.
-Usein esiintyvä idea on muuttaa
-puu jollakin tavalla taulukoksi
-ja hyödyntää tehokkaita taulukon välikyselyitä.
+Tässä luvussa tutustumme algoritmeihin,
+joiden avulla voi toteuttaa tehokkaasti kyselyitä
+juurelliseen puuhun.
+Kyselyt liittyvät puussa oleviin polkuihin
+ja alipuihin.
+Esimerkkejä kyselyistä ovat:
+
+\begin{itemize}
+\item mikä solmu on $k$ askelta ylempänä solmua $x$?
+\item mikä on solmun $x$ alipuun arvojen summa?
+\item mikä on solmujen $a$ ja $b$ välisen polun arvojen summa?
+\item mikä on solmujen $a$ ja $b$ alin yhteinen esivanhempi?
+\end{itemize}
 
 \section{Tehokas nouseminen}
 
@@ -55,7 +59,7 @@ Tämän aikavaativuus on kuitenkin $O(n)$,
 koska on mahdollista, että puussa on
 ketju, jossa on $O(n)$ solmua.
 
-Kuten luvussa 16.3.1, funktion $f(x,k)$
+Kuten luvussa 16.3, funktion $f(x,k)$
 arvo on mahdollista laskea tehokkaasti ajassa
 $O(\log k)$ sopivan esikäsittelyn avulla.
 Ideana on laskea etukäteen kaikki arvot
@@ -185,7 +189,7 @@ ja solmutaulukoksi tulee:
 \end{tikzpicture}
 \end{center}
 
-\subsection{Alipuiden käsittely}
+\subsubsection{Alipuiden käsittely}
 
 Solmutaulukossa jokaisen alipuun kaikki solmut ovat peräkkäin
 niin, että ensin on alipuun juurisolmu ja sitten
@@ -381,7 +385,7 @@ Tällöin sekä alipuun arvojen summan laskeminen
 että solmun arvon muuttaminen onnistuvat ajassa $O(\log n)$,
 eli pystymme vastaamaan kyselyihin tehokkaasti.
 
-\subsection{Polkujen käsittely}
+\subsubsection{Polkujen käsittely}
 
 Solmutaulukon avulla voi myös käsitellä tehokkaasti
 polkuja, jotka kulkevat juuresta tiettyyn solmuun puussa.
@@ -438,6 +442,7 @@ kun taulukon kohdassa $k$ olevan solmun arvo on $a$,
 kohdan $k$ arvoon lisätään $a$ ja kohdan $k+c$ arvosta
 vähennetään $a$, missä $c$ on alipuun koko.
 
+\begin{samepage}
 Esimerkiksi yllä olevaa puuta vastaa seuraava taulukko:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -489,6 +494,7 @@ Esimerkiksi yllä olevaa puuta vastaa seuraava taulukko:
 \node at (9.5,1.4) {$10$};
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 Esimerkiksi solmun $3$ arvona on $-5$, koska
 se on solmujen $2$ ja $6$ alipuiden jälkeinen solmu,
@@ -555,8 +561,9 @@ Esimerkiksi summa solmusta $1$ solmuun $8$ selviää näin:
 \end{tikzpicture}
 \end{center}
 
-Summaksi tulee $4+5+3-5+2+5-2=12$, mikä vastaa
-polun summaa $4+5+3=12$.
+Summaksi tulee
+\[4+5+3-5+2+5-2=12,\]
+mikä vastaa polun summaa $4+5+3=12$.
 Tämä laskentatapa toimii, koska jokaisen solmun arvo
 lisätään summaan, kun se tulee vastaan syvyyshaussa,
 ja vähennetään summasta, kun sen käsittely päättyy.
@@ -647,7 +654,9 @@ alimman yhteisen esivanhemman etsimistä:
 \end{center}
 
 Solmu 5 on tasolla 3, kun taas solmu 8 on tasolla 4.
-Niinpä nousemme ensin solmusta 8 yhden tason ylemmäs solmuun 6:
+Niinpä nousemme ensin solmusta 8 yhden tason ylemmäs solmuun 6.
+Tämän jälkeen nousemme rinnakkain solmuista 5 ja 6
+lähtien yhden tason, jolloin päädymme solmuun 2:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -657,33 +666,8 @@ Niinpä nousemme ensin solmusta 8 yhden tason ylemmäs solmuun 6:
 \node[draw, circle] (4) at (0,1) {$3$};
 \node[draw, circle] (5) at (2,-1) {$7$};
 \node[draw, circle,fill=lightgray] (6) at (-3,-1) {$5$};
-\node[draw, circle,fill=lightgray] (7) at (-1,-1) {$6$};
-\node[draw, circle] (8) at (-1,-3) {$8$};
-\path[draw,thick,-] (1) -- (2);
-\path[draw,thick,-] (1) -- (3);
-\path[draw,thick,-] (1) -- (4);
-\path[draw,thick,-] (2) -- (5);
-\path[draw,thick,-] (3) -- (6);
-\path[draw,thick,-] (3) -- (7);
-\path[draw,thick,-] (7) -- (8);
-\end{tikzpicture}
-\end{center}
-
-Tämän jälkeen etsitään pienin määrä tasoja,
-jotka nousemalla ylöspäin päädymme samaan solmuun.
-Tässä tapauksessa riittää nousta yksi taso ylöspäin
-solmuun 2. Niinpä solmujen alin yhteinen esivanhempi on 2:
-
-\begin{center}
-\begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (0,3) {$1$};
-\node[draw, circle] (2) at (2,1) {$4$};
-\node[draw, circle,fill=lightgray] (3) at (-2,1) {$2$};
-\node[draw, circle] (4) at (0,1) {$3$};
-\node[draw, circle] (5) at (2,-1) {$7$};
-\node[draw, circle] (6) at (-3,-1) {$5$};
 \node[draw, circle] (7) at (-1,-1) {$6$};
-\node[draw, circle] (8) at (-1,-3) {$8$};
+\node[draw, circle,fill=lightgray] (8) at (-1,-3) {$8$};
 \path[draw,thick,-] (1) -- (2);
 \path[draw,thick,-] (1) -- (3);
 \path[draw,thick,-] (1) -- (4);
@@ -691,6 +675,10 @@ solmuun 2. Niinpä solmujen alin yhteinen esivanhempi on 2:
 \path[draw,thick,-] (3) -- (6);
 \path[draw,thick,-] (3) -- (7);
 \path[draw,thick,-] (7) -- (8);
+
+\path[draw=red,thick,->,line width=2pt] (6) edge [bend left] (3);
+\path[draw=red,thick,->,line width=2pt] (8) edge [bend right] (7);
+\path[draw=red,thick,->,line width=2pt] (7) edge [bend right] (3);
 \end{tikzpicture}
 \end{center}
 
