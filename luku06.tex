@@ -499,10 +499,12 @@ sille tulee muodostaa \textit{koodi},
 jossa jokaista merkkiä vastaa tietty \textit{koodisana}.
 Oletetaan, että koodin tulee olla \textit{binäärikoodi}
 eli koodisanojen tulee muodostua biteistä 0 ja 1.
+Tällaisen koodin avulla voidaan muodostaa merkkijonoa
+vastaava bittiesitys.
 
 Yksi mahdollisuus on muodostaa vakiopituinen
 koodi eli valita koodisanat niin,
-että jokaisen pituus on sama.
+että jokaisen koodisanan pituus on sama.
 Esimerkiksi jos aakkostossa on neljä merkkiä,
 tarvittava koodisanan pituus on 2:
 \begin{center}
@@ -518,7 +520,7 @@ merkki & koodisana \\
 Nyt esimerkiksi merkkijonoa \texttt{AABACDACA}
 vastaa seuraava bittiesitys, jonka pituus on 18 bittiä:
 \[000001001011001000\]
-Tätä on kuitenkin mahdollista lyhentää
+Bittiesitystä on kuitenkin mahdollista lyhentää
 ottamalla käyttöön koodi, jonka koodisanat voivat
 olla keskenään eripituisia.
 Ideana on valita usein esiintyville merkeille
