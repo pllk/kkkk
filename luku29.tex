@@ -618,3 +618,116 @@ Esimerkiksi monikulmion
 
 pinta-ala on $6+7/2-1=17/2$.
 
+\section{Etäisyysmitat}
+
+\index{etäisyysmitta}
+\index{Euklidinen etäisyys}
+\index{Manhattan-etäisyys}
+
+Etäisyysmitta määrittää tavan laskea kahden pisteen etäisyys.
+Tavallisimmin geometriassa käytetty etäisyysmitta on
+euklidinen etäisyys, jolloin pisteiden
+$(x_1,y_1)$ ja $(x_2,y_2)$ etäisyys on
+\[\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}.\]
+Vaihtoehtoinen etäisyysmitta on Manhattan-etäisyys,
+jota käyttäen pisteiden
+$(x_1,y_1)$ ja $(x_2,y_2)$ etäisyys on
+\[|x_1-x_2|+|y_1-y_2|.\]
+\begin{samepage}
+Esimerkiksi kuvaparissa
+\begin{center}
+\begin{tikzpicture}
+
+\draw[fill] (2,1) circle [radius=0.05];
+\draw[fill] (5,2) circle [radius=0.05];
+
+\node at (2,0.5) {$(2,1)$};
+\node at (5,1.5) {$(5,2)$};
+
+\draw[dashed] (2,1) -- (5,2);
+
+\draw[fill] (5+2,1) circle [radius=0.05];
+\draw[fill] (5+5,2) circle [radius=0.05];
+
+\node at (5+2,0.5) {$(2,1)$};
+\node at (5+5,1.5) {$(5,2)$};
+
+\draw[dashed] (5+2,1) -- (5+2,2);
+\draw[dashed] (5+2,2) -- (5+5,2);
+
+\node at (3.5,-0.5) {euklidinen etäisyys};
+\node at (5+3.5,-0.5) {Manhattan-etäisyys};
+\end{tikzpicture}
+\end{center}
+\end{samepage}
+pisteiden Euklidinen etäisyys on
+\[\sqrt{(5-2)^2+(2-1)^2}=\sqrt{10}\]
+ja pisteiden Manhattan-etäisyys on
+\[|5-2|+|2-1|=4.\]
+Seuraava kuvapari näyttää alueen, joka on pisteestä etäisyyden 1
+sisällä käyttäen euklidista ja Manhattan-etäisyyttä:
+\begin{center}
+\begin{tikzpicture}
+
+\draw[fill=gray!20] (0,0) circle [radius=1];
+\draw[fill] (0,0) circle [radius=0.05];
+
+\node at (0,-1.5) {euklidinen etäisyys};
+
+\draw[fill=gray!20] (5+0,1) -- (5-1,0) -- (5+0,-1) -- (5+1,0) -- (5+0,1);
+\draw[fill] (5,0) circle [radius=0.05];
+\node at (5,-1.5) {Manhattan-etäisyys};
+\end{tikzpicture}
+\end{center}
+Joidenkin ongelmien ratkaiseminen on helpompaa, jos käytössä on
+Manhattan-etäisyys euklidisen etäisyyden sijasta.
+Tarkastellaan esimerkkinä tehtävää, jossa annettuna
+on $n$ pistettä $(x_1,y_1),(x_2,y_2),\ldots,(x_n,y_n)$
+ja tehtävänä on laskea, mikä on suurin mahdollinen etäisyys
+kahden pisteen välillä.
+
+Tämän tehtävän ratkaiseminen tehokkaasti on vaikeaa,
+jos laskettavana on euklidinen etäisyys.
+Sen sijaan suurin Manhattan-etäisyys on helppoa selvittää,
+koska se on suurempi etäisyyksistä
+\[\max A - \min A \hspace{20px} \textrm{ja} \hspace{20px} \max B - \min B,\]
+missä
+\[A = \{x_i+y_i : i = 1,2,\ldots,n\}\]
+ja
+\[B = \{x_i-y_i : i = 1,2,\ldots,n\}.\]
+\begin{samepage}
+Tämä johtuu siitä, että Manhattan-etäisyys
+\[|x_a-x_b|+|y_a-y_b]\]
+voidaan ilmaista muodossa
+\begin{center}
+\begin{tabular}{cl}
+& $\max(x_a-x_b+y_a-y_b,\,x_a-x_b-y_a+y_b)$ \\
+$=$ & $\max(x_a+y_a-(x_b+y_b),\,x_a-y_a-(x_b-y_b))$
+\end{tabular}
+\end{center}
+olettaen, että $x_a \ge x_b$.
+\end{samepage}
+
+\begin{samepage}
+Kätevä tekniikka Manhattan-etäisyyden yhteydessä on myös
+kääntää koordinaatistoa 45 astetta
+niin, että pisteestä $(x,y)$ tulee piste $(a(x+y),a(y-x))$,
+missä $a=1/\sqrt{2}$.
+Kerroin $a$ on valittu niin, että
+pisteiden etäisyydet säilyvät samana käännöksen jälkeen.
+
+Tämän seurauksena pisteestä etäisyydellä $d$ oleva alue
+on neliö, jonka sivut ovat vaaka- ja pystysuuntaisia,
+mikä helpottaa alueen käsittelyä.
+\begin{center}
+\begin{tikzpicture}
+\draw[fill=gray!20] (0,1) -- (-1,0) -- (0,-1) -- (1,0) -- (0,1);
+\draw[fill] (0,0) circle [radius=0.05];
+
+\node at (2.5,0) {$\Rightarrow$};
+
+\draw[fill=gray!20] (5-0.71,0.71) -- (5-0.71,-0.71) -- (5+0.71,-0.71) -- (5+0.71,0.71) -- (5-0.71,0.71);
+\draw[fill] (5,0) circle [radius=0.05];
+\end{tikzpicture}
+\end{center}
+\end{samepage}
