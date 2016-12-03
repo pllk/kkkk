@@ -487,3 +487,194 @@ jonka nollakohdat ovat $x=0$ ja $x=2s/n$
 ja pienin arvo on näiden keskikohta
 $x=s/n$ eli taulukon lukujen keskiarvo.
 
+\section{Huffmanin koodaus}
+
+\index{Huffmanin koodaus}
+\index{koodi}
+\index{koodisana}
+\index{binäärikoodi}
+
+Tarkastellaan tehtävää, jossa annettuna on merkkijono ja
+sille tulee muodostaa \textit{koodi},
+jossa jokaista merkkiä vastaa tietty \textit{koodisana}.
+Oletetaan, että koodin tulee olla \textit{binäärikoodi}
+eli koodisanojen tulee muodostua biteistä 0 ja 1.
+
+Yksi mahdollisuus on muodostaa vakiopituinen
+koodi eli valita koodisanat niin,
+että jokaisen pituus on sama.
+Esimerkiksi jos aakkostossa on neljä merkkiä,
+tarvittava koodisanan pituus on 2:
+\begin{center}
+\begin{tabular}{rr}
+merkki & koodisana \\
+\hline
+\texttt{A} & 00 \\
+\texttt{B} & 01 \\
+\texttt{C} & 10 \\
+\texttt{D} & 11 \\
+\end{tabular}
+\end{center}
+Nyt esimerkiksi merkkijonoa \texttt{AABACDACA}
+vastaa seuraava bittiesitys, jonka pituus on 18 bittiä:
+\[000001001011001000\]
+Tätä on kuitenkin mahdollista lyhentää
+ottamalla käyttöön koodi, jonka koodisanat voivat
+olla keskenään eripituisia.
+Ideana on valita usein esiintyville merkeille
+lyhyitä koodisanoja ja harvoin esiintyville
+merkeille pitkiä koodisanoja.
+Tässä tapauksessa hyvä koodi on seuraava:
+\begin{center}
+\begin{tabular}{rr}
+merkki & koodisana \\
+\hline
+\texttt{A} & 0 \\
+\texttt{B} & 110 \\
+\texttt{C} & 10 \\
+\texttt{D} & 111 \\
+\end{tabular}
+\end{center}
+Nyt merkkijonon \texttt{AABACDACA}
+bittiesityksen pituus on vain 15:
+\[001100101110100\]
+Huomaa, että koodissa ei saa esiintyä kahta koodisanaa,
+joista toinen on toisen alkuosa,
+koska alkuperäisen merkkijonon palauttaminen
+bittiesityksestä ei olisi välttämättä mahdollista.
+Esimerkiksi koodissa
+\begin{center}
+\begin{tabular}{rr}
+merkki & koodisana \\
+\hline
+\texttt{A} & 0 \\
+\texttt{B} & 00 \\
+\texttt{C} & 1 \\
+\texttt{D} & 11 \\
+\end{tabular}
+\end{center}
+koodisan 0 on koodisanan 00 alkuosa.
+Tämän seurauksena ei ole mahdollista tietää, tarkoittaako bittiesitys
+001 merkkijonoa \texttt{AAC} vai merkkijonoa \texttt{BC}.
+
+\subsubsection{Optimaalinen koodi}
+
+Optimaalinen koodi on sellainen, jossa merkkijonon bittiesitys
+on mahdollisimman lyhyt.
+Esimerkiksi merkkijonon \texttt{AABACDACA} tapauksessa
+optimaalinen koodi on yllä esitetty koodi,
+jota käyttäen bittiesityksen pituus on 15.
+
+Huffmanin koodaus on yleinen menetelmä,
+jonka avulla voi muodostaa optimaalisen koodin merkkijonolle.
+Siinä on ideana muodostaa koodia vastaava binääripuu
+merkkien esiintymiskertojen perusteella.
+
+Aluksi jokaista merkkijonon merkkiä vastaa solmu,
+jonka painona on merkin esiintymiskertojen määrä merkkijonossa.
+Tämän jälkeen joka vaiheessa yhdistetään kaksi solmua,
+joiden painot ovat pienimmät.
+Näin jatketaan, kunnes koodi on valmis.
+
+Esimerkiksi merkkijonon \texttt{AABACDACA} tapauksessa
+alkutilanne on seuraava:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {$5$};
+\node[draw, circle] (2) at (2,0) {$1$};
+\node[draw, circle] (3) at (4,0) {$2$};
+\node[draw, circle] (4) at (6,0) {$1$};
+
+\node[color=blue] at (0,-0.75) {\texttt{A}};
+\node[color=blue] at (2,-0.75) {\texttt{B}};
+\node[color=blue] at (4,-0.75) {\texttt{C}};
+\node[color=blue] at (6,-0.75) {\texttt{D}};
+
+%\path[draw,thick,-] (4) -- (5);
+\end{tikzpicture}
+\end{center}
+Merkkiä \texttt{A} vastaavan solmun paino on
+5, koska merkki \texttt{A} esiintyy 5 kertaa merkkijonossa.
+Muiden solmujen painot on laskettu vastaavalla tavalla.
+
+Ensimmäinen askel on yhdistää merkkejä \texttt{B} ja \texttt{D}
+vastaavat solmut, joiden kummankin paino on 1.
+Tuloksena on:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {$5$};
+\node[draw, circle] (3) at (2,0) {$2$};
+\node[draw, circle] (2) at (4,0) {$1$};
+\node[draw, circle] (4) at (6,0) {$1$};
+\node[draw, circle] (5) at (5,1.5) {$2$};
+
+\node[color=blue] at (0,-0.75) {\texttt{A}};
+\node[color=blue] at (2,-0.75) {\texttt{C}};
+\node[color=blue] at (4,-0.75) {\texttt{B}};
+\node[color=blue] at (6,-0.75) {\texttt{D}};
+
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+\end{tikzpicture}
+\end{center}
+Tämän jälkeen yhdistetään solmut, joiden paino on 2:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {$5$};
+\node[draw, circle] (3) at (2,0) {$2$};
+\node[draw, circle] (2) at (4,0) {$1$};
+\node[draw, circle] (4) at (6,0) {$1$};
+\node[draw, circle] (5) at (5,1.5) {$2$};
+\node[draw, circle] (6) at (4,3) {$4$};
+
+\node[color=blue] at (0,-0.75) {\texttt{A}};
+\node[color=blue] at (2,-0.75) {\texttt{C}};
+\node[color=blue] at (4,-0.75) {\texttt{B}};
+\node[color=blue] at (6,-0.75) {\texttt{D}};
+
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (5) -- (6);
+\end{tikzpicture}
+\end{center}
+Lopuksi yhdistetään kaksi viimeistä solmua:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (0,0) {$5$};
+\node[draw, circle] (3) at (2,0) {$2$};
+\node[draw, circle] (2) at (4,0) {$1$};
+\node[draw, circle] (4) at (6,0) {$1$};
+\node[draw, circle] (5) at (5,1.5) {$2$};
+\node[draw, circle] (6) at (4,3) {$4$};
+\node[draw, circle] (7) at (3,4.5) {$9$};
+
+\node[color=blue] at (0,-0.75) {\texttt{A}};
+\node[color=blue] at (2,-0.75) {\texttt{C}};
+\node[color=blue] at (4,-0.75) {\texttt{B}};
+\node[color=blue] at (6,-0.75) {\texttt{D}};
+
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (4) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (5) -- (6);
+\path[draw,thick,-] (1) -- (7);
+\path[draw,thick,-] (6) -- (7);
+\end{tikzpicture}
+\end{center}
+Tuloksena olevasta puusta saadaan kutakin merkkiä vastaava
+koodisana kulkemalla puun huipulta alas merkkiin asti.
+Aina vasemmalle mentäessä koodisanaan tulee bitti 0
+ja oikealle mentäessä koodisanaan tulee bitti 1.
+Tuloksena on optimaalinen koodi:
+\begin{center}
+\begin{tabular}{rr}
+merkki & koodisana \\
+\hline
+\texttt{A} & 0 \\
+\texttt{B} & 110 \\
+\texttt{C} & 10 \\
+\texttt{D} & 111 \\
+\end{tabular}
+\end{center}
