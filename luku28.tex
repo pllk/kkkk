@@ -572,10 +572,10 @@ node *s = new node(0, 0, 15);
 s->x = 5;
 \end{lstlisting}
 
-\subsection{Harva indeksialue}
+\subsubsection{Harva segmenttipuu}
 
 Dynaaminen segmenttipuu on hyödyllinen,
-jos puun indeksialue $[0,N-1]$ on harva
+jos puun indeksialue $[0,N-1]$ on \textit{harva}
 eli $N$ on suuri mutta vain
 pieni osa indekseistä on käytössä.
 Siinä missä tavallinen segmenttipuu 
@@ -632,11 +632,12 @@ ja indeksien pakkausta (luku 9.4).
 Tämä ei ole kuitenkaan mahdollista,
 jos indeksit syntyvät vasta algoritmin aikana.
 
-\subsection{Muutoshistoria}
+\subsubsection{Persistentti segmenttipuu}
 
-Dynaaminen segmenttipuu mahdollistaa myös
-puun muutoshistorian säilyttämiseen.
-Tämä tarkoittaa, että muistissa on jokainen
+Dynaamisen toteutuksen avulla on myös
+mahdollista luoda persistentti segmenttipuu,
+joka säilyttää puun muutoshistorian.
+Tällöin muistissa on jokainen
 segmenttipuun vaihe, joka on esiintynyt
 algoritmin suorituksen aikana.
 
@@ -650,7 +651,7 @@ puita, joita voi muokata edelleen.
 Tarkastellaan esimerkiksi seuraavaa muutossarjaa,
 jossa punaiset solmut muuttuvat päivityksessä
 ja muut solmut säilyvät ennallaan:
-\\
+
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
 \node[draw, circle,minimum size=13pt] (1a) at (3,0) {};
@@ -701,14 +702,12 @@ ja muut solmut säilyvät ennallaan:
 \end{tikzpicture}
 \end{center}
 Jokaisen muutoksen jälkeen suurin osa puun
-solmuista säilyy ennallaan.
-Muistia säästävä tapa tallentaa muutoshistoria
-onkin käyttää mahdollisimman paljon hyväksi
+solmuista säilyy ennallaan,
+joten muistia säästävä tapa tallentaa muutoshistoria
+on käyttää mahdollisimman paljon hyväksi
 puun vanhoja osia muutoksissa.
-
-Tässä tapauksessa muutoshistorian voisi
+Tässä tapauksessa muutoshistorian voi
 tallentaa seuraavasti:
-\\
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
 \path[use as bounding box] (0, 1) rectangle (16, -3.5);
@@ -762,7 +761,8 @@ Jokainen muutos tuo vain $O(\log N)$ uutta solmua puuhun,
 kun puun indeksialue on $[0,N-1]$,
 joten koko muutoshistorian pitäminen muistissa on mahdollista.
 
-\section{Tietorakenne solmussa}
+\section{Tietorakenteet}
+
 
 Segmenttipuun solmussa voi olla
 yksittäisen arvon
@@ -773,34 +773,13 @@ $O(f(n) \log n)$, missä $f(n)$ on
 yksittäisen solmun tietorakenteen
 käsittelyyn kuluva aika.
 
-\subsection{Lukumäärät}
+Tarkastellaan esimerkkinä segmenttipuuta,
+jonka avulla voi laskea, montako kertaa
+luku $x$ esiintyy taulukon välillä $[a,b]$.
+Esimerkiksi seuravassa taulukossa
+luku 1 esiintyy kolme kertaa
+merkityllä välillä:
 
-\textit{Tehtävä:}
-Toteuta segmenttipuu, jonka avulla voi laskea,
-montako kertaa luku $x$ esiintyy välillä $[a,b]$.
-
-Ideana on, että jokainen segmenttipuun solmu
-sisältää tietorakenteen, josta voi kysyä,
-montako kertaa luku $x$ esiintyy kyseisellä välillä.
-Vastaus kyselyyn syntyy laskemalla yhteen
-esiintymismäärät väleiltä, joista $[a,b]$ muodostuu.
-
-Sopiva tietorakenne tehtävään on
-\texttt{map}-rakenne,
-jonka avulla voi pitää kirjaa välillä esiintyvien
-lukujen määrästä.
-Yhden solmun käsittely
-vie aikaa $O(\log n)$, joten kunkin
-kyselyn aikavaativuus on $O(\log^2 n)$.
-
-Solmuissa olevat tietorakenteet kasvattavat
-segmenttipuun muistinkäyttöä.
-Tässä tapauksessa
-segmenttipuu vie tilaa $O(n \log n)$,
-koska siinä on $O(\log n)$ tasoa, joista
-jokaisella binääripuut sisältävät $O(n)$ lukua.
-
-Esimerkiksi taulukosta
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -813,9 +792,21 @@ Esimerkiksi taulukosta
 \node[anchor=center] at (5.5, 0.5) {1};
 \node[anchor=center] at (6.5, 0.5) {1};
 \node[anchor=center] at (7.5, 0.5) {2};
+
+\draw [decoration={brace}, decorate, line width=0.5mm] (6,-0.25) -- (1,-0.25);
 \end{tikzpicture}
 \end{center}
-syntyy seuraava segmenttipuu:
+
+Ideana on toteuttaa segmenttipuu, jonka
+jokaisessa solmussa on tietorakenne,
+josta voi kysyä,
+montako kertaa luku $x$ esiintyy solmun välillä.
+Tällaisen segmenttipuun avulla
+vastaus kyselyyn syntyy laskemalla yhteen
+esiintymismäärät väleiltä, joista $[a,b]$ muodostuu.
+
+Esimerkiksi yllä olevasta taulukosta syntyy
+seuraava segmenttipuu:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 
@@ -959,23 +950,35 @@ syntyy seuraava segmenttipuu:
 \end{tikzpicture}
 \end{center}
 
-\subsection{Kaksiulotteisuus}
 
-\textit{Tehtävä:}
-Toteuta segmenttipuu, jolla pystyy laskemaan
-$n \times n$ -kokoisen
-kaksi\-ulotteisen taulukon alitaulukon
-summan sekä muuttamaan taulukkoa.
+Sopiva tietorakenne segmenttipuun toteuttamiseen on
+hakemistorakenne, joka pitää kirjaa välillä esiintyvien
+lukujen määrästä.
+Esimerkiksi \texttt{map}-ra\-ken\-net\-ta käyttäen
+yhden solmun käsittely vie aikaa $O(\log n)$,
+minkä seurauksena kyselyn aikavaativuus on $O(\log^2 n)$.
 
-Tavallinen tapa toteuttaa kaksiulotteinen
-segmenttipuu on luoda segmenttipuu,
-jonka jokaisessa solmussa on segmenttipuu.
-Suuri segmenttipuu vastaa taulukon rivejä,
-ja pienet segmenttipuut vastaavat sarakkeita.
+Solmuissa olevat tietorakenteet kasvattavat
+segmenttipuun muistinkäyttöä.
+Tässä tapauksessa
+segmenttipuu vie tilaa $O(n \log n)$,
+koska siinä on $O(\log n)$ tasoa, joista
+jokaisella hakemistorakenteet sisältävät $O(n)$ lukua.
+Tässä oletuksena on, että $k$ luvun tallentaminen
+hakemistoon vie tilaa $O(k)$.
 
-\newpage
+\section{Kaksiulotteisuus}
+
+Kaksiulotteinen segmenttipuu mahdollistaa
+kaksiulotteisen taulukon
+suorakulmaisia alueita koskevat kyselyt.
+Tällaisen segmenttipuun voi toteuttaa
+sisäkkäisinä segmenttipuina:
+suuri puu vastaa taulukon rivejä
+ja sen kussakin solmussa on pieni puu,
+joka vastaa taulukon sarakkeita.
+
 Esimerkiksi taulukon
-\\
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,4);
@@ -1003,9 +1006,9 @@ Esimerkiksi taulukon
 \end{center}
 
 alueiden summia voi laskea seuraavasta segmenttipuusta:
-\\
+
 \begin{center}
-\begin{tikzpicture}[scale=0.32]
+\begin{tikzpicture}[scale=0.4]
 \footnotesize
 \begin{scope}[shift={(-12,0)}]
 \draw (-1,-1) rectangle (5,6);
@@ -1149,7 +1152,8 @@ alueiden summia voi laskea seuraavasta segmenttipuusta:
 \end{tikzpicture}
 \end{center}
 
-Segmenttipuun operaatiot vievät aikaa
+Kaksiulotteisen
+segmenttipuun operaatiot vievät aikaa
 $O(\log^2 n)$,
 koska suuressa puussa ja kussakin
 pienessä puussa on $O(\log n)$ tasoa.
