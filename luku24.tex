@@ -2,7 +2,7 @@
 
 \index{todennäköisyys}
 
-Todennäköisyys on luku väliltä $0 \ldots 1$,
+\key{Todennäköisyys} on luku väliltä $0 \ldots 1$,
 joka kuvaa sitä, miten todennäköinen jokin
 tapahtuma on.
 Varman tapahtuman todennäköisyys on 1,
@@ -76,7 +76,7 @@ Todennäköisyys koko prosessin onnistumiselle on
 
 \section{Tapahtumat}
 
-Todennäköisyyden tapahtuma
+Todennäköisyyden \key{tapahtuma}
 voidaan esittää joukkona
 \[A \subset X,\]
 missä $X$ sisältää kaikki mahdolliset alkeistapaukset
@@ -107,17 +107,17 @@ Koska todennäköisyyden tapahtumat ovat joukkoja,
 niihin voi soveltaa jouk\-ko-opin operaatioita:
 
 \begin{itemize}
-\item Komplementti $\bar A$ tarkoittaa
+\item \key{Komplementti} $\bar A$ tarkoittaa
 tapahtumaa ''$A$ ei tapahdu''. 
 Esimerkiksi nopanheitossa tapahtuman
 $A=\{x_2,x_4,x_6\}$ komplementti on
 $\bar A = \{x_1,x_3,x_5\}$.
-\item Yhdiste $A \cup B$ tarkoittaa
+\item \key{Yhdiste} $A \cup B$ tarkoittaa
 tapahtumaa ''$A$ tai $B$ tapahtuu''.
 Esimerkiksi tapahtumien $A=\{x_2,x_5\}$
 ja $B=\{x_4,x_5,x_6\}$ yhdiste on
 $A \cup B = \{x_2,x_4,x_5,x_6\}$.
-\item Leikkaus $A \cap B$ tarkoittaa
+\item \key{Leikkaus} $A \cap B$ tarkoittaa
 tapahtumaa ''$A$ ja $B$ tapahtuvat''.
 Esimerkiksi tapahtumien $A=\{x_2,x_5\}$
 ja $B=\{x_4,x_5,x_6\}$ leikkaus on
@@ -165,7 +165,7 @@ yhdisteen $A \cup B$ todennäköisyys on yksinkertaisesti
 
 \index{ehdollinen todennäköisyys}
 
-Ehdollinen todennäköisyys
+\key{Ehdollinen todennäköisyys}
 \[P(A | B) = \frac{P(A \cap B)}{P(B)}\]
 on tapahtuman $A$ todennäköisyys
 olettaen, että tapahtuma $B$ tapahtuu.
@@ -211,7 +211,7 @@ todennäköisyys on
 
 \index{satunnaismuuttuja}
 
-Satunnaismuuttuja on arvo, joka syntyy satunnaisen
+\key{Satunnaismuuttuja} on arvo, joka syntyy satunnaisen
 prosessin tuloksena.
 Satunnaismuuttujaa merkitään yleensä
 suurella kirjaimella.
@@ -232,7 +232,7 @@ $(4,6)$, $(5,5)$ ja $(6,4)$.
 
 \index{odotusarvo}
 
-Odotusarvo $E[X]$ kertoo, mikä satunnaismuuttujan $X$
+\key{Odotusarvo} $E[X]$ kertoo, mikä satunnaismuuttujan $X$
 arvo on keskimääräisessä tilanteessa.
 Odotusarvo lasketaan summana
 \[\sum_x P(X=x)x,\]
@@ -242,7 +242,7 @@ Esimerkiksi nopan heitossa silmäluvun odotusarvo on
 
 \[1/6 \cdot 1 + 1/6 \cdot 2 + 1/6 \cdot 3 + 1/6 \cdot 4 + 1/6 \cdot 5 + 1/6 \cdot 6 = 7/2.\]
 
-Usein hyödyllinen odotusarvon ominaisuus on \textit{lineaarisuus}.
+Usein hyödyllinen odotusarvon ominaisuus on \key{lineaarisuus}.
 Sen ansiosta summa $E[X_1+X_2+\cdots+X_n]$ voidaan laskea $E[X_1]+E[X_2]+\cdots+E[X_n]$.
 Kaava pätee myös silloin, kun satunnaismuuttujat riippuvat toisistaan.
 
@@ -265,7 +265,7 @@ määrän odotusarvo on $n \cdot (\frac{n-1}{n})^n$.
 
 \index{jakauma}
 
-Satunnaismuuttujan jakauma kertoo,
+Satunnaismuuttujan \key{jakauma} kertoo,
 millä todennäköisyydellä satunnaismuuttuja
 saa minkäkin arvon.
 Jakauma muodostuu arvoista $P(X=x)$.
@@ -281,8 +281,8 @@ $P(X=x)$ & $1/36$ & $2/36$ & $3/36$ & $4/36$ & $5/36$ & $6/36$ & $5/36$ & $4/36$
 \end{center}
 Tutustumme seuraavaksi muutamaan usein esiintyvään jakaumaan.
 \index{tasajakauma}
-~\\
-\textit{Tasajakauman} satunnaismuuttuja
+~\\\\
+\key{Tasajakauman} satunnaismuuttuja
 saa arvoja väliltä $a \ldots b$
 ja jokaisen arvon todennäköisyys on sama.
 Esimerkiksi yhden nopan heitto tuottaa tasajakauman,
@@ -292,7 +292,7 @@ Tasajakaumassa $X$:n odotusarvo on
 \[E[X] = \frac{a+b}{2}.\]
 \index{binomijakauma}
 ~\\
-\textit{Binomijakauma} kuvaa tilannetta, jossa tehdään $n$
+\key{Binomijakauma} kuvaa tilannetta, jossa tehdään $n$
 yritystä ja joka yrityksessä onnistumisen
 todennäköisyys on $p$. Satunnaismuuttuja $X$
 on onnistuneiden yritysten määrä.
@@ -312,7 +312,7 @@ Binomijakaumassa $X$:n odotusarvo on
 \[E[X] = pn.\]
 \index{geometrinen jakauma}
 ~\\
-\textit{Geometrinen jakauma} kuvaa tilannetta,
+\key{Geometrinen jakauma} kuvaa tilannetta,
 jossa onnistumisen todennäköisyys on $p$
 ja yrityksiä tehdään, kunnes tulee ensimmäinen
 onnistuminen. Satunnaismuuttuja $X$ on
@@ -334,7 +334,7 @@ Geometrisessa jakaumassa $X$:n odotusarvo on
 
 \index{Markovin ketju}
 
-Markovin ketju on satunnaisprosessi,
+\key{Markovin ketju} on satunnaisprosessi,
 joka muodostuu tiloista ja niiden välisistä siirtymistä.
 Jokaisesta tilasta tiedetään, millä todennäköisyydellä
 siitä siirrytään toisiin tiloihin.
@@ -459,14 +459,14 @@ perustuu satunnaisuuteen.
 
 \index{Monte Carlo -algoritmi}
 
-\textit{Monte Carlo -algoritmi} on satunnaisalgoritmi,
+\key{Monte Carlo -algoritmi} on satunnaisalgoritmi,
 joka saattaa tuottaa joskus väärän tuloksen.
 Jotta algoritmi olisi käyttökelpoinen,
 väärän vastauksen todennäköisyyden tulee olla pieni.
 
 \index{Las Vegas -algoritmi}
 
-\textit{Las Vegas -algoritmi} on satunnaisalgoritmi,
+\key{Las Vegas -algoritmi} on satunnaisalgoritmi,
 joka tuottaa aina oikean tuloksen mutta jonka
 suoritusaika vaihtelee satunnaisesti.
 Tavoitteena on, että algoritmi toimisi nopeasti

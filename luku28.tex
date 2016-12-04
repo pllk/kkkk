@@ -177,7 +177,7 @@ koska haun aikana käsiteltävien solmujen määrä on $O(\log n)$.
 \index{laiska eteneminen}
 \index{laiska segmenttipuu}
 
-Laiska eteneminen (\textit{lazy propagation})
+\key{Laiska eteneminen}
 mahdollistaa segmenttipuun,
 jossa voi sekä muuttaa väliä että kysyä tietoa väliltä
 ajassa $O(\log n)$.
@@ -506,7 +506,7 @@ ja siihen tulee ylhäältä toinen laiska muutos.
 Tässä tapauksessa yhdistäminen on helppoa,
 koska muutokset $z_1$ ja $z_2$ aiheuttavat yhdessä muutoksen $z_1+z_2$.
 
-\subsubsection{Muuttaminen polynomilla}
+\subsubsection{Polynomimuutos}
 
 Laiskaa segmenttipuuta voi yleistää niin,
 että väliä muuttaa polynomi
@@ -552,7 +552,7 @@ eli jokaiselle solmulle on paikka taulukossa
 ja puu vie kiinteän määrän muistia.
 Tämä toteutus kuitenkin tuhlaa muistia,
 jos suurin osa puun solmuista on tyhjiä.
-Dynaaminen segmenttipuu varaa muistia vain
+\key{Dynaaminen segmenttipuu} varaa muistia vain
 niille solmuille, joita todella tarvitaan.
 
 Solmut on kätevää tallentaa tietueina tähän tapaan:
@@ -593,7 +593,7 @@ dynaaminen segmenttipuu vie muistia
 vain $O(n \log N)$, missä $n$ on
 käytössä olevien indeksien määrä.
 
-Ideana on, että puu on aluksi tyhjä
+\key{Harva segmenttipuu} aluksi tyhjä
 ja sen ainoa solmu on $[0,N-1]$.
 Kun puu muuttuu, siihen lisätään
 solmuja dynaamisesti sitä mukaa kuin niitä tarvitaan
@@ -647,7 +647,7 @@ jos indeksit syntyvät vasta algoritmin aikana.
 \index{muutoshistoria}
 
 Dynaamisen toteutuksen avulla on myös
-mahdollista luoda persistentti segmenttipuu,
+mahdollista luoda \key{persistentti segmenttipuu},
 joka säilyttää puun muutoshistorian.
 Tällöin muistissa on jokainen
 segmenttipuun vaihe, joka on esiintynyt
@@ -982,7 +982,7 @@ hakemistoon vie tilaa $O(k)$.
 
 \index{kaksiulotteinen segmenttipuu}
 
-Kaksiulotteinen segmenttipuu mahdollistaa
+\key{Kaksiulotteinen segmenttipuu} mahdollistaa
 kaksiulotteisen taulukon
 suorakulmaisia alueita koskevat kyselyt.
 Tällaisen segmenttipuun voi toteuttaa

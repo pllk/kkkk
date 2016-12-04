@@ -2,7 +2,7 @@
 
 \index{lukuteoria}
 
-Lukuteoria on kokonaislukuja tutkiva
+\key{Lukuteoria} on kokonaislukuja tutkiva
 matematiikan ala, jonka keskeinen
 käsite on lukujen jaollisuus.
 Lukuteoriassa on kiehtovaa, että monet kokonaislukuihin
@@ -38,7 +38,7 @@ alkuluvun tarkastaminen sekä luvun jakaminen tekijöihin.
 \index{jakaja}
 \index{tekijä}
 
-Luku $a$ on luvun $b$ jakaja eli tekijä,
+Luku $a$ on luvun $b$ \key{jakaja} eli \key{tekijä},
 jos $b$ on jaollinen $a$:lla.
 Jos $a$ on $b$:n jakaja,
 niin merkitään $a \mid b$,
@@ -48,18 +48,18 @@ Esimerkiksi luvun 24 jakajat ovat 1, 2, 3, 4, 6, 8, 12 ja 24.
 \index{alkuluku}
 \index{alkutekijähajotelma}
 
-Luku $n$ on alkuluku, jos sen ainoat 
+Luku $n$ on \key{alkuluku}, jos sen ainoat 
 positiiviset jakajat ovat 1 ja $n$.
 Esimerkiksi luvut 7, 19 ja 41 ovat alkulukuja.
 Luku 35 taas ei ole alkuluku, koska $5 \cdot 7 = 35$.
 Jokaiselle luvulle $n>1$ on olemassa yksikäsitteinen
-alkutekijähajotelma
+\key{alkutekijähajotelma}
 \[ n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k},\]
 missä $p_1,p_2,\ldots,p_k$ ovat alkulukuja
 ja $\alpha_1,\alpha_2,\ldots,\alpha_k$ ovat positiivisia
 kokonaislukuja. Esimerkiksi
 \[84 = 2^2 \cdot 3^1 \cdot 7^1.\]
-Luvun $n$ jakajien määrä on
+Luvun $n$ \key{jakajien määrä} on
 \[\tau(n)=\prod_{i=1}^k (\alpha_i+1),\]
 koska alkutekijän $p_i$ kohdalla on $\alpha_i+1$
 tapaa valita, montako kertaa alkutekijä
@@ -68,12 +68,12 @@ Esimerkiksi luvun 84 jakajat ovat
 \[\{1,2,3,4,6,7,12,14,21,28,42,84\}\]
 ja niiden määrä on $\tau(84)=3 \cdot 2 \cdot 2 = 12$.
 
-Luvun $n$ jakajien summa on
+Luvun $n$ \key{jakajien summa} on
 \[\sigma(n)=\prod_{i=1}^k (1+p_1+\ldots+p_1^{\alpha_i}) = \prod_{i=1}^k \frac{p_i^{a_i+1}-1}{p_i-1},\]
 jossa jälkimmäinen muoto perustuu geometriseen summaan.
 Esimerkiksi luvun 84 jakajien summa on
 \[\sigma(84)=\frac{2^3-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^2-1}{7-1} = 7 \cdot 4 \cdot 8 = 224.\]
-Luvun $n$ jakajien tulo on
+Luvun $n$ \key{jakajien tulo} on
 \[\mu(n)=n^{\tau(n)/2},\]
 koska jakajista voi muodostaa
 $\tau(n)/2$ paria, joiden jokaisen tulona on $n$.
@@ -84,7 +84,7 @@ ja jakajien tulo on $\pi(84)=84^6=351298031616$.
 %\index{tzydellinen luku@täydellinen luku}
 \index{täydellinen luku}
 
-Luku $n$ on \textit{täydellinen}, jos $n=\sigma(n)-n$
+Luku $n$ on \key{täydellinen}, jos $n=\sigma(n)-n$
 eli luku on sen pienempien jakajien summa.
 Esimerkiksi luku 28 on täydellinen,
 koska $28 = 1+2+4+7+14$.
@@ -129,16 +129,16 @@ Kuuluisia konjektuureja ovat seuraavat:
 
 \begin{itemize}
 \index{Goldbachin konjektuuri}
-\item \textit{Goldbachin konjektuuri}:
+\item \key{Goldbachin konjektuuri}:
 Jokainen parillinen kokonaisluku $n>2$ voidaan esittää
 muodossa $n=a+b$ niin, että $a$ ja $b$
 ovat alkulukuja.
 \index{alkulukupari}
-\item \textit{Alkulukuparit}:
+\item \key{Alkulukuparit}:
 On olemassa äärettömästi pareja muotoa $(p,p+2)$,
 joissa sekä $p$ että $p+2$ on alkuluku.
 \index{Legendren konjektuuri}
-\item \textit{Legendren konjektuuri}:
+\item \key{Legendren konjektuuri}:
 Lukujen $n^2$ ja $(n+1)^2$ välillä on aina alkuluku,
 kun $n$ on mikä tahansa positiivinen kokonaisluku.
 \end{itemize}
@@ -206,7 +206,7 @@ joten funktio muodostaa vektorin $[2,2,2,3]$.
 
 \index{Eratostheneen seula}
 
-Eratostheneen seula on esilaskenta-algoritmi,
+\key{Eratostheneen seula} on esilaskenta-algoritmi,
 jonka suorituksen jälkeen mistä tahansa
 välin $2 \ldots n$ luvusta pystyy tarkastamaan
 nopeasti, onko se alkuluku,
@@ -318,9 +318,9 @@ on vain $O(n \log \log n)$ eli hyvin lähellä $O(n)$.
 \index{pienin yhteinen moninkerta}
 \index{Eukleideen algoritmi}
 
-Lukujen $a$ ja $b$ suurin yhteinen tekijä eli $\textrm{syt}(a,b)$
+Lukujen $a$ ja $b$ \key{suurin yhteinen tekijä} eli $\textrm{syt}(a,b)$
 on suurin luku, jolla sekä $a$ että $b$ on jaollinen.
-Lukujen $a$ ja $b$ pienin yhteinen moninkerta eli $\textrm{pym}(a,b)$
+Lukujen $a$ ja $b$ \key{pienin yhteinen moninkerta} eli $\textrm{pym}(a,b)$
 on puolestaan pienin luku, joka on jaollinen sekä $a$:lla että $b$:llä.
 Esimerkiksi $\textrm{syt}(24,36)=12$ ja
 $\textrm{pym}(24,36)=72$.
@@ -328,7 +328,7 @@ $\textrm{pym}(24,36)=72$.
 Suurimman yhteisen tekijän ja pienimmän yhteisen
 moninkerran välillä on yhteys
 \[\textrm{pym}(a,b)=\frac{ab}{\textrm{syt}(a,b)}.\]
-Eukleideen algoritmi on tehokas tapa etsiä
+\key{Eukleideen algoritmi} on tehokas tapa etsiä
 suurin yhteinen tekijä.
 Se laskee suurimman yhteisen tekijän kaavalla
 \begin{equation*}
@@ -359,7 +359,7 @@ Esimerkiksi
 
 Luvut $a$ ja $b$ ovat suhteelliset alkuluvut,
 jos $\textrm{syt}(a,b)=1$.
-Eulerin totienttifunktio $\varphi(n)$
+\key{Eulerin totienttifunktio} $\varphi(n)$
 laskee luvun $n$ suhteellisten alkulukujen
 määrän välillä $1 \ldots n$.
 Esimerkiksi $\varphi(12)=4$,
@@ -375,7 +375,9 @@ jos $n$ on alkuluku.
 
 \section{Modulolaskenta}
 
-Modulolaskennassa lukualuetta rajoitetaan
+\index{modulolaskenta}
+
+\key{Modulolaskennassa} lukualuetta rajoitetaan
 niin, että käytössä ovat vain
 kokonaisluvut $0,1,2,\ldots,m-1$,
 missä $m$ on vakio.
@@ -432,18 +434,20 @@ int pot(int x, int n, int m) {
 \index{Fermat'n pieni lause}
 \index{Eulerin lause}
 
-Fermat'n pienen lauseen mukaan
+\key{Fermat'n pienen lauseen} mukaan
 \[x^{m-1} \bmod m = 1,\]
 kun $m$ on alkuluku ja $x$ ja $m$ ovat suhteelliset alkuluvut.
 Tällöin myös
 \[x^k \bmod m = (x^{k \bmod (m-1)}) \bmod m.\]
-Yleisemmin Eulerin lauseen mukaan
+Yleisemmin \key{Eulerin lauseen} mukaan
 \[x^{\varphi(m)} \bmod m = 1,\]
 kun $x$ ja $m$ ovat suhteelliset alkuluvut.
 Fermat'n pieni lause seuraa Eulerin lauseesta,
 koska jos $m$ on alkuluku, niin $\varphi(m)=m-1$.
 
 \subsubsection{Modulon käänteisluku}
+
+\index{modulon käänteisluku}
 
 Luvun $x$ käänteisluku modulo $m$
 tarkoittaa sellaista lukua $x^{-1}$,
@@ -522,7 +526,7 @@ cout << x*x << "\n"; // 2537071545
 
 \index{Diofantoksen yhtälö}
 
-Diofantoksen yhtälö on muotoa
+\key{Diofantoksen yhtälö} on muotoa
 \[ ax + by = c, \]
 missä $a$, $b$ ja $c$ ovat vakioita
 ja tehtävänä on ratkaista muuttujat $x$ ja $y$.
@@ -545,6 +549,8 @@ ax + by = \textrm{syt}(a,b).
 Diofantoksen yhtälön ratkaisu on olemassa, jos $c$ on
 jaollinen $\textrm{syt}(a,b)$:llä,
 ja muussa tapauksessa yhtälöllä ei ole ratkaisua.
+
+\index{laajennettu Eukleideen algoritmi}
 
 \subsubsection*{Laajennettu Eukleideen algoritmi}
 
@@ -592,7 +598,7 @@ on ratkaisu, missä $k$ on mikä tahansa kokonaisluku.
 
 \index{kiinalainen jäännöslause}
 
-Kiinalainen jäännöslause ratkaisee yhtälöryhmän muotoa
+\key{Kiinalainen jäännöslause} ratkaisee yhtälöryhmän muotoa
 \[
 \begin{array}{lcl}
 x & = & a_1 \bmod m_1 \\
@@ -640,7 +646,7 @@ $x+m_1 m_2 \cdots m_n$ ovat ratkaisuja.
 
 \index{Lagrangen lause}
 
-Lagrangen lauseen mukaan jokainen positiivinen kokonaisluku voidaan
+\key{Lagrangen lauseen} mukaan jokainen positiivinen kokonaisluku voidaan
 esittää neljän neliöluvun summana eli muodossa $a^2+b^2+c^2+d^2$.
 
 Esimerkiksi lukujen $1 \ldots 10$ esitykset ovat seuraavat:
@@ -670,7 +676,7 @@ esittäminen vaatii neljä neliölukua.
 \index{Zeckendorfin lause}
 \index{Fibonaccin luku}
 
-Zeckendorfin lauseen mukaan jokainen positiivinen kokonaisluku voidaan
+\key{Zeckendorfin lauseen} mukaan jokainen positiivinen kokonaisluku voidaan
 esittää Fibonaccin lukujen summana niin, että
 mitkään kaksi lukua eivät ole samat eivätkä peräkkäiset
 Fibonaccin luvut.
@@ -699,7 +705,7 @@ luku & esitys \\
 \index{Pythagoraan kolmikko}
 \index{Eukleideen kaava}
 
-Pythagoraan kolmikko on lukukolmikko $(a,b,c)$,
+\key{Pythagoraan kolmikko} on lukukolmikko $(a,b,c)$,
 joka toteuttaa Pythagoraan lauseen $a^2+b^2=c^2$
 eli $a$, $b$ ja $c$ voivat olla suorakulmaisen
 kolmion sivujen pituudet.
@@ -714,7 +720,7 @@ jos $a$, $b$ ja $c$ ovat suhteellisia alkulukuja,
 ja primitiivisista kolmikoista voi muodostaa
 kaikki muut kolmikot kertoimen $k$ avulla.
 
-Eukleideen kaava on tehokas menetelmä muodostaa
+\key{Eukleideen kaava} on tehokas menetelmä muodostaa
 Pythagoraan kolmikoita.
 Sen mukaan jokainen primitiivinen
 Pythagoraan kolmikko on muotoa
@@ -729,7 +735,7 @@ pienin mahdollinen Pythagoraan kolmikko
 
 \index{Wilsonin lause}
 
-Wilsonin lauseen mukaan luku $n$ on alkuluku
+\key{Wilsonin lauseen} mukaan luku $n$ on alkuluku
 tarkalleen silloin, kun
 \[(n-1)! \bmod n = n-1.\]
 Esimerkiksi luku 11 on alkuluku, koska
