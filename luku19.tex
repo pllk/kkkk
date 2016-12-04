@@ -2,10 +2,10 @@
 
 Tämä luku käsittelee kahdenlaisia polkuja verkossa:
 \begin{itemize}
-\item \textit{Eulerin polku} on verkossa oleva
+\item \key{Eulerin polku} on verkossa oleva
 polku, joka kulkee tasan kerran jokaista
 verkon kaarta pitkin.
-\item \textit{Hamiltonin polku} on verkossa
+\item \key{Hamiltonin polku} on verkossa
 oleva polku, joka käy tasan kerran
 jokaisessa verkon solmussa.
 \end{itemize}
@@ -25,7 +25,7 @@ NP-vaikea ongelma.
 
 \index{Eulerin polku}
 
-Eulerin polku (\textit{Eulerian path}) on verkossa oleva
+\key{Eulerin polku} on verkossa oleva
 polku, joka kulkee tarkalleen kerran jokaista kaarta pitkin.
 Esimerkiksi verkossa
 \begin{center}
@@ -69,7 +69,7 @@ on Eulerin polku solmusta 2 solmuun 5:
 \end{tikzpicture}
 \end{center}
 \index{Eulerin kierros}
-Eulerin kierros (\textit{Eulerian circuit})
+\key{Eulerin kierros}
 on puolestaan Eulerin polku,
 jonka alku- ja loppusolmu ovat samat.
 Esimerkiksi verkossa
@@ -222,9 +222,11 @@ Niinpä verkossa on Eulerin polku solmusta 2 solmuun 5:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Muodostaminen}
+\subsubsection{Hierholzerin algoritmi}
 
-Seuraavaksi esitettävä algoritmi muodostaa Eulerin kierroksen
+\index{Hierholzerin algoritmi}
+
+\key{Hierholzerin algoritmi} muodostaa Eulerin kierroksen
 suuntaamattomassa verkossa.
 Algoritmi olettaa, että kaikki kaaret ovat samassa
 komponentissa ja jokaisen solmun aste on parillinen.
@@ -440,7 +442,7 @@ linkitettyjen vieruslistojen avulla.
 \section{Hamiltonin polku}
 
 \index{Hamiltonin polku}
-Hamiltonin polku (\textit{Hamiltonian path})
+\key{Hamiltonin polku}
 on verkossa oleva polku,
 joka kulkee tarkalleen kerran jokaisen solmun kautta.
 Esimerkiksi verkossa
@@ -485,7 +487,7 @@ on Hamiltonin polku solmusta 1 solmuun 3:
 
 \index{Hamiltonin kierros}
 Jos Hamiltonin polun alku- ja loppusolmu on sama,
-kyseessä on Hamiltonin kierros (\textit{Hamiltonian circuit}).
+kyseessä on \key{Hamiltonin kierros}.
 Äskeisessä verkossa on myös
 Hamiltonin kierros, jonka alku- ja loppusolmu on solmu 1:
 \begin{center}
@@ -527,12 +529,12 @@ Myös vahvempia tuloksia on saatu aikaan:
 \begin{itemize}
 \item
 \index{Diracin lause}
-\textit{Diracin lause}:
+\key{Diracin lause}:
 Jos jokaisen verkon solmun aste on $n/2$ tai suurempi,
 niin verkossa on Hamiltonin polku.
 \item
 \index{Oren lause}
-\textit{Oren lause}:
+\key{Oren lause}:
 Jos jokaisen ei-vierekkäisen solmuparin asteiden summa
 on $n$ tai suurempi,
 niin verkossa on Hamiltonin polku.
@@ -572,7 +574,7 @@ Tällainen ratkaisu on mahdollista toteuttaa ajassa $O(2^n n^2)$.
 
 \index{de Bruijnin jono}
 
-De Bruijnin jono (\textit{de Bruijn sequence})
+\key{De Bruijnin jono}
 on lyhin $k$-merkkisen aakkoston merkkijono,
 jonka osajonoina ovat kaikki mahdolliset
 $n$ merkin yhdistelmät.
@@ -631,7 +633,7 @@ lyhin mahdollinen merkkijono.
 
 \index{ratsun kierros}
 
-Ratsun kierros (\textit{knight's tour}) on tapa liikuttaa ratsua
+\key{Ratsun kierros} on tapa liikuttaa ratsua
 shakin sääntöjen mukaisesti $n \times n$ -kokoisella
 shakkilaudalla niin,
 että ratsu käy tarkalleen kerran jokaisessa ruudussa.
@@ -685,7 +687,7 @@ tulee valmiiksi nopeasti.
 \index{heuristiikka}
 \index{Warnsdorffin sääntö}
 
-Warnsdorffin sääntö on yksinkertainen mutta käytännössä hyvä heuristiikka
+\key{Warnsdorffin sääntö} on yksinkertainen mutta käytännössä hyvä heuristiikka
 ratsun kierroksen etsimiseen.
 Sen avulla on mahdollista löytää nopeasti ratsun kierros
 suurestakin ruudukosta.

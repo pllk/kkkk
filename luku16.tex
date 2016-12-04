@@ -4,11 +4,11 @@ Tässä luvussa tutustumme kahteen suunnattujen
 verkkojen alaluokkaan:
 
 \begin{itemize}
-\item \textit{Syklitön verkko}:
+\item \key{Syklitön verkko}:
 Tällaisessa verkossa ei ole yhtään sykliä,
 eli mistään solmusta ei ole polkua takaisin
 solmuun itseensä.
-\item \textit{Seuraajaverkko}:
+\item \key{Seuraajaverkko}:
 Tällaisessa verkossa jokaisen solmun lähtöaste on 1
 eli kullakin solmulla on yksikäsitteinen seuraaja.
 \end{itemize}
@@ -22,8 +22,7 @@ hyödyntävät oletuksia verkon rakenteesta.
 \index{topologinen järjestys}
 \index{sykli}
 
-Topologinen järjestys
-(\textit{topological sort}) on tapa
+\key{Topologinen järjestys} on tapa
 järjestää suunnatun verkon solmut niin,
 että jos solmusta $a$ pääsee solmuun $b$,
 niin $a$ on ennen $b$:tä järjestyksessä.
@@ -508,7 +507,7 @@ ja $x=6$, niin verkosta tulee seuraava:
 \index{funktionaalinen verkko}
 
 Seuraavaksi oletamme, että
-suunnaton verkko on \textit{seuraajaverkko},
+suunnaton verkko on \key{seuraajaverkko},
 jolloin jokaisen solmun lähtöaste on 1
 eli siitä lähtee tasan yksi kaari ulospäin.
 Niinpä verkko muodostuu yhdestä tai useammasta
@@ -516,7 +515,7 @@ komponentista, joista jokaisessa on yksi sykli
 ja joukko siihen johtavia polkuja.
 
 Seuraajaverkosta käytetään joskus myös nimeä
-\textit{funktionaalinen verkko}.
+\key{funktionaalinen verkko}.
 Tämä johtuu siitä, että jokaista seuraajaverkkoa
 vastaa funktio $f$, joka määrittelee verkon kaaret.
 Funktion parametrina on verkon solmu ja
@@ -675,14 +674,13 @@ olemassa parempia algoritmeja.
 Niissä aikavaativuus on edelleen $O(n)$,
 mutta muistia kuluu vain $O(1)$.
 Tästä on merkittävää hyötyä, jos $n$ on suuri.
-Tunnetuin tällainen algoritmi on
-\textit{Floydin algoritmi}, johon tutustumme seuraavaksi.
+Tutustumme seuraavaksi tunnetuimpaan tällaiseen algoritmiin.
 
 \subsubsection{Floydin algoritmi}
 
 \index{Floydin algoritmi}
 
-Floydin algoritmi kulkee verkossa eteenpäin rinnakkain
+\key{Floydin algoritmi} kulkee verkossa eteenpäin rinnakkain
 kahdesta kohdasta.
 Osoitin $a$ liikkuu joka vuorolla askeleen eteenpäin,
 kun taas osoitin $b$ liikkuu kaksi askelta eteenpäin.

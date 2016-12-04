@@ -1,4 +1,5 @@
 \chapter{Verkkojen perusteet}
+
 Monen ohjelmointitehtävän voi ratkaista tulkitsemalla
 tehtävän verkko-on\-gel\-ma\-na ja käyttämällä
 sopivaa verkkoalgoritmia.
@@ -20,9 +21,8 @@ sekä erilaisia tapoja pitää verkkoa muistissa algoritmeissa.
 \index{solmu}
 \index{kaari}
 
-Verkko (\textit{graph})
-muodostuu solmuista (\textit{node} tai \textit{vertex})
-ja niiden välisistä kaarista (\textit{edge}).
+\key{Verkko} muodostuu \key{solmuista}
+ja niiden välisistä \key{kaarista}.
 Merkitsemme tässä kirjassa
 verkon solmujen määrää
 muuttujalla $n$ ja kaarten määrää muuttujalla $m$.
@@ -49,9 +49,11 @@ Esimerkiksi seuraavassa verkossa on 5 solmua ja 7 kaarta:
 \end{tikzpicture}
 \end{center}
 
-Polku (\textit{path}) on solmusta $a$ solmuun $b$
+\index{polku}
+
+\key{Polku} on solmusta $a$ solmuun $b$
 johtava reitti, joka kulkee verkon kaaria pitkin.
-Polun pituus (\textit{length}) on kaarten määrä polulla.
+Polun \key{pituus} on kaarten määrä polulla.
 Esimerkiksi yllä olevassa verkossa
 polkuja solmusta 1 solmuun 5 ovat:
 
@@ -65,9 +67,9 @@ polkuja solmusta 1 solmuun 5 ovat:
 
 \subsubsection{Yhtenäisyys}
 
-\index{yhtenäisyys}
+\index{yhtenäinen verkko}
 
-Verkko on yhtenäinen (\textit{connected}), jos siinä on polku
+Verkko on \key{yhtenäinen}, jos siinä on polku
 mistä tahansa solmusta mihin tahansa solmuun.
 Esimerkiksi seuraava verkko on yhtenäinen:
 \begin{center}
@@ -130,7 +132,9 @@ $\{8\}$.
 \end{tikzpicture}
 \end{center}
 
-Puu (\textit{tree}) on yhtenäinen verkko,
+\index{puu}
+
+\key{Puu} on yhtenäinen verkko,
 jossa on $n$ solmua ja $n-1$ kaarta.
 Siinä minkä tahansa kahden solmun välillä
 on yksikäsitteinen polku.
@@ -155,7 +159,9 @@ Esimerkiksi seuraava verkko on puu:
 
 \subsubsection{Kaarten suunnat}
 
-Verkko on suunnattu (\textit{directed}),
+\index{suunnattu verkko}
+
+Verkko on \key{suunnattu},
 jos verkon kaaria pystyy
 kulkemaan vain niiden merkittyyn suuntaan.
 Esimerkiki seuraava verkko on suunnattu:
@@ -182,12 +188,15 @@ $3 \rightarrow 1 \rightarrow 2 \rightarrow 5$.
 Sen sijaan solmusta 5 ei lähde polkua mihinkään muuhun
 solmuun.
 
-Suunnattu verkko on vahvasti yhtenäinen
-(\textit{strongly connected}),
+\index{vahvasti yhtenäinen verkko}
+
+Suunnattu verkko on \key{vahvasti yhtenäinen},
 jos mistä tahansa solmusta on polku mihin
 tahansa toiseen solmuun.
 
-Sykli (\textit{cycle}) on polku, jonka ensimmäinen
+\index{sykli}
+
+\key{Sykli} on polku, jonka ensimmäinen
 ja viimeinen solmu on sama.
 Esimerkiksi yllä olevassa verkossa on sykli
 $1 \rightarrow 2 \rightarrow 4 \rightarrow 1$.
@@ -196,7 +205,9 @@ Jos verkossa ei ole yhtään sykliä, se on syklitön
 
 \subsubsection{Kaarten painot}
 
-Painotetussa (\textit{weighted}) verkossa
+\index{painotettu verkko}
+
+\key{Painotetussa} verkossa
 jokaiseen kaareen liittyy paino.
 Tavallinen tulkinta on, että painot kuvaavat
 kaarien pituuksia.
@@ -228,9 +239,9 @@ Jälkimmäinen polku on lyhin polku solmusta 1 solmuun 5.
 \index{naapuri}
 \index{aste}
 
-Kaksi solmua ovat naapureita (\textit{neighbor}),
+Kaksi solmua ovat \key{naapureita},
 jos ne ovat vierekkäin eli niiden välillä on kaari.
-Solmun aste (\textit{degree}) on
+Solmun \key{aste} on
 sen naapurien määrä.
 Esimerkiksi seuraavassa verkossa
 solmun 2 naapurit ovat 1, 4 ja 5,
@@ -260,16 +271,22 @@ Tämä johtuu siitä, että jokainen kaari lisää
 kahden solmun astetta yhdellä.
 Niinpä solmujen asteiden summa on aina parillinen.
 
-Verkko on säännöllinen (\textit{regular}),
+\index{säännöllinen verkko}
+\index{täydellinen verkko}
+
+Verkko on \key{säännöllinen},
 jos jokaisen solmun aste on vakio $d$.
-Verkko on täydellinen (\textit{complete}),
+Verkko on \key{täydellinen},
 jos jokaisen solmun aste on $n-1$ eli
 verkossa on kaikki mahdolliset kaaret
 solmujen välillä.
 
-Suunnatussa verkossa lähtöaste (\textit{outdegree})
+\index{lähtöaste}
+\index{tuloaste}
+
+Suunnatussa verkossa \key{lähtöaste}
 on solmusta lähtevien kaarten määrä ja
-tuloaste (\textit{indegree}) on solmuun tulevien
+\key{tuloaste} on solmuun tulevien
 kaarten määrä.
 Esimerkiksi seuraavassa verkossa solmun 2
 lähtöaste on 1 ja tuloaste on 2.
@@ -294,12 +311,12 @@ lähtöaste on 1 ja tuloaste on 2.
 \subsubsection{Väritykset}
 
 \index{väritys}
-\index{kaksijakoisuus}
+\index{kaksijakoinen verkko}
 
-Verkon värityksessä (\textit{coloring}) jokaiselle solmulle valitaan
+Verkon \key{värityksessä} jokaiselle solmulle valitaan
 tietty väri niin, että millään kahdella
 vierekkäisellä solmulla ei ole samaa väriä.
-Verkko on kaksijakoinen (\textit{bipartite}),
+Verkko on \key{kaksijakoinen},
 jos kaksi väriä riittää sen värittämiseen.
 
 Esimerkiksi verkko
@@ -344,7 +361,9 @@ pariton määrä solmuja.
 
 \subsubsection{Yksinkertaisuus}
 
-Verkko on yksinkertainen (\textit{simple}),
+\index{yksinkertainen verkko}
+
+Verkko on \key{yksinkertainen},
 jos mistään solmusta ei ole kaarta itseensä
 eikä minkään kahden solmun välillä ole
 monta kaarta samaan suuntaan.
@@ -389,7 +408,7 @@ Seuraavaksi käymme läpi kolme tavallista vaihtoehtoa.
 \index{vieruslista}
 
 Tavallisin tapa pitää verkkoa muistissa on
-luoda jokaisesta solmusta vieruslista (\textit{adjacency list}),
+luoda jokaisesta solmusta \key{vieruslista},
 joka sisältää kaikki solmut,
 joihin solmusta pystyy siirtymään kaarta pitkin.
 Vieruslistaesitys on tavallisin verkon esitysmuoto ja
@@ -484,8 +503,7 @@ for (auto u : v[s]) {
 
 \index{vierusmatriisi}
 
-Vierusmatriisi (\textit{adjacency matrix})
-on kaksiulotteinen taulukko,
+\key{Vierusmatriisi} on kaksiulotteinen taulukko,
 joka kertoo jokaisesta mahdollisesta kaaresta,
 onko se mukana verkossa.
 Vierusmatriisista on nopeaa tarkistaa,
@@ -608,7 +626,7 @@ vastaa seuraava vierusmatriisi:
 
 \index{kaarilista}
 
-Kaarilista (\textit{edge list}) sisältää kaikki verkon kaaret.
+\key{Kaarilista} sisältää kaikki verkon kaaret.
 Kaarilista on hyvä tapa tallentaa verkko,
 jos algoritmissa täytyy käydä läpi
 kaikki verkon kaaret eikä ole tarvetta

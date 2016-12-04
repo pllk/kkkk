@@ -23,7 +23,7 @@ tarvitaan kehittyneempiä algoritmeja.
 
 \index{Bellman-Fordin algoritmi}
 
-Bellman-Fordin algoritmi etsii
+\key{Bellman-Fordin algoritmi} etsii
 lyhimmän polun alkusolmusta
 kaikkiin muihin verkon solmuihin.
 Algoritmi toimii kaikenlaisissa verkoissa,
@@ -240,6 +240,8 @@ kun mikään etäisyysarvio ei parane kierroksen aikana.
 
 \subsubsection{Negatiivinen sykli}
 
+\index{negatiivinen sykli}
+
 Bellman-Fordin algoritmin avulla voi myös tarkastaa,
 onko verkossa sykliä,
 jonka pituus on negatiivinen.
@@ -280,7 +282,7 @@ ja algoritmi etsii negatiivista sykliä koko verkon alueelta.
 
 \index{SPFA-algoritmi}
 
-SPFA-algoritmi (\textit{Shortest Path Faster Algorithm})
+\key{SPFA-algoritmi} (''Shortest Path Faster Algorithm'')
 on Bellman-Fordin algoritmin muunnelma,
 joka on usein alkuperäistä algoritmia tehokkaampi.
 Se ei tutki joka kierroksella koko verkkoa läpi
@@ -327,7 +329,7 @@ kuin tavallisen Bellman-Fordin algoritmin.
 
 \index{Dijkstran algoritmi}
 
-Dijkstran algoritmi etsii Bellman-Fordin
+\key{Dijkstran algoritmi} etsii Bellman-Fordin
 algoritmin tavoin lyhimmät polut
 alkusolmusta kaikkiin muihin solmuihin.
 Dijkstran algoritmi on tehokkaampi kuin
@@ -611,17 +613,17 @@ Huomaa, että $O(\log m)=O(\log n)$, koska
 $n$ solmun verkossa on enintään $O(n^2)$ eri kaarta
 ja $\log(n^2) = 2 \log n$.
 
-\section{Floyd-Warshallin algoritmi}
+\section{Floyd–Warshallin algoritmi}
 
-\index{Floyd-Warshallin algoritmi}
+\index{Floyd–Warshallin algoritmi}
 
-Floyd-Warshallin algoritmi lähestyy toisella
+\key{Floyd–Warshallin algoritmi} lähestyy toisella
 tavalla lyhimpien polkujen etsimistä
 kuin Bellman-Fordin ja Dijkstran algoritmit.
 Siinä missä muut algoritmit
 etsivät lyhimpiä polkuja
 tietystä solmusta alkaen,
-Floyd-Warshallin algoritmi etsii
+Floyd–Warshallin algoritmi etsii
 samalla kertaa lyhimmän polun jokaisen verkon
 solmuparin välillä.
 
@@ -638,7 +640,7 @@ toimia välisolmuina poluilla.
 
 \subsubsection{Toiminta}
 
-Tarkastellaan Floyd-Warshallin
+Tarkastellaan Floyd–Warshallin
 algoritmin toimintaa seuraavassa verkossa:
 
 \begin{center}
@@ -783,7 +785,7 @@ Tämä vastaa seuraavaa polkua:
 
 \subsubsection{Toteutus}
 
-Floyd-Warshallin algoritmin etuna on,
+Floyd–Warshallin algoritmin etuna on,
 että se on helppoa toteuttaa.
 Seuraava toteutus muodostaa etäisyysmatriisin
 \texttt{d}, jossa $\texttt{d}[a][b]$

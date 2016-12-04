@@ -14,7 +14,7 @@ missä järjestyksessä ne kulkevat verkossa.
 
 \index{syvyyshaku}
 
-Syvyyshaku (\textit{depth-first search} eli \textit{DFS})
+\key{Syvyyshaku}
 on suoraviivainen menetelmä verkon läpikäyntiin.
 Syvyyshaku lähtee liikkeelle tietystä
 verkon solmusta ja etenee siitä
@@ -128,7 +128,7 @@ koska haku käsittelee kerran jokaisen solmun ja kaaren.
 
 Syvyyshaku on yleensä mukavinta toteuttaa
 rekursiolla.
-Seuraava funktio \texttt{dfs}
+Seuraava funktio \texttt{haku}
 suorittaa syvyyshaun sille parametrina
 annetusta solmusta lähtien.
 Funktio olettaa, että
@@ -147,12 +147,12 @@ ja kun haku saapuu solmuun $s$,
 sen kohdalle merkitään luku 1.
 Funktion toteutus on seuraavanlainen:
 \begin{lstlisting}
-void dfs(int s) {
+void haku(int s) {
     if (z[s]) return;
     z[s] = 1;
     // solmun s käsittely tähän
     for (auto u: v[s]) {
-        dfs(u);
+        haku(u);
     }
 }
 \end{lstlisting}
@@ -161,7 +161,7 @@ void dfs(int s) {
 
 \index{leveyshaku}
 
-Leveyshaku (\textit{breadth-first search} eli \textit{BFS})
+\key{Leveyshaku}
 käy solmut läpi järjestyksessä sen mukaan,
 kuinka kaukana ne ovat aloitussolmusta.
 Niinpä leveyshaun avulla pystyy laskemaan
@@ -565,7 +565,7 @@ ettei missään kohtaa ole vierekkäin
 kahta samanväristä solmua.
 Edes tapaukseen $k=3$ ei tunneta
 mitään tehokasta algoritmia,
-vaan kyseessä on NP-täydellinen ongelma.
+vaan kyseessä on NP-vaikea ongelma.
 % 
 % \section{Labyrintin käsittely}
 % 

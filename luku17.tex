@@ -1,6 +1,6 @@
 \chapter{Vahvasti yhtenäisyys}
 
-\index{vahvasti yhtenäisyys}
+\index{vahvasti yhtenäinen verkko}
 
 Suunnatussa verkossa yhtenäisyys ei takaa sitä,
 että kahden solmun välillä olisi olemassa polkua,
@@ -9,8 +9,7 @@ Niinpä suunnattuja verkkoja varten on mielekästä
 määritellä uusi käsite,
 joka vaatii enemmän verkon yhtenäisyydeltä.
 
-Verkko on \textit{vahvasti} yhtenäinen
-(\textit{strongly connected}),
+Verkko on \key{vahvasti yhtenäinen},
 jos mistä tahansa solmusta on olemassa polku
 kaikkiin muihin solmuihin.
 Esimerkiksi seuraavassa kuvassa vasen
@@ -45,11 +44,14 @@ Oikeanpuoleinen verkko ei ole vahvasti yhtenäinen,
 koska esimerkiksi solmusta 2 ei ole
 polkua solmuun 1.
 
-Verkon vahvasti yhtenäiset komponentit
+\index{vahvasti yhtenäinen komponentti}
+\index{komponenttiverkko}
+
+Verkon \key{vahvasti yhtenäiset komponentit}
 jakavat verkon solmut mahdollisimman
 suuriin vahvasti yhtenäisiin osiin.
 Verkon vahvasti yhtenäiset komponentit
-muodostavat syklittömän komponenttiverkon,
+muodostavat syklittömän \key{komponenttiverkon},
 joka kuvaa alkuperäisen verkon syvärakennetta.
 
 Esimerkiksi verkon
@@ -145,7 +147,7 @@ käyttää logiikan 2SAT-ongelman ratkaisemiseen.
 
 \index{Kosarajun algoritmi}
 
-Kosarajun algoritmi on tehokas
+\key{Kosarajun algoritmi} on tehokas
 menetelmä verkon
 vahvasti yhtenäisten komponenttien etsimiseen.
 Se suorittaa verkkoon
@@ -371,7 +373,7 @@ kummankin haun aikavaativuus on $O(n+m)$.
 
 \index{2SAT-ongelma}
 
-Vahvasti yhtenäisyys liittyy myös 2SAT-ongelman ratkaisemiseen.
+Vahvasti yhtenäisyys liittyy myös \key{2SAT-ongelman} ratkaisemiseen.
 Siinä annettuna on looginen lauseke muotoa
 
 \[
@@ -550,11 +552,13 @@ ovat verkossa molempiin suuntiin.
 Niinpä sekä $x_i$ että $x_j$
 saavat varmasti arvokseen epätosi.
 
-2SAT-ongelman vaikeampi versio on 3SAT-ongelma,
+\index{3SAT-ongelma}
+
+2SAT-ongelman vaikeampi versio on \key{3SAT-ongelma},
 jossa jokainen lausekkeen osa on muotoa
 $(a_i \lor b_i \lor c_i)$.
 Tämän ongelman ratkaisemiseen \textit{ei}
 tunneta tehokasta menetelmää,
-vaan kyseessä on NP-täydellinen ongelma.
+vaan kyseessä on NP-vaikea ongelma.
 
 

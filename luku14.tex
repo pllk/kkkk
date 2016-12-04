@@ -2,7 +2,7 @@
 
 \index{puu}
 
-Puu (\textit{tree}) on yhtenäinen, syklitön ja suuntaamaton verkko,
+\key{Puu} on yhtenäinen, syklitön ja suuntaamaton verkko,
 jossa on $n$ solmua ja $n-1$ kaarta.
 Jokaisen kahden puun solmun välillä on yksikäsitteinen polku.
 Jos puusta poistaa yhden kaaren, se ei ole enää yhtenäinen,
@@ -28,13 +28,17 @@ Esimerkiksi seuraavassa puussa on 7 solmua ja 6 kaarta:
 \end{tikzpicture}
 \end{center}
 
-Puun lehdet (\textit{leaves}) ovat solmut,
+\index{lehti}
+
+Puun \key{lehdet} ovat solmut,
 joiden aste on 1 eli joista lähtee vain yksi kaari.
 Esimerkiksi yllä olevan puun lehdet ovat
 solmut 3, 5, 6 ja 7.
 
-Usein yksi solmuista valitaan puun juureksi 
-(\textit{root}) ja muut solmut asettuvat sen alapuolelle.
+\index{juuri}
+
+Usein yksi solmuista valitaan puun \key{juureksi} 
+ja muut solmut asettuvat sen alapuolelle.
 Esimerkiksi jos yllä olevassa puussa valitaan
 juureksi solmu 1, solmut asettuvat seuraavaan järjestykseen:
 
@@ -56,17 +60,22 @@ juureksi solmu 1, solmut asettuvat seuraavaan järjestykseen:
 \end{tikzpicture}
 \end{center}
 
-Solmun lapset (\textit{children})
+\index{lapsi}
+\index{vanhempi}
+
+Solmun \key{lapset}
 ovat sen alemman tason naapurit
-ja solmun vanhempi (\textit{parent})
+ja solmun \key{vanhempi}
 on sen ylemmän tason naapuri.
 Jokaisella solmulla on tasan yksi vanhempi,
 paitsi juurella ei ole vanhempaa.
 Esimerkiksi yllä olevassa puussa solmun 4
 lapset ovat solmut 3 ja 7 ja solmun 4 vanhempi on solmu 1.
 
+\index{alipuu}
+
 Juurellisen puun rakenne on rekursiivinen:
-jokaisesta puun solmusta alkaa alipuu (\textit{subtree}),
+jokaisesta puun solmusta alkaa \key{alipuu},
 jonka juurena on solmu itse ja johon kuuluvat
 kaikki solmut, joihin solmusta pääsee kulkemalla alaspäin puussa.
 Esimerkiksi solmun 4 alipuussa
@@ -88,10 +97,10 @@ siitä syvyyshaku.
 Seuraava rekursiivinen funktio toteuttaa sen:
 
 \begin{lstlisting}
-void dfs(int s, int e) {
+void haku(int s, int e) {
     // solmun s käsittely tähän
     for (auto u : v[s]) {
-        if (u != e) dfs(u, s);
+        if (u != e) haku(u, s);
     }
 }
 \end{lstlisting}
@@ -105,7 +114,7 @@ sellaisiin solmuihin, joita ei ole vielä käsitelty.
 Seuraava kutsu käy läpi puun aloittaen juuresta $x$:
 
 \begin{lstlisting}
-dfs(x, 0);
+haku(x, 0);
 \end{lstlisting}
 
 Ensimmäisessä kutsussa $e=0$, koska läpikäynti
@@ -131,11 +140,11 @@ alipuiden solmujen määristä.
 Laskennan voi toteuttaa seuraavasti:
 
 \begin{lstlisting}
-void dfs(int s, int e) {
+void haku(int s, int e) {
     c[s] = 1;
     for (auto u : v[s]) {
         if (u == e) continue;
-        dfs(u, s);
+        haku(u, s);
         c[s] += c[u];
     }
 }
@@ -145,7 +154,7 @@ void dfs(int s, int e) {
 
 \index{läpimitta}
 
-Puun läpimitta (\textit{diameter}) on pisin polku
+Puun \key{läpimitta} on pisin polku
 kahden puussa olevan solmun välillä.
 Esimerkiksi puussa
 \begin{center}
@@ -477,11 +486,12 @@ kaikkiin suuntiin:
 \index{binääripuu}
 
 \begin{samepage}
-Binääripuu (\textit{binary tree}) on juurellinen puu,
+\key{Binääripuu} on juurellinen puu,
 jonka jokaisella solmulla on vasen ja oikea alipuu.
 On mahdollista, että alipuu on tyhjä,
 jolloin puu ei jatku siitä pidemmälle alaspäin.
 Niinpä jokaisella solmulla on 0, 1 tai 2 lasta.
+
 Esimerkiksi seuraava puu on binääripuu:
 
 \begin{center}
@@ -512,9 +522,9 @@ jotka syntyvät rekursiivisesta läpikäynnistä:
 \index{jälkijärjestys}
 
 \begin{itemize}
-\item esijärjestys (\textit{pre-order}): juuri, vasen alipuu, oikea alipuu
-\item sisäjärjestys (\textit{in-order}): vasen alipuu, juuri, oikea alipuu
-\item jälkijärjestys (\textit{post-order}): vasen alipuu, oikea alipuu, juuri
+\item \key{esijärjestys}: juuri, vasen alipuu, oikea alipuu
+\item \key{sisäjärjestys}: vasen alipuu, juuri, oikea alipuu
+\item \key{jälkijärjestys}: vasen alipuu, oikea alipuu, juuri
 \end{itemize}
 
 Esimerkissä kuvatun puun esijärjestys on

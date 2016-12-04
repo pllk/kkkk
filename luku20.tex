@@ -3,10 +3,10 @@
 Virtauslaskennan keskeiset ongelmat ovat:
 
 \begin{itemize}
-\item \textit{Maksimivirtauksen etsiminen}:
+\item \key{Maksimivirtauksen etsiminen}:
 Kuinka paljon virtausta on mahdollista kuljettaa
 verkon alkusolmusta loppusolmuun kaaria pitkin?
-\item \textit{Maksimileikkauksen etsiminen}:
+\item \key{Maksimileikkauksen etsiminen}:
 Mikä on yhteispainoltaan pienin joukko kaaria,
 joiden poistaminen erottaa alkusolmun loppusolmusta?
 \end{itemize}
@@ -45,7 +45,7 @@ jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 \index{virtaus}
 \index{maksimivirtaus}
 
-Virtaus (\textit{flow})
+Verkossa oleva \key{virtaus}
 lähtee liikkeelle alkusolmusta ja päätyy loppusolmuun.
 Kunkin kaaren paino on kapasiteetti,
 joka ilmaisee, kuinka paljon virtausta kaaren
@@ -53,7 +53,7 @@ kautta voi kulkea.
 Kaikissa solmuissa alku- ja loppusolmua lukuun ottamatta
 tulevan ja lähtevän virtauksen on oltava yhtä suuri.
 
-Maksimivirtaus (\textit{maximum flow}) on suurin
+\key{Maksimivirtaus} on suurin
 mahdollinen virtaus verkossa.
 Esimerkkiverkossa maksimivirtauksen suuruus on 7:
 
@@ -97,13 +97,13 @@ kuljettaa enempää virtausta verkossa.
 \index{leikkaus}
 \index{minimileikkaus}
 
-Leikkaus (\textit{cut}) jakaa verkon solmut
+\key{Leikkaus} jakaa verkon solmut
 kahteen osaan niin, että alkusolmu ja loppusolmu
 ovat eri osissa.
 Leikkauksen paino on niiden kaarten yhteispaino,
 jotka kulkevat alkuosasta loppuosaan.
 
-Minimileikkaus (\textit{minimum cut})
+\key{Minimileikkaus}
 on leikkaus, jonka paino on pienin mahdollinen.
 Esimerkkiverkossa minimileikkaus on painoltaan 7:
 
@@ -161,7 +161,7 @@ minimileikkaus ovat yhtä suuret.
 
 \index{Ford-Fulkersonin algoritmi}
 
-Ford-Fulkersonin algoritmi etsii verkon maksimivirtauksen.
+\key{Ford-Fulkersonin algoritmi} etsii verkon maksimivirtauksen.
 Algoritmin ideana on aloittaa tilanteesta,
 jossa virtaus on 0, ja etsiä sitten verkosta polkuja,
 jotka tuottavat siihen lisää virtausta.
@@ -430,7 +430,7 @@ jotka estävät tämän ilmiön.
 
 \index{Edmonds-Karpin algoritmi}
 
-\textit{Edmonds-Karpin algoritmi} on
+\key{Edmonds-Karpin algoritmi} on
 Ford-Fulkersonin algoritmin toteutus,
 jossa virtausta kasvattava polku valitaan
 aina niin, että siinä on mahdollisimman vähän kaaria.
@@ -440,7 +440,9 @@ Osoittautuu, että tämä varmistaa virtauksen
 kasvamisen nopeasti ja
 maksimivirtauksen etsiminen vie aikaa $O(m^2 n)$.
 
-\textit{Skaalaava algoritmi}
+\index{skaalaava algoritmi}
+
+\key{Skaalaava algoritmi}
 asettaa minimiarvon, joka on ensin alkusolmusta
 lähtevien kaarten kapasiteettien summa $c$.
 Joka vaiheessa verkosta etsitään
@@ -457,6 +459,8 @@ Molemmat algoritmit ovat yleensä aina riittävän
 nopeita ohjelmointikisoissa esiintyviin tehtäviin.
 
 \subsubsection{Minimileikkaus}
+
+\index{minimileikkaus}
 
 Osoittautuu, että kun Ford-Fulkersonin algoritmi on saanut valmiiksi
 maksimivirtauksen, se on tuottanut samalla minimileikkauksen.
@@ -737,12 +741,13 @@ kun sama solmu ei saa esiintyä monessa polussa.
 
 \section{Maksimiparitus}
 
+\index{paritus}
 \index{maksimiparitus}
 
-Verkon paritus (\textit{matching}) on kokoelma kaaria,
+Verkossa oleva \key{paritus} on kokoelma kaaria,
 jotka on valittu niin, että jokainen verkon solmu
 esiintyy enintään yhden paritukseen kuuluvan kaaren päätesolmuna.
-Maksimiparitus (\textit{maximum matching})
+\key{Maksimiparitus}
 on puolestaan paritus, jossa parien määrä on mahdollisimman suuri.
 
 Maksimiparituksen etsimiseen yleisessä
@@ -858,13 +863,14 @@ joten maksimiparitus on myös 3.
 \subsubsection{Hallin lause}
 
 \index{Hallin lause}
+\index{täydellinen paritus}
 
-Hallin lause antaa ehdon, milloin kaksijakoiseen
+\key{Hallin lause} antaa ehdon, milloin kaksijakoiseen
 verkkoon voidaan muodostaa paritus,
 joka sisältää kaikki toisen puolen solmut.
 Jos kummallakin puolella on yhtä monta solmua,
 Hallin lause kertoo, voidaanko muodostaa
-täydellinen paritus (\textit{perfect matching}),
+\key{täydellinen paritus},
 jossa kaikki solmut paritetaan keskenään.
 
 Oletetaan, että haluamme muodostaa parituksen,
@@ -942,11 +948,13 @@ yhdistää solmuun 7, mutta tämä ei ole mahdollista.
 \index{solmupeite}
 \index{riippumaton joukko}
 
-Solmupeite (\textit{vertex cover}) on sellainen joukko
-verkon solmuja, että jokaisesta verkon kaaresta ainakin
+\key{Kőnigin lause} tuo yhteyden maksimiparituksen
+ja solmupeitteen välille.
+\key{Solmupeite} on sellainen joukko
+verkon solmuja, että jokaisen verkon kaaresta ainakin
 toinen kaaren päätesolmuista kuuluu joukkoon.
-Riippumaton joukko (\textit{independent set})
-on puolestaan joukko verkon solmuja,
+\key{Riippumaton joukko}
+on taas joukko verkon solmuja,
 jossa minkään solmuparin välillä ei ole kaarta.
 
 Jokaista verkon solmupeitettä vastaa riippumaton
@@ -1048,16 +1056,16 @@ suurin riippumaton joukko on seuraava:
 
 \index{polkupeite}
 
-Polkupeite (\textit{path cover}) on joukko verkon polkuja,
-jotka on valittu niin, että jokainen verkon solmu kuuluu
+\key{Polkupeite} on joukko verkon polkuja,
+joka on muodostettu niin, että jokainen verkon solmu kuuluu
 ainakin yhteen polkuun. Seuraavaksi näemme, miten virtauslaskennan
 avulla voi etsiä pienimmän polkupeitteen suunnatussa,
 syklittömässä verkossa.
 
 Polkupeitteestä on kaksi muunnelmaa:
-Solmuerillinen peite on polkupeite,
+\key{Solmuerillinen peite} on polkupeite,
 jossa jokainen verkon solmu esiintyy tasan yhdessä polussa.
-Yleinen peite taas on polkupeite, jossa sama solmu voi
+\key{Yleinen peite} taas on polkupeite, jossa sama solmu voi
 esiintyä useammassa polussa.
 Kummassakin tapauksessa pienin polkupeite löytyy
 samanlaisella idealla.
@@ -1227,7 +1235,7 @@ solmuun $b$ (mahdollisesti usean kaaren kautta).
 
 \index{Dilworthin lause}
 
-Dilworthin lauseen mukaan suunnatun, syklittömän
+\key{Dilworthin lauseen} mukaan suunnatun, syklittömän
 verkon pienin yleinen polkupeite
 on yhtä suuri kuin suurin
 mahdollinen kokoelma solmuja,
