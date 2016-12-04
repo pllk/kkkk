@@ -8,12 +8,10 @@ kuitenkin segmenttipuuta melko rajoittuneesti.
 Nyt on aika tutustua pintaa syvemmältä
 segmenttipuun mahdollisuuksiin.
 
-\section{Kulku puussa}
-
 Tähän mennessä olemme kulkeneet segmenttipuuta
-alhaalta ylöspäin lehdistä juureen.
+\textit{alhaalta ylöspäin} lehdistä juureen.
 Vaihtoehtoinen tapa toteuttaa puun käsittely
-on kulkea ylhäältä alaspäin juuresta lehtiin.
+on kulkea \textit{ylhäältä alaspäin} juuresta lehtiin.
 Tämä kulkusuunta on usein kätevä silloin,
 kun kyseessä on perustilannetta
 monimutkaisempi segmenttipuu.
@@ -38,11 +36,11 @@ Ylhäältä alaspäin toteutettuna funktiosta tulee:
 
 \begin{lstlisting}
 int summa(int a, int b, int k, int c, int d) {
-    if (a > d || b < c) return 0;
+    if (b < c || a > d) return 0;
     if (a == c && b == d) return p[k];
-    int w = d-c+1;
-    return summa(a, min(b,c+w/2-1), 2*k, c, c+w/2-1) +
-           summa(max(a,c+w/2), b, 2*k+1, c+w/2, d);
+    int w = (d-c+1)/2;
+    return summa(a, min(c+w-1,b), 2*k, a, a+w-1) +
+           summa(max(c+w,a), b, 2*k+1, a+w, b);
 }
 \end{lstlisting}
 Nyt välin $[a,b]$ summan saa laskettua
@@ -65,11 +63,11 @@ ulkopuolella, välin summa on 0.
 Jos taas välit $[a,b]$ ja $[c,d]$
 ovat samat, summan saa taulukosta \texttt{p}.
 
-Jos väli $[a,b]$ on välin $[c,d]$
+Jos väli $[a,b]$ on kokonaan tai osittain välin $[c,d]$
 sisällä, haku jatkuu rekursiivisesti
 välin $[c,d]$ vasemmasta ja oikeasta puoliskosta.
-Kun $w$ on välin $[c,d]$ pituus,
-vasen puolisko kattaa välin $[c,c+w/2-1]$
+Kummankin puoliskon koko on $w=(d-c+1)/2$,
+joten vasen puolisko kattaa välin $[c,c+w/2-1]$
 ja oikea puolisko kattaa välin $[c+w/2,d]$.
 
 Seuraava kuva näyttää,
@@ -198,16 +196,20 @@ Lisäyksessä välin jokaiseen alkioon lisätään
 tietty arvo, ja asetuksessa välin
 jokainen alkio saa tietyn arvon.
 Kummankin operaation toteutus on melko samanlainen,
-ja puu voi myös tukea samaan aikaan
-molempia muutostapoja.
+ja puu voi myös sallia samaan aikaan
+molemmat muutostavat.
 
-\subsection{Esimerkki}
+\subsubsection{Laiska segmenttipuu}
 
-\textit{Tehtävä:} Toteuta segmenttipuu,
-jonka avulla voi kasvattaa jokaista välin $[a,b]$
-arvoa $x$:llä sekä laskea välin $[a,b]$ summan.
-
-Jokaisessa puun solmussa on kaksi arvoa ($s/z$):
+Tarkastellaan esimerkkinä tilannetta,
+jossa segmenttipuun
+tulee toteuttaa seuraavat operaatiot:
+\begin{itemize}
+\item lisää jokaisen välin $[a,b]$ alkioon arvo $x$
+\item laske välin $[a,b]$ alkioiden summa
+\end{itemize}
+Toteutamme puun, jonka jokaisessa
+solmussa on kaksi arvoa $s/z$:
 välin lukujen summa $s$,
 kuten tavallisessa segmenttipuussa, sekä
 laiska muutos $z$,
@@ -293,10 +295,10 @@ Kulun aikana tapahtuu kahdenlaisia muutoksia puun solmuihin:
 
 Jos solmun väli $[c,d]$ kuuluu kokonaan
 muutettavalle välille $[a,b]$,
-solmun arvo $z$ kasvaa $x$:llä ja kulku pysähtyy.
+solmun $z$-arvo kasvaa $x$:llä ja kulku pysähtyy.
 Jos taas väli $[c,d]$ kuuluu osittain välille $[a,b]$,
-solmun arvo $s$ kasvaa $wx$:llä,
-missä $w$ on välien $[a,b]$ ja $[c,d]$ yhteisen osan pituus,
+solmun $s$-arvo kasvaa $hx$:llä,
+missä $h$ on välien $[a,b]$ ja $[c,d]$ yhteisen osan pituus,
 ja kulku jatkuu rekursiivisesti alaspäin.
 
 Kasvatetaan esimerkiksi puun alle merkittyä väliä 2:lla:
@@ -391,28 +393,123 @@ Kasvatetaan esimerkiksi puun alle merkittyä väliä 2:lla:
 Välin $[a,b]$ summan laskenta tapahtuu myös
 kulkuna puun juuresta lehtiä kohti.
 Jos solmun väli $[c,d]$ kuuluu kokonaan väliin $[a,b]$,
-se kasvattaa kyselyn tuloksena olevaa summaa arvolla $s+(d-c+1)z$.
+kyselyn summaan lisätään solmun $s$-arvo
+sekä mahdollinen $z$-arvon tuottama lisäys.
 Muussa tapauksessa kulku jatkuu rekursiivisesti alaspäin solmun lapsiin.
 
-Laiskat muutokset välitetään puussa alaspäin
-samalla kun puussa kuljetaan alaspäin
-välin muutoksen tai summakyselyn yhteydessä.
-Ideana on, että laiska muutos etenee vain
-silloin, kun siihen on todellinen syy.
-Useita laiskoja muutoksia voi olla
-myös päällekkäin niin, että $z$
-kertoo niiden summan.
+Aina ennen solmun käsittelyä siinä mahdollisesti
+oleva laiska muutos välitetään tasoa alemmas.
+Tämä tapahtuu sekä välin muutoskyselyssä
+että summakyselyssä.
+Ideana on, että laiska muutos etenee alaspäin
+vain silloin, kun tämä on välttämätöntä,
+jotta puun käsittely on tehokasta.
 
-\subsection{Polynomit}
+Seuraava kuva näyttää, kuinka äskeinen puu muuttuu,
+kun siitä lasketaan puun alapuolelle merkityn välin summa:
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,0) grid (16,1);
+
+\node[anchor=center] at (0.5, 0.5) {5};
+\node[anchor=center] at (1.5, 0.5) {8};
+\node[anchor=center] at (2.5, 0.5) {6};
+\node[anchor=center] at (3.5, 0.5) {3};
+\node[anchor=center] at (4.5, 0.5) {2};
+\node[anchor=center] at (5.5, 0.5) {9};
+\node[anchor=center] at (6.5, 0.5) {2};
+\node[anchor=center] at (7.5, 0.5) {6};
+\node[anchor=center] at (8.5, 0.5) {7};
+\node[anchor=center] at (9.5, 0.5) {1};
+\node[anchor=center] at (10.5, 0.5) {7};
+\node[anchor=center] at (11.5, 0.5) {5};
+\node[anchor=center] at (12.5, 0.5) {6};
+\node[anchor=center] at (13.5, 0.5) {2};
+\node[anchor=center] at (14.5, 0.5) {3};
+\node[anchor=center] at (15.5, 0.5) {2};
+
+\node[draw, circle] (a) at (1,2.5) {13/0};
+\path[draw,thick,-] (a) -- (0.5,1);
+\path[draw,thick,-] (a) -- (1.5,1);
+\node[draw, circle,minimum size=32pt] (b) at (3,2.5) {9/0};
+\path[draw,thick,-] (b) -- (2.5,1);
+\path[draw,thick,-] (b) -- (3.5,1);
+\node[draw, circle,minimum size=32pt] (c) at (5,2.5) {11/0};
+\path[draw,thick,-] (c) -- (4.5,1);
+\path[draw,thick,-] (c) -- (5.5,1);
+\node[draw, circle,minimum size=32pt] (d) at (7,2.5) {8/2};
+\path[draw,thick,-] (d) -- (6.5,1);
+\path[draw,thick,-] (d) -- (7.5,1);
+\node[draw, circle,minimum size=32pt] (e) at (9,2.5) {8/2};
+\path[draw,thick,-] (e) -- (8.5,1);
+\path[draw,thick,-] (e) -- (9.5,1);
+\node[draw, circle,fill=gray!50,] (f) at (11,2.5) {12/2};
+\path[draw,thick,-] (f) -- (10.5,1);
+\path[draw,thick,-] (f) -- (11.5,1);
+\node[draw, circle,fill=gray!50,minimum size=32pt] (g) at (13,2.5) {8/2};
+\path[draw,thick,-] (g) -- (12.5,1);
+\path[draw,thick,-] (g) -- (13.5,1);
+\node[draw, circle,minimum size=32pt] (h) at (15,2.5) {5/0};
+\path[draw,thick,-] (h) -- (14.5,1);
+\path[draw,thick,-] (h) -- (15.5,1);
+
+\node[draw, circle] (i) at (2,4.5) {22/0};
+\path[draw,thick,-] (i) -- (a);
+\path[draw,thick,-] (i) -- (b);
+\node[draw, circle] (j) at (6,4.5) {23/0};
+\path[draw,thick,-] (j) -- (c);
+\path[draw,thick,-] (j) -- (d);
+\node[draw, circle] (k) at (10,4.5) {28/0};
+\path[draw,thick,-] (k) -- (e);
+\path[draw,thick,-] (k) -- (f);
+\node[draw, circle] (l) at (14,4.5) {17/0};
+\path[draw,thick,-] (l) -- (g);
+\path[draw,thick,-] (l) -- (h);
+
+\node[draw, circle] (m) at (4,6.5) {45/0};
+\path[draw,thick,-] (m) -- (i);
+\path[draw,thick,-] (m) -- (j);
+\node[draw, circle] (n) at (12,6.5) {45/0};
+\path[draw,thick,-] (n) -- (k);
+\path[draw,thick,-] (n) -- (l);
+
+\node[draw, circle] (o) at (8,8.5) {90/0};
+\path[draw,thick,-] (o) -- (m);
+\path[draw,thick,-] (o) -- (n);
+
+\path[draw=red,thick,->,line width=2pt] (o) -- (n);
+
+\path[draw=red,thick,->,line width=2pt] (n) -- (k);
+\path[draw=red,thick,->,line width=2pt] (n) -- (l);
+
+\path[draw=red,thick,->,line width=2pt] (k) -- (f);
+\path[draw=red,thick,->,line width=2pt] (l) -- (g);
+
+\draw [decoration={brace}, decorate, line width=0.5mm] (14,-0.25) -- (10,-0.25);
+
+\draw[color=blue,thick] (8,1.5) rectangle (12,5.5);
+\end{tikzpicture}
+\end{center}
+Tämän kyselyn seurauksena laiska muutos eteni alaspäin
+laatikolla ympäröidyssä puun osassa.
+Laiskaa muutosta täytyi viedä alaspäin, koska kyselyn
+kohteena oleva väli osui osittain laiskan muutoksen välille.
+
+Huomaa, että joskus puussa olevia laiskoja muutoksia täytyy yhdistää.
+Näin tapahtuu silloin, kun solmussa on valmiina laiska muutos
+ja siihen tulee ylhäältä toinen laiska muutos.
+Tässä tapauksessa yhdistäminen on helppoa,
+koska muutokset $z_1$ ja $z_2$ aiheuttavat yhdessä muutoksen $z_1+z_2$.
+
+\subsubsection{Muuttaminen polynomilla}
 
 Laiskaa segmenttipuuta voi yleistää niin,
 että väliä muuttaa polynomi
-
 \[p(x) = t_k x^k + t_{k-1} x^{k-1} + \cdots + t_0.\]
 
 Ideana on, että välin ensimmäisen kohdan
 muutos on $p(0)$, toisen kohdan muutos on $p(1)$ jne.,
-eli välillä $[a,b]$ kohta $i$ muutos on $p(i-a)$.
+eli välin $[a,b]$ kohdan $i$ muutos on $p(i-a)$.
 Esimerkiksi polynomin $p(x)=x+1$ lisäys välille
 $[a,b]$ tarkoittaa, että kohta $a$ kasvaa 1:llä,
 kohta $a+1$ kasvaa 2:lla, kohta $a+2$ kasvaa 3:lla jne.
@@ -425,13 +522,10 @@ ja arvot $z_0,z_1,\ldots,z_k$ ovat polynomin kertoimet,
 joka ilmaisee väliin kohdistuvan laiskan muutoksen.
 
 Nyt välin $[c,d]$ summa on
-
-\[s+\sum_{x=0}^{d-c} z_k x^k + z_{k-1} x^{k-1} + \cdots + z_0.\]
-
-Summan saa laskettua tehokkaasti osissa summakaavalla.
+\[s+\sum_{x=0}^{d-c} z_k x^k + z_{k-1} x^{k-1} + \cdots + z_0,\]
+jonka saa laskettua tehokkaasti osissa summakaavoilla.
 Esimerkiksi termin $z_0$ summaksi tulee
 $(d-c+1)z_0$ ja termin $z_1 x$ summaksi tulee
-
 \[z_1(0+1+\cdots+d-c) = z_1 \frac{(d-c)(d-c+1)}{2} .\]
 
 Kun muutos etenee alaspäin puussa,
@@ -439,11 +533,9 @@ polynomin $p(x)$ indeksointi muuttuu,
 koska jokaisella välillä $[c,d]$
 polynomin arvot tulevat kohdista $x=0,1,\ldots,d-c$.
 Tämä ei kuitenkaan tuota ongelmia,
-koska $p'(x)=p(x+c)$ on samanasteinen polynomi
-kuin $p(x)$, kun $c$ on vakio.
-
+koska $p'(x)=p(x+c)$ on aina
+samanasteinen polynomi kuin $p(x)$.
 Esimerkiksi jos $p(x)=t_2 x^2+t_1 x-t_0$, niin
-
 \[p'(x)=t_2(x+c)^2+t_1(x+c)-t_0=t_2 x^2 + (2ct_2+t_1)x+t_2c^2+t_1c-t_0.\]
 
 \section{Dynaaminen toteutus}
