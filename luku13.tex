@@ -19,11 +19,11 @@ tapaukseen, jossa kaarilla on painot.
 Tällöin lyhimpien polkujen etsimiseen
 tarvitaan kehittyneempiä algoritmeja.
 
-\section{Bellman-Fordin algoritmi}
+\section{Bellman–Fordin algoritmi}
 
-\index{Bellman-Fordin algoritmi}
+\index{Bellman–Fordin algoritmi}
 
-\key{Bellman-Fordin algoritmi} etsii
+\key{Bellman–Fordin algoritmi} etsii
 lyhimmän polun alkusolmusta
 kaikkiin muihin verkon solmuihin.
 Algoritmi toimii kaikenlaisissa verkoissa,
@@ -43,7 +43,7 @@ kunnes mitään arviota ei voi enää parantaa.
 
 \subsubsection{Toiminta}
 
-Tarkastellaan Bellman-Fordin
+Tarkastellaan Bellman–Fordin
 algoritmin toimintaa seuraavassa verkossa:
 \begin{center}
 \begin{tikzpicture}
@@ -194,7 +194,7 @@ seuraavaa reittiä:
 
 \subsubsection{Toteutus}
 
-Seuraava Bellman-Fordin algoritmin toteutus
+Seuraava Bellman–Fordin algoritmin toteutus
 etsii lyhimmät polut solmusta $x$
 kaikkiin muihin verkon solmuihin.
 Koodi olettaa, että verkko on tallennettuna
@@ -242,7 +242,7 @@ kun mikään etäisyysarvio ei parane kierroksen aikana.
 
 \index{negatiivinen sykli}
 
-Bellman-Fordin algoritmin avulla voi myös tarkastaa,
+Bellman–Fordin algoritmin avulla voi myös tarkastaa,
 onko verkossa sykliä,
 jonka pituus on negatiivinen.
 Esimerkiksi verkossa
@@ -271,7 +271,7 @@ toistamalla negatiivista sykliä uudestaan ja uudestaan,
 minkä vuoksi lyhimmän polun käsite ei ole mielekäs.
 
 Negatiivisen syklin voi tunnistaa
-Bellman-Fordin algoritmilla
+Bellman–Fordin algoritmilla
 suorittamalla algoritmia $n$ kierrosta.
 Jos viimeinen kierros parantaa jotain
 etäisyysarviota, verkossa on negatiivinen sykli.
@@ -283,7 +283,7 @@ ja algoritmi etsii negatiivista sykliä koko verkon alueelta.
 \index{SPFA-algoritmi}
 
 \key{SPFA-algoritmi} (''Shortest Path Faster Algorithm'')
-on Bellman-Fordin algoritmin muunnelma,
+on Bellman–Fordin algoritmin muunnelma,
 joka on usein alkuperäistä algoritmia tehokkaampi.
 Se ei tutki joka kierroksella koko verkkoa läpi
 parantaakseen etäisyysarvioita, vaan valitsee
@@ -323,24 +323,24 @@ algoritmi on keskimäärin hyvin tehokas mutta
 sen pahimman tapauksen aikavaativuus on edelleen
 $O(nm)$ ja on mahdollista
 laatia syötteitä, jotka saavat algoritmin yhtä hitaaksi
-kuin tavallisen Bellman-Fordin algoritmin.
+kuin tavallisen Bellman–Fordin algoritmin.
 
 \section{Dijkstran algoritmi}
 
 \index{Dijkstran algoritmi}
 
-\key{Dijkstran algoritmi} etsii Bellman-Fordin
+\key{Dijkstran algoritmi} etsii Bellman–Fordin
 algoritmin tavoin lyhimmät polut
 alkusolmusta kaikkiin muihin solmuihin.
 Dijkstran algoritmi on tehokkaampi kuin
-Bellman-Fordin algoritmi,
+Bellman–Fordin algoritmi,
 minkä ansiosta se soveltuu suurten
 verkkojen käsittelyyn.
 Algoritmi vaatii kuitenkin,
 ettei verkossa ole negatiivisia kaaria.
 
 Dijkstran algoritmi vastaa
-Bellman-Fordin algoritmia siinä,
+Bellman–Fordin algoritmia siinä,
 että se pitää
 yllä etäisyysarvioita solmuihin
 ja parantaa niitä algoritmin aikana.
@@ -376,7 +376,7 @@ seuraavassa verkossa:
 \path[draw,thick,-] (4) -- node[font=\small,label=below:1] {} (5);
 \end{tikzpicture}
 \end{center}
-Bellman-Fordin algoritmin tavoin
+Bellman–Fordin algoritmin tavoin
 alkusolmun etäisyysarvio on 0
 ja kaikissa muissa solmuissa etäisyysarvio
 on aluksi $\infty$.
@@ -619,7 +619,7 @@ ja $\log(n^2) = 2 \log n$.
 
 \key{Floyd–Warshallin algoritmi} lähestyy toisella
 tavalla lyhimpien polkujen etsimistä
-kuin Bellman-Fordin ja Dijkstran algoritmit.
+kuin Bellman–Fordin ja Dijkstran algoritmit.
 Siinä missä muut algoritmit
 etsivät lyhimpiä polkuja
 tietystä solmusta alkaen,

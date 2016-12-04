@@ -149,7 +149,7 @@ ovat \textit{aina} yhtä suuret,
 eli käsitteet kuvaavat saman asian
 kahta eri puolta.
 
-Seuraavaksi tutustumme Ford-Fulkersonin
+Seuraavaksi tutustumme Ford–Fulkersonin
 algoritmiin, jolla voi etsiä verkon
 maksimivirtauksen ja
 minimileikkauksen.
@@ -157,11 +157,11 @@ Algoritmi auttaa myös ymmärtämään,
 \textit{miksi} maksimivirtaus ja
 minimileikkaus ovat yhtä suuret.
 
-\section{Ford-Fulkersonin algoritmi}
+\section{Ford–Fulkersonin algoritmi}
 
-\index{Ford-Fulkersonin algoritmi}
+\index{Ford–Fulkersonin algoritmi}
 
-\key{Ford-Fulkersonin algoritmi} etsii verkon maksimivirtauksen.
+\key{Ford–Fulkersonin algoritmi} etsii verkon maksimivirtauksen.
 Algoritmin ideana on aloittaa tilanteesta,
 jossa virtaus on 0, ja etsiä sitten verkosta polkuja,
 jotka tuottavat siihen lisää virtausta.
@@ -211,7 +211,7 @@ Esimerkkiverkosta syntyy seuraava verkko:
 
 \subsubsection{Algoritmin toiminta}
 
-Ford-Fulkersonin algoritmi etsii verkosta joka vaiheessa polun,
+Ford–Fulkersonin algoritmi etsii verkosta joka vaiheessa polun,
 joka alkaa alkusolmusta,
 päättyy loppusolmuun ja jossa jokaisen kaaren
 paino on positiivinen.
@@ -414,7 +414,7 @@ Niinpä algoritmi pysähtyy ja verkon maksimivirtaus on 7.
 
 \subsubsection{Polun valinta}
 
-Ford-Fulkersonin algoritmi ei ota kantaa siihen,
+Ford–Fulkersonin algoritmi ei ota kantaa siihen,
 millä tavoin virtausta kasvattava polku valitaan verkossa.
 Valintatavasta riippumatta algoritmi pysähtyy
 ja tuottaa maksimivirtauksen ennemmin tai myöhemmin,
@@ -428,10 +428,10 @@ kasvattaa virtausta vain 1:llä ja algoritmi toimii hitaasti.
 Seuraavaksi käymme läpi kaksi tapaa polun valintaan,
 jotka estävät tämän ilmiön.
 
-\index{Edmonds-Karpin algoritmi}
+\index{Edmonds–Karpin algoritmi}
 
-\key{Edmonds-Karpin algoritmi} on
-Ford-Fulkersonin algoritmin toteutus,
+\key{Edmonds–Karpin algoritmi} on
+Ford–Fulkersonin algoritmin toteutus,
 jossa virtausta kasvattava polku valitaan
 aina niin, että siinä on mahdollisimman vähän kaaria.
 Tämä onnistuu etsimällä polku syvyyshaun
@@ -462,7 +462,7 @@ nopeita ohjelmointikisoissa esiintyviin tehtäviin.
 
 \index{minimileikkaus}
 
-Osoittautuu, että kun Ford-Fulkersonin algoritmi on saanut valmiiksi
+Osoittautuu, että kun Ford–Fulkersonin algoritmi on saanut valmiiksi
 maksimivirtauksen, se on tuottanut samalla minimileikkauksen.
 Olkoon $A$ niiden solmujen joukko,
 joihin verkossa pääsee
@@ -544,7 +544,7 @@ koska virtauksen täytyy edetä osasta $A$ osaan $B$.
 Niinpä maksimivirtaus on pienempi tai yhtä suuri kuin
 mikä tahansa verkon leikkaus.
 
-Toisaalta Ford-Fulkersonin algoritmi tuottaa virtauksen,
+Toisaalta Ford–Fulkersonin algoritmi tuottaa virtauksen,
 joka on tarkalleen yhtä suuri kuin verkossa oleva leikkaus.
 Niinpä tämän virtauksen on oltava maksimivirtaus ja
 vastaavasti leikkauksen on oltava minimileikkaus.
