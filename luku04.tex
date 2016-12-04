@@ -2,7 +2,7 @@
 
 \index{tietorakenne}
 
-Tietorakenne (\textit{data structure})
+\key{Tietorakenne}
 on tapa säilyttää tietoa tietokoneen muistissa.
 Sopivan tietorakenteen valinta on tärkeää,
 koska kullakin rakenteella on omat
@@ -23,11 +23,11 @@ rakenteisiin, joita ei ole valmiina C++:ssa.
 \index{vektori}
 \index{\texttt{vector}}
 
-Dynaaminen taulukko on taulukko,
-jonka kokoa pystyy muuttamaan
+\key{Dynaaminen taulukko} on taulukko,
+jonka kokoa voi muuttaa
 ohjelman suorituksen aikana.
 C++:n tavallisin dynaaminen taulukko
-on vektori (\texttt{vector}).
+on \key{vektori} (\texttt{vector}).
 Sitä voi käyttää hyvin samalla tavalla
 kuin tavallista taulukkoa.
 
@@ -110,7 +110,7 @@ keskimäärin $O(1)$.
 \index{merkkijono}
 \index{\texttt{string}}
 
-Myös merkkijono (\texttt{string}) on dynaaminen taulukko,
+Myös \key{merkkijono} (\texttt{string}) on dynaaminen taulukko,
 jota pystyy käsittelemään lähes samaan
 tapaan kuin vektoria.
 Merkkijonon käsittelyyn liittyy lisäksi erikoissyntaksia
@@ -141,7 +141,7 @@ cout << c << "\n"; // tiva
 \index{\texttt{unordered\_set}}
 
 
-Joukko (\textit{set}) on tietorakenne,
+\key{Joukko} on tietorakenne,
 joka muodostuu siinä olevista alkioista.
 Joukon perusoperaatiot ovat alkion lisäys,
 haku ja poisto.
@@ -242,7 +242,7 @@ cout << s.count(5) << "\n"; // 2
 \index{\texttt{map}}
 \index{\texttt{unordered\_map}}
 
-Hakemisto (\textit{map}) on taulukon yleistys,
+\key{Hakemisto} on taulukon yleistys,
 joka sisältää joukon avain-arvo-pareja.
 Siinä missä taulukossa avaimet ovat aina peräkkäiset
 kokonaisluvut $0,1,2,\ldots$,
@@ -305,7 +305,7 @@ for (auto x : m) {
 Monet C++:n standardikirjaston funktiot
 käsittelevät tietorakenteiden iteraattoreita
 ja niiden määrittelemiä välejä.
-Iteraattori (\textit{iterator}) on muuttuja,
+\key{Iteraattori} on muuttuja,
 joka osoittaa tiettyyn tietorakenteen alkioon.
 
 Usein tarvittavat iteraattorit ovat \texttt{begin}
@@ -465,7 +465,7 @@ on joko $a$:n osoittama alkio tai tätä edellinen alkio.
 \index{bittijoukko}
 \index{\texttt{bitset}}
 
-Bittijoukko (\texttt{bitset}) on taulukko,
+\key{Bittijoukko} (\texttt{bitset}) on taulukko,
 jonka jokaisen alkion arvo on 0 tai 1.
 Bittijoukon etuna on, että jokainen alkio
 vie vain yhden bitin tilaa muistissa.
@@ -510,7 +510,7 @@ cout << (a^b) << "\n"; // 1001101110
 \index{pakka}
 \index{\texttt{deque}}
 
-Pakka (\texttt{deque}) on dynaaminen taulukko,
+\key{Pakka} (\texttt{deque}) on dynaaminen taulukko,
 jonka kokoa pystyy muuttamaan tehokkaasti
 sekä alku- että loppupäässä.
 Pakka sisältää vektorin tavoin
@@ -541,7 +541,7 @@ aikavaativuus on keskimäärin $O(1)$ molemmissa päissä.
 \index{pino}
 \index{\texttt{stack}}
 
-Pino (\texttt{stack}) on tietorakenne,
+\key{Pino} (\texttt{stack}) on tietorakenne,
 joka tarjoaa kaksi $O(1)$-aikaista
 operaatiota:
 alkion lisäys pinon päälle ja alkion
@@ -565,7 +565,7 @@ cout << s.top(); // 2
 \index{jono}
 \index{\texttt{queue}}
 
-Jono (\texttt{queue}) on kuin pino,
+\key{Jono} (\texttt{queue}) on kuin pino,
 mutta alkion lisäys tapahtuu jonon loppuun
 ja alkion poisto tapahtuu jonon alusta.
 Jonossa on mahdollista käsitellä vain
@@ -597,7 +597,7 @@ jos niiden operaatiot riittävät algoritmin toteuttamiseen.
 \index{keko}
 \index{\texttt{priority\_queue}}
 
-Prioriteettijono (\texttt{priority\_queue})
+\key{Prioriteettijono} (\texttt{priority\_queue})
 pitää yllä joukkoa alkioista.
 Sen operaatiot ovat alkion lisäys ja
 jonon tyypistä riippuen joko
@@ -609,7 +609,7 @@ ja haun aikavaativuus on $O(1)$.
 Prioriteettijonon operaatiot
 pystyy toteuttamaan myös \texttt{set}-rakenteella.
 Prioriteettijonon etuna on kuitenkin,
-että sen kekoon perustuva sisäinen
+että sen \key{kekoon} perustuva sisäinen
 toteutus on yksinkertaisempi
 kuin \texttt{set}-rakenteen binääripuu,
 minkä vuoksi rakenne on kevyempi ja
@@ -645,7 +645,7 @@ ja jonosta pystyy hakemaan ja poistamaan pienimmän alkion:
 priority_queue<int,vector<int>,greater<int>> q;
 \end{lstlisting}
 
-\section{Tietorakenne vs. järjestäminen}
+\section{Vertailu järjestämiseen}
 
 Monen tehtävän voi ratkaista tehokkaasti joko
 sopivilla tietorakenteilla tai järjestämisellä.

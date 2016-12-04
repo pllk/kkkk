@@ -12,7 +12,7 @@ monenlaista hyötyä algoritmien ohjelmoinnissa.
 
 \index{bittiesitys}
 
-Luvun bittiesitys ilmaisee, mistä 2:n potensseista
+Luvun \key{bittiesitys} ilmaisee, mistä 2:n potensseista
 luku muodostuu. Esimerkiksi luvun 43 bittiesitys on 101011, koska
 $43 = 2^5 + 2^3 + 2^1 + 2^0$
 eli oikealta lukien bitit 0, 1, 3 ja 5 ovat ykkösiä
@@ -36,8 +36,7 @@ kaikki bitit kuuluvat lukuun ja $n$ bitillä voi esittää luvut $0 \ldots 2^n-1
 Etumerkillisessä bittiesityksessä ei-negatiivisen luvun
 ensimmäinen bitti on 0 ja negatiivisen luvun
 ensimmäinen bitti on 1.
-Bittiesityksenä on kahden komplementti
-(\textit{two's complement}),
+Bittiesityksenä on \key{kahden komplementti},
 jossa positiivisesta luvusta saa negatiivisen muuttamalla
 kaikki bitit käänteiseksi ja lisäämällä
 tulokseen yksi.
@@ -90,6 +89,8 @@ muuttuja $x$ pyörähtää ympäri luvusta $2^{31}-1$ lukuun $-2^{31}$.
 
 \subsubsection{And-operaatio}
 
+\index{and-operaatio}
+
 And-operaatio $x$ \& $y$ tuottaa luvun,
 jossa on ykkösbitti niissä kohdissa,
 joissa molemmissa luvuissa $x$ ja $y$ on ykkösbitti.
@@ -110,6 +111,8 @@ ja $x$ \& $1$ = 1, jos luku on pariton.
 
 \subsubsection{Or-operaatio}
 
+\index{or-operaatio}
+
 Or-operaatio $x$ | $y$ tuottaa luvun,
 jossa on ykkösbitti niissä kohdissa,
 joissa ainakin toisessa luvuista $x$ ja $y$ on ykkösbitti.
@@ -126,6 +129,8 @@ Esimerkiksi $22$ | $26$ = 30, koska
 
 \subsubsection{Xor-operaatio}
 
+\index{xor-operaatio}
+
 Xor-operaatio $x$ $\XOR$ $y$ tuottaa luvun,
 jossa on ykkösbitti niissä kohdissa,
 joissa tarkalleen toisessa luvuista $x$ ja $y$ on ykkösbitti.
@@ -141,6 +146,8 @@ $\XOR$ & 11010 & (26) \\
 \end{center}
 
 \subsubsection{Not-operaatio}
+
+\index{not-operaatio}
 
 Not-operaatio \textasciitilde$x$ tuottaa luvun,
 jossa kaikki $x$:n bitit on muutettu käänteisiksi.
@@ -160,8 +167,9 @@ $x$ & = & 29 &   00000000000000000000000000011101 \\
 \end{tabular}
 \end{center}
 
-
 \subsubsection{Bittisiirrot}
+
+\index{bittisiirto}
 
 Vasen bittisiirto $x < < k$ tuottaa luvun, jossa luvun $x$ bittejä
 on siirretty $k$ askelta vasemmalle

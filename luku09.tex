@@ -1,17 +1,20 @@
 \chapter{Välikyselyt}
 
 \index{välikysely}
+\index{summakysely}
+\index{minimikysely}
+\index{maksimikysely}
 
-Välikysely (\textit{range query}) kohdistuu
+\key{Välikysely} kohdistuu
 taulukkoon, jonka sisältönä on lukuja.
 Kyselyssä annetaan tietty taulukon väli $[a,b]$
 ja tehtävänä on laskea haluttu tieto välillä olevista luvuista.
 Tavallisia välikyselyitä ovat:
 
 \begin{itemize}
-\item \textbf{summakysely}: laske välin $[a,b]$ lukujen summa
-\item \textbf{minimikysely}: etsi pienin luku välillä $[a,b]$
-\item \textbf{maksimikysely}: etsi suurin luku välillä $[a,b]$
+\item \key{summakysely}: laske välin $[a,b]$ lukujen summa
+\item \key{minimikysely}: etsi pienin luku välillä $[a,b]$
+\item \key{maksimikysely}: etsi suurin luku välillä $[a,b]$
 \end{itemize}
 
 \noindent
@@ -76,12 +79,12 @@ taulukon pohjalta tietorakenne,
 josta voi selvittää tehokkaasti vastauksen mihin tahansa väliin
 kohdistuvaan kyselyyn.
 
-\subsection{Summakysely}
+\subsubsection{Summakysely}
 
 \index{summataulukko}
 
 Summakyselyyn on mahdollista vastata tehokkaasti
-muodostamalla taulukosta etukäteen summataulukko,
+muodostamalla taulukosta etukäteen \key{summataulukko},
 jonka kohdassa $k$ on taulukon välin $[1,k]$ summa.
 Tämän jälkeen minkä tahansa välin $[a,b]$
 summan saa laskettua $O(1)$-ajassa
@@ -259,7 +262,7 @@ Harmaan suorakulmion summan saa laskettua kaavalla
 missä $S(X)$ tarkoittaa summaa vasemmasta
 yläkulmasta kirjaimen $X$ osoittamaan kohtaan asti.
 
-\subsection{Minimikysely}
+\subsubsection{Minimikysely}
 
 Myös minimikyselyyn on mahdollista
 vastata $O(1)$-ajassa sopivan esikäsittelyn avulla,
@@ -458,9 +461,9 @@ sillä ole merkitystä kisakoodauksessa.
 \section{Binääri-indeksipuu}
 
 \index{binääri-indeksipuu}
+\index{Fenwick-puu}
 
-Binääri-indeksipuu\footnote{Tämä tietorakenne tunnetaan myös
-nimellä Fenwick-puu (\textit{Fenwick tree}).} (\textit{binary indexed tree}) on
+\key{Binääri-indeksipuu} eli \key{Fenwick-puu} on
 summataulukkoa muistuttava tietorakenne,
 joka toteuttaa kaksi operaatiota:
 taulukon välin $[a,b]$ summakysely
@@ -728,7 +731,7 @@ seuraavaan väliin.
 
 \index{segmenttipuu}
 
-Segmenttipuu (\textit{segment tree}) on tietorakenne,
+\key{Segmenttipuu} on tietorakenne,
 jonka operaatiot ovat taulukon välin $[a,b]$ välikysely
 sekä kohdan $k$ arvon päivitys.
 Segmenttipuun avulla voi toteuttaa summakyselyn,
@@ -1263,10 +1266,6 @@ kulkemalla puussa huipulta alaspäin:
 
 \section{Lisätekniikoita}
 
-\subsubsection{Indeksien pakkaus}
-
-\index{indeksien pakkaus}
-
 Tämän luvun tietorakenteiden
 rajoituksena on,
 että ne on rakennettu taulukon päälle
@@ -1278,8 +1277,10 @@ Esimerkiksi indeksin $10^9$ käyttäminen
 vaatisi, että taulukossa olisi $10^9$ alkiota,
 mikä ei ole realistista.
 
+\index{indeksien pakkaus}
+
 Tätä rajoitusta on kuitenkin mahdollista
-kiertää usein käyttämällä indeksien pakkausta.
+kiertää usein käyttämällä \key{indeksien pakkausta}.
 Se tarkoittaa, että $n$ indeksiä jaetaan
 uudestaan niin, että ne ovat välillä $1,2,\ldots,n$.
 Tämä on mahdollista silloin, kun kaikki

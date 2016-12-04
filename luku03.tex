@@ -2,7 +2,7 @@
 
 \index{järjestäminen}
 
-Järjestäminen (\textit{sorting})
+\key{Järjestäminen}
 on keskeinen algoritmiikan ongelma.
 Moni tehokas algoritmi
 perustuu järjestämiseen,
@@ -93,7 +93,7 @@ on järjestettynä seuraava:
 
 \index{kuplajärjestäminen}
 
-Kuplajärjestäminen (\textit{bubble sort})
+\key{Kuplajärjestäminen}
 on yksinkertainen järjestämisalgoritmi,
 joka muodostuu taulukon läpikäynneistä.
 Jokainen läpikäynti etsii taulukosta
@@ -280,7 +280,7 @@ koska tarvittava vaihtojen määrä
 saattaa olla luokkaa $O(n^2)$.
 
 Hyödyllinen käsite järjestämisalgoritmien
-analyysissa on inversio.
+analyysissa on \key{inversio}.
 Se on indeksipari $(a,b)$, joille $a<b$
 ja $\texttt{t}[a]>\texttt{t}[b]$
 eli kaksi taulukon alkiota, jotka ovat väärässä
@@ -333,8 +333,8 @@ $\frac{n(n-1)}{2} = O(n^2)$ vaihtoa.
 
 \index{lomitusjärjestäminen}
 
-Lomitusjärjestäminen (\textit{mergesort})
-on tehokas $O(n \log n)$-aikainen järjestämisalgoritmi.
+\key{Lomitusjärjestäminen}
+on $O(n \log n)$-aikainen järjestämisalgoritmi.
 Algoritmi jakaa taulukon kahteen yhtä suureen osaan,
 järjestää osataulukot rekursiivisesti ja muodostaa
 sitten järjestetyn taulukon yhdistämällä osataulukot.
@@ -493,8 +493,8 @@ vie yhteensä $O(n)$ aikaa.
 
 Lomitusjärjestämisen lisäksi on olemassa useita muitakin
 $O(n \log n)$-aikaisia järjestämis\-algoritmeja,
-kuten pikajärjestäminen (\textit{quicksort})
-ja kekojärjestäminen (\textit{heapsort}).
+kuten \key{pikajärjestäminen}
+ja \key{kekojärjestäminen}.
 Kukaan ei ole kuitenkaan onnistunut keksimään
 yleistä järjestämisalgoritmia,
 joka toimisi nopeammin kuin $O(n \log n)$.
@@ -563,8 +563,8 @@ Puun korkeuden tulee olla tämän vuoksi vähintään
 Järjestämisen alaraja $O(n \log n)$ ei koske algoritmeja,
 jotka eivät perustu alkioiden vertailuun vaan hyödyntävät
 jotain muuta tietoa alkioista.
-Esimerkki tällaisesta algoritmista on laskemisjärjestäminen
-(\textit{counting sort}), joka järjestää
+Esimerkki tällaisesta algoritmista on
+\key{laskemisjärjestäminen}, joka järjestää
 kokonaisluvuista koostuvan taulukon $O(n)$-ajassa.
 
 Algoritmin ideana on luoda kirjanpito, josta selviää,
@@ -804,8 +804,8 @@ mistä päin taulukkoa alkiota $x$ kannattaa etsiä.
 
 Tilanne on toinen silloin, kun taulukko on
 järjestyksessä.
-Seuraavaksi käsiteltävä binäärihaku
-(\textit{binary search}) on tehokas menetelmä
+Seuraavaksi käsiteltävä \key{binäärihaku}
+on tehokas menetelmä
 etsiä alkiota järjestetystä taulukosta.
 Algoritmi hyödyntää tietoa taulukon
 järjestyksestä,
