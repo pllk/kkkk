@@ -4,7 +4,7 @@ Kisakoodauksessa yhdistyy kaksi asiaa:
 algoritmien suunnittelu ja
 algoritmien toteutus.
 
-\textit{Algoritmien suunnittelu} on loogista ongelmanratkaisua,
+\key{Algoritmien suunnittelu} on loogista ongelmanratkaisua,
 joka on lähellä matematiikkaa.
 Se vaatii kykyä analysoida ongelmia ja
 ratkaista niitä luovasti.
@@ -20,7 +20,7 @@ tekniikoita sekä omia oivalluksia.
 Kisakoodauksessa esiintyvät menetelmät ovat myös
 algoritmiikan tieteellisen tutkimuksen perusta.
 
-\textit{Algoritmien toteutus} edellyttää hyvää ohjelmointitaitoa.
+\key{Algoritmien toteutus} edellyttää hyvää ohjelmointitaitoa.
 Kisakoodauksessa tehtävän ratkaisun arvostelu tapahtuu
 testaamalla toteutettua algoritmia
 joukolla testisyötteitä.
@@ -450,9 +450,11 @@ typedef pair<int,int> pi;
 \index{makro}
 \index{\texttt{\#define}}
 
-Esikääntäjän komennolla \texttt{\#define}
-voi määritellä makroja, joiden avulla voi lyhentää
-koodia. Yksinkertaisimmillaan makro antaa lyhyemmän
+\key{Makro} määrittää, että tietty merkkijono
+korvataan toisella ennen koodin kääntämistä.
+C++:ssa makro määritellään
+esikääntäjän komennolla \texttt{\#define}.
+Yksinkertaisimmillaan makro antaa lyhyemmän
 version jollekin koodissa esiintyvälle sanalle.
 
 Määritellään esimerkiksi seuraavat makrot:
@@ -613,8 +615,12 @@ $a_1,a_2,\ldots,a_n$.
 \subsubsection{Joukot}
 
 \index{joukko}
+\index{leikkaus}
+\index{yhdiste}
+\index{erotus}
+\index{osajoukko}
 
-Joukko on kokoelma alkioita.
+\key{Joukko} on kokoelma alkioita.
 Esimerkiksi joukko $\{2,4,7\}$
 sisältää alkiot 2, 4 ja 7.
 Tietty alkio voi esiintyä joukossa enintään kerran.
@@ -629,18 +635,18 @@ että alkio $x$ ei ole joukossa $S$.
 Esimerkiksi $4 \in \{2,4,7\}$,
 mutta $5 \notin \{2,4,7\}$.
 
-Leikkaus $A \cap B$ sisältää alkiot,
+\key{Leikkaus} $A \cap B$ sisältää alkiot,
 jotka ovat molemmissa joukoista $A$ ja $B$.
-Yhdiste $A \cup B$ sisältää alkiot,
+\key{Yhdiste} $A \cup B$ sisältää alkiot,
 jotka ovat ainakin toisessa joukoista $A$ ja $B$.
-Erotus $A \setminus B$ sisältää alkiot,
+\key{Erotus} $A \setminus B$ sisältää alkiot,
 jotka ovat joukossa $A$ mutta eivät joukossa $B$.
 Esimerkiksi jos $A=\{1,2,5\}$ ja $B=\{2,4\}$,
 niin $A \cap B = \{2\}$, $A \cup B = \{1,2,4,5\}$
 ja $A \setminus B = \{1,5\}$.
 
 Merkintä $A \subset S$ tarkoittaa,
-että $A$ on $S$:n osajoukko
+että $A$ on $S$:n \key{osajoukko}
 eli jokainen $A$:n alkio esiintyy $S$:ssä.
 Esimerkiksi joukon $\{2,4,7\}$
 osajoukot ovat $\emptyset$,
@@ -648,10 +654,14 @@ $\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ ja $\{2,4,7\}$.
 Joukon $S$ osajoukkojen määrä on $2^{|S|}$.
 
 Usein esiintyviä joukkoja ovat
-$\mathbb{N}$ (luonnolliset luvut),
-$\mathbb{Z}$ (kokonaisluvut),
-$\mathbb{Q}$ (rationaaliluvut) sekä
-$\mathbb{R}$ (reaaliluvut).
+
+\begin{itemize}
+\item $\mathbb{N}$ (luonnolliset luvut),
+\item $\mathbb{Z}$ (kokonaisluvut),
+\item $\mathbb{Q}$ (rationaaliluvut) sekä
+\item $\mathbb{R}$ (reaaliluvut).
+\end{itemize}
+
 Joukko $\mathbb{N}$ voidaan määritellä
 kahdella tavalla: joko $\mathbb{N}=\{0,1,2,\ldots\}$
 tai $\mathbb{N}=\{1,2,3,...\}$.
@@ -659,14 +669,19 @@ tai $\mathbb{N}=\{1,2,3,...\}$.
 \subsubsection{Logiikka}
 
 \index{logiikka}
+\index{negaatio}
+\index{konjunktio}
+\index{disjunktio}
+\index{implikaatio}
+\index{ekvivalenssi}
 
-Loogisen lausekkeen arvo on joko 1 (tosi) tai 0 (epätosi).
+Loogisen lausekkeen arvo on joko 1 (\key{tosi}) tai 0 (\key{epätosi}).
 Tärkeimmät loogiset operaatiot ovat
-$\lnot$ (negaatio),
-$\land$ (konjunktio),
-$\lor$ (disjunktio),
-$\Rightarrow$ (implikaatio) sekä
-$\Leftrightarrow$ (ekvivalenssi).
+$\lnot$ (\key{negaatio}),
+$\land$ (\key{konjunktio}),
+$\lor$ (\key{disjunktio}),
+$\Rightarrow$ (\key{implikaatio}) sekä
+$\Leftrightarrow$ (\key{ekvivalenssi}).
 Seuraava taulukko näyttää operaatioiden merkityksen:
 
 \begin{center}
@@ -689,14 +704,18 @@ jos $A$:n ollessa tosi myös $B$:n on aina tosi.
 Lauseke $A \Leftrightarrow B$ on tosi,
 jos $A$:n ja $B$:n totuusarvo on sama.
 
-Predikaatti on lauseke, jonka arvo on tosi tai epätosi
+\index{predikaatti}
+
+\key{Predikaatti} on lauseke, jonka arvo on tosi tai epätosi
 riippuen sen parametreista.
 Yleensä predikaattia merkitään suurella kirjaimella.
 Esimerkiksi voidaan määritellä predikaatti $P(x)$,
 joka on tosi tarkalleen silloin, kun $x$ on alkuluku.
 Tällöin esimerkiksi $P(7)$ on tosi, kun taas $P(8)$ on epätosi.
 
-Kvanttoreita ovat $\forall$ (kaikille) ja $\exists$
+\index{kvanttori}
+
+\key{Kvanttoreita} ovat $\forall$ (kaikille) ja $\exists$
 (on olemassa).
 Esimerkiksi $\forall x (\exists y (y > x))$
 tarkoittaa kokonaislukujen joukossa,
@@ -718,7 +737,7 @@ Tämänkin lausekkeen arvo on tosi.
 
 \index{logaritmi}
 
-Logaritmi merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
+\key{Logaritmi} merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
 Logaritmi on potenssilaskun käänteisoperaatio:
 $\log_k(x)=a$ tarkalleen silloin, kun $k^a=x$.
 
@@ -752,7 +771,7 @@ $\lfloor \log_{10}(x)\rfloor + 1$.
 
 \index{aritmeettinen summa}
 \begin{samepage}
-\textit{Aritmeettinen summa} on summalauseke,
+\key{Aritmeettinen summa} on summalauseke,
 jossa jokaisen vierekkäisen luvun erotus on vakio.
 Esimerkiksi
 \[3+7+11+15\]
@@ -773,7 +792,7 @@ Aritmeettisen summan erikoistapaus on
 
 \index{geometrinen summa}
 \noindent
-\textit{Geometrinen summa} on summalauseke,
+\key{Geometrinen summa} on summalauseke,
 jossa jokaisen vierekkäisen
 summattavan luvun suhde on vakio.
 Esimerkiksi
@@ -800,7 +819,7 @@ Geometrisen summan sukulainen on
 
 \index{harmoninen summa}
 \noindent
-\textit{Harmoninen summa} on
+\key{Harmoninen summa} on
 \[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\ldots+\frac{1}{n}.\]
 Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
 Summaa voi näet arvioida ylöspäin
@@ -816,7 +835,7 @@ rationaalilukua toistavaan osaan, joista jokaisen summa on enintään 1.
 
 \index{Fibonaccin luku}
 
-Fibonaccin luvut esiintyvät monissa erilaisissa yhteyksissä.
+\key{Fibonaccin luvut} esiintyvät monissa erilaisissa yhteyksissä.
 Ne määritellään seuraavasti rekursiivisesti:
 \[
 \begin{array}{lcl}
