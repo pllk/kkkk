@@ -1,5 +1,7 @@
 \chapter{Lisää segmenttipuusta}
 
+\index{segmenttipuu}
+
 Segmenttipuu on tehokas tietorakenne,
 joka mahdollistaa monenlaisten
 kyselyiden toteuttamisen tehokkaasti.
@@ -171,6 +173,9 @@ Myös tässä toteutuksessa kyselyn aikavaativuus on $O(\log n)$,
 koska haun aikana käsiteltävien solmujen määrä on $O(\log n)$.
 
 \section{Laiska eteneminen}
+
+\index{laiska eteneminen}
+\index{laiska segmenttipuu}
 
 Laiska eteneminen (\textit{lazy propagation})
 mahdollistaa segmenttipuun,
@@ -540,6 +545,8 @@ Esimerkiksi jos $p(x)=t_2 x^2+t_1 x-t_0$, niin
 
 \section{Dynaaminen toteutus}
 
+\index{dynaaminen segmenttipuu}
+
 Tavallinen segmenttipuu on staattinen,
 eli jokaiselle solmulle on paikka taulukossa
 ja puu vie kiinteän määrän muistia.
@@ -573,6 +580,8 @@ s->x = 5;
 \end{lstlisting}
 
 \subsubsection{Harva segmenttipuu}
+
+\index{harva segmenttipuu}
 
 Dynaaminen segmenttipuu on hyödyllinen,
 jos puun indeksialue $[0,N-1]$ on \textit{harva}
@@ -633,6 +642,9 @@ Tämä ei ole kuitenkaan mahdollista,
 jos indeksit syntyvät vasta algoritmin aikana.
 
 \subsubsection{Persistentti segmenttipuu}
+
+\index{persistentti segmenttipuu}
+\index{muutoshistoria}
 
 Dynaamisen toteutuksen avulla on myös
 mahdollista luoda persistentti segmenttipuu,
@@ -762,7 +774,6 @@ kun puun indeksialue on $[0,N-1]$,
 joten koko muutoshistorian pitäminen muistissa on mahdollista.
 
 \section{Tietorakenteet}
-
 
 Segmenttipuun solmussa voi olla
 yksittäisen arvon
@@ -969,6 +980,8 @@ hakemistoon vie tilaa $O(k)$.
 
 \section{Kaksiulotteisuus}
 
+\index{kaksiulotteinen segmenttipuu}
+
 Kaksiulotteinen segmenttipuu mahdollistaa
 kaksiulotteisen taulukon
 suorakulmaisia alueita koskevat kyselyt.
@@ -1164,4 +1177,3 @@ vie muistia $O(n)$.
 Vastaavalla tavalla voi luoda myös segmenttipuita,
 joissa on vielä enemmän ulottuvuuksia,
 mutta tälle on harvoin tarvetta.
-
