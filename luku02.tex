@@ -190,90 +190,91 @@ Tämän perusteella kutsun $\texttt{g}(n)$ aikavaativuus on
 
 \index{vaativuusluokka}
 
-Usein esiintyviä vaativuusluokkia ovat:
+Usein esiintyviä vaativuusluokkia ovat seuraavat:
 
-\begin{itemize}
-\item
-\key{$O(1)$ (vakioaikainen)}
-
-Aikavaativuus $O(1)$ tarkoittaa,
-että algoritmi on vakioaikainen
+\begin{description}
+\item[$O(1)$]
+\index{vakioaikainen algoritmi}
+\key{Vakioaikainen} algoritmi
+käyttää saman verran aikaa minkä tahansa
+syötteen käsittelyyn,
 eli algoritmin nopeus ei riipu syötteen koosta.
-Tyypillinen $O(1)$-algoritmi on suora kaava
+Tyypillinen vakioaikainen algoritmi on suora kaava
 vastauksen laskemiseen.
-\item
-\key{$O(\log n)$ (logaritminen)}
 
-Logaritminen aikavaativuus $O(\log n)$
+\item[$O(\log n)$]
+\index{logaritminen algoritmi}
+\key{Logaritminen} aikavaativuus
 syntyy usein siitä, että algoritmi
 puolittaa syötteen koon joka askeleella.
 Logaritmi $\log_2 n$ näet ilmaisee, montako
 kertaa luku $n$ täytyy puolittaa,
 ennen kuin tuloksena on 1.
-\item
-\key{$O(\sqrt n)$ (neliöjuuri)}
 
-Aikavaativuus $O(\sqrt n)$ sijoittuu
-vaativuuksien $O(\log n)$ ja $O(n)$ välimaastoon.
+\item[$O(\sqrt n)$]
+
+Tällainen algoritmi sijoittuu
+aikavaativuuksien $O(\log n)$ ja $O(n)$ välimaastoon.
 Neliöjuuren erityinen ominaisuus on,
 että $\sqrt n = n/\sqrt n$, joten neliöjuuri
 osuu tietyllä tavalla syötteen puoliväliin.
-\item
-\key{$O(n)$ (lineaarinen)}
 
-Lineaarinen algoritmi käy syötteen läpi
+\item[$O(n)$]
+\index{lineaarinen algoritmi}
+\key{Lineaarinen} algoritmi käy syötteen läpi
 kiinteän määrän kertoja.
 Tämä on usein paras mahdollinen aikavaativuus,
 koska yleensä syöte täytyy käydä
 läpi ainakin kerran,
 ennen kuin algoritmi voi ilmoittaa vastauksen.
-\item
-\key{$O(n \log n)$ (järjestäminen)}
 
-Aikavaativuus $O(n \log n)$ viittaa usein
+\item[$O(n \log n)$]
+
+Tämä aikavaativuus viittaa usein
 syötteen järjestämiseen,
 koska tehokkaat järjestämisalgoritmit toimivat
 ajassa $O(n \log n)$.
 Toinen mahdollisuus on, että algoritmi
 käyttää tietorakennetta,
 jonka operaatiot ovat $O(\log n)$-aikaisia.
-\item
-\key{$O(n^2)$ (neliöllinen)}
 
-Neliöllinen aikavaativuus $O(n^2)$ voi syntyä
+\item[$O(n^2)$]
+\index{neliöllinen algoritmi}
+\key{Neliöllinen} aikavaativuus voi syntyä
 siitä, että algoritmissa on 
 kaksi sisäkkäistä silmukkaa.
 Neliöllinen algoritmi voi käydä läpi kaikki
 tavat valita joukosta kaksi alkiota.
-\item
-\key{$O(n^3)$ (kuutiollinen)}
 
-Kuutiollinen aikavaativuus $O(n^3)$ voi syntyä siitä,
+\item[$O(n^3)$]
+\index{kuutiollinen algoritmi}
+\key{Kuutiollinen} aikavaativuus voi syntyä siitä,
 että algoritmissa on 
 kolme sisäkkäistä silmukkaa.
 Kuutiollinen algoritmi voi käydä läpi kaikki
 tavat valita joukosta kolme alkiota.
-\item
-\key{$O(2^n)$ (osajoukot)}
 
-Aikavaativuus $O(2^n)$ tarkoittaa usein,
+\item[$O(2^n)$]
+
+Tämä aikavaativuus tarkoittaa usein,
 että algoritmi käy läpi kaikki syötteen osajoukot.
 Esimerkiksi joukon $\{1,2,3\}$ osajoukot ovat
 $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1,2\}$,
 $\{1,3\}$, $\{2,3\}$, $\{1,2,3\}$,
 missä $\emptyset$ on tyhjä joukko.
-\item
-\key{$O(n!)$ (permutaatiot)}
 
-Aikavaativuus $O(n!)$ voi syntyä siitä,
+\item[$O(n!)$]
+
+Tämä aikavaativuus voi syntyä siitä,
 että algoritmi käy läpi kaikki syötteen permutaatiot.
 Esimerkiksi joukon $\{1,2,3\}$ permutaatiot ovat
 $(1,2,3)$, $(1,3,2)$, $(2,1,3)$, $(2,3,1)$,
 $(3,1,2)$ sekä $(3,2,1)$.
-\end{itemize}
 
-\noindent
+\end{description}
+
 \index{polynominen algoritmi}
+\noindent
 Algoritmi on \key{polynominen},
 jos sen aikavaativuus on korkeintaan $O(n^k)$,
 kun $k$ on vakio.
@@ -429,7 +430,7 @@ optimiratkaisu on valita alitaulukko seuraavasti:
 Tämän alitaulukon summa on $2+4+(-3)+5+2=10$,
 joka on suurin mahdollinen alitaulukon summa.
 
-\subsubsection{Ratkaisu 1 ($O(n^3)$)}
+\subsubsection{Ratkaisu 1}
 
 Suoraviivainen ratkaisu tehtävään on käydä
 läpi kaikki tavat valita alitaulukko taulukosta,
@@ -460,7 +461,7 @@ Muuttujassa $p$ on puolestaan paras haun aikana löydetty summa.
 Algoritmin aikavaativuus on $O(n^3)$, koska siinä on kolme
 sisäkkäistä silmukkaa ja jokainen silmukka käy läpi $O(n)$ lukua.
 
-\subsubsection{Ratkaisu 2 ($O(n^2)$)}
+\subsubsection{Ratkaisu 2}
 
 Äskeistä ratkaisua on helppoa tehostaa hankkiutumalla
 eroon sisimmästä silmukasta.
@@ -481,7 +482,7 @@ cout << p << "\n";
 \end{lstlisting}
 Tämän muutoksen jälkeen koodin aikavaativuus on $O(n^2)$.
 
-\subsubsection{Ratkaisu 3 ($O(n)$)}
+\subsubsection{Ratkaisu 3}
 
 Yllättävää kyllä, tehtävään on olemassa myös
 $O(n)$-aikainen ratkaisu eli koodista pystyy

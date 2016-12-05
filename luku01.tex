@@ -15,7 +15,7 @@ keksiminen on tehtävän ydin.
 
 Teoreettiset tiedot algoritmiikasta
 ovat kisakoodarille kullanarvoisia.
-Usein tehtävän ratkaisu on yhdistelmä tunnettuja
+Tyypillisesti tehtävän ratkaisu on yhdistelmä tunnettuja
 tekniikoita sekä omia oivalluksia.
 Kisakoodauksessa esiintyvät menetelmät ovat myös
 algoritmiikan tieteellisen tutkimuksen perusta.
@@ -300,7 +300,7 @@ tehtävässä riittää käyttää tyyppejä \texttt{int} ja \texttt{long long}.
 Luvun $x$ jakojäännöstä $m$:llä
 merkitään $x \bmod m$.
 Esimerkiksi $17 \bmod 5 = 2$,
-koska $12 = 3 \cdot 5 + 2$.
+koska $17 = 3 \cdot 5 + 2$.
 
 Tärkeä modulon ominaisuus on,
 että yhteen-, vähennys- ja kertolaskussa
@@ -409,6 +409,14 @@ on enintään $2^{53}$.
 
 \section{Koodin lyhentäminen}
 
+Kisakoodauksessa ihanteena on lyhyt koodi,
+koska algoritmi täytyy pystyä toteuttamaan
+mahdollisimman nopeasti.
+Monet kisakoodarit käyttävätkin lyhennysmerkintöjä
+tyypeille ja muille koodin osille.
+
+\subsubsection{Tyyppimääritelmät}
+
 Komennolla \texttt{typedef} voi antaa lyhyemmän
 nimen tyypille.
 Esimerkiksi nimi \texttt{long long} on pitkä,
@@ -437,6 +445,8 @@ kokonaislukua sisältävälle parille.
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 \end{lstlisting}
+
+\subsubsection{Makrot}
 
 Toinen tapa lyhentää koodia on määritellä makroja.
 Makro ilmaisee, että tietyt koodissa olevat
@@ -487,33 +497,33 @@ REP(i,1,n) {
 }
 \end{lstlisting}
 
-Huomaa, että toisin kuin funktioissa,
-makron parametri sijoitetaan lausekkeeseen
-sellaisenaan.
-Tästä voi tulla joskus yllättäviä ongelmia.
-Näin on esimerkiksi seuraavassa makrossa:
-
-\begin{lstlisting}
-#define SQR(x) x*x
-\end{lstlisting}
-
-Nyt makroa
-\begin{lstlisting}
-cout << SQR(1+2) << "\n";
-\end{lstlisting}
-vastaa seuraava koodi:
-\begin{lstlisting}
-cout << 1+2*1+2 << "\n";
-\end{lstlisting}
-
-Tuloksena oleva koodi laskee siis $1+(2 \cdot 1)+2$,
-vaikka tarkoitus olisi laskea $(1+2) \cdot (1+2)$.
-Yleensä helppo korjaus ongelmaan on lisätä makron
-lausekkeeseen sulkuja, tässä tapauksessa seuraavasti:
-
-\begin{lstlisting}
-#define SQR(x) (x)*(x)
-\end{lstlisting}
+% Huomaa, että toisin kuin funktioissa,
+% makron parametri sijoitetaan lausekkeeseen
+% sellaisenaan.
+% Tästä voi tulla joskus yllättäviä ongelmia.
+% Näin on esimerkiksi seuraavassa makrossa:
+% 
+% \begin{lstlisting}
+% #define SQR(x) x*x
+% \end{lstlisting}
+% 
+% Nyt makroa
+% \begin{lstlisting}
+% cout << SQR(1+2) << "\n";
+% \end{lstlisting}
+% vastaa seuraava koodi:
+% \begin{lstlisting}
+% cout << 1+2*1+2 << "\n";
+% \end{lstlisting}
+% 
+% Tuloksena oleva koodi laskee siis $1+(2 \cdot 1)+2$,
+% vaikka tarkoitus olisi laskea $(1+2) \cdot (1+2)$.
+% Yleensä helppo korjaus ongelmaan on lisätä makron
+% lausekkeeseen sulkuja, tässä tapauksessa seuraavasti:
+% 
+% \begin{lstlisting}
+% #define SQR(x) (x)*(x)
+% \end{lstlisting}
 
 \section{Matematiikka}
 
@@ -542,7 +552,6 @@ Esimerkiksi
 \[3+7+11+15\]
 on aritmeettinen summa,
 jossa vakio on 4.
-Siinä pätee siis $7-3=4$, $11-7=4$ ja $15-11=4$.
 Aritmeettinen summa voidaan laskea kaavalla
 \[\frac{n(a+b)}{2},\]
 jossa summan ensimmäinen luku on $a$,
@@ -552,10 +561,8 @@ Esimerkiksi
 Kaava perustuu siihen, että summa muodostuu $n$ luvusta
 ja luvun suuruus on keskimäärin $(a+b)/2$.
 
-Aritmeettisen summan erikoistapaus on
-\[1+2+3+\cdots+n = \frac{n(1+n)}{2}.\]
-
 \index{geometrinen summa}
+~\\
 \noindent
 \key{Geometrinen summa} on summa,
 jossa jokaisen vierekkäisen luvun suhde on vakio.
@@ -577,7 +584,7 @@ Kertomalla molemmat puolet $x$:llä saadaan
 josta kaava seuraa ratkaisemalla yhtälön
 \[ xS-S = bx-a.\]
 Geometrisen summan erikoistapaus on usein kätevä kaava
-\[1+2+4+8+\ldots+2^n=2^{n+1}-1.\]
+\[1+2+4+8+\ldots+2^{n-1}=2^n-1.\]
 Geometrisen summan sukulainen on
 \[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
 
@@ -723,8 +730,8 @@ Tällöin esimerkiksi $P(7)$ on tosi, kun taas $P(8)$ on epätosi.
 
 \index{kvanttori}
 
-\key{Kvanttori} määrittää, millä tavalla
-lauseke liittyy joukon alkioihin.
+\key{Kvanttori} ilmaisee, että looginen
+lauseke liittyy jollakin tavalla joukon alkioihin.
 Tavalliset kvanttorit
 ovat $\forall$ (kaikille) ja $\exists$ (on olemassa).
 Esimerkiksi $\forall x (\exists y (y > x))$
@@ -743,39 +750,6 @@ niin on olemassa luvut $a$ ja $b$,
 joiden tulo on $x$ ja jotka molemmat ovat suurempia kuin 1.
 Tämänkin lausekkeen arvo on tosi.
 
-\subsubsection{Logaritmi}
-
-\index{logaritmi}
-
-\key{Logaritmi} merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
-Logaritmi on potenssilaskun käänteisoperaatio:
-$\log_k(x)=a$ tarkalleen silloin, kun $k^a=x$.
-
-Algoritmiikassa hyödyllinen tulkinta on,
-että logaritmi $\log_k(x)$ ilmaisee, montako kertaa lukua $x$
-täytyy jakaa $k$:lla, ennen kuin tulos on 1.
-Esimerkiksi $\log_2(32)=5$, koska 2:lla jakaminen
-muuttaa lukua 32 seuraavasti:
-
-\[32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \]
-
-Logaritmi tulee usein vastaan algoritmiikassa,
-koska monessa tehokkaassa algoritmissa jokin asia puolittuu
-joka askeleella.
-Niinpä logaritmin avulla voi arvioida algoritmin tehokkuutta.
-
-Logaritmi muuttaa kertolaskun yhteenlaskuksi:
-\[\log_k(ab) = \log_k(a)+\log_k(b)\]
-Samoin logaritmi muuttaa jakolaskun vähennyslaskuksi:
-\[\log_k(\frac{a}{b}) = \log_k(a)-\log_k(b)\]
-Lisäksi on voimassa kaava
-\[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
-jonka ansiosta logaritmeja voi laskea mille tahansa kantaluvulle
-kiinteän kantaluvun funktiolla.
-
-Vielä yksi logaritmin ominaisuus on, että
-luvun $x$ numeroiden määrä $b$-järjestelmässä
-on $\log_b(x)+1$ alaspäin pyöristäen.
 
 \subsubsection{Funktioita}
 
@@ -825,3 +799,37 @@ Fibonaccin lukujen laskemiseen on olemassa myös
 suljetun muodon kaava
 
 \[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
+
+\subsubsection{Logaritmi}
+
+\index{logaritmi}
+
+\key{Logaritmi} merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
+Logaritmi on potenssilaskun käänteisoperaatio:
+$\log_k(x)=a$ tarkalleen silloin, kun $k^a=x$.
+
+Algoritmiikassa hyödyllinen tulkinta on,
+että logaritmi $\log_k(x)$ ilmaisee, montako kertaa lukua $x$
+täytyy jakaa $k$:lla, ennen kuin tulos on 1.
+Esimerkiksi $\log_2(32)=5$, koska 2:lla jakaminen
+muuttaa lukua 32 seuraavasti:
+
+\[32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \]
+
+Logaritmi tulee usein vastaan algoritmien analyysissa,
+koska monessa tehokkaassa algoritmissa jokin asia puolittuu
+joka askeleella.
+Niinpä logaritmin avulla voi arvioida algoritmin tehokkuutta.
+
+Logaritmi muuttaa kertolaskun yhteenlaskuksi:
+\[\log_k(ab) = \log_k(a)+\log_k(b)\]
+Samoin logaritmi muuttaa jakolaskun vähennyslaskuksi:
+\[\log_k(\frac{a}{b}) = \log_k(a)-\log_k(b)\]
+Lisäksi on voimassa kaava
+\[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
+jonka ansiosta logaritmeja voi laskea mille tahansa kantaluvulle
+kiinteän kantaluvun funktiolla.
+
+Vielä yksi logaritmin ominaisuus on, että
+luvun $x$ numeroiden määrä $b$-järjestelmässä
+on $\lfloor \log_b(x)+1 \rfloor$.
