@@ -307,6 +307,7 @@ on tehtävän valmistumishetki.
 Mikä on suurin mahdollinen pistesumma?
 \end{task}
 
+\begin{minipage}{\textwidth}
 Esimerkiksi jos tehtävät ovat
 
 \begin{center}
@@ -319,6 +320,7 @@ $C$ & 2 & 7 \\
 $D$ & 4 & 5 \\
 \end{tabular}
 \end{center}
+\end{minipage}
 
 \noindent
 niin optimaalinen ratkaisu on suorittaa
@@ -610,7 +612,7 @@ Tuloksena on:
 \node[draw, circle] (3) at (2,0) {$2$};
 \node[draw, circle] (2) at (4,0) {$1$};
 \node[draw, circle] (4) at (6,0) {$1$};
-\node[draw, circle] (5) at (5,1.5) {$2$};
+\node[draw, circle] (5) at (5,1) {$2$};
 
 \node[color=blue] at (0,-0.75) {\texttt{A}};
 \node[color=blue] at (2,-0.75) {\texttt{C}};
@@ -628,8 +630,8 @@ Tämän jälkeen yhdistetään solmut, joiden paino on 2:
 \node[draw, circle] (3) at (2,0) {$2$};
 \node[draw, circle] (2) at (4,0) {$1$};
 \node[draw, circle] (4) at (6,0) {$1$};
-\node[draw, circle] (5) at (5,1.5) {$2$};
-\node[draw, circle] (6) at (4,3) {$4$};
+\node[draw, circle] (5) at (5,1) {$2$};
+\node[draw, circle] (6) at (4,2) {$4$};
 
 \node[color=blue] at (0,-0.75) {\texttt{A}};
 \node[color=blue] at (2,-0.75) {\texttt{C}};
@@ -649,9 +651,9 @@ Lopuksi yhdistetään kaksi viimeistä solmua:
 \node[draw, circle] (3) at (2,0) {$2$};
 \node[draw, circle] (2) at (4,0) {$1$};
 \node[draw, circle] (4) at (6,0) {$1$};
-\node[draw, circle] (5) at (5,1.5) {$2$};
-\node[draw, circle] (6) at (4,3) {$4$};
-\node[draw, circle] (7) at (3,4.5) {$9$};
+\node[draw, circle] (5) at (5,1) {$2$};
+\node[draw, circle] (6) at (4,2) {$4$};
+\node[draw, circle] (7) at (3,3) {$9$};
 
 \node[color=blue] at (0,-0.75) {\texttt{A}};
 \node[color=blue] at (2,-0.75) {\texttt{C}};

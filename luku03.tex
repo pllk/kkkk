@@ -96,7 +96,7 @@ on järjestettynä seuraava:
 Yksinkertaiset algoritmit taulukon
 järjestämiseen vievät aikaa $O(n^2)$.
 Ehkä tunnetuin tällainen algoritmi on
-\key{kuplajärjestäminen},
+\key{kuplajärjestäminen} (''bubble sort''),
 joka muodostuu peräkkäisistä taulukon läpikäynneistä.
 
 Algoritmissa jokainen taulukon läpikäynti
@@ -335,18 +335,14 @@ $\frac{n(n-1)}{2} = O(n^2)$ vaihtoa.
 \subsubsection{$O(n \log n)$-algoritmit}
 
 \index{lomitusjärjestäminen}
-\index{pikajärjestäminen}
 
 Tehokkaat järjestämisalgoritmit vievät
 aikaa $O(n \log n)$.
-Tunnetuimmat tällaiset algoritmit ovat
-\key{lomitusjärjestäminen} ja
-\key{pikajärjestäminen},
-jotka molemmat järjestävät taulukon
+Yksi tällainen algoritmi on
+\key{lomitusjärjestäminen} (''merge sort''),
+joka järjestää taulukon
 rekursiivisesti jakamalla sen
 pienemmiksi osataulukoiksi.
-Tutustumme seuraavaksi tarkemmin
-lomitusjärjestämiseen.
 
 Lomitusjärjestäminen
 jakaa taulukon kahdeksi osataulukoksi,
@@ -666,11 +662,9 @@ jonka avulla voi järjestää helposti taulukoita
 ja muita tietorakenteita.
 Tätä funktiota kannattaa käyttää yleensä aina
 järjestämiseen algoritmeissa,
-koska funktio on toteutettu tehokkaasti ja toimivasti.
-Tutustumme seuraavaksi funktion käyttämiseen tarkemmin.
+koska funktio on toteutettu tehokkaasti ja varmasti toimivasti.
 
-\subsubsection{Peruskäyttö}
-
+\begin{minipage}{\textwidth}
 Seuraava koodi järjestää vektorin \texttt{v}
 luvut pienimmästä suurimpaan:
 
@@ -678,6 +672,7 @@ luvut pienimmästä suurimpaan:
 vector<int> v = {4,2,5,3,5,8,3};
 sort(v.begin(),v.end());
 \end{lstlisting}
+\end{minipage}
 
 Järjestämisen jälkeen vektorin sisältö on
 $\{2,3,3,4,5,5,8\}$.
