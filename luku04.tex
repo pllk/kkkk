@@ -93,8 +93,10 @@ vektorin koko ja alkuarvo:
 \begin{lstlisting}
 // koko 10, alkuarvo 0
 vector<int> v(10);
+\end{lstlisting}
+\begin{lstlisting}
 // koko 10, alkuarvo 5
-vector<int> w(10, 5)
+vector<int> v(10, 5)
 \end{lstlisting}
 
 Vektori on toteutettu sisäisesti tavallisena taulukkona.
@@ -104,8 +106,6 @@ vektorin sisältö.
 Näin tapahtuu kuitenkin niin harvoin, että vektorin
 funktion \texttt{push\_back} aikavaativuus on
 keskimäärin $O(1)$.
-
-\subsubsection{Merkkijono}
 
 \index{merkkijono}
 \index{\texttt{string}}
@@ -142,7 +142,7 @@ cout << c << "\n"; // tiva
 
 
 \key{Joukko} on tietorakenne,
-joka muodostuu siinä olevista alkioista.
+joka sisältää kokoelman alkioita.
 Joukon perusoperaatiot ovat alkion lisäys,
 haku ja poisto.
 
@@ -243,7 +243,7 @@ cout << s.count(5) << "\n"; // 2
 \index{\texttt{unordered\_map}}
 
 \key{Hakemisto} on taulukon yleistys,
-joka sisältää joukon avain-arvo-pareja.
+joka sisältää kokoelman avain-arvo-pareja.
 Siinä missä taulukossa avaimet ovat aina peräkkäiset
 kokonaisluvut $0,1,2,\ldots$,
 hakemistossa ne voivat
@@ -609,7 +609,7 @@ ja haun aikavaativuus on $O(1)$.
 Prioriteettijonon operaatiot
 pystyy toteuttamaan myös \texttt{set}-rakenteella.
 Prioriteettijonon etuna on kuitenkin,
-että sen \key{kekoon} perustuva sisäinen
+että sen kekoon perustuva sisäinen
 toteutus on yksinkertaisempi
 kuin \texttt{set}-rakenteen binääripuu,
 minkä vuoksi rakenne on kevyempi ja
@@ -712,19 +712,27 @@ $5 \cdot 10^6$ & $10{,}0$ s & $2{,}3$ s & $0{,}9$ s \\
 \end{tabular}
 \end{center}
 
-Osoittautuu, että järjestämistä käyttävä ratkaisu 3
-on selvästi nopeampi kuin joukkoa käyttävät
-ratkaisut 1 ja 2.
-Syynä tähän on, että järjestäminen on kevyt operaatio
-ja se tehdään vain kerran ratkaisun 3 alussa.
-Ratkaisut 1 ja 2 taas joutuvat pitämään
-käsittelemään jatkuvasti joukkoa.
+Ensimmäinen havainto on, että rakenteiden
+\texttt{set} ja \texttt{unordered\_set}
+tehokkuudessa on merkittävä ero:
+rakennetta \texttt{unordered\_set}
+käyttävä ratkaisu 2 on testitapauksesta
+riippuen 4–5 kertaa nopeampi
+kuin muuten samanlainen ratkaisu 1,
+joka käyttää \texttt{set}-rakennetta.
 
-Tärkeä havainto on, että vaikka sekä ratkaisun 1
-että ratkaisun 3 aikavaativuus on $O(n \log n)$,
-ratkaisu 3 on todellisuudessa noin 10 kertaa
-tehokkaampi kuin ratkaisu 1.
-Lisäksi ratkaisun 2 \texttt{unordered\_set}-rakenne on tässä
-tapauksessa noin 5 kertaa tehokkaampi kuin
-ratkaisun 1\texttt{set}-rakenne.
+Tehokkain ratkaisu on kuitenkin järjestämistä
+käyttävä ratkaisu 3, joka on vielä puolet
+nopeampi kuin ratkaisu 2.
+Kiinnostavaa on, että sekä ratkaisun 1 että
+ratkaisun 3 aikavaativuus on $O(n \log n)$,
+mutta siitä huolimatta
+ratkaisu 3 vie aikaa vain kymmenesosan.
 
+Syynä nopeuseroon, että
+ratkaisussa 3 järjestäminen on kevyt
+operaatio ja se täytyy tehdä vain kerran
+algoritmin alussa, minkä jälkeen loppuosan
+aikavaativuus on lineaarinen.
+Samaan aikaan ratkaisu 1 pitää yllä monimutkaista
+tasapainoista binääripuuta koko algoritmin ajan.
