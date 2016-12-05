@@ -144,7 +144,7 @@ int z[N];
 joka kertoo, missä solmuissa haku on käynyt.
 Alussa taulukon jokainen arvo on 0,
 ja kun haku saapuu solmuun $s$,
-sen kohdalle merkitään luku 1.
+kohtaan \texttt{z}[$s$] merkitään 1.
 Funktion toteutus on seuraavanlainen:
 \begin{lstlisting}
 void haku(int s) {
@@ -311,7 +311,7 @@ missä $n$ on solmujen määrä ja $m$ on kaarten määrä.
 
 \subsubsection*{Toteutus}
 
-Leveyshaun toteutus on syvyyshakua monimutkaisempi,
+Leveyshaku on syvyyshakua hankalampi toteuttaa,
 koska haku käy läpi solmuja verkon eri
 puolilta niiden etäisyyden mukaan.
 Tyypillinen toteutus on pitää yllä jonoa

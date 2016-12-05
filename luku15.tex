@@ -513,23 +513,23 @@ Funktio \texttt{liita} varmistaa,
 että ketjun pituus on luokkaa $O(\log n)$
 yhdistämällä pienemmän joukon suurempaan.
 
-Funktiota \texttt{id} on mahdollista vielä tehostaa
-seuraavasti:
-
-\begin{lstlisting}
-int id(int x) {
-  if (x == k[x]) return x;
-  return k[x] = id(x);
-}
-\end{lstlisting}
-
-Nyt joukon edustajan etsimisen yhteydessä kaikki ketjun
-alkiot laitetaan osoittamaan suoraan edustajaan.
-On mahdollista osoittaa, että tämän avulla
-funktioiden \texttt{sama} ja \texttt{liita}
-aikavaativuus on tasoitetusti
-vain $O(\alpha(n))$, missä $\alpha(n)$ on
-hyvin hitaasti kasvava käänteinen Ackermannin funktio.
+% Funktiota \texttt{id} on mahdollista vielä tehostaa
+% seuraavasti:
+% 
+% \begin{lstlisting}
+% int id(int x) {
+%   if (x == k[x]) return x;
+%   return k[x] = id(x);
+% }
+% \end{lstlisting}
+% 
+% Nyt joukon edustajan etsimisen yhteydessä kaikki ketjun
+% alkiot laitetaan osoittamaan suoraan edustajaan.
+% On mahdollista osoittaa, että tämän avulla
+% funktioiden \texttt{sama} ja \texttt{liita}
+% aikavaativuus on tasoitetusti
+% vain $O(\alpha(n))$, missä $\alpha(n)$ on
+% hyvin hitaasti kasvava käänteinen Ackermannin funktio.
 
 \section{Primin algoritmi}
 

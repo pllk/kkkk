@@ -2,11 +2,12 @@
 
 \index{puu}
 
-\key{Puu} on yhtenäinen, syklitön ja suuntaamaton verkko,
+\key{Puu} on yhtenäinen, syklitön verkko,
 jossa on $n$ solmua ja $n-1$ kaarta.
-Jokaisen kahden puun solmun välillä on yksikäsitteinen polku.
 Jos puusta poistaa yhden kaaren, se ei ole enää yhtenäinen,
 ja jos puuhun lisää yhden kaaren, se ei ole enää syklitön.
+Puussa pätee myös aina, että
+jokaisen kahden puun solmun välillä on yksikäsitteinen polku.
 
 Esimerkiksi seuraavassa puussa on 7 solmua ja 6 kaarta:
 
@@ -36,9 +37,11 @@ Esimerkiksi yllä olevan puun lehdet ovat
 solmut 3, 5, 6 ja 7.
 
 \index{juuri}
+\index{juurellinen puu}
 
-Usein yksi solmuista valitaan puun \key{juureksi} 
-ja muut solmut asettuvat sen alapuolelle.
+Jos puu on \key{juurellinen}, yksi solmuista
+on puun \key{juuri},
+jonka alapuolelle muut solmut asettuvat.
 Esimerkiksi jos yllä olevassa puussa valitaan
 juureksi solmu 1, solmut asettuvat seuraavaan järjestykseen:
 
@@ -63,7 +66,7 @@ juureksi solmu 1, solmut asettuvat seuraavaan järjestykseen:
 \index{lapsi}
 \index{vanhempi}
 
-Solmun \key{lapset}
+Tällöin solmun \key{lapset}
 ovat sen alemman tason naapurit
 ja solmun \key{vanhempi}
 on sen ylemmän tason naapuri.
@@ -123,7 +126,7 @@ saa edetä juuresta kaikkiin suuntiin alaspäin.
 \subsubsection{Dynaaminen ohjelmointi}
 
 Puun läpikäyntiin voi myös yhdistää dynaamista
-ohjelmointia ja laskea sen avulla jotain tietoa puusta.
+ohjelmointia ja laskea sen avulla jotakin tietoa puusta.
 Dynaamisen ohjelmoinnin avulla voi esimerkiksi
 laskea ajassa $O(n)$ jokaiselle solmulle,
 montako solmua sen alipuussa

@@ -6,7 +6,7 @@ Lyhimmän polun etsiminen alkusolmusta loppusolmuun
 on keskeinen verkko-ongelma, joka esiintyy usein
 käytännön tilanteissa.
 Esimerkiksi tieverkostossa
-tyypillinen ongelma on selvittää,
+luonteva ongelma on selvittää,
 mikä on lyhin reitti kahden kaupungin välillä,
 kun tiedossa ovat kaupunkien väliset tiet ja niiden pituudet.
 
@@ -69,9 +69,9 @@ algoritmin toimintaa seuraavassa verkossa:
 Verkon jokaiseen solmun viereen on merkitty etäisyysarvio.
 Alussa alkusolmun etäisyysarvio on 0
 ja muiden solmujen etäisyysarvio on
-ääretön ($\infty$).
+ääretön.
 
-Algoritmin etsii verkosta kaaria,
+Algoritmi etsii verkosta kaaria,
 jotka parantavat etäisyysarvioita.
 Aluksi kaikki solmusta 0 lähtevät kaaret
 parantavat arvioita:
@@ -319,7 +319,7 @@ while (!q.empty()) {
 \end{lstlisting}
 
 SPFA-algoritmin tehokkuus riippuu verkon rakenteesta:
-algoritmi on keskimäärin hyvin tehokas mutta
+algoritmi on keskimäärin hyvin tehokas, mutta
 sen pahimman tapauksen aikavaativuus on edelleen
 $O(nm)$ ja on mahdollista
 laatia syötteitä, jotka saavat algoritmin yhtä hitaaksi
@@ -379,7 +379,7 @@ seuraavassa verkossa:
 Bellman–Fordin algoritmin tavoin
 alkusolmun etäisyysarvio on 0
 ja kaikissa muissa solmuissa etäisyysarvio
-on aluksi $\infty$.
+on aluksi ääretön.
 
 Dijkstran algoritmi
 ottaa joka askeleella käsittelyyn
@@ -605,27 +605,22 @@ while (!q.empty()) {
 }
 \end{lstlisting}
 
-Yllä olevan toteutuksen aikavaativuus on $O(n+m \log n)$,
+Yllä olevan toteutuksen aikavaativuus on $O(n+m \log m)$,
 koska algoritmi käy läpi kaikki verkon solmut
 ja lisää jokaista kaarta kohden korkeintaan
 yhden etäisyysarvion prioriteettijonoon.
-Huomaa, että $O(\log m)=O(\log n)$, koska 
-$n$ solmun verkossa on enintään $O(n^2)$ eri kaarta
-ja $\log(n^2) = 2 \log n$.
 
 \section{Floyd–Warshallin algoritmi}
 
 \index{Floyd–Warshallin algoritmi}
 
-\key{Floyd–Warshallin algoritmi} lähestyy toisella
-tavalla lyhimpien polkujen etsimistä
-kuin Bellman–Fordin ja Dijkstran algoritmit.
-Siinä missä muut algoritmit
-etsivät lyhimpiä polkuja
-tietystä solmusta alkaen,
-Floyd–Warshallin algoritmi etsii
-samalla kertaa lyhimmän polun jokaisen verkon
-solmuparin välillä.
+\key{Floyd–Warshallin algoritmi}
+on toisenlainen lähestymistapa
+lyhimpien polkujen etsintään.
+Toisin kuin aiemmat algoritmit,
+se  etsii yhdellä kertaa lyhimmät polut kaikkien
+verkon solmujen välillä.
+
 
 Algoritmi ylläpitää kaksiulotteista
 taulukkoa etäisyyksistä solmujen
