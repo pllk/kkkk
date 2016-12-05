@@ -7,7 +7,7 @@ on keskeinen algoritmiikan ongelma.
 Moni tehokas algoritmi
 perustuu järjestämiseen,
 koska järjestetyn tiedon
-käsittely on usein helpompaa
+käsittely on helpompaa
 kuin sekalaisessa järjestyksessä olevan.
 
 Esimerkiksi kysymys ''onko taulukossa kahta samaa
@@ -89,15 +89,18 @@ on järjestettynä seuraava:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Kuplajärjestäminen}
+\subsubsection{$O(n^2)$-algoritmit}
 
 \index{kuplajärjestäminen}
 
-\key{Kuplajärjestäminen}
-on yksinkertainen järjestämisalgoritmi,
-joka muodostuu taulukon läpikäynneistä.
-Jokainen läpikäynti etsii taulukosta
-vierekkäisiä alkiopareja,
+Yksinkertaiset algoritmit taulukon
+järjestämiseen vievät aikaa $O(n^2)$.
+Ehkä tunnetuin tällainen algoritmi on
+\key{kuplajärjestäminen},
+joka muodostuu peräkkäisistä taulukon läpikäynneistä.
+
+Algoritmissa jokainen taulukon läpikäynti
+etsii vierekkäisiä alkiopareja,
 jotka ovat väärässä järjestyksessä,
 ja korjaa näiden alkioparien järjestyksen.
 Algoritmi päättyy, kun läpikäynnin
@@ -329,13 +332,24 @@ on aina ainakin $O(n^2)$,
 koska sen täytyy tehdä pahimmassa tapauksessa
 $\frac{n(n-1)}{2} = O(n^2)$ vaihtoa.
 
-\subsubsection{Lomitusjärjestäminen}
+\subsubsection{$O(n \log n)$-algoritmit}
 
 \index{lomitusjärjestäminen}
+\index{pikajärjestäminen}
 
-\key{Lomitusjärjestäminen}
-on $O(n \log n)$-aikainen järjestämisalgoritmi.
-Algoritmi jakaa taulukon kahteen yhtä suureen osaan,
+Tehokkaat järjestämisalgoritmit vievät
+aikaa $O(n \log n)$.
+Tunnetuimmat tällaiset algoritmit ovat
+\key{lomitusjärjestäminen} ja
+\key{pikajärjestäminen},
+jotka molemmat järjestävät taulukon
+rekursiivisesti jakamalla sen
+pienemmiksi osataulukoiksi.
+Tutustumme seuraavaksi tarkemmin
+lomitusjärjestämiseen.
+
+Lomitusjärjestäminen
+jakaa taulukon kahdeksi osataulukoksi,
 järjestää osataulukot rekursiivisesti ja muodostaa
 sitten järjestetyn taulukon yhdistämällä osataulukot.
 Algoritmin runko on seuraava:
@@ -491,19 +505,15 @@ vie yhteensä $O(n)$ aikaa.
 \index{pikajärjestäminen}
 \index{kekojärjestäminen}
 
-Lomitusjärjestämisen lisäksi on olemassa useita muitakin
-$O(n \log n)$-aikaisia järjestämis\-algoritmeja,
-kuten \key{pikajärjestäminen}
-ja \key{kekojärjestäminen}.
-Kukaan ei ole kuitenkaan onnistunut keksimään
+Monet järjestämisalgoritmi saavuttavat
+aikavaativuuden $O(n \log n)$,
+mutta kukaan ei ole onnistunut keksimään
 yleistä järjestämisalgoritmia,
 joka toimisi nopeammin kuin $O(n \log n)$.
-
 Tähän on yllättävä syy: on mahdollista todistaa,
-että yleistä järjestämisalgoritmia
-ei voi toteuttaa nopeammin kuin
-ajassa $O(n \log n)$.
-Ideana on tarkastella järjestämistä
+että tällaista algoritmia ei ole olemassa.
+
+Ideana todistuksessa on tarkastella järjestämistä
 prosessina, jossa jokainen kahden alkion vertailu
 antaa lisää tietoa taulukon sisällöstä.
 Prosessista muodostuu seuraavanlainen puu:
@@ -567,7 +577,7 @@ Esimerkki tällaisesta algoritmista on
 \key{laskemisjärjestäminen}, joka järjestää
 kokonaisluvuista koostuvan taulukon $O(n)$-ajassa.
 
-Algoritmin ideana on luoda kirjanpito, josta selviää,
+Algoritmin ideana on luoda \emph{kirjanpito}, josta selviää,
 montako kertaa mikäkin alkio esiintyy taulukossa.
 Kirjanpito on taulukko, jonka indeksit ovat alkuperäisen
 taulukon alkioita.
@@ -651,7 +661,7 @@ kirjanpidon taulukon indeksöinnissä.
 
 \index{\texttt{sort}}
 
-C++:n standardikirjastossa on \texttt{sort}-funktio,
+C++:n standardikirjastossa on funktio \texttt{sort},
 jonka avulla voi järjestää helposti taulukoita
 ja muita tietorakenteita.
 Tätä funktiota kannattaa käyttää yleensä aina
@@ -701,9 +711,11 @@ on järjestettynä ''aainp''.
 
 \subsubsection{Vertailuoperaattori}
 
+\index{vertailuoperaattori}
+
 Funktion \texttt{sort} käyttäminen vaatii,
 että järjestettävien alkioiden
-tietotyypille on määritelty vertailuoperaattori \texttt{<},
+tietotyypille on määritelty \key{vertailuoperaattori} \texttt{<},
 jonka avulla voi selvittää, mikä on kahden alkion järjestys.
 Järjestämisen aikana \texttt{sort}-funktio
 käyttää operaattoria \texttt{<} aina, kun sen täytyy
@@ -761,8 +773,10 @@ struct P {
 
 \subsubsection{Vertailufunktio}
 
+\index{vertailufunktio}
+
 On myös mahdollista antaa
-\texttt{sort}-funktiolle ulkopuolinen vertailufunktio.
+\texttt{sort}-funktiolle ulkopuolinen \key{vertailufunktio}.
 Esimerkiksi seuraava vertailufunktio
 järjestää merkkijonot ensisijaisesti pituuden mukaan
 ja toissijaisesti aakkosjärjestyksen mukaan:
@@ -804,12 +818,12 @@ mistä päin taulukkoa alkiota $x$ kannattaa etsiä.
 
 Tilanne on toinen silloin, kun taulukko on
 järjestyksessä.
+Tässä tapauksessa haku on mahdollista toteuttaa
+paljon nopeammin, koska alkioiden järjestys
+ohjaa etsimään alkiota oikeasta suunnasta.
 Seuraavaksi käsiteltävä \key{binäärihaku}
-on tehokas menetelmä
-etsiä alkiota järjestetystä taulukosta.
-Algoritmi hyödyntää tietoa taulukon
-järjestyksestä,
-minkä ansiosta hakuun kuluu aikaa vain $O(\log n)$.
+löytää alkion järjestetystä taulukosta
+tehokkaasti ajassa $O(\log n)$.
 
 \subsubsection{Toteutus 1}
 
@@ -929,8 +943,8 @@ Algoritmi kutsuu $O(\log z)$ kertaa funktiota
 \texttt{ok}, joten kokonaisaikavaativuus
 riippuu siitä, kauanko funktion \texttt{ok}
 suoritus kestää.
-Usein ratkaisun kelvollisuuden voi tarkastaa
-ajassa $O(n)$, jolloin kokonaisaikavaativuus
+Esimerkiksi jos ratkaisun tarkastus
+vie aikaa $O(n)$, niin kokonaisaikavaativuus
 on $O(n \log z)$.
 
 \subsubsection{Huippuarvon etsiminen}
