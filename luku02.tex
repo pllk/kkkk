@@ -81,9 +81,7 @@ for (int i = 1; i <= n; i += 2) {
 }
 \end{lstlisting}
 
-Seuraavan koodin aikavaativuus on $O(n^2)$,
-koska silmukoiden sisällä oleva
-koodi suoritetaan $1+2+\cdots+n = \frac{n(n+1)}{2}$ kertaa.
+Seuraavan koodin aikavaativuus on $O(n^2)$:
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
@@ -178,7 +176,6 @@ kutsu & kerrat \\
 \hline
 $\texttt{g}(n)$ & 1 \\
 $\texttt{g}(n-1)$ & 2 \\
-$\texttt{g}(n-2)$ & 4 \\
 $\cdots$ & $\cdots$ \\
 $\texttt{g}(1)$ & $2^{n-1}$ \\
 
@@ -193,15 +190,19 @@ Tämän perusteella kutsun $\texttt{g}(n)$ aikavaativuus on
 
 \index{vaativuusluokka}
 
-\subsubsection*{$O(1)$ (vakioaikainen)}
+Usein esiintyviä vaativuusluokkia ovat:
+
+\begin{itemize}
+\item
+\key{$O(1)$ (vakioaikainen)}
 
 Aikavaativuus $O(1)$ tarkoittaa,
 että algoritmi on vakioaikainen
 eli algoritmin nopeus ei riipu syötteen koosta.
 Tyypillinen $O(1)$-algoritmi on suora kaava
 vastauksen laskemiseen.
-
-\subsubsection*{$O(\log n)$ (logaritminen)}
+\item
+\key{$O(\log n)$ (logaritminen)}
 
 Logaritminen aikavaativuus $O(\log n)$
 syntyy usein siitä, että algoritmi
@@ -209,16 +210,16 @@ puolittaa syötteen koon joka askeleella.
 Logaritmi $\log_2 n$ näet ilmaisee, montako
 kertaa luku $n$ täytyy puolittaa,
 ennen kuin tuloksena on 1.
-
-\subsubsection*{$O(\sqrt n)$ (neliöjuuri)}
+\item
+\key{$O(\sqrt n)$ (neliöjuuri)}
 
 Aikavaativuus $O(\sqrt n)$ sijoittuu
 vaativuuksien $O(\log n)$ ja $O(n)$ välimaastoon.
 Neliöjuuren erityinen ominaisuus on,
 että $\sqrt n = n/\sqrt n$, joten neliöjuuri
 osuu tietyllä tavalla syötteen puoliväliin.
-
-\subsubsection*{$O(n)$ (lineaarinen)}
+\item
+\key{$O(n)$ (lineaarinen)}
 
 Lineaarinen algoritmi käy syötteen läpi
 kiinteän määrän kertoja.
@@ -226,8 +227,8 @@ Tämä on usein paras mahdollinen aikavaativuus,
 koska yleensä syöte täytyy käydä
 läpi ainakin kerran,
 ennen kuin algoritmi voi ilmoittaa vastauksen.
-
-\subsubsection*{$O(n \log n)$ (järjestäminen)}
+\item
+\key{$O(n \log n)$ (järjestäminen)}
 
 Aikavaativuus $O(n \log n)$ viittaa usein
 syötteen järjestämiseen,
@@ -236,24 +237,24 @@ ajassa $O(n \log n)$.
 Toinen mahdollisuus on, että algoritmi
 käyttää tietorakennetta,
 jonka operaatiot ovat $O(\log n)$-aikaisia.
-
-\subsubsection*{$O(n^2)$ (neliöllinen)}
+\item
+\key{$O(n^2)$ (neliöllinen)}
 
 Neliöllinen aikavaativuus $O(n^2)$ voi syntyä
 siitä, että algoritmissa on 
 kaksi sisäkkäistä silmukkaa.
 Neliöllinen algoritmi voi käydä läpi kaikki
 tavat valita joukosta kaksi alkiota.
-
-\subsubsection*{$O(n^3)$ (kuutiollinen)}
+\item
+\key{$O(n^3)$ (kuutiollinen)}
 
 Kuutiollinen aikavaativuus $O(n^3)$ voi syntyä siitä,
 että algoritmissa on 
 kolme sisäkkäistä silmukkaa.
 Kuutiollinen algoritmi voi käydä läpi kaikki
 tavat valita joukosta kolme alkiota.
-
-\subsubsection*{$O(2^n)$ (osajoukot)}
+\item
+\key{$O(2^n)$ (osajoukot)}
 
 Aikavaativuus $O(2^n)$ tarkoittaa usein,
 että algoritmi käy läpi kaikki syötteen osajoukot.
@@ -261,16 +262,16 @@ Esimerkiksi joukon $\{1,2,3\}$ osajoukot ovat
 $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1,2\}$,
 $\{1,3\}$, $\{2,3\}$, $\{1,2,3\}$,
 missä $\emptyset$ on tyhjä joukko.
-
-\subsubsection*{$O(n!)$ (permutaatiot)}
+\item
+\key{$O(n!)$ (permutaatiot)}
 
 Aikavaativuus $O(n!)$ voi syntyä siitä,
 että algoritmi käy läpi kaikki syötteen permutaatiot.
 Esimerkiksi joukon $\{1,2,3\}$ permutaatiot ovat
 $(1,2,3)$, $(1,3,2)$, $(2,1,3)$, $(2,3,1)$,
 $(3,1,2)$ sekä $(3,2,1)$.
+\end{itemize}
 
-~\\
 \noindent
 \index{polynominen algoritmi}
 Algoritmi on \key{polynominen},
@@ -300,8 +301,8 @@ että sen avulla voi arvioida ennen algoritmin
 toteuttamista, onko algoritmi riittävän nopea
 tehtävän ratkaisemiseen.
 Lähtökohtana arviossa on, että nykyaikainen tietokone
-pystyy suorittamaan sekunnissa sadasta miljoonasta
-miljardiin koodissa olevaa komentoa.
+pystyy suorittamaan sekunnissa joitakin
+satoja miljoonia koodissa olevia komentoja.
 
 Oletetaan esimerkiksi, että tehtävän aikaraja on 
 yksi sekunti ja syötteen koko on $n=10^5$.
@@ -344,9 +345,9 @@ algoritmi voi tehdä käytännössä $n/2$ tai $5n$ operaatiota.
 Tällä on merkittävä vaikutus algoritmin
 todelliseen ajankäyttöön.
 
-\section{Suurin alitaulukko}
+\section{Suurin alitaulukon summa}
 
-\index{suurin alitaulukko}
+\index{suurin alitaulukon summa}
 
 Yleensä ohjelmointitehtävän ratkaisuun on monta
 luontevaa algoritmia, joiden aikavaativuudet eroavat.
@@ -425,11 +426,8 @@ optimiratkaisu on valita alitaulukko seuraavasti:
 \end{tikzpicture}
 \end{center}
 
-Tämän alitaulukon lukujen summa on $2+4+(-3)+5+2=10$,
-joka on suurin mahdollinen.
-Keskellä oleva negatiivinen luku $-3$ kannattaa
-ottaa mukaan, koska sen kummallakin puolella olevat
-luvut kasvattavat summaa yli $3$:lla.
+Tämän alitaulukon summa on $2+4+(-3)+5+2=10$,
+joka on suurin mahdollinen alitaulukon summa.
 
 \subsubsection{Ratkaisu 1 ($O(n^3)$)}
 
@@ -457,7 +455,7 @@ Koodi olettaa, että luvut on tallennettu taulukkoon \texttt{t},
 jota indeksoidaan $1 \ldots n$.
 Muuttujat $a$ ja $b$ valitsevat alitaulukon ensimmäisen
 ja viimeisen luvun, ja alitaulukon summa lasketaan muuttujaan $s$.
-Muuttujassa $p$ on taas paras haun aikana löydetty summa.
+Muuttujassa $p$ on puolestaan paras haun aikana löydetty summa.
 
 Algoritmin aikavaativuus on $O(n^3)$, koska siinä on kolme
 sisäkkäistä silmukkaa ja jokainen silmukka käy läpi $O(n)$ lukua.
@@ -481,9 +479,7 @@ for (int a = 1; a <= n; a++) {
 }
 cout << p << "\n";
 \end{lstlisting}
-
-Tämän muutoksen jälkeen koodin aikavaativuus on $O(n^2)$,
-koska siinä on kaksi sisäkkäistä silmukkaa.
+Tämän muutoksen jälkeen koodin aikavaativuus on $O(n^2)$.
 
 \subsubsection{Ratkaisu 3 ($O(n)$)}
 
@@ -496,17 +492,17 @@ kyseiseen kohtaan päättyvässä alitaulukossa,
 ja valita suurin näistä summista.
 
 Kun alitaulukon loppukohta $k$ on valittu,
-sen muodostamiseen on kaksi vaihtoehtoa.
-Yksi mahdollisuus on, että alitaulukossa
+summan muodostamiseen on kaksi vaihtoehtoa.
+Yksi mahdollisuus on, että summassa
 on vain yksi luku: kohdassa $k$ oleva luku.
-Muussa tapauksessa siinä on ensin
-kohtaan $k-1$ päättyvä alitaulukko,
-johon on yhdistetty kohdassa $k$ oleva luku.
+Muussa tapauksessa summassa on ensin
+kohtaan $k-1$ päättyvän alitaulukon
+summa ja sitten kohdassa $k$ oleva luku.
 
 Koska tavoitteena on saada aikaan mahdollisimman
 suuri summa, jälkimmäisessä tapauksessa myös
-kohtaan $k-1$ päättyvä alitaulukko tulee valita niin,
-että sen summa on mahdollisimman suuri.
+kohtaan $k-1$ päättyvän alitaulukon summa tulee valita niin,
+että se on mahdollisimman suuri.
 Niinpä tehokas ratkaisu syntyy käymällä läpi
 kaikki loppukohdat $k$ järjestyksessä.
 
@@ -534,7 +530,7 @@ On kiinnostavaa tutkia, kuinka tehokkaita algoritmit
 ovat käytännössä.
 Seuraava taulukko näyttää, kuinka nopeasti äskeiset
 ratkaisut toimivat eri $n$:n arvoilla
-(testikoneena Intel Core i7-2677M, 1{,}80 GHz).
+nykyaikaisella tietokoneella.
 
 Jokainen syöte on muodostettu satunnaisesti,
 ja taulukon luvut ovat välillä $-10^9 \ldots 10^9$.
