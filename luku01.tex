@@ -1,8 +1,8 @@
 \chapter{Johdanto}
 
 Kisakoodauksessa yhdistyy kaksi asiaa:
-algoritmien suunnittelu ja
-algoritmien toteutus.
+(1) algoritmien suunnittelu ja
+(2) algoritmien toteutus.
 
 \key{Algoritmien suunnittelu} on loogista ongelmanratkaisua,
 joka on lähellä matematiikkaa.
@@ -33,19 +33,19 @@ koska kisoissa on vain vähän aikaa.
 Toisin kuin tavallisessa ohjelmistokehityksessä,
 ratkaisut ovat lyhyitä
 (yleensä enintään joitakin satoja rivejä)
-eikä koodia tarvitse kehittää kilpailun jälkeen.
+eikä koodia tarvitse ylläpitää kilpailun jälkeen.
 
 \section{Ohjelmointikielet}
 
 \index{ohjelmointikieli}
 
 Tällä hetkellä yleisimmät koodauskisoissa
-käytetyt kielet ovat C++, Python ja Java.
+käytetyt ohjelmointikielet ovat C++, Python ja Java.
 Esimerkiksi vuoden 2016 Google Code Jamissa
 3000 parhaan osallistujan joukossa
 73 \% käytti C++:aa,
 15 \% käytti Pythonia ja
-10 \% käytti Javaa \footnote{\url{https://www.go-hero.net/jam/16}}.
+10 \% käytti Javaa\footnote{\url{https://www.go-hero.net/jam/16}}.
 Jotkut osallistujat käyttivät myös useita näistä kielistä.
 
 Monen mielestä C++ on paras
@@ -67,7 +67,7 @@ koska kielessä on sisäänrakennettuna
 suurten kokonaislukujen käsittely.
 Toisaalta tehtävät yritetään yleensä laatia niin,
 ettei tietyn kielen ominaisuuksista
-ole kohtuutonta hyötyä tehtävän ratkaisussa.
+ole kohtuutonta etua tehtävän ratkaisussa.
 
 Kaikki tämän kirjan esimerkit on kirjoitettu C++:lla,
 ja niissä on käytetty runsaasti C++:n valmiita 
@@ -97,7 +97,7 @@ Koodin alussa oleva \texttt{\#include}-rivi
 on \texttt{g++}-kääntäjän tarjoama tapa
 ottaa mukaan kaikki standardikirjaston sisältö.
 Tämän ansiosta koodissa ei tarvitse erikseen
-ottaa mukaan tiedostoja \texttt{iostream},
+ottaa mukaan kirjastoja \texttt{iostream},
 \texttt{vector}, \texttt{algorithm}, jne.,
 vaan ne kaikki ovat käytettävissä automaattisesti.
 
@@ -267,6 +267,7 @@ Esimerkiksi tässä koodissa on salakavala virhe:
 \begin{lstlisting}
 int a = 123456789;
 long long b = a*a;
+cout << b << "\n"; // -1757895751
 \end{lstlisting}
 
 Vaikka muuttuja \texttt{b} on \texttt{long long} -tyyppinen,
@@ -279,7 +280,7 @@ laskun muodossa \texttt{(long long)a*a}.
 
 Yleensä tehtävät laaditaan niin, että tyyppi
 \texttt{long long} riittää niiden ratkaisuun.
-Kuitenkin \texttt{g++}-kääntäjä sisältää myös 128-bittisen
+On kuitenkin hyvä tietää, että \texttt{g++}-kääntäjä sisältää myös 128-bittisen
 tyypin \texttt{\_\_int128\_t}, jonka lukuväli on
 $-2^{127} \ldots 2^{127}-1$ eli noin $-10^{38} \ldots 10^{38}$.
 Tämä tyyppi ei kuitenkaan ole käytettävissä kaikissa kisajärjestelmissä.
@@ -298,8 +299,8 @@ tehtävässä riittää käyttää tyyppejä \texttt{int} ja \texttt{long long}.
 
 Luvun $x$ jakojäännöstä $m$:llä
 merkitään $x \bmod m$.
-Esimerkiksi $12 \bmod 5 = 2$,
-koska 12:n jakojäännös 5:llä on 2.
+Esimerkiksi $17 \bmod 5 = 2$,
+koska $12 = 3 \cdot 5 + 2$.
 
 Tärkeä modulon ominaisuus on,
 että yhteen-, vähennys- ja kertolaskussa
@@ -331,8 +332,8 @@ cout << x << "\n";
 
 Yleensä vastaus modulona tulee antaa niin,
 että se on aina välillä $0\ldots m-1$.
-Kuitenkin C++:ssa ja muissa
-kielissä negatiivisen
+Kuitenkin C++:ssa ja monissa
+muissa kielissä negatiivisen
 luvun modulo on nolla tai negatiivinen.
 Helppo tapa varmistaa, että modulo ei ole negatiivinen,
 on laskea ensin modulo ja lisätä sitten $m$,
@@ -377,13 +378,7 @@ Esimerkiksi seuraava koodi tuottaa yllättävän tuloksen:
 
 \begin{lstlisting}
 double x = 0.3*3+0.1;
-printf("%.20f\n", x);
-\end{lstlisting}
-
-Koodin tulostus on seuraava:
-
-\begin{lstlisting}
-0.99999999999999988898
+printf("%.20f\n", x); // 0.99999999999999988898
 \end{lstlisting}
 
 Pyöristysvirheen vuoksi muuttujan \texttt{x}
@@ -401,19 +396,18 @@ Käytännössä vertailun voi toteuttaa seuraavasti ($\varepsilon=10^{-9}$):
 
 \begin{lstlisting}
 if (abs(a-b) < 1e-9) {
-    // a ja b ovat samat
+    // a ja b ovat yhtä suuret
 }
 \end{lstlisting}
 
-Vaikka liukuluvut ovat epätarkkoja, niillä voi esittää
+Huomaa, että
+vaikka liukuluvut ovat epätarkkoja, niillä voi esittää
 tarkasti kokonaislukuja tiettyyn rajaan asti.
 Esimerkiksi \texttt{double}-tyypillä voi esittää
 tarkasti kaikki kokonaisluvut, joiden itseisarvo
 on enintään $2^{53}$.
 
 \section{Koodin lyhentäminen}
-
-\index{\texttt{typedef}}
 
 Komennolla \texttt{typedef} voi antaa lyhyemmän
 nimen tyypille.
@@ -424,16 +418,14 @@ typedef long long ll;
 \end{lstlisting}
 Tämän jälkeen seuraavat kaksi koodia tarkoittavat samaa:
 \begin{lstlisting}
-long long f(long long x) {
-    long long u = (x == 0) ? 1 : f(x/2);
-    return u*u;
-}
+long long a = 123456789;
+long long b = 987654321;
+cout << a*b << "\n";
 \end{lstlisting}
 \begin{lstlisting}
-ll f(ll x) {
-    ll u = (x == 0) ? 1 : f(x/2);
-    return u*u;
-}
+ll a = 123456789;
+ll b = 987654321;
+cout << a*b << "\n";
 \end{lstlisting}
 Komentoa \texttt{typedef} voi käyttää myös
 monimutkaisempien tyyppien kanssa.
@@ -446,16 +438,12 @@ typedef vector<int> vi;
 typedef pair<int,int> pi;
 \end{lstlisting}
 
-\subsubsection{Makrot}
-\index{makro}
-\index{\texttt{\#define}}
-
-\key{Makro} määrittää, että tietty merkkijono
-korvataan toisella ennen koodin kääntämistä.
+Toinen tapa lyhentää koodia on määritellä makroja.
+Makro ilmaisee, että tietyt koodissa olevat
+merkkijonot korvataan toisilla ennen koodin
+kääntämistä.
 C++:ssa makro määritellään
 esikääntäjän komennolla \texttt{\#define}.
-Yksinkertaisimmillaan makro antaa lyhyemmän
-version jollekin koodissa esiintyvälle sanalle.
 
 Määritellään esimerkiksi seuraavat makrot:
 \begin{lstlisting}
@@ -464,12 +452,13 @@ Määritellään esimerkiksi seuraavat makrot:
 #define PB push_back
 #define MP make_pair
 \end{lstlisting}
-Tämän jälkeen seuraavat koodit vastaavat toisiaan:
+Tämän jälkeen koodin
 \begin{lstlisting}
 v.push_back(make_pair(y1,x1));
 v.push_back(make_pair(y2,x2));
 int d = v[i].first+v[i].second;
 \end{lstlisting}
+voi kirjoittaa lyhyemmin seuraavasti:
 \begin{lstlisting}
 v.PB(MP(y1,x1));
 v.PB(MP(y2,x2));
@@ -484,12 +473,14 @@ Määritellään esimerkiksi seuraava makro:
 \begin{lstlisting}
 #define REP(i,a,b) for (int i = a; i <= b; i++)
 \end{lstlisting}
-Tämän jälkeen seuraavat koodit vastaavat toisiaan:
+
+Tämän jälkeen koodin
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
     haku(i);
 }
 \end{lstlisting}
+voi lyhentää seuraavasti:
 \begin{lstlisting}
 REP(i,1,n) {
     haku(i);
@@ -506,17 +497,16 @@ Näin on esimerkiksi seuraavassa makrossa:
 #define SQR(x) x*x
 \end{lstlisting}
 
-Nyt seuraavat koodit vastaavat toisiaan:
-
+Nyt makroa
 \begin{lstlisting}
 cout << SQR(1+2) << "\n";
 \end{lstlisting}
-
+vastaa seuraava koodi:
 \begin{lstlisting}
 cout << 1+2*1+2 << "\n";
 \end{lstlisting}
 
-Tuloksena koodi laskee siis $1+(2 \cdot 1)+2$,
+Tuloksena oleva koodi laskee siis $1+(2 \cdot 1)+2$,
 vaikka tarkoitus olisi laskea $(1+2) \cdot (1+2)$.
 Yleensä helppo korjaus ongelmaan on lisätä makron
 lausekkeeseen sulkuja, tässä tapauksessa seuraavasti:
@@ -525,95 +515,89 @@ lausekkeeseen sulkuja, tässä tapauksessa seuraavasti:
 #define SQR(x) (x)*(x)
 \end{lstlisting}
 
-\section{Virheen etsiminen}
-
-Yleensä kilpailun aikana ei saa tietää,
-millä syötteillä koodia testataan.
-Niinpä jos koodi toimii väärin, syy virheeseen
-täytyy löytää itse.
-Virhe voi selvitä helposti koodia tutkimalla,
-mutta virhettä voi olla myös vaikeaa löytää.
-
-Järjestelmällinen tapa etsiä virhettä on koodata kaksi
-ratkaisua: tehokas palautettavaksi tarkoitettu
-ratkaisu sekä toinen raa'an voiman ratkaisu,
-joka toimii varmasti oikein mutta ei ole tehokas.
-Tämän jälkeen riittää etsiä syöte,
-jossa nämä koodit toimivat eri tavalla.
-
-Seuraavassa on esimerkki Python-koodista,
-joka etsii virheellistä syötettä automaattisesti.
-Tehokas ratkaisu on nimeltään \texttt{fast}
-ja raa'an voiman ratkaisu on nimeltään \texttt{brute}.
-Syötteessä annetaan ensin lukujen määrä $n$ ja
-sen jälkeen $n$ lukua väliltä $1 \ldots r$.
-
-\begin{lstlisting}
-from os import system
-from random import randint
-
-n = 10 # lukujen määrä
-r = 5 # lukujen yläraja
-
-while True:
-    f = open("input.txt","w")
-    f.write(str(n) + "\n")
-    u = []
-    for i in range(n):
-        u.append(str(randint(1,r)))
-    f.write(" ".join(u) + "\n")
-    f.close()
-    system("./fast < input.txt > output1.txt")
-    system("./brute < input.txt > output2.txt")
-    o1 = open("output1.txt").readlines()
-    o2 = open("output2.txt").readlines()
-    if o1 == o2:
-        print "ok"
-    else:
-        print "virhe!"
-        exit(0)
-\end{lstlisting}
-
-Koodi muodostaa satunnaisen syötteen tiedostoon ''input.txt''
-ja suorittaa sitten kummankin koodin tälle syötteelle
-niin, että tulosteet ohjautuvat tiedostoihin
-''output1.txt'' ja ''output2.txt''.
-Tämän jälkeen koodi vertaa tulostiedostoja ja
-pysähtyy, jos ne eivät ole samat.
-
-Tällä lähestymistavalla
-koodissa oleva virhe löytyy
-lähes varmasti.
-Lisäksi yleensä jos koodissa on virhe,
-se esiintyy jollakin pienellä syötteellä,
-mikä helpottaa virheen etsimistä koodista.
-
 \section{Matematiikka}
 
-Summa $\sum_{x=a}^b$ käy läpi välin $a \ldots b$ kokonaisluvut.
-Jokaisen luvun kohdalla summaan lisätään
-yleensä $x$:stä riippuvan lausekkeen arvo.
-Esimerkiksi
-\[\sum_{x=1}^n x = 1+2+3+\ldots+n\]
+Matematiikka on tärkeässä asemassa kisakoodauksessa,
+ja menestyvän kisakoodarin täytyy osata myös
+hyvin matematiikkaa.la
+Käymme seuraavaksi läpi joukon keskeisiä
+matematiikan käsitteitä ja kaavoja.
+Palaamme moniin aiheisiin myöhemmin tarkemmin kirjan aikana.
+
+\subsubsection{Summakaavat}
+
+Jokaiselle summalle muotoa
+\[\sum_{x=1}^n x^k = 1^k+2^k+3^k+\ldots+n^k\]
+on olemassa laskukaava,
+kun $k$ on jokin positiivinen kokonaisluku.
+Tällainen laskukaava on aina astetta $k+1$
+oleva polynomi. Esimerkiksi
+\[\sum_{x=1}^n x = 1+2+3+\ldots+n = \frac{n(n+1)}{2}\]
 ja
-\[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2.\]
-Vastaavasti tulo $\prod_{x=a}^b$
-käy läpi välin $a \ldots b$ kokonaisluvut.
-Esimerkiksi luvun $n$ kertoma $n!$ voidaan ilmaista muodossa
+\[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2 = \frac{n(n+1)(2n+1)}{6}.\]
+\noindent
+\key{Aritmeettinen summa} on summa, \index{aritmeettinen summa}
+jossa jokaisen vierekkäisen luvun erotus on vakio.
+Esimerkiksi
+\[3+7+11+15\]
+on aritmeettinen summa,
+jossa vakio on 4.
+Siinä pätee siis $7-3=4$, $11-7=4$ ja $15-11=4$.
+Aritmeettinen summa voidaan laskea kaavalla
+\[\frac{n(a+b)}{2},\]
+jossa summan ensimmäinen luku on $a$,
+viimeinen luku on $b$ ja lukujen määrä on $n$.
+Esimerkiksi
+\[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
+Kaava perustuu siihen, että summa muodostuu $n$ luvusta
+ja luvun suuruus on keskimäärin $(a+b)/2$.
 
-\[n! = \prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdot \cdots \cdot n.\]
+Aritmeettisen summan erikoistapaus on
+\[1+2+3+\cdots+n = \frac{n(1+n)}{2}.\]
 
-Merkinnät $\lfloor x \rfloor$ ja $\lceil x \rceil$
-pyöristävät luvun $x$ kokonaisluvuksi alaspäin ja ylöspäin.
-Esimerkiksi $\lfloor 5/2 \rfloor = 2$ ja $\lceil 5/2 \rceil = 3$.
+\index{geometrinen summa}
+\noindent
+\key{Geometrinen summa} on summa,
+jossa jokaisen vierekkäisen luvun suhde on vakio.
+Esimerkiksi
+\[3+6+12+24\]
+on geometrinen summa,
+jossa vakio on 2.
+Siinä pätee $6/3=2$, $12/6=2$ ja $24/12=2$.
+Geometrinen summa voidaan laskea kaavalla
+\[\frac{bx-a}{x-1},\]
+jossa summan ensimmäinen luku on $a$,
+viimeinen luku on $b$ ja vierekkäisten lukujen suhde on $x$.
+Esimerkiksi
+\[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
+Geometrisen summan kaavan voi johtaa merkitsemällä
+\[ S = a + ax + ax^2 + \cdots + b .\] 
+Kertomalla molemmat puolet $x$:llä saadaan
+\[ xS = ax + ax^2 + ax^3 + \cdots + bx,\]
+josta kaava seuraa ratkaisemalla yhtälön
+\[ xS-S = bx-a.\]
+Geometrisen summan erikoistapaus on usein kätevä kaava
+\[1+2+4+8+\ldots+2^n=2^{n+1}-1.\]
+Geometrisen summan sukulainen on
+\[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
 
-Merkinnät $\min(a_1,a_2,\ldots,a_n)$ ja
-$\max(a_1,a_2,\ldots,a_n)$ valitsevat
-pienimmän ja suurimman alkioista
-$a_1,a_2,\ldots,a_n$.
+\index{harmoninen summa}
+\noindent
+\key{Harmoninen summa} on summa muotoa
+\[ \sum_{x=1}^n \frac{1}{x} = 1+\frac{1}{2}+\frac{1}{3}+\ldots+\frac{1}{n}.\]
+Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
+Summaa voi näet arvioida ylöspäin
+muuttamalla jokaista termiä $1/k$ niin,
+että $k$:ksi tulee alempi 2:n potenssi.
+Esimerkiksi tapauksessa $n=6$ arvioksi tulee
+\[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6} \le
+1+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{4}.\]
+Tämän seurauksena summa jakaantuu $\log_2(n)+1$ samaa
+rationaalilukua toistavaan osaan, joista jokaisen summa on enintään 1.
 
-\subsubsection{Joukot}
+\subsubsection{Joukko-oppi}
 
+\index{joukko-oppi}
 \index{joukko}
 \index{leikkaus}
 \index{yhdiste}
@@ -621,50 +605,73 @@ $a_1,a_2,\ldots,a_n$.
 \index{osajoukko}
 
 \key{Joukko} on kokoelma alkioita.
-Esimerkiksi joukko $\{2,4,7\}$
+Esimerkiksi joukko
+\[X=\{2,4,7\}\]
 sisältää alkiot 2, 4 ja 7.
-Tietty alkio voi esiintyä joukossa enintään kerran.
 Merkintä $\emptyset$ tarkoittaa tyhjää joukkoa.
-Joukon $S$ koko eli alkoiden määrä on $|S|$,
-esimerkiksi $|\{2,4,7\}|=3$.
+Joukon $S$ koko eli alkoiden määrä on $|S|$.
+Esimerkiksi äskeisessä joukossa $|X|=3$.
 
 Merkintä $x \in S$ tarkoittaa,
 että alkio $x$ on joukossa $S$,
 ja merkintä $x \notin S$ tarkoittaa,
 että alkio $x$ ei ole joukossa $S$.
-Esimerkiksi $4 \in \{2,4,7\}$,
-mutta $5 \notin \{2,4,7\}$.
+Esimerkiksi äskeisessä joukossa
+\[4 \in X \hspace{10px}\textrm{ja}\hspace{10px} 5 \notin X.\]
 
-\key{Leikkaus} $A \cap B$ sisältää alkiot,
+\begin{samepage}
+Uusia joukkoja voidaan muodostaa joukko-operaatioilla
+seuraavasti:
+\begin{itemize}
+\item \key{Leikkaus} $A \cap B$ sisältää alkiot,
 jotka ovat molemmissa joukoista $A$ ja $B$.
-\key{Yhdiste} $A \cup B$ sisältää alkiot,
-jotka ovat ainakin toisessa joukoista $A$ ja $B$.
-\key{Erotus} $A \setminus B$ sisältää alkiot,
-jotka ovat joukossa $A$ mutta eivät joukossa $B$.
 Esimerkiksi jos $A=\{1,2,5\}$ ja $B=\{2,4\}$,
-niin $A \cap B = \{2\}$, $A \cup B = \{1,2,4,5\}$
-ja $A \setminus B = \{1,5\}$.
+niin $A \cap B = \{2\}$.
+\item \key{Yhdiste} $A \cup B$ sisältää alkiot,
+jotka ovat ainakin toisessa joukoista $A$ ja $B$.
+Esimerkin tilanteessa $A \cup B = \{1,2,4,5\}$.
+\item \key{Komplementti} $\bar A$ sisältää alkiot,
+jotka eivät ole joukossa $A$.
+Tämän tulkinta riippuu siitä, mitkä kaikki
+alkiot ovat olemassa.
+\item \key{Erotus} $A \setminus B = A \cap \bar B$ sisältää alkiot,
+jotka ovat joukossa $A$ mutta eivät joukossa $B$.
+Esimerkin tilanteessa $A \setminus B = \{1,5\}$.
+\end{itemize}
+\end{samepage}
 
 Merkintä $A \subset S$ tarkoittaa,
 että $A$ on $S$:n \key{osajoukko}
 eli jokainen $A$:n alkio esiintyy $S$:ssä.
+Joukon $S$ osajoukkojen yhteismäärä on $2^{|S|}$.
 Esimerkiksi joukon $\{2,4,7\}$
-osajoukot ovat $\emptyset$,
+osajoukot ovat
+\begin{center}
+$\emptyset$,
 $\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ ja $\{2,4,7\}$.
-Joukon $S$ osajoukkojen määrä on $2^{|S|}$.
+\end{center}
 
-Usein esiintyviä joukkoja ovat
+Usein esiintyviä joukkoja ovat seuraavat:
 
-\begin{itemize}
-\item $\mathbb{N}$ (luonnolliset luvut),
-\item $\mathbb{Z}$ (kokonaisluvut),
-\item $\mathbb{Q}$ (rationaaliluvut) sekä
-\item $\mathbb{R}$ (reaaliluvut).
+\begin{itemize}[noitemsep]
+\item $\mathbb{N}$ (luonnolliset luvut)
+\item $\mathbb{Z}$ (kokonaisluvut)
+\item $\mathbb{Q}$ (rationaaliluvut)
+\item $\mathbb{R}$ (reaaliluvut)
 \end{itemize}
 
-Joukko $\mathbb{N}$ voidaan määritellä
-kahdella tavalla: joko $\mathbb{N}=\{0,1,2,\ldots\}$
+Luonnollisten lukujen joukko $\mathbb{N}$ voidaan määritellä
+tilanteesta riippuen kahdella tavalla:
+joko $\mathbb{N}=\{0,1,2,\ldots\}$
 tai $\mathbb{N}=\{1,2,3,...\}$.
+
+Joukon voi muodostaa myös säännöllä
+\[\{f(n) : n \in S\}.\]
+Tällainen joukko sisältää kaikki alkiot
+muotoa $f(n)$, jossa $n$ on valittu joukosta $S$.
+Esimerkiksi joukko
+\[X=\{2n : n \in \mathbb{Z}\}\]
+sisältää kaikki parilliset kokonaisluvut.
 
 \subsubsection{Logiikka}
 
@@ -675,7 +682,8 @@ tai $\mathbb{N}=\{1,2,3,...\}$.
 \index{implikaatio}
 \index{ekvivalenssi}
 
-Loogisen lausekkeen arvo on joko 1 (\key{tosi}) tai 0 (\key{epätosi}).
+Loogisen lausekkeen arvo on joko \key{tosi} (1) tai
+\key{epätosi} (0).
 Tärkeimmät loogiset operaatiot ovat
 $\lnot$ (\key{negaatio}),
 $\land$ (\key{konjunktio}),
@@ -715,8 +723,10 @@ Tällöin esimerkiksi $P(7)$ on tosi, kun taas $P(8)$ on epätosi.
 
 \index{kvanttori}
 
-\key{Kvanttoreita} ovat $\forall$ (kaikille) ja $\exists$
-(on olemassa).
+\key{Kvanttori} määrittää, millä tavalla
+lauseke liittyy joukon alkioihin.
+Tavalliset kvanttorit
+ovat $\forall$ (kaikille) ja $\exists$ (on olemassa).
 Esimerkiksi $\forall x (\exists y (y > x))$
 tarkoittaa kokonaislukujen joukossa,
 että jokaiselle luvulle $x$ on olemassa
@@ -754,87 +764,52 @@ koska monessa tehokkaassa algoritmissa jokin asia puolittuu
 joka askeleella.
 Niinpä logaritmin avulla voi arvioida algoritmin tehokkuutta.
 
-Logaritmi muuttaa kertolaskun yhteenlaskuksi ja
-jakolaskun vähennyslaskuksi:
-$\log_k(a \cdot b) = \log_k(a)+\log_k(b)$ ja
-$\log_k(a / b) = \log_k(a)-\log_k(b)$.
-Lisäksi on voimassa kaava $\log_u(x) = \log_k(x)/\log_k(u)$.
-Tämän ansiosta logaritmeja voi laskea mille tahansa kantaluvulle
+Logaritmi muuttaa kertolaskun yhteenlaskuksi:
+\[\log_k(ab) = \log_k(a)+\log_k(b)\]
+Samoin logaritmi muuttaa jakolaskun vähennyslaskuksi:
+\[\log_k(\frac{a}{b}) = \log_k(a)-\log_k(b)\]
+Lisäksi on voimassa kaava
+\[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
+jonka ansiosta logaritmeja voi laskea mille tahansa kantaluvulle
 kiinteän kantaluvun funktiolla.
 
-Yksi logaritmin ominaisuus on, että se kertoo luvun numeroiden
-määrän halutussa lukujärjestelmässä.
-Esimerkiksi luvun $x$ numeroiden määrä 10-jär\-jes\-tel\-mäs\-sä on
-$\lfloor \log_{10}(x)\rfloor + 1$.
+Vielä yksi logaritmin ominaisuus on, että
+luvun $x$ numeroiden määrä $b$-järjestelmässä
+on $\log_b(x)+1$ alaspäin pyöristäen.
 
-\subsubsection{Summakaavat}
+\subsubsection{Funktioita}
 
-\index{aritmeettinen summa}
-\begin{samepage}
-\key{Aritmeettinen summa} on summalauseke,
-jossa jokaisen vierekkäisen luvun erotus on vakio.
-Esimerkiksi
-\[3+7+11+15\]
-on aritmeettinen summa,
-jossa vakio on 4.
-Siinä pätee siis $7-3=4$, $11-7=4$ ja $15-11=4$.
-Aritmeettinen summa voidaan laskea kaavalla
-\[\frac{n(a+b)}{2},\]
-jossa summan ensimmäinen luku on $a$,
-viimeinen luku on $b$ ja lukujen määrä on $n$.
-Esimerkiksi
-\[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
-Kaava perustuu siihen, että summa muodostuu $n$ luvusta
-ja luvun suuruus on keskimäärin $(a+b)/2$.
-\end{samepage}
-Aritmeettisen summan erikoistapaus on
-\[1+2+3+\cdots+n = \frac{n(n+1)}{2}.\]
+Funktio $\lfloor x \rfloor$ pyöristää luvun $x$
+alaspäin kokonaisluvuksi ja
+funktio $\lceil x \rceil$ pyöristää luvun $x$
+ylöspäin kokonaisluvuksi. Esimerkiksi
 
-\index{geometrinen summa}
+\[ \lfloor 3/2 \rfloor = 1 \hspace{10px} \textrm{ja} \hspace{10px} \lceil 3/2 \rceil = 2.\]
+
 \noindent
-\key{Geometrinen summa} on summalauseke,
-jossa jokaisen vierekkäisen
-summattavan luvun suhde on vakio.
+Funktio $\min(x_1,x_2,\ldots,x_n)$ valitsee pienimmän arvon
+ja
+funktio $\min(x_1,x_2,\ldots,x_n)$ valitsee suurimman arvon.
 Esimerkiksi
-\[3+6+12+24\]
-on geometrinen summa,
-jossa vakio on 2.
-Siinä pätee $6/3=2$, $12/6=2$ ja $24/12=2$.
-Geometrinen summa voidaan laskea kaavalla
-\[\frac{bx-a}{x-1},\]
-jossa summan ensimmäinen luku on $a$,
-viimeinen luku on $b$ ja vierekkäisten lukujen suhde on $x$.
-Esimerkiksi
-\[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
-Geometrisen summan kaavan voi johtaa merkitsemällä
-\[ S = a + ax + ax^2 + \cdots + b .\] 
-Kertomalla molemmat puolet $x$:llä saadaan
-\[ xS = ax + ax^2 + ax^3 + \cdots + bx,\]
-josta kaava seuraa ratkaisemalla yhtälön
-\[ xS-S = bx-a.\]
-Geometrisen summan erikoistapaus on usein kätevä kaava
-\[1+2+4+8+\ldots+2^n=2^{n+1}-1.\]
-Geometrisen summan sukulainen on
-\[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
 
-\index{harmoninen summa}
+\[ \min(1,2,3)=1 \hspace{10px} \textrm{ja} \hspace{10px} \max(1,2,3)=3.\]
+
+\index{kertoma}
+
 \noindent
-\key{Harmoninen summa} on
-\[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\ldots+\frac{1}{n}.\]
-Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
-Summaa voi näet arvioida ylöspäin
-muuttamalla jokaista termiä $1/k$ niin,
-että $k$:ksi tulee alempi 2:n potenssi.
-Esimerkiksi tapauksessa $n=6$ arvioksi tulee
-\[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6} \le
-1+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{4}.\]
-Tämän seurauksena summa jakaantuu $\log_2(n)+1$ samaa
-rationaalilukua toistavaan osaan, joista jokaisen summa on enintään 1.
-
-\subsubsection{Fibonaccin luvut}
+\key{Kertoma} $n!$ määritellään
+\[\prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdots n\]
+eli toisin sanoen rekursiivisesti
+\[
+\begin{array}{lcl}
+0! & = & 1 \\
+n! & = & n \cdot (n-1)! \\
+\end{array}
+\]
 
 \index{Fibonaccin luku}
 
+\noindent
 \key{Fibonaccin luvut} esiintyvät monissa erilaisissa yhteyksissä.
 Ne määritellään seuraavasti rekursiivisesti:
 \[
@@ -848,4 +823,24 @@ Ensimmäiset Fibonaccin luvut ovat
 \[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots\]
 Fibonaccin lukujen laskemiseen on olemassa myös
 suljetun muodon kaava
+
 \[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
+
+
+
+% ja
+% \[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2.\]
+% Vastaavasti tulo $\prod_{x=a}^b$
+% käy läpi välin $a \ldots b$ kokonaisluvut.
+% Esimerkiksi luvun $n$ kertoma $n!$ voidaan ilmaista muodossa
+% 
+% \[n! = \prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdot \cdots \cdot n.\]
+% 
+% Merkinnät $\lfloor x \rfloor$ ja $\lceil x \rceil$
+% pyöristävät luvun $x$ kokonaisluvuksi alaspäin ja ylöspäin.
+% Esimerkiksi $\lfloor 5/2 \rfloor = 2$ ja $\lceil 5/2 \rceil = 3$.
+% 
+% Merkinnät $\min(a_1,a_2,\ldots,a_n)$ ja
+% $\max(a_1,a_2,\ldots,a_n)$ valitsevat
+% pienimmän ja suurimman alkioista
+% $a_1,a_2,\ldots,a_n$.
