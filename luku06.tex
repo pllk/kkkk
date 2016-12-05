@@ -52,7 +52,7 @@ ja lopuksi 20.
 Mutta toimiiko ahne algoritmi aina oikein?
 
 Osoittautuu, että eurokolikoiden tapauksessa
-ahne algoritmi toimii aina oikein,
+ahne algoritmi \emph{toimii} aina oikein,
 eli se tuottaa aina ratkaisun,
 jossa on pienin määrä kolikoita.
 Algoritmin toimivuuden voi perustella
@@ -88,14 +88,14 @@ tuottaa optimiratkaisun.
 
 Kuten tästä esimerkistä huomaa,
 ahneen algoritmin toimivuuden perusteleminen
-voi olla vaikeaa,
+voi olla työlästä,
 vaikka kyseessä olisi yksinkertainen algoritmi.
 
 \subsubsection{Yleinen tapaus}
 
 Yleisessä tapauksessa kolikot voivat olla mitä tahansa.
 Tällöin suurimman kolikon valitseva ahne algoritmi
-ei välttämättä tuota optimiratkaisua.
+\emph{ei} välttämättä tuota optimiratkaisua.
 
 Jos ahne algoritmi ei toimi, tämän voi osoittaa
 näyttämällä vastaesimerkin, jossa algoritmi
@@ -116,7 +116,7 @@ millä tahansa kolikoilla ja rahamäärällä.
 \section{Aikataulutus}
 
 Monet aikataulutukseen liittyvät ongelmat
-ratkeavat ahneasti.
+ratkeavat ahneesti.
 Näin on esimerkiksi seuraavassa klassisessa tehtävässä:
 
 \begin{task}
@@ -291,7 +291,8 @@ aikaisin päättyvä tapahtuma.
 Tällainen valinta ei ole koskaan parempi,
 koska myöhemmin päättyvän tapahtuman
 jälkeen on joko yhtä paljon tai vähemmän
-mahdollisuuksia valita seuraavia tapahtumia.
+mahdollisuuksia valita seuraavia tapahtumia
+kuin aiemmin päättyvän tapahtuman jälkeen.
 
 \section{Tehtävät ja deadlinet}
 
@@ -544,7 +545,7 @@ Huomaa, että koodissa ei saa esiintyä kahta koodisanaa,
 joista toinen on toisen alkuosa,
 koska alkuperäisen merkkijonon palauttaminen
 bittiesityksestä ei olisi välttämättä mahdollista.
-Esimerkiksi koodissa
+Esimerkiksi seuraava koodi ei ole kelvollinen:
 \begin{center}
 \begin{tabular}{rr}
 merkki & koodisana \\
@@ -555,8 +556,8 @@ merkki & koodisana \\
 \texttt{D} & 11 \\
 \end{tabular}
 \end{center}
-koodisan 0 on koodisanan 00 alkuosa.
-Tämän seurauksena ei ole mahdollista tietää, tarkoittaako bittiesitys
+Nyt koodisana 0 on koodisanan 00 alkuosa,
+minkä vuoksi ei ole mahdollista tietää, tarkoittaako bittiesitys
 001 merkkijonoa \texttt{AAC} vai merkkijonoa \texttt{BC}.
 
 \subsubsection{Optimaalinen koodi}
