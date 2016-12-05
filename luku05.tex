@@ -30,8 +30,6 @@ osajoukot ovat $\emptyset$,
 $\{1\}$, $\{2\}$, $\{3\}$,
 $\{1,2\}$, $\{1,3\}$, $\{2,3\}$ ja $\{1,2,3\}$,
 missä $\emptyset$ on tyhjä joukko.
-Tutustumme seuraavaksi kahteen menetelmään
-osajoukkojen läpikäyntiin.
 
 \subsubsection{Menetelmä 1}
 
@@ -41,8 +39,8 @@ Seuraava funktio \texttt{haku} muodostaa
 joukon $\{1,2,\ldots,n\}$ osajoukot.
 Funktio pitää yllä vektoria \texttt{v},
 johon se kokoaa osajoukossa olevat luvut.
-Osajoukkojen muodostus alkaa kutsumalla
-funktiota \texttt{haku(1)}.
+Osajoukkojen muodostus alkaa
+tekemällä funktiokutsu \texttt{haku(1)}.
 
 \begin{lstlisting}
 void haku(int k) {
@@ -147,9 +145,6 @@ for (int b = 0; b < (1<<n); b++) {
 }
 \end{lstlisting}
 
-Merkintä $1 < < n$ on bittisiirto,
-joka tarkoittaa samaa kuin $2^n$.
-
 Seuraava koodi muodostaa jokaisen osajoukon
 kohdalla vektorin \texttt{v},
 joka sisältää osajoukossa olevat luvut.
@@ -176,8 +171,6 @@ permutaatioita on kaikkiaan $n!$.
 Esimerkiksi joukon $\{1,2,3\}$
 permutaatiot ovat $(1,2,3)$, $(1,3,2)$,
 $(2,1,3)$, $(2,3,1)$, $(3,1,2)$ ja $(3,2,1)$.
-Tutustumme seuraavaksi kahteen tapaan
-permutaatioiden läpikäyntiin.
 
 \subsubsection{Menetelmä 1}
 
@@ -249,7 +242,7 @@ ja laajentaa ratkaisua askel kerrallaan.
 Joka askeleella haku haarautuu kaikkiin
 mahdollisiin suuntiin, joihin ratkaisua voi laajentaa.
 Haaran tutkimisen jälkeen haku peruuttaa takaisin
-ja jatkaa hakua muihin suuntiin.
+ja jatkaa muihin mahdollisiin suuntiin.
 
 Tarkastellaan esimerkkinä seuraavaa tehtävää:
 
@@ -345,8 +338,8 @@ toisiaan.
 Sen sijaan neljäs osaratkaisu kelpaa,
 ja sitä on mahdollista laajentaa loppuun asti
 kokonaiseksi ratkaisuksi.
-\newpage
 
+\begin{samepage}
 Seuraava koodi toteuttaa peruuttavan haun:
 
 \begin{lstlisting}
@@ -363,6 +356,7 @@ void haku(int y) {
     }
 }
 \end{lstlisting}
+\end{samepage}
 Haku alkaa kutsumalla funktiota \texttt{haku(0)}.
 Laudan koko on muuttujassa $n$,
 ja koodi laskee ratkaisuiden määrän
@@ -577,6 +571,23 @@ suoritusaika: 0{,}6 sekuntia
 rekursiokutsuja: 69 miljoonaa
 \end{itemize}
 
+~\\
+Nyt on hyvä hetki lopettaa optimointi ja muistella,
+mistä lähdimme liikkeelle.
+Alkuperäinen algoritmi vei aikaa 483 sekuntia,
+ja nyt optimointien jälkeen algoritmi vie aikaa
+vain 0{,}6 sekuntia.
+Optimointien ansiosta algoritmin nopeutui
+siis lähes 1000-kertaisesti!
+
+Tämä on yleinen ilmiö peruuttavassa haussa,
+koska hakupuu on yleensä valtava ja
+yksinkertainenkin optimointi voi karsia suuren
+määrän haaroja hakupuusta.
+Erityisen hyödyllisiä ovat optimoinnit,
+jotka kohdistuvat hakupuun yläosaan,
+koska ne karsivat eniten haaroja.
+
 \section{Puolivälihaku}
 
 \index{puolivälihaku}
@@ -588,14 +599,15 @@ ja lopuksi hakujen tulokset yhdistetään.
 Puolivälihaun hyötynä on, että sen avulla voi
 parantaa haun aikavaativuutta.
 
+\begin{samepage}
 Tutustumme puolivälihakuun seuraavan tehtävän kautta:
-
 \begin{task}
 Annettuna on lista, jossa on $n$ lukua,
 sekä lisäksi kokonaisluku $x$.
 Tehtäväsi on selvittää, voiko listan luvuista
 valita osajoukon niin, että osajoukon lukujen summa on $x$.
 \end{task}
+\end{samepage}
 
 Tavanomainen ratkaisu tehtävään on käydä kaikki
 listan alkioiden osajoukot läpi ja tarkastaa,
@@ -613,7 +625,6 @@ listan $A$ luvuista ja laittaa muistiin niiden summat
 listaan $S_A$.
 Toinen haku käsittelee vastaavasti listan $B$ luvut
 ja laittaa niiden summat listaan $S_B$.
-
 Tämän jälkeen riittää tarkastaa,
 onko mahdollista valita yksi luku listasta $S_A$
 ja toinen luku listasta $S_B$ niin,
@@ -643,7 +654,7 @@ valitsemalla kummastakin listasta yksi luku.
 
 Vaikka aikavaativuudet $O(2^n)$ ja $O(2^{n/2})$
 muistuttavat toisiaan, niiden ero on merkittävä.
-Vakiokertoimilla on siis väliä, jos ne esiintyvät
+Vakiokertoimilla \emph{on} siis väliä, jos ne esiintyvät
 potenssin eksponentissa.
 Esimerkiksi jos $n=40$, $O(2^n)$-algoritmin suoritus
 veisi tunteja aikaa, kun taas $O(2^{n/2})$
