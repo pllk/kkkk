@@ -2,7 +2,7 @@
 
 \index{tietorakenne@tietorakenne}
 
-\key{Tietorakenne}
+\key{Tietorakenne} (''data structure'')
 on tapa säilyttää tietoa tietokoneen muistissa.
 Sopivan tietorakenteen valinta on tärkeää,
 koska kullakin rakenteella on omat
@@ -221,16 +221,13 @@ cout << s.count(5) << "\n"; // 3
 Funktio \texttt{erase} poistaa
 kaikki alkion esiintymät
 \texttt{multiset}-rakenteessa:
-
 \begin{lstlisting}
 s.erase(5);
 cout << s.count(5) << "\n"; // 0
 \end{lstlisting}
-
 Usein kuitenkin tulisi poistaa
 vain yksi esiintymä,
 mikä onnistuu näin:
-
 \begin{lstlisting}
 s.erase(s.find(5));
 cout << s.count(5) << "\n"; // 2
@@ -369,13 +366,10 @@ Iteraattoreita tarvitsee usein joukon
 alkioiden käsittelyssä.
 Seuraava koodi määrittelee iteraattorin
 \texttt{it}, joka osoittaa joukon \texttt{s} alkuun:
-
 \begin{lstlisting}
 set<int>::iterator it = s.begin();
 \end{lstlisting}
-
 Koodin voi kirjoittaa myös lyhyemmin näin:
-
 \begin{lstlisting}
 auto it = s.begin();
 \end{lstlisting}
@@ -388,6 +382,7 @@ joukon ensimmäisen alkion:
 auto it = s.begin();
 cout << *it << "\n";
 \end{lstlisting}
+
 Iteraattoria pystyy liikuttamaan
 operaatioilla \texttt{++} (eteenpäin)
 ja \texttt{---} (taaksepäin).
@@ -472,8 +467,8 @@ vie vain yhden bitin tilaa muistissa.
 Niinpä bittijoukon käyttäminen säästää muistia,
 jos arvot 0 ja 1 riittävät.
 
-Esimerkiksi jos taulukossa on $n$ arvoa
-tallennettuna \texttt{int}-lukuina,
+Esimerkiksi jos \texttt{int}-tyyppisessä
+taulukossa on $n$ arvoa,
 jokainen arvo vie tilaa 32 bittiä ja taulukko
 vie muistia $32n$ bittiä.
 Käyttämällä bittijoukkoa tilaa
@@ -582,14 +577,14 @@ cout << s.front(); // 3
 s.pop();
 cout << s.front(); // 2
 \end{lstlisting}
-
-Huomaa, että rakenteiden \texttt{stack} ja \texttt{queue}
-sijasta voi aina käyttää rakenteita
-\texttt{vector} ja \texttt{deque}, joilla voi
-tehdä kaiken saman ja enemmän.
-Kuitenkin \texttt{stack} ja \texttt{queue} ovat
-kevyempiä ja hieman tehokkaampia rakenteita,
-jos niiden operaatiot riittävät algoritmin toteuttamiseen.
+% 
+% Huomaa, että rakenteiden \texttt{stack} ja \texttt{queue}
+% sijasta voi aina käyttää rakenteita
+% \texttt{vector} ja \texttt{deque}, joilla voi
+% tehdä kaiken saman ja enemmän.
+% Kuitenkin \texttt{stack} ja \texttt{queue} ovat
+% kevyempiä ja hieman tehokkaampia rakenteita,
+% jos niiden operaatiot riittävät algoritmin toteuttamiseen.
 
 \subsubsection{Prioriteettijono}
 
@@ -729,11 +724,11 @@ ratkaisun 3 aikavaativuus on $O(n \log n)$,
 mutta siitä huolimatta
 ratkaisu 3 vie aikaa vain kymmenesosan.
 
-Syynä nopeuseroon, että
+Syynä nopeuseroon on, että
 ratkaisussa 3 järjestäminen on kevyt
 operaatio ja se täytyy tehdä vain kerran
 algoritmin alussa, minkä jälkeen loppuosan
 aikavaativuus on lineaarinen.
-Samaan aikaan ratkaisu 1 pitää yllä monimutkaista
+Ratkaisu 1 puolestaan pitää yllä monimutkaista
 tasapainoista binääripuuta koko algoritmin ajan.
 

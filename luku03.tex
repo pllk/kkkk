@@ -2,7 +2,7 @@
 
 \index{jxrjestxminen@järjestäminen}
 
-\key{Järjestäminen}
+\key{Järjestäminen} (''sorting'')
 on keskeinen algoritmiikan ongelma.
 Moni tehokas algoritmi
 perustuu järjestämiseen,
@@ -35,9 +35,7 @@ Tehtäväsi on järjestää alkiot pienimmästä
 suurimpaan.
 \end{task}
 
-\noindent
 Esimerkiksi taulukko
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -61,10 +59,7 @@ Esimerkiksi taulukko
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
-\noindent
 on järjestettynä seuraava:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -288,8 +283,7 @@ Se on indeksipari $(a,b)$, joille $a<b$
 ja $\texttt{t}[a]>\texttt{t}[b]$
 eli kaksi taulukon alkiota, jotka ovat väärässä
 järjestyksessä.
-Esimerkiksi taulukossa
-
+Esimerkiksi taulukon
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -313,7 +307,6 @@ Esimerkiksi taulukossa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 inversiot ovat $(4,5)$, $(4,6)$ ja $(7,8)$.
 Inversioiden määrä kuvaa, miten lähellä
 järjestystä taulukko on.
@@ -358,6 +351,7 @@ void mergesort(int a, int b) {
     merge(a,c,c+1,b);
 }
 \end{lstlisting}
+
 Funktio \texttt{mergesort}
 järjestää taulukon välin $a \ldots b$ alkiot.
 Jos $a=b$, välillä on vain yksi alkio,
@@ -379,7 +373,6 @@ oikean osan alusta alkaen.
 
 \begin{samepage}
 Esimerkiksi taulukko
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -404,9 +397,7 @@ Esimerkiksi taulukko
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-
 jakautuu osataulukoiksi
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,1);
@@ -434,9 +425,7 @@ jakautuu osataulukoiksi
 
 \end{tikzpicture}
 \end{center}
-
-jotka ovat järjestettyinä:
-
+jotka ovat järjestettyinä
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,1);
@@ -463,9 +452,7 @@ jotka ovat järjestettyinä:
 \node at (8.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 Osataulukot lomittamalla syntyy järjestetty taulukko
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -578,7 +565,6 @@ Jokaisen indeksin kohdalla lukee, montako kertaa
 kyseinen alkio esiintyy alkuperäisessä taulukossa.
 
 Esimerkiksi taulukosta
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -602,9 +588,7 @@ Esimerkiksi taulukosta
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 syntyy seuraava kirjanpito:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (9,1);
@@ -661,28 +645,22 @@ Tätä funktiota kannattaa käyttää yleensä aina
 järjestämiseen algoritmeissa,
 koska funktio on toteutettu tehokkaasti ja varmasti toimivasti.
 
-\begin{minipage}{\textwidth}
 Seuraava koodi järjestää vektorin \texttt{v}
 luvut pienimmästä suurimpaan:
-
 \begin{lstlisting}
 vector<int> v = {4,2,5,3,5,8,3};
 sort(v.begin(),v.end());
 \end{lstlisting}
-\end{minipage}
-
 Järjestämisen jälkeen vektorin sisältö on
 $\{2,3,3,4,5,5,8\}$.
 
 Oletuksena järjestys tapahtuu pienimmästä suurimpaan,
 mutta järjestyksen saa käänteiseksi näin:
-
 \begin{lstlisting}
 sort(v.rbegin(),v.rend());
 \end{lstlisting}
 
 Tavallisen taulukon voi järjestää seuraavasti:
-
 \begin{lstlisting}
 int n = 7; // taulukon koko
 int t[] = {4,2,5,3,5,8,3};
@@ -690,7 +668,6 @@ sort(t,t+n);
 \end{lstlisting}
 
 Seuraava koodi järjestää merkkijonon \texttt{s}:
-
 \begin{lstlisting}
 string s = "apina";
 sort(s.begin(), s.end());
@@ -721,6 +698,8 @@ suuruusjärjestykseen,
 ja jos järjestettävänä on merkkijonoja,
 ne järjestyvät aakkosjärjestykseen.
 
+\index{pair@\texttt{pair}}
+
 Parit (\texttt{pair}) järjestyvät ensisijaisesti
 ensimmäisen kentän (\texttt{first}) mukaan.
 Jos kuitenkin parien ensimmäiset kentät ovat samat,
@@ -737,6 +716,23 @@ sort(v.begin(), v.end());
 
 Koodin suorituksen jälkeen parien järjestys on
 $(1,2)$, $(1,5)$, $(2,3)$.
+
+\index{tuple@\texttt{tuple}}
+Vastaavasti \texttt{tuple}-rakenteet
+järjestyvät ensisijaisesti ensimmäisen kentän,
+toissijaisesti toisen kentän, jne., mukaan.
+Seuraava koodi esittelee asiaa:
+\begin{lstlisting}
+vector<tuple<int,int,int>> v;
+v.push_back(make_tuple(2,1,4));
+v.push_back(make_tuple(1,5,3));
+v.push_back(make_tuple(2,1,3));
+sort(v.begin(),v.end());
+\end{lstlisting}
+Koodin suorituksen jälkeen järjestys on
+$(1,5,3)$, $(2,1,3)$, $(2,1,4)$.
+
+\subsubsection{Omat tietueet}
 
 Jos järjestettävänä on omia tietueita,
 niiden vertailuoperaattori täytyy toteuttaa itse.
@@ -779,9 +775,7 @@ bool cmp(string a, string b) {
     return a < b;
 }
 \end{lstlisting}
-
 Tämän jälkeen merkkijonovektorin voi järjestää näin:
-
 \begin{lstlisting}
 sort(v.begin(), v.end(), cmp);
 \end{lstlisting}

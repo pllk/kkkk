@@ -129,7 +129,6 @@ Et voi osallistua tapahtumaan vain osittain.
 \end{task}
 
 Esimerkiksi jos tapahtumat ovat
-
 \begin{center}
 \begin{tabular}{lll}
 tapahtuma & alkuaika & loppuaika \\
@@ -140,13 +139,10 @@ $C$ & 3 & 9 \\
 $D$ & 6 & 8 \\
 \end{tabular}
 \end{center}
-
-\noindent
 niin on mahdollista osallistua korkeintaan
 kahteen tapahtumaan.
 Yksi mahdollisuus on osallistua tapahtumiin
 $B$ ja $D$ seuraavasti:
-\\
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -162,7 +158,6 @@ $B$ ja $D$ seuraavasti:
 \end{tikzpicture}
 \end{center}
 
-\noindent
 Tehtävän ratkaisuun on mahdollista 
 keksiä useita ahneita algoritmeja,
 mutta mikä niistä toimii kaikissa tapauksissa?
@@ -351,7 +346,6 @@ tehtävät seuraavasti:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
 Tässä ratkaisussa $C$ tuottaa 5 pistettä,
 $B$ tuottaa 0 pistettä, $A$ tuottaa $-7$ pistettä
 ja $D$ tuottaa $-8$ pistettä,
@@ -477,11 +471,9 @@ Esimerkissä lukujen keskiarvo on $(1+2+9+2+6)/5=4$.
 
 Tämän tuloksen voi johtaa järjestämällä summan
 uudestaan muotoon
-
 \[
 (a_1^2+a_2^2+\cdots+a_n^2)-2x(a_1+a_2+\cdots+a_n)+nx^2.
 \]
-
 Ensimmäinen osa ei riipu $x$:stä, joten sen voi jättää huomiotta.
 Jäljelle jäävistä osista muodostuu funktio
 $nx^2-2xs$, missä $s=a_1+a_2+\cdots+a_n$.
@@ -523,6 +515,7 @@ merkki & koodisana \\
 Nyt esimerkiksi merkkijonoa \texttt{AABACDACA}
 vastaa seuraava bittiesitys, jonka pituus on 18 bittiä:
 \[000001001011001000\]
+
 Bittiesitystä on kuitenkin mahdollista lyhentää
 ottamalla käyttöön koodi, jonka koodisanat voivat
 olla keskenään eripituisia.
@@ -540,9 +533,11 @@ merkki & koodisana \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
+
 Nyt merkkijonon \texttt{AABACDACA}
 bittiesityksen pituus on vain 15:
 \[001100101110100\]
+
 Huomaa, että koodissa ei saa esiintyä kahta koodisanaa,
 joista toinen on toisen alkuosa,
 koska alkuperäisen merkkijonon palauttaminen
@@ -558,6 +553,7 @@ merkki & koodisana \\
 \texttt{D} & 11 \\
 \end{tabular}
 \end{center}
+
 Nyt koodisana 0 on koodisanan 00 alkuosa,
 minkä vuoksi ei ole mahdollista tietää, tarkoittaako bittiesitys
 001 merkkijonoa \texttt{AAC} vai merkkijonoa \texttt{BC}.
@@ -668,6 +664,7 @@ Lopuksi yhdistetään kaksi viimeistä solmua:
 \path[draw,thick,-] (6) -- (7);
 \end{tikzpicture}
 \end{center}
+
 Tuloksena olevasta puusta saadaan kutakin merkkiä vastaava
 koodisana kulkemalla puun huipulta alas merkkiin asti.
 Aina vasemmalle mentäessä koodisanaan tulee bitti 0

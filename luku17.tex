@@ -55,7 +55,6 @@ muodostavat syklittömän \key{komponenttiverkon},
 joka kuvaa alkuperäisen verkon syvärakennetta.
 
 Esimerkiksi verkon
-
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -78,9 +77,7 @@ Esimerkiksi verkon
 \path[draw,thick,->] (6) -- (7);
 \end{tikzpicture}
 \end{center}
-
 vahvasti yhtenäiset komponentit ovat
-
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -108,9 +105,7 @@ vahvasti yhtenäiset komponentit ovat
 \draw [red,thick,dashed,line width=2pt] (-6.5,0.5) rectangle (-7.5,-0.5);
 \end{tikzpicture}
 \end{center}
-
 ja ne muodostavat seuraavan komponenttiverkon:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (-3,1) {$B$};
@@ -125,7 +120,6 @@ ja ne muodostavat seuraavan komponenttiverkon:
 \path[draw,thick,->] (3) -- (4);
 \end{tikzpicture}
 \end{center}
-
 Komponentit ovat $A=\{1,2\}$,
 $B=\{3,6,7\}$, $C=\{4\}$ sekä $D=\{5\}$.
 
@@ -136,12 +130,6 @@ Niinpä komponenttiverkolle voi muodostaa
 luvun 16 tapaan topologisen järjestyksen
 ja soveltaa sen jälkeen dynaamista ohjelmintia
 verkon käsittelyyn.
-
-% Tutustumme seuraavaksi algoritmiin,
-% jonka avulla voi etsiä tehokkaasti verkon
-% vahvasti yhtenäiset komponentit.
-% Tämän jälkeen näemme, kuinka algoritmia voi
-% käyttää logiikan 2SAT-ongelman ratkaisemiseen.
 
 \section{Kosarajun algoritmi}
 
@@ -375,11 +363,9 @@ kummankin haun aikavaativuus on $O(n+m)$.
 
 Vahvasti yhtenäisyys liittyy myös \key{2SAT-ongelman} ratkaisemiseen.
 Siinä annettuna on looginen lauseke muotoa
-
 \[
 (a_1 \lor b_1) \land (a_2 \lor b_2) \land \cdots \land (a_m \lor b_m)
 \]
-
 ja tehtävänä on valita muuttujille arvot niin,
 että lauseke on tosi,
 tai todeta, että tämä ei ole mahdollista.
@@ -390,7 +376,6 @@ Jokainen lausekkeessa esiintyvä $a_i$ ja $b_i$ on looginen muuttuja
 tai sen negaatio ($\lnot x_1, \lnot x_2, \ldots, \lnot x_n$).
 
 Esimerkiksi lauseke
-
 \[
 L_1 = (x_2 \lor \lnot x_1) \land
       (\lnot x_1 \lor \lnot x_2) \land
@@ -398,19 +383,15 @@ L_1 = (x_2 \lor \lnot x_1) \land
       (\lnot x_2 \lor \lnot x_3) \land
       (x_1 \lor x_4)
 \]
-
 on tosi, kun $x_1$ ja $x_2$ ovat epätosia
 ja $x_3$ ja $x_4$ ovat tosia.
-
 Vastaavasti lauseke
-
 \[
 L_2 = (x_1 \lor x_2) \land
       (x_1 \lor \lnot x_2) \land
       (\lnot x_1 \lor x_3) \land
       (\lnot x_1 \lor \lnot x_3)
 \]
-
 on epätosi riippumatta muuttujien valinnasta.
 Tämän näkee siitä, että muuttujalle $x_1$
 ei ole mahdollista arvoa, joka ei tuottaisi ristiriitaa.

@@ -92,7 +92,6 @@ int main() {
 }
 \end{lstlisting}
 
-\noindent
 Koodin alussa oleva \texttt{\#include}-rivi
 on \texttt{g++}-kääntäjän tarjoama tapa
 ottaa mukaan kaikki standardikirjaston sisältö.
@@ -159,9 +158,8 @@ molemmat seuraavat syötteet:
 123    456
 apina
 \end{lstlisting}
-Tulostaminen tapahtuu seuraavasti
+Tulostaminen tapahtuu puolestaan seuraavasti
 \texttt{cout}-virran kautta:
-
 \begin{lstlisting}
 int a = 123, b = 456;
 string x = "apina";
@@ -189,13 +187,11 @@ C++:n standardivirroille.
 Ne ovat yleensä hieman nopeampia,
 mutta toisaalta vaikeakäyttöisempiä.
 Seuraava koodi lukee kaksi kokonaislukua syötteestä:
-
 \begin{lstlisting}
 int a, b;
 scanf("%d %d", &a, &b);
 \end{lstlisting}
 Seuraava koodi taas tulostaa kaksi kokonaislukua:
-
 \begin{lstlisting}
 int a = 123, b = 456;
 printf("%d %d\n", a, b);
@@ -214,13 +210,11 @@ getline(cin, s);
 
 Jos syötteessä olevan tiedon määrä ei ole tiedossa
 etukäteen, seuraavanlainen silmukka on kätevä:
-
 \begin{lstlisting}
 while (cin >> x) {
     // koodia
 }
 \end{lstlisting}
-
 Tämä silmukka lukee syötettä alkio
 kerrallaan, kunnes syöte loppuu.
 
@@ -229,7 +223,6 @@ käsittelyyn käytetään tiedostoja. Helppo ratkaisu tähän
 on kirjoittaa koodi tavallisesti
 standardivirtoja käyttäen,
 mutta kirjoittaa alkuun seuraavat rivit:
-
 \begin{lstlisting}
 freopen("input.txt", "r", stdin);
 freopen("output.txt", "w", stdout);
@@ -253,7 +246,6 @@ eli noin $-9 \cdot 10^{18} \ldots 9 \cdot 10^{18}$.
 
 Seuraava koodi määrittelee
 \texttt{long long} -muuttujan:
-
 \begin{lstlisting}
 long long x = 123456789123456789LL;
 \end{lstlisting}
@@ -321,7 +313,6 @@ eivätkä luvut kasva liian suuriksi.
 
 Esimerkiksi seuraava koodi
 laskee luvun $n$ kertoman modulo $m$:
-
 \begin{lstlisting}
 long long x = 1;
 for (int i = 2; i <= n i++) {
@@ -338,7 +329,6 @@ luvun modulo on nolla tai negatiivinen.
 Helppo tapa varmistaa, että modulo ei ole negatiivinen,
 on laskea ensin modulo ja lisätä sitten $m$,
 jos tulos on negatiivinen:
-
 \begin{lstlisting}
 x = x%m;
 if (x < 0) x += m;
@@ -416,7 +406,7 @@ Monet kisakoodarit käyttävätkin lyhennysmerkintöjä
 tyypeille ja muille koodin osille.
 
 \subsubsection{Tyyppimääritelmät}
-
+\index{typedef@\texttt{typedef}}
 Komennolla \texttt{typedef} voi antaa lyhyemmän
 nimen tyypille.
 Esimerkiksi nimi \texttt{long long} on pitkä,
@@ -435,6 +425,7 @@ ll a = 123456789;
 ll b = 987654321;
 cout << a*b << "\n";
 \end{lstlisting}
+
 Komentoa \texttt{typedef} voi käyttää myös
 monimutkaisempien tyyppien kanssa.
 Esimerkiksi seuraava koodi antaa nimen \texttt{vi}
@@ -447,8 +438,8 @@ typedef pair<int,int> pi;
 \end{lstlisting}
 
 \subsubsection{Makrot}
-
-Toinen tapa lyhentää koodia on määritellä makroja.
+\index{makro}
+Toinen tapa lyhentää koodia on määritellä \key{makroja}.
 Makro ilmaisee, että tietyt koodissa olevat
 merkkijonot korvataan toisilla ennen koodin
 kääntämistä.
@@ -474,6 +465,7 @@ v.PB(MP(y1,x1));
 v.PB(MP(y2,x2));
 int d = v[i].F+v[i].S;
 \end{lstlisting}
+
 Makro on mahdollista määritellä myös niin,
 että sille voi antaa parametreja.
 Tämän ansiosta makrolla voi lyhentää esimerkiksi
@@ -483,7 +475,6 @@ Määritellään esimerkiksi seuraava makro:
 \begin{lstlisting}
 #define REP(i,a,b) for (int i = a; i <= b; i++)
 \end{lstlisting}
-
 Tämän jälkeen koodin
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
@@ -577,21 +568,25 @@ jossa summan ensimmäinen luku on $a$,
 viimeinen luku on $b$ ja vierekkäisten lukujen suhde on $x$.
 Esimerkiksi
 \[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
+
 Geometrisen summan kaavan voi johtaa merkitsemällä
 \[ S = a + ax + ax^2 + \cdots + b .\] 
 Kertomalla molemmat puolet $x$:llä saadaan
 \[ xS = ax + ax^2 + ax^3 + \cdots + bx,\]
 josta kaava seuraa ratkaisemalla yhtälön
 \[ xS-S = bx-a.\]
+
 Geometrisen summan erikoistapaus on usein kätevä kaava
 \[1+2+4+8+\ldots+2^{n-1}=2^n-1.\]
+
 Geometrisen summan sukulainen on
 \[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
 
 \index{harmoninen summa@harmoninen summa}
-\noindent
+
 \key{Harmoninen summa} on summa muotoa
 \[ \sum_{x=1}^n \frac{1}{x} = 1+\frac{1}{2}+\frac{1}{3}+\ldots+\frac{1}{n}.\]
+
 Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
 Summaa voi näet arvioida ylöspäin
 muuttamalla jokaista termiä $1/k$ niin,
@@ -734,18 +729,19 @@ Tällöin esimerkiksi $P(7)$ on tosi, kun taas $P(8)$ on epätosi.
 lauseke liittyy jollakin tavalla joukon alkioihin.
 Tavalliset kvanttorit
 ovat $\forall$ (kaikille) ja $\exists$ (on olemassa).
-Esimerkiksi $\forall x (\exists y (y > x))$
+Esimerkiksi
+\[\forall x (\exists y (y > x))\]
 tarkoittaa kokonaislukujen joukossa,
 että jokaiselle luvulle $x$ on olemassa
 jokin luku $y$ niin, että $y$ on $x$:ää suurempi.
 Tämän lausekkeen arvo on tosi, koska kokonaislukuja
 on äärettömästi.
 
-Näiden merkintöjä avulla on mahdollista esittää
+Tässä esitettyjen merkintöjä avulla on mahdollista esittää
 monenlaisia loogisia väitteitä.
 Esimerkiksi
-$\forall x (\lnot P(x) \Rightarrow (\exists a (\exists b (x = ab \land a > 1 \land b > 1))))$
-tarkoittaa, että jos luku $x$ ei ole alkuluku,
+\[\forall x (\lnot P(x) \Rightarrow (\exists a (\exists b (x = ab \land a > 1 \land b > 1))))\]
+tarkoittaa kokonaislukujen joukossa, että jos luku $x$ ei ole alkuluku,
 niin on olemassa luvut $a$ ja $b$,
 joiden tulo on $x$ ja jotka molemmat ovat suurempia kuin 1.
 Tämänkin lausekkeen arvo on tosi.
@@ -757,20 +753,16 @@ Funktio $\lfloor x \rfloor$ pyöristää luvun $x$
 alaspäin kokonaisluvuksi ja
 funktio $\lceil x \rceil$ pyöristää luvun $x$
 ylöspäin kokonaisluvuksi. Esimerkiksi
-
 \[ \lfloor 3/2 \rfloor = 1 \hspace{10px} \textrm{ja} \hspace{10px} \lceil 3/2 \rceil = 2.\]
 
-\noindent
 Funktio $\min(x_1,x_2,\ldots,x_n)$ valitsee pienimmän arvon
 ja
 funktio $\min(x_1,x_2,\ldots,x_n)$ valitsee suurimman arvon.
 Esimerkiksi
-
 \[ \min(1,2,3)=1 \hspace{10px} \textrm{ja} \hspace{10px} \max(1,2,3)=3.\]
 
 \index{kertoma@kertoma}
 
-\noindent
 \key{Kertoma} $n!$ määritellään
 \[\prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdots n\]
 eli toisin sanoen rekursiivisesti
@@ -783,7 +775,6 @@ n! & = & n \cdot (n-1)! \\
 
 \index{Fibonaccin luku@Fibonaccin luku}
 
-\noindent
 \key{Fibonaccin luvut} esiintyvät monissa erilaisissa yhteyksissä.
 Ne määritellään seuraavasti rekursiivisesti:
 \[
@@ -797,7 +788,6 @@ Ensimmäiset Fibonaccin luvut ovat
 \[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots\]
 Fibonaccin lukujen laskemiseen on olemassa myös
 suljetun muodon kaava
-
 \[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
 
 \subsubsection{Logaritmi}

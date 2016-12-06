@@ -356,6 +356,7 @@ f(8) & = & 25 \\
 f(9) & = & 40 \\
 \end{array}
 \]
+
 Seuraava koodi laskee funktion $f(x)$ arvon
 dynaamisella ohjelmoinnilla täyttämällä taulukon
 \texttt{d} rahamäärille $0 \ldots x$:
@@ -601,7 +602,6 @@ Yleisessä tapauksessa valittavana on
 kaksi reittiä,
 joista kannattaa valita se,
 joka tuottaa suuremman summan:
-
 \[ f(y,x) = \max(f(y,x-1),f(y-1,x))+r(y,x)\]
 
 \section{Repunpakkaus}
@@ -655,9 +655,7 @@ Ratkaisu tehtävään on suurin arvoista
 $f(n,u)$, kun $0 \le u \le x$.
 
 Rekursiivinen kaava funktion laskemiseksi on
-
 \[f(k,u) = \max(f(k-1,u),f(k-1,u-p_k)+a_k),\]
-
 koska viimeinen tavara joko otetaan mukaan tai ei
 oteta mukaan ratkaisuun.
 Pohjatapauksina $f(0,0)=0$ ja $f(0,u)=-\infty$,
@@ -674,9 +672,7 @@ $u$, kun $0 \le u \le s$ ja $f(n,u) \le x$,
 missä $s=\sum_{i=1}^n a_i$.
 
 Rekursiivinen kaava funktion laskemiseksi on
-
 \[f(k,u) = \min(f(k-1,u),f(k-1,u-a_k)+p_k),\]
-
 samaan tapaan kuin edellisessä ratkaisussa.
 Pohjatapauksina $f(0,0)=0$ ja $f(0,u)=\infty$, kun $u \neq 0$.
 Ratkaisun aikavaativuus on $O(ns)$.
@@ -762,7 +758,6 @@ Kaava käy läpi mahdollisuudet lyhentää merkkijonoja:
 sama merkki ($c=0$) tai $x$:n merkki muutetaan $y$:n merkiksi ($c=1$)
 \end{itemize}
 
-\noindent
 Seuraava taulukko sisältää funktion $f$ arvot
 esimerkin tapauksessa:
 

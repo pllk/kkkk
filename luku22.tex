@@ -100,6 +100,7 @@ Toinen tapa laskea binomikerroin on seuraava:
 \[
 {n \choose k}  =  \frac{n!}{k!(n-k)!}.
 \]
+
 Kaavassa $n!$ on $n$ alkion permutaatioiden määrä.
 Ideana on käydä läpi kaikki permutaatiot
 ja valita kussakin tapauksessa
@@ -132,6 +133,7 @@ Nimi ''binomikerroin'' tulee siitä, että
 \ldots + 
 {n \choose n-1} a^1 b^{n-1} +
 {n \choose n} a^0 b^n. \]
+
 Binomikertoimet esiintyvät myös Pascalin
 kolmiossa, jonka reunoilla on lukua 1
 ja jokainen luku saadaan
@@ -363,6 +365,7 @@ ja loppusulkuja tulee esiintyä tarkalleen yhtä monta kertaa.
 
 Catalanin lukuja voi laskea rekursiivisesti kaavalla
 \[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1}.\]
+
 Summa käy läpi tavat
 jakaa sulkulauseke kahteen osaan niin,
 että kumpikin osa on kelvollinen sulkulauseke
@@ -452,10 +455,7 @@ Esimerkiksi tapauksessa $C_3=5$ binääripuut ovat
 \draw[fill=white] (11.5+1.5,-2) circle (0.3);
 \end{tikzpicture}
 \end{center}
-
-
 ja yleiset puut ovat
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \path[draw,thick,-] (0,0) -- (-1,-1);
@@ -564,9 +564,7 @@ parillisen määrän negatiivisina.
 Huomaa, että vastaavat kaavat toimivat myös käänteisesti
 leikkauksen koon laskemiseen yhdisteiden kokojen perusteella.
 Esimerkiksi
-
 \[ |A \cap B| = |A| + |B| - |A \cup B|\]
-
 ja
 \[ |A \cap B \cap C| = |A| + |B| + |C| - |A \cup B|  - |A \cup C|  - |B \cup C| + |A \cup B \cup C| .\]
 

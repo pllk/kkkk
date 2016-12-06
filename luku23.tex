@@ -325,19 +325,13 @@ Matriisin $A$ \key{determinantti} $\det(A)$
 on määritelty, jos $A$ on neliömatriisi.
 Jos $A$ on kokoa $1 \times 1$,
 niin $\det(A)=A[1,1]$.
-Muuten determinaatti lasketaan rekursiivisesti
-kaavalla
-
+Suuremmalle matriisille determinaatti lasketaan rekursiivisesti
+kaavalla \index{kofaktori@kofaktori}
 \[\det(A)=\sum_{j=1}^n A[1,j] C[1,j],\]
-
-\index{kofaktori@kofaktori}
-
 missä $C[i,j]$ on matriisin $A$ \key{kofaktori}
 kohdassa $[i,j]$.
-Kofaktori lasketaan kaavalla
-
+Kofaktori lasketaan puolestaan kaavalla
 \[C[i,j] = (-1)^{i+j} A'[i,j],\]
-
 missä $A'$ on matriisi $A$, josta on poistettu
 rivi $i$ ja sarake $j$.
 Kofaktorissa olevan kertoimen $(-1)^{i+j}$ ansiosta
@@ -581,9 +575,7 @@ matriisi $X$, jolle pätee
   f(i+k) \\
  \end{bmatrix}.
 \]
-
 Tällainen matriisi on
-
 \[
 X =
  \begin{bmatrix}
@@ -656,9 +648,7 @@ Esimerkiksi verkon
 \path[draw,thick,->,>=latex] (6) -- (5);
 \end{tikzpicture}
 \end{center}
-
 vierusmatriisi on
-
 \[
 V= \begin{bmatrix}
   0 & 0 & 0 & 1 & 0 & 0 \\
@@ -669,8 +659,7 @@ V= \begin{bmatrix}
   0 & 0 & 1 & 0 & 1 & 0 \\
  \end{bmatrix}.
 \]
-
-Nyt esimerkiksi matriisi
+Esimerkiksi matriisi
 \[
 V^4= \begin{bmatrix}
   0 & 0 & 1 & 1 & 1 & 0 \\
@@ -681,7 +670,6 @@ V^4= \begin{bmatrix}
   0 & 0 & 1 & 1 & 1 & 0 \\
  \end{bmatrix}
 \]
-
 kertoo, montako 4 kaaren pituista polkua
 solmuista on toisiinsa.
 Esimerkiksi $V^4[2,5]=2$,

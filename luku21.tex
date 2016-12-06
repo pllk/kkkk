@@ -51,28 +51,32 @@ Esimerkiksi luvun 24 jakajat ovat 1, 2, 3, 4, 6, 8, 12 ja 24.
 Luku $n$ on \key{alkuluku}, jos sen ainoat 
 positiiviset jakajat ovat 1 ja $n$.
 Esimerkiksi luvut 7, 19 ja 41 ovat alkulukuja.
-Luku 35 taas ei ole alkuluku, koska $5 \cdot 7 = 35$.
+Luku 35 taas ei ole alkuluku, koska se voidaan
+jakaa tekijöihin $5 \cdot 7 = 35$.
 Jokaiselle luvulle $n>1$ on olemassa yksikäsitteinen
 \key{alkutekijähajotelma}
 \[ n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k},\]
 missä $p_1,p_2,\ldots,p_k$ ovat alkulukuja
 ja $\alpha_1,\alpha_2,\ldots,\alpha_k$ ovat positiivisia
-lukuja. Esimerkiksi
-\[84 = 2^2 \cdot 3^1 \cdot 7^1.\]
+lukuja. Esimerkiksi luvun 84 alkutekijähajotelma on
+\[2^2 \cdot 3^1 \cdot 7^1.\]
+
 Luvun $n$ \key{jakajien määrä} on
 \[\tau(n)=\prod_{i=1}^k (\alpha_i+1),\]
 koska alkutekijän $p_i$ kohdalla on $\alpha_i+1$
 tapaa valita, montako kertaa alkutekijä
 esiintyy jakajassa.
-Esimerkiksi luvun 84 jakajat ovat
-\[\{1,2,3,4,6,7,12,14,21,28,42,84\}\]
-ja niiden määrä on $\tau(84)=3 \cdot 2 \cdot 2 = 12$.
+Esimerkiksi luvun 84 jakajien määrä
+on $\tau(84)=3 \cdot 2 \cdot 2 = 12$.
+Jakajat ovat
+1, 2, 3, 4, 6, 7, 12, 14, 21, 28, 42 ja 84.
 
 Luvun $n$ \key{jakajien summa} on
 \[\sigma(n)=\prod_{i=1}^k (1+p_1+\ldots+p_1^{\alpha_i}) = \prod_{i=1}^k \frac{p_i^{a_i+1}-1}{p_i-1},\]
 missä jälkimmäinen muoto perustuu geometriseen summaan.
 Esimerkiksi luvun 84 jakajien summa on
 \[\sigma(84)=\frac{2^3-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^2-1}{7-1} = 7 \cdot 4 \cdot 8 = 224.\]
+
 Luvun $n$ \key{jakajien tulo} on
 \[\mu(n)=n^{\tau(n)/2},\]
 koska jakajista voi muodostaa
@@ -282,7 +286,6 @@ taulukosta tulee:
 \end{tikzpicture}
 \end{center}
 
-\noindent
 Seuraava koodi muodostaa
 Eratostheneen seulan.
 Koodi olettaa, että jokainen taulukon \texttt{a}
@@ -297,7 +300,6 @@ for (int x = 2; x <= n; x++) {
 }
 \end{lstlisting}
 
-\noindent
 Algoritmin sisäsilmukka suoritetaan
 $n/x$ kertaa tietyllä $x$:n arvolla,
 joten yläraja algoritmin ajankäytölle
@@ -364,8 +366,8 @@ jos $\textrm{syt}(a,b)=1$.
 laskee luvun $n$ suhteellisten alkulukujen
 määrän välillä $1 \ldots n$.
 Esimerkiksi $\varphi(12)=4$,
-koska 1, 5, 7 ja 11 ovat suhteellisia
-alkulukuja 12:n kanssa.
+koska luvut 1, 5, 7 ja 11 ovat suhteellisia
+alkulukuja luvun 12:n kanssa.
 
 Totienttifunktion arvon $\varphi(n)$ pystyy laskemaan
 luvun $n$ alkutekijähajotelmasta kaavalla
@@ -548,6 +550,7 @@ jotka toteuttavat yhtälön
 \[
 ax + by = \textrm{syt}(a,b).
 \]
+
 Diofantoksen yhtälön ratkaisu on olemassa, jos $c$ on
 jaollinen $\textrm{syt}(a,b)$:llä,
 ja muussa tapauksessa yhtälöllä ei ole ratkaisua.
@@ -636,6 +639,7 @@ x & = & 2 \bmod 3 \\
 \]
 ratkaisu on
 \[ 3 \cdot 21 \cdot 1 + 4 \cdot 15 \cdot 1 + 2 \cdot 35 \cdot 2 = 263.\]
+
 Kun luku $x$ on yhtälöryhmän ratkaisu,
 niin myös kaikki luvut muotoa
 \[x+m_1 m_2 \cdots m_n\]
@@ -743,6 +747,7 @@ Esimerkiksi luku 11 on alkuluku, koska
 \[10! \bmod 11 = 10\]
 ja luku 12 ei ole alkuluku, koska
 \[11! \bmod 12 = 0 \neq 11.\]
+
 Wilsonin lauseen avulla voi siis tutkia, onko luku alkuluku.
 Tämä ei ole kuitenkaan käytännössä hyvä tapa,
 koska luvun $(n-1)!$ laskeminen on työlästä,

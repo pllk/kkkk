@@ -225,9 +225,7 @@ ei voi muodostaa syklin takia. Näin on seuraavassa verkossa:
 \path[draw,thick,->,>=latex] (3) -- (6);
 \end{tikzpicture}
 \end{center}
-
 Nyt syvyyshaun aikana tapahtuu näin:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle,fill=gray!20] (1) at (1,5) {$1$};
@@ -237,12 +235,8 @@ Nyt syvyyshaun aikana tapahtuu näin:
 \node[draw, circle,fill=gray!20] (5) at (3,3) {$5$};
 \node[draw, circle] (6) at (5,3) {$6$};
 
-%\path[draw,thick,->,>=latex] (1) -- (2);
-%\path[draw,thick,->,>=latex] (2) -- (3);
 \path[draw,thick,->,>=latex] (4) -- (1);
 \path[draw,thick,->,>=latex] (4) -- (5);
-%\path[draw,thick,->,>=latex] (5) -- (2);
-%\path[draw,thick,->,>=latex] (3) -- (5);
 \path[draw,thick,->,>=latex] (3) -- (6);
 
 \path[draw=red,thick,->,line width=2pt] (1) -- (2);
@@ -251,7 +245,6 @@ Nyt syvyyshaun aikana tapahtuu näin:
 \path[draw=red,thick,->,line width=2pt] (5) -- (2);
 \end{tikzpicture}
 \end{center}
-
 Syvyyshaku saapuu tilassa 1 olevaan solmuun 2,
 mikä tarkoittaa, että verkossa on sykli.
 Tässä tapauksessa sykli on $2 \rightarrow 3 \rightarrow 5 \rightarrow 2$.
@@ -402,7 +395,6 @@ Esimerkiksi verkossa
 \path[draw,thick,-] (2) -- node[font=\small,label=above:2] {} (3);
 \end{tikzpicture}
 \end{center}
-
 solmusta 1 lähteviin lyhimpiin polkuihin kuuluvat
 seuraavat kaaret:
 \begin{center}
@@ -523,7 +515,6 @@ se palauttaa solmusta lähtevän kaaren kohdesolmun.
 
 \begin{samepage}
 Esimerkiksi funktio
-
 \begin{center}
 \begin{tabular}{r|rrrrrrrrr}
 $x$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
@@ -532,9 +523,7 @@ $f(x)$ & 3 & 5 & 7 & 6 & 2 & 2 & 1 & 6 & 3 \\
 \end{tabular}
 \end{center}
 \end{samepage}
-
 määrittelee seuraavan verkon:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$1$};
@@ -627,6 +616,7 @@ Tämän ansiosta
 \[f(x,11)=f(f(f(x,8),2),1).\]
 Esimerkiksi yllä olevassa verkossa 
 \[f(4,11)=f(f(f(4,8),2),1)=5.\]
+
 Tällaisessa esityksessä on aina
 $O(\log k)$ osaa, joten arvon $f(x,k)$ laskemiseen
 kuluu aikaa $O(\log k)$.

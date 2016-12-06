@@ -55,14 +55,12 @@ C++:ssa luvut ovat oletuksena etumerkillisiä,
 mutta avainsanan \texttt{unsigned} avulla
 luvusta saa etumerkittömän.
 Esimerkiksi koodissa
-
 \begin{lstlisting}
 int x = -43;
 unsigned int y = x;
 cout << x << "\n"; // -43
 cout << y << "\n"; // 4294967253
 \end{lstlisting}
-
 etumerkillistä lukua $x=-43$ vastaa etumerkitön luku $y=2^{32}-43$.
 
 Jos luvun suuruus menee käytössä
@@ -73,14 +71,12 @@ luvusta $2^{n-1}-1$ seuraava luku on $-2^{n-1}$
 ja vastaavasti etumerkittömässä bittiesityksessä
 luvusta $2^n-1$ seuraava luku on $0$.
 Esimerkiksi koodissa
-
 \begin{lstlisting}
 int x = 2147483647
 cout << x << "\n"; // 2147483647
 x++;
 cout << x << "\n"; // -2147483648
 \end{lstlisting}
-
 muuttuja $x$ pyörähtää ympäri luvusta $2^{31}-1$ lukuun $-2^{31}$.
 
 \section{Bittioperaatiot}
@@ -320,13 +316,15 @@ for (int i = 0; i < 32; i++) {
 }
 cout << "\n";
 \end{lstlisting}
+
 Koodin tulostus on seuraava:
 \begin{lstlisting}
 1 3 4 8
 \end{lstlisting}
 
-\noindent
-Nyt joukko-operaatiot voi toteuttaa bittioperaatioilla:
+Kun joukko on tallennettu bittiesityksenä,
+niin joukko-operaatiot voi toteuttaa 
+tehokkaasti bittioperaatioiden avulla:
 \begin{itemize}
 \item $a$ \& $b$ on joukkojen $a$ ja $b$ leikkaus $a \cap b$
 (tämä sisältää alkiot,
@@ -339,7 +337,6 @@ $a \setminus b$ (tämä sisältää alkiot,
 jotka ovat joukossa $a$ mutta eivät joukossa $b$)
 \end{itemize}
 
-\noindent
 Seuraava koodi muodostaa
 joukkojen $\{1,3,4,8\}$ ja $\{3,6,8,9\}$ yhdisteen:
 
@@ -356,6 +353,7 @@ for (int i = 0; i < 32; i++) {
 }
 cout << "\n";
 \end{lstlisting}
+
 Koodin tulostus on seuraava:
 \begin{lstlisting}
 1 3 4 6 8 9

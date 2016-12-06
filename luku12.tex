@@ -16,7 +16,7 @@ missä järjestyksessä ne kulkevat verkossa.
 
 \key{Syvyyshaku}
 on suoraviivainen menetelmä verkon läpikäyntiin.
-Syvyyshaku lähtee liikkeelle tietystä
+Algoritmi lähtee liikkeelle tietystä
 verkon solmusta ja etenee siitä
 kaikkiin solmuihin, jotka ovat
 saavutettavissa kaaria kulkemalla.
@@ -382,7 +382,6 @@ jostakin verkon solmusta ja
 tarkastamalla, pääseekö siitä kaikkiin solmuihin.
 
 Esimerkiksi verkossa
-
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (2) at (7,5) {$2$};
@@ -397,10 +396,8 @@ Esimerkiksi verkossa
 \path[draw,thick,-] (2) -- (5);
 \end{tikzpicture}
 \end{center}
-
 solmusta $1$ alkava syvyyshaku löytää seuraavat
 solmut:
-
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (2) at (7,5) {$2$};
@@ -436,7 +433,6 @@ aikana tulee vastaan solmu,
 jonka naapuri on jo käsitelty
 ja solmuun ei ole saavuttu kyseisen naapurin kautta.
 Esimerkiksi verkossa
-
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (2) at (7,5) {$2$};
@@ -458,7 +454,6 @@ Esimerkiksi verkossa
 
 \end{tikzpicture}
 \end{center}
-
 on sykli, koska tultaessa solmusta 2 solmuun 5
 havaitaan, että naapurina oleva solmu 3 on jo käsitelty.
 Niinpä verkossa täytyy olla solmun 3 kautta
@@ -499,7 +494,6 @@ Muuten verkko on kaksijakoinen
 ja yksi väritys on muodostunut.
 
 Esimerkiksi verkko
-
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (2) at (5,5) {$2$};
@@ -516,11 +510,9 @@ Esimerkiksi verkko
 \path[draw,thick,-] (5) -- (3);
 \end{tikzpicture}
 \end{center}
-
 ei ole kaksijakoinen, koska
 läpikäynti solmusta 1 alkaen
 aiheuttaa seuraavan ristiriidan:
-
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=red!40] (2) at (5,5) {$2$};

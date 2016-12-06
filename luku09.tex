@@ -17,9 +17,7 @@ Tavallisia välikyselyitä ovat:
 \item \key{maksimikysely}: etsi suurin luku välillä $[a,b]$
 \end{itemize}
 
-\noindent
 Tarkastellaan esimerkkinä seuraavan taulukon väliä $[4,7]$:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (7,1);
@@ -45,7 +43,6 @@ Tarkastellaan esimerkkinä seuraavan taulukon väliä $[4,7]$:
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 Välin $[4,7]$ summa on $4+6+1+3=14$, minimi on $1$
 ja maksimi on $6$.
 
@@ -116,9 +113,7 @@ Esimerkiksi taulukon
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 summataulukko on seuraava:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 %\fill[color=lightgray] (3,0) rectangle (7,1);
@@ -148,16 +143,13 @@ summataulukko on seuraava:
 
 Seuraava koodi muodostaa taulukosta \texttt{t}
 summataulukon \texttt{s} ajassa $O(n)$:
-
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
     s[i] = s[i-1]+t[i];
 }
 \end{lstlisting}
-
 Tämän jälkeen summakyselyyn voi vastata
 ajassa $O(1)$ seuraavasti:
-
 \begin{lstlisting}
 int summa(int a, int b) {
     return s[b]-s[a-1];
@@ -239,8 +231,8 @@ summan $O(1)$-ajassa.
 Ideana on tallentaa summataulukkoon summia
 alueista, jotka alkavat taulukon vasemmasta yläkulmasta.
 
+\begin{samepage}
 Seuraava ruudukko havainnollistaa asiaa:
-\\
 \begin{center}
 \begin{tikzpicture}[scale=0.55]
 \draw[fill=lightgray] (3,2) rectangle (7,5);
@@ -252,11 +244,10 @@ Seuraava ruudukko havainnollistaa asiaa:
 \node[anchor=center] at (2.5, 5.5) {$D$};
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 Harmaan suorakulmion summan saa laskettua kaavalla
-
 \[S(A) - S(B) - S(C) + S(D),\]
-
 missä $S(X)$ tarkoittaa summaa vasemmasta
 yläkulmasta kirjaimen $X$ osoittamaan kohtaan asti.
 
@@ -511,7 +502,6 @@ Esimerkiksi taulukkoa
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-
 vastaava binääri-indeksipuu on seuraava:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -710,6 +700,7 @@ int summa(int k) {
     return s;
 }
 \end{lstlisting}
+
 Funktio \texttt{lisaa} kasvattaa taulukon kohtaa $k$ arvolla $x$:
 \begin{lstlisting}
 void lisaa(int k, int x) {
@@ -779,9 +770,7 @@ Esimerkiksi taulukkoa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 vastaa seuraava segmenttipuu:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -993,7 +982,6 @@ alkuperäisen taulukon sisältö
 tallennetaan kohdasta $n$ eteenpäin.
 
 Esimerkiksi segmenttipuun
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -1032,9 +1020,7 @@ Esimerkiksi segmenttipuun
 \path[draw,thick,-] (m) -- (j);
 \end{tikzpicture}
 \end{center}
-
 voi tallentaa taulukkoon seuraavasti:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 %\fill[color=lightgray] (3,0) rectangle (7,1);
@@ -1349,9 +1335,7 @@ Esimerkiksi taulukosta
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 tulee seuraava:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);

@@ -146,7 +146,6 @@ Kokonais\-aikavaativuus saadaan kertomalla
 nämä arvot toisillaan.
 
 Tarkastellaan esimerkiksi seuraavaa funktiota:
-
 \begin{lstlisting}
 void f(int n) {
     if (n == 1) return;
@@ -158,7 +157,6 @@ ja jokainen funktiokutsu vie vakioajan,
 joten aikavaativuus on $O(n)$.
 
 Tarkastellaan sitten seuraavaa funktiota:
-
 \begin{lstlisting}
 void g(int n) {
     if (n == 1) return;
@@ -166,10 +164,8 @@ void g(int n) {
     g(n-1);
 }
 \end{lstlisting}
-
 Tässä tapauksessa funktio haarautuu kahteen osaan,
 joten kutsu $\texttt{g}(n)$ aiheuttaa kaikkiaan seuraavat kutsut:
-
 \begin{center}
 \begin{tabular}{rr}
 kutsu & kerrat \\
@@ -178,12 +174,9 @@ $\texttt{g}(n)$ & 1 \\
 $\texttt{g}(n-1)$ & 2 \\
 $\cdots$ & $\cdots$ \\
 $\texttt{g}(1)$ & $2^{n-1}$ \\
-
 \end{tabular}
 \end{center}
-
 Tämän perusteella kutsun $\texttt{g}(n)$ aikavaativuus on
-
 \[1+2+4+\cdots+2^{n-1} = 2^n-1 = O(2^n).\]
 
 \section{Vaativuusluokkia}
@@ -274,7 +267,6 @@ $(3,1,2)$ sekä $(3,2,1)$.
 \end{description}
 
 \index{polynominen algoritmi@polynominen algoritmi}
-\noindent
 Algoritmi on \key{polynominen},
 jos sen aikavaativuus on korkeintaan $O(n^k)$,
 kun $k$ on vakio.
@@ -373,8 +365,6 @@ olla positiivisia lukuja, jotka kumoavat negatiivisen
 luvun vaikutuksen.
 
 Esimerkiksi taulukossa
-
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -399,9 +389,7 @@ Esimerkiksi taulukossa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
 optimiratkaisu on valita alitaulukko seuraavasti:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (6,1);
@@ -430,6 +418,9 @@ optimiratkaisu on valita alitaulukko seuraavasti:
 
 Tämän alitaulukon summa on $2+4+(-3)+5+2=10$,
 joka on suurin mahdollinen alitaulukon summa.
+Tässä tapauksessa kannattaa ottaa mukaan summaan
+luku $-3$, koska sen molemmilla puolilla
+olevat luvut kasvattavat summaa.
 
 \subsubsection{Ratkaisu 1}
 
