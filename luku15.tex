@@ -308,8 +308,11 @@ virittävässä puussa ei olisi verkon keveintä kaarta.
 Oletetaan esimerkiksi, että äskeisen verkon
 pienimmässä virittävässä puussa ei olisi
 2:n painoista kaarta solmujen 5 ja 6 välillä.
-Tällainen pienin virittävä puu voisi olla
-esimerkiksi seuraavanlainen:
+Emme tiedä tarkalleen, millainen uusi pienin
+virittävä puu olisi, mutta siinä täytyy olla
+kuitenkin joukko kaaria.
+Oletetaan, että virittävä puu olisi
+vaikkapa seuraavanlainen:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -394,9 +397,9 @@ suoritus veisi aikaa $O(n+m)$,
 mikä on hidasta, koska funktiota kutsutaan
 jokaisen kaaren kohdalla.
 
-Seuraavaksi esiteltävä union-find-tietorakenne
+Seuraavaksi esiteltävä union-find-rakenne
 ratkaisee asian.
-Se toteuttaa kummankin funktion
+Se toteuttaa molemmat funktiot
 ajassa $O(\log n)$,
 jolloin Kruskalin algoritmin
 aikavaativuus on vain $O(m \log n)$
@@ -429,7 +432,6 @@ muiden alkioiden kautta.
 Esimerkiksi jos joukot ovat
 $\{1,4,7\}$, $\{5\}$ ja $\{2,3,6,8\}$,
 tilanne voisi olla:
-\\
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (0,-1) {$1$};
@@ -450,7 +452,6 @@ tilanne voisi olla:
 
 \end{tikzpicture}
 \end{center}
-~\\
 Tässä tapauksessa alkiot 4, 5 ja 2
 ovat joukkojen edustajat.
 
@@ -470,7 +471,6 @@ joukkojen yhteiseksi edustajaksi
 ja kytkemällä toinen edustaja siihen.
 Esimerkiksi joukot $\{1,4,7\}$ ja $\{2,3,6,8\}$
 voi yhdistää näin joukoksi $\{1,2,3,4,6,7,8\}$:
-\\
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (2,-1) {$1$};
@@ -503,7 +503,10 @@ riittää yhdistää aina pienempi joukko suurempaan,
 tai kummin päin tahansa,
 jos joukot ovat yhtä suuret.
 Tällöin pisin ketju
-alkiosta edustajaan on aina luokkaa $O(\log n)$.
+alkiosta edustajaan on aina luokkaa $O(\log n)$,
+koska jokainen askel eteenpäin
+ketjussa kaksinkertaistaa
+vastaavan joukon koon.
 
 \subsubsection{Toteutus}
 
@@ -524,7 +527,8 @@ for (int i = 1; i <= n; i++) s[i] = 1;
 \end{lstlisting}
 
 Funktio \texttt{id} kertoo alkion $x$
-joukon edustajan:
+joukon edustajan. Alkion edustaja löytyy
+käymällä ketju läpi alkiosta $x$ alkaen.
 
 \begin{lstlisting}
 int id(int x) {
@@ -534,7 +538,9 @@ int id(int x) {
 \end{lstlisting}
 
 Funktio \texttt{sama} kertoo,
-ovatko alkiot $a$ ja $b$ samassa joukossa:
+ovatko alkiot $a$ ja $b$ samassa joukossa.
+Tämä onnistuu helposti funktion
+\texttt{id} avulla.
 
 \begin{lstlisting}
 bool sama(int a, int b) {
@@ -543,8 +549,11 @@ bool sama(int a, int b) {
 \end{lstlisting}
 
 \begin{samepage}
-Funktio \texttt{liita} taas yhdistää
-kaksi joukkoa toisiinsa:
+Funktio \texttt{liita} yhdistää
+puolestaan alkioiden $a$ ja $b$ osoittamat
+joukot yhdeksi joukoksi.
+Funktio etsii ensin joukkojen edustajat
+ja yhdistää sitten pienemmän joukon suurempaan.
 
 \begin{lstlisting}
 void liita(int a, int b) {
