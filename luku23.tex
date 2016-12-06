@@ -127,7 +127,7 @@ Esimerkiksi
 
 Matriisien $A$ ja $B$ tulo $AB$ on määritelty,
 jos matriisi $A$ on kokoa $a \times n$
-ja matriisi $B$ on kokoa $n \times b$,
+ja matriisi $B$ on kokoa $n \times b$
 eli matriisin $A$ leveys on sama kuin matriisin
 $B$ korkeus.
 Tuloksena oleva matriisi
@@ -192,7 +192,7 @@ on liitännäinen, eli on voimassa $A \cdot (B \cdot C)=(A \cdot B) \cdot C$.
 
 \index{ykkösmatriisi}
 
-\textit{Ykkösmatriisi} on neliömatriisi,
+\key{Ykkösmatriisi} on neliömatriisi,
 jonka lävistäjän jokainen alkio on 1
 ja jokainen muu alkio on 0.
 Esimerkiksi $3 \times 3$ -yksikkömatriisi on
@@ -245,11 +245,14 @@ ennallaan. Esimerkiksi
 \]
 \end{samepage}
 
-Matriisitulon laskeminen vie aikaa $O(n^3)$
-käyttäen suoraviivaista algoritmia,
-kun $A$ ja $B$ ovat kokoa $n \times n$.
-Myös nopeampia algoritmeja on olemassa,
-mutta ne eivät ole tarpeen kisakoodauksessa.
+Kahden $n \times n$ kokoisen matriisin tulon
+laskeminen vie aikaa $O(n^3)$
+käyttäen suoraviivaista algoritmia.
+Myös nopeampia algoritmeja on olemassa:
+tällä hetkellä nopein tunnettu algoritmi
+vie aikaa $O(n^{2{,}37})$.
+Tällaiset algoritmit eivät kuitenkaan
+ole tarpeen kisakoodauksessa.
 
 \subsubsection{Matriisipotenssi}
 
@@ -447,7 +450,7 @@ Funktion arvon $f(n)$ voi laskea dynaamisella
 ohjelmoinnilla ajassa $O(kn)$
 laskemalla kaikki arvot $f(0),f(1),\ldots,f(n)$ järjestyksessä.
 Tätä ratkaisua voi kuitenkin tehostaa merkittävästi
-matriisien avulla.
+matriisien avulla, kun $k$ on pieni.
 Seuraavaksi näemme, miten arvon $f(n)$
 voi laskea ajassa $O(k^3 \log n)$.
 
@@ -467,8 +470,9 @@ f(n) & = & f(n-1)+f(n-2) \\
 Tässä tapauksessa $k=2$ ja $c_1=c_2=1$.
 
 \begin{samepage}
-Ideana on esittää rekursiivinen kaava $k \times k$
--kokoisena neliömatriisina $X$, jolle pätee
+Ideana on esittää Fibonaccin lukujen laskukaava
+$2 \times 2$ -kokoisena neliömatriisina
+$X$, jolle pätee
 \[ X \cdot
  \begin{bmatrix}
   f(i) \\
@@ -480,12 +484,11 @@ Ideana on esittää rekursiivinen kaava $k \times k$
   f(i+2) \\
  \end{bmatrix}
  \]
-\end{samepage}
 eli $X$:lle annetaan
-''syötteenä'' $k$ peräkkäistä funktion $f$ arvoa
-kohdasta $i$ alkaen ja $X$ muodostaa niistä
-$k$ peräkkäistä arvoa kohdasta $i+1$ alkaen.
-Fibonaccin lukujen tapauksessa tällainen matriisi on
+''syötteenä'' arvot $f(i)$ ja $f(i+1)$,
+ja $X$ muodostaa niistä
+arvot $f(i+1)$ ja $f(i+2)$.
+Osoittautuu, että tällainen matriisi on
 
 \[ X = 
  \begin{bmatrix}
@@ -493,9 +496,9 @@ Fibonaccin lukujen tapauksessa tällainen matriisi on
   1 & 1 \\
  \end{bmatrix}.
 \]
-
+\end{samepage}
+\noindent
 Esimerkiksi
-
 \[
  \begin{bmatrix}
   0 & 1 \\
@@ -527,10 +530,8 @@ Esimerkiksi
   f(7) \\
  \end{bmatrix}.
 \]
-
 Tämän ansiosta arvon $f(n)$ sisältävän matriisin saa laskettua
 kaavalla
-
 \[
  \begin{bmatrix}
   f(n) \\
@@ -553,8 +554,7 @@ X^n \cdot
   1 \\
  \end{bmatrix}.
 \]
-
-Potenssilasku $X^n$ onnistuu ajassa
+Potenssilasku $X^n$ on mahdollista laskea ajassa
 $O(k^3 \log n)$,
 joten myös funktion arvon $f(n)$
 saa laskettua ajassa $O(k^3 \log n)$.
@@ -624,7 +624,9 @@ X^n \cdot
 \]
 \end{samepage}
 
-\section{Verkkojen käsittely}
+\section{Verkot ja matriisit}
+
+\subsubsection{Polkujen määrä}
 
 Matriisipotenssilla
 on mielenkiintoinen vaikutus
@@ -818,8 +820,8 @@ Tällä verkolla on kolme virittävää puuta:
 %\path[draw,thick,-] (1c) -- (4c);
 \end{tikzpicture}
 \end{center}
-
-Muodostetaan verkosta Laplacen matriisi $L$,
+\index{Laplacen matriisi}
+Muodostetaan verkosta \key{Laplacen matriisi} $L$,
 jossa $L[i,i]$ on solmun $i$ aste ja
 $L[i,j]=-1$, jos solmujen $i$ ja $j$ välillä on kaari,
 ja muuten $L[i,j]=0$.

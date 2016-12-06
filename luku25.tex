@@ -227,35 +227,35 @@ koska siitä ei voi poistaa mitään tikkua,
 ja peli päättyy aina tähän tilaan.
 
 \subsubsection{Analyysi}
-
+\index{nim-summa}
 Osoittautuu, että nim-pelin tilan luonteen
-kertoo xor-summa $x_1 \oplus x_2 \oplus \cdots \oplus x_n$,
+kertoo \key{nim-summa} $x_1 \oplus x_2 \oplus \cdots \oplus x_n$,
 missä $\oplus$ tarkoittaa xor-operaatiota.
-Jos xor-summa on 0, tila on häviötila,
+Jos nim-summa on 0, tila on häviötila,
 ja muussa tapauksessa tila on voittotila.
-Esimerkiksi tilan $(10,12,5)$ xor-summa on
+Esimerkiksi tilan $(10,12,5)$ nim-summa on
 $10 \oplus 12 \oplus 5 = 3$, joten tila on voittotila.
 
-Mutta miten xor-summa liittyy nim-peliin?
-Tämä selviää tutkimalla, miten xor-summa muuttuu,
+Mutta miten nim-summa liittyy nim-peliin?
+Tämä selviää tutkimalla, miten nim-summa muuttuu,
 kun nim-pelin tila muuttuu.
 
 ~\\
 \noindent
 \textit{Häviötilat:}
 Pelin päätöstila $[0,0,\ldots,0]$ on häviötila,
-ja sen xor-summa on 0, kuten kuuluukin.
+ja sen nim-summa on 0, kuten kuuluukin.
 Muissa häviötiloissa mikä tahansa siirto johtaa
 voittotilaan, koska yksi luvuista $x_k$ muuttuu
-ja samalla pelin xor-summa muuttuu
-eli siirron jälkeen xor-summasta tulee jokin muu kuin 0.
+ja samalla pelin nim-summa muuttuu
+eli siirron jälkeen nim-summasta tulee jokin muu kuin 0.
 
 ~\\
 \noindent
 \textit{Voittotilat:}
 Voittotilasta pääsee häviötilaan muuttamalla
 jonkin kasan $k$ tikkujen määräksi $x_k \oplus s$,
-missä $s$ on pelin xor-summa.
+missä $s$ on pelin nim-summa.
 Vaatimuksena on, että $x_k \oplus s < x_k$,
 koska kasasta voi vain poistaa tikkuja.
 Sopiva kasa $x_k$ on sellainen,
@@ -266,12 +266,14 @@ $s$:n vasemmanpuoleisin ykkösbitti.
 \noindent
 Tarkastellaan esimerkkinä tilaa $(10,2,5)$.
 Tämä tila on voittotila,
-koska sen xor-summa on 3.
+koska sen nim-summa on 3.
 Täytyy siis olla olemassa siirto,
 jolla tilasta pääsee häviötilaan.
 Selvitetään se seuraavaksi.
 
-Pelin xor-summa muodostuu seuraavasti:
+\begin{samepage}
+\noindent
+Pelin nim-summa muodostuu seuraavasti:
 
 \begin{center}
 \begin{tabular}{r|r}
@@ -282,12 +284,13 @@ Pelin xor-summa muodostuu seuraavasti:
 3 & \texttt{0011} \\
 \end{tabular}
 \end{center}
+\end{samepage}
 
 Tässä tapauksessa
 10 tikun kasa on ainoa,
 jonka bittiesityksessä on ykkösbitti
 samassa kohdassa kuin 
-xor-summan vasemmanpuoleisin ykkösbitti:
+nim-summan vasemmanpuoleisin ykkösbitti:
 
 \begin{center}
 \begin{tabular}{r|r}
@@ -340,7 +343,7 @@ vastaan jossakin vaiheessa peliä,
 ja kyseinen tila on voittotila,
 koska siinä on tarkalleen yksi kasa,
 jossa on yli 1 tikkua,
-joten xor-summa ei ole 0.
+joten nim-summa ei ole 0.
 
 \section{Sprague–Grundyn lause}
 
@@ -351,13 +354,13 @@ kaikkiin peleihin, jotka täyttävät
 seuraavat vaatimukset:
 
 \begin{itemize}[noitemsep]
-\item pelissä on kaksi pelaajaa, jotka tekevät vuorotellen siirtoja
-\item peli muodostuu tiloista ja mahdolliset siirrot tilasta
-eivät riipu siitä, kumpi pelaaja on vuorossa
-\item peli päättyy, kun toinen pelaaja ei voi tehdä siirtoa
-\item peli päättyy varmasti ennemmin tai myöhemmin
-\item pelaajien saatavilla on kaikki tieto tiloista
-ja siirroista eikä pelissä ole satunnaisuutta
+\item Pelissä on kaksi pelaajaa, jotka tekevät vuorotellen siirtoja.
+\item Peli muodostuu tiloista ja mahdolliset siirrot tilasta
+eivät riipu siitä, kumpi pelaaja on vuorossa.
+\item Peli päättyy, kun toinen pelaaja ei voi tehdä siirtoa.
+\item Peli päättyy varmasti ennemmin tai myöhemmin.
+\item Pelaajien saatavilla on kaikki tieto tiloista
+ja siirroista, eikä pelissä ole satunnaisuutta.
 \end{itemize}
 Ideana on laskea kullekin pelin tilalle Grundy-luku,
 joka vastaa tikkujen määrää nim-pelin kasassa.
@@ -442,6 +445,7 @@ määrä askeleita vasemmalle tai jokin
 määrä askeleita ylöspäin.
 Pelin voittaja on se, joka tekee viimeisen siirron.
 
+\begin{samepage}
 Esimerkiksi seuraavassa on pelin mahdollinen aloitustilanne,
 jossa @ on pelihahmo ja * merkitsee ruutua, johon hahmo voi siirtyä.
 
@@ -467,6 +471,7 @@ jossa @ on pelihahmo ja * merkitsee ruutua, johon hahmo voi siirtyä.
   \end{scope}
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 Sokkelopelin tiloja ovat kaikki sokkelon
 lattiaruudut. Tässä tapauksessa
@@ -521,10 +526,10 @@ Peli päättyy, kun missään alipelissä ei
 pysty tekemään siirtoa.
 
 Nyt pelin tilan Grundy-luku on alipelien
-Grundy-lukujen xor-summa.
+Grundy-lukujen nim-summa.
 Peliä pystyy pelaamaan nim-pelin
 tapaan selvittämällä kaikkien alipelien Grundy-luvut
-ja laskemalla niiden xor-summa.
+ja laskemalla niiden nim-summa.
 
 ~\\
 \noindent
@@ -635,11 +640,11 @@ Sokkeloiden ruutujen Grundy-luvut ovat:
 \end{tabular}
 \end{center}
 
-Aloitustilanteessa Grundy-lukujen xor-summa on
+Aloitustilanteessa Grundy-lukujen nim-summa on
 $2 \oplus 3 \oplus 3 = 2$, joten
 aloittaja pystyy voittamaan pelin.
 Voittoon johtava siirto on liikkua vasemmassa sokkelossa
-2 askelta ylöspäin, jolloin xor-summaksi
+2 askelta ylöspäin, jolloin nim-summaksi
 tulee $0 \oplus 3 \oplus 3 = 0$.
 
 \subsubsection{Jakautuminen}
@@ -656,7 +661,7 @@ Grundy-luvut ovat $a_{k,1},a_{k,2},\ldots,a_{k,m}$.
 
 \index{Grundyn peli}
 
-Esimerkki tällaisesta pelistä on \textit{Grundyn peli}.
+Esimerkki tällaisesta pelistä on \key{Grundyn peli}.
 Pelin alkutilanteessa on kasa, jossa on $n$ tikkua.
 Joka vuorolla pelaaja valitsee jonkin kasan
 ja jakaa sen kahdeksi epätyhjäksi kasaksi

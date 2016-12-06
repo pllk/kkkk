@@ -354,15 +354,15 @@ niin myös sulkulauseke $AB$ on kelvollinen.
 
 Toinen tapa luonnehtia kelvollista sulkulauseketta on,
 että jos valitaan mikä tahansa lausekkeen alkuosa,
-niin merkkiä \texttt{(} esiintyy ainakin yhtä monta
-kertaa kuin merkkiä \texttt{)}.
-Lisäksi koko lausekkeessa merkkejä \texttt{(}
-ja \texttt{)} tulee esiintyä tarkalleen yhtä monta kertaa.
+niin alkusulkuja on ainakin yhtä monta
+kuin loppusulkuja.
+Lisäksi koko lausekkeessa alkusulkuja
+ja loppusulkuja tulee esiintyä tarkalleen yhtä monta kertaa.
 
 \subsubsection{Laskutapa 1}
 
-Catalanin lukuja voi laskea rekursiivisesti seuraavasti:
-\[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1}\]
+Catalanin lukuja voi laskea rekursiivisesti kaavalla
+\[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1}.\]
 Summa käy läpi tavat
 jakaa sulkulauseke kahteen osaan niin,
 että kumpikin osa on kelvollinen sulkulauseke
@@ -384,7 +384,7 @@ tyhjän sulkulausekkeen.
 \subsubsection{Laskutapa 2}
 
 Catalanin lukuja voi laskea myös binomikertoimen avulla:
-\[ C_n = \frac{1}{n+1} {2n \choose n}. \]
+\[ C_n = \frac{1}{n+1} {2n \choose n}\]
 Kaavan voi perustella seuraavasti:
 
 Kun käytössä on $n$ alkusulkua ja $n$ loppusulkua,
@@ -662,6 +662,7 @@ Kaksi helminauhaa ovat symmetriset,
 jos ne voi saada näyttämään samalta pyörittämällä.
 \end{task}
 
+\begin{samepage}
 \noindent
 Esimerkiksi helminauhan
 \begin{center}
@@ -673,6 +674,7 @@ Esimerkiksi helminauhan
 \draw[fill=green] (-1,0) circle (0.3);
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 kanssa symmetriset helminauhat ovat seuraavat:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -735,6 +737,8 @@ ja kaksi puuta ovat erilaiset,
 jos niiden rakenne on erilainen
 tai niissä on eri numerointi.
 
+\begin{samepage}
+\noindent
 Esimerkiksi kun $n=4$, numeroitujen puiden määrä on $4^{4-2}=16$:
 
 \begin{center}
@@ -779,6 +783,7 @@ Esimerkiksi kun $n=4$, numeroitujen puiden määrä on $4^{4-2}=16$:
 \puub{9}{-7.5}{3}{2}{1}{4}
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 Seuraavaksi näemme, miten Cayleyn kaavan
 voi perustella samastamalla numeroidut puut
@@ -795,8 +800,7 @@ joka askeleella lehden, jonka numero on pienin,
 ja lisäämällä lehden vieressä olevan solmun
 numeron koodiin.
 
-Tarkastellaan esimerkiksi seuraavaa puuta:
-
+Esimerkiksi puun
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (2,3) {$1$};
@@ -814,7 +818,7 @@ Tarkastellaan esimerkiksi seuraavaa puuta:
 %\path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-Tämän puun Prüfer-koodi on $(4,4,2)$,
+Prüfer-koodi on $(4,4,2)$,
 koska puusta poistetaan ensin solmu 1,
 sitten solmu 3 ja lopuksi solmu 5.
 
