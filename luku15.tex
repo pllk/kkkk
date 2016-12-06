@@ -140,7 +140,7 @@ algoritmin aikana puuhun tulevista kaarista.
 Lopulta kaikki solmut ovat samassa
 komponentissa, jolloin pienin virittävä puu on valmis.
 
-\subsubsection{Toiminta}
+\subsubsection{Esimerkki}
 
 \begin{samepage}
 Tarkastellaan Kruskalin algoritmin toimintaa
@@ -296,17 +296,70 @@ ja verkko on yhtenäinen.
 Tuloksena on verkon pienin virittävä puu,
 jonka paino on $2+3+3+5+7=20$.
 
-Kruskalin algoritmin
-tuloksena on aina pienin mahdollinen
-virittävä puu,
-koska kahden komponentin
-yhdistämisessä mahdollisimman kevyt kaari
-on aina paras valinta.
-Jos kevyintä kaarta ei valittaisi,
-komponentit täytyisi yhdistää
-myöhemmin käyttäen raskaampaa kaarta.
+\subsubsection{Miksi algoritmi toimii?}
 
-\subsubsection{Toteutus}
+On hyvä kysymys, miksi Kruskalin algoritmi
+toimii aina eli miksi ahne strategia tuottaa
+varmasti pienimmän mahdollisen virittävän puun.
+
+Voimme perustella algoritmin toimivuuden
+tekemällä vastaoletuksen, että pienimmässä
+virittävässä puussa ei olisi verkon keveintä kaarta.
+Oletetaan esimerkiksi, että äskeisen verkon
+pienimmässä virittävässä puussa ei olisi
+2:n painoista kaarta solmujen 5 ja 6 välillä.
+Tällainen pienin virittävä puu voisi olla
+esimerkiksi seuraavanlainen:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1.5,2) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (6.5,2) {$4$};
+\node[draw, circle] (5) at (3,1) {$5$};
+\node[draw, circle] (6) at (5,1) {$6$};
+
+\path[draw,thick,-,dashed] (1) -- (2);
+\path[draw,thick,-,dashed] (2) -- (5);
+\path[draw,thick,-,dashed] (2) -- (3);
+\path[draw,thick,-,dashed] (3) -- (4);
+\path[draw,thick,-,dashed] (4) -- (6);
+\end{tikzpicture}
+\end{center}
+
+Ei ole kuitenkaan mahdollista,
+että yllä oleva virittävä puu olisi todellisuudessa
+verkon pienin virittävä puu.
+Tämä johtuu siitä, että voimme poistaa siitä
+jonkin kaaren ja korvata sen 2:n painoisella kaarella.
+Tuloksena on virittävä puu, jonka paino on pienempi:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1) at (1.5,2) {$1$};
+\node[draw, circle] (2) at (3,3) {$2$};
+\node[draw, circle] (3) at (5,3) {$3$};
+\node[draw, circle] (4) at (6.5,2) {$4$};
+\node[draw, circle] (5) at (3,1) {$5$};
+\node[draw, circle] (6) at (5,1) {$6$};
+
+\path[draw,thick,-,dashed] (1) -- (2);
+\path[draw,thick,-,dashed] (2) -- (5);
+\path[draw,thick,-,dashed] (3) -- (4);
+\path[draw,thick,-,dashed] (4) -- (6);
+\path[draw,thick,-] (5) -- node[font=\small,label=below:2] {} (6);
+\end{tikzpicture}
+\end{center}
+
+Niinpä on aina optimaalinen ratkaisu valita pienimpään
+virittävään puuhun verkon kevein kaari.
+Vastaavalla tavalla on mahdollista perustella
+seuraavaksi keveimmän kaaren valinta jne.
+Niinpä Kruskalin algoritmi toimii oikein ja
+tuottaa aina pienimmän virittävän puun.
+
+\subsubsection{Algoritmin toteutus}
 
 Kruskalin algoritmi on mukavinta toteuttaa
 kaarilistan avulla. Algoritmin ensimmäinen vaihe
@@ -489,6 +542,7 @@ bool sama(int a, int b) {
 }
 \end{lstlisting}
 
+\begin{samepage}
 Funktio \texttt{liita} taas yhdistää
 kaksi joukkoa toisiinsa:
 
@@ -501,6 +555,7 @@ void liita(int a, int b) {
     k[b] = a;
 }
 \end{lstlisting}
+\end{samepage}
 
 Funktion \texttt{id} aikavaativuus on $O(\log n)$
 olettaen, että ketjun pituus on luokkaa $O(\log n)$.
@@ -538,6 +593,8 @@ Algoritmi aloittaa puun muodostamisen valitusta
 verkon solmusta ja lisää puuhun aina kaaren,
 joka on mahdollisimman kevyt ja joka
 liittää puuhun uuden solmun.
+Lopulta kaikki solmut on lisätty puuhun
+ja pienin virittävä puu on valmis.
 
 Primin algoritmin toiminta on hyvin lähellä
 Dijkstran algoritmia.
@@ -546,7 +603,7 @@ kaari, jonka kautta syntyy lyhin polku alkusolmusta
 uuteen solmuun, mutta Primin algoritmissa
 valitaan vain kevein kaari, joka johtaa uuteen solmuun.
 
-\subsubsection{Toiminta}
+\subsubsection{Esimerkki}
 
 Tarkastellaan Primin algoritmin toimintaa
 seuraavassa verkossa:
@@ -659,7 +716,7 @@ Sama jatkuu, kunnes kaikki solmut ovat mukana puussa:
 \end{center}
 \end{samepage}
 
-\subsubsection{Toteutus}
+\subsubsection{Algoritmin toteutus}
 
 Dijkstran algoritmin tavoin Primin algoritmin voi toteuttaa
 tehokkaasti käyttämällä prioriteettijonoa.
