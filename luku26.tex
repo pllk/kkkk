@@ -5,8 +5,8 @@
 
 Merkkijonon $s$ merkit ovat $s[1],s[2],\ldots,s[n]$,
 missä $n$ on merkkijonon pituus.
-\key{Aakkosto}
-määrittää, mitä merkkejä merkkijonossa voi esiintyä.
+\key{Aakkosto} on joukko,
+joka määrittää, mitä merkkejä merkkijonossa voi esiintyä.
 Esimerkiksi aakkosto $\{\texttt{A},\texttt{B},\ldots,\texttt{Z}\}$
 sisältää englannin kielen suuret kirjaimet.
 
@@ -67,11 +67,9 @@ Jakson viimeinen toistokerta voi olla osittainen
 niin, että siinä on vain jakson alkuosa.
 Usein on kiinnostavaa selvittää, mikä on merkkijonon
 \key{lyhin jakso}.
-
 Esimerkiksi merkkijonon \texttt{ABCABCA} lyhin jakso on \texttt{ABC}.
-Merkkijono syntyy toistamalla jaksoa ensin kahdesti kokonaan
-ja sitten kerran osittain, eli merkkijono muodostuu
-osista \texttt{ABC} + \texttt{ABC} + \texttt{A}.
+Tässä tapauksessa merkkijono syntyy toistamalla jaksoa ensin kahdesti kokonaan
+ja sitten kerran osittain.
 
 \key{Reuna} on
 merkkijono, joka on sekä
@@ -95,7 +93,7 @@ että $x[i]=y[i]$, kun $i<k$, ja $x[k]<y[k]$.
 \index{trie}
 
 \key{Trie} on puurakenne,
-joka pitää yllä joukkoa merkkijonoa.
+joka pitää yllä joukkoa merkkijonoja.
 Merkkijonot tallennetaan puuhun
 juuresta lähtevinä merkkien ketjuina.
 Jos useammalla merkkijonolla on sama alkuosa,
@@ -411,8 +409,8 @@ vielä valinnalla $B \approx 10^9$.
 \index{syntymäpäiväparadoksi}
 
 Tapauksen 3 ilmiö tunnetaan nimellä
-\key{syntymäpäiväparadoksi}.
-Jos huoneessa on $n$ henkilöä, on suuri
+\key{syntymäpäiväparadoksi}:
+jos huoneessa on $n$ henkilöä, on suuri
 todennäköisyys, että jollain kahdella
 henkilöllä on sama syntymäpäivä, vaikka
 $n$ olisi melko pieni.
@@ -422,7 +420,7 @@ käy helposti niin, että jotkin
 kaksi ovat sattumalta samoja.
 
 Hyvä tapa pienentää törmäyksen riskiä on laskea
-monta hajautusarvoa eri parametreilla
+\emph{useita} hajautusarvoja eri parametreilla
 ja verrata niitä kaikkia.
 On hyvin pieni todennäköisyys,
 että törmäys tapahtuisi samaan aikaan
