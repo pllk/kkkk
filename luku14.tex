@@ -1,6 +1,6 @@
 \chapter{Puiden käsittely}
 
-\index{puu}
+\index{puu@puu}
 
 \key{Puu} on yhtenäinen, syklitön verkko,
 jossa on $n$ solmua ja $n-1$ kaarta.
@@ -29,15 +29,15 @@ Esimerkiksi seuraavassa puussa on 7 solmua ja 6 kaarta:
 \end{tikzpicture}
 \end{center}
 
-\index{lehti}
+\index{lehti@lehti}
 
 Puun \key{lehdet} ovat solmut,
 joiden aste on 1 eli joista lähtee vain yksi kaari.
 Esimerkiksi yllä olevan puun lehdet ovat
 solmut 3, 5, 6 ja 7.
 
-\index{juuri}
-\index{juurellinen puu}
+\index{juuri@juuri}
+\index{juurellinen puu@juurellinen puu}
 
 Jos puu on \key{juurellinen}, yksi solmuista
 on puun \key{juuri},
@@ -63,8 +63,8 @@ juureksi solmu 1, solmut asettuvat seuraavaan järjestykseen:
 \end{tikzpicture}
 \end{center}
 
-\index{lapsi}
-\index{vanhempi}
+\index{lapsi@lapsi}
+\index{vanhempi@vanhempi}
 
 Tällöin solmun \key{lapset}
 ovat sen alemman tason naapurit
@@ -75,7 +75,7 @@ paitsi juurella ei ole vanhempaa.
 Esimerkiksi yllä olevassa puussa solmun 4
 lapset ovat solmut 3 ja 7 ja solmun 4 vanhempi on solmu 1.
 
-\index{alipuu}
+\index{alipuu@alipuu}
 
 Juurellisen puun rakenne on rekursiivinen:
 jokaisesta puun solmusta alkaa \key{alipuu},
@@ -155,7 +155,7 @@ void haku(int s, int e) {
 
 \section{Läpimitta}
 
-\index{läpimitta}
+\index{lzpimitta@läpimitta}
 
 Puun \key{läpimitta} on pisin polku
 kahden puussa olevan solmun välillä.
@@ -486,7 +486,7 @@ kaikkiin suuntiin:
 
 \section{Binääripuut}
 
-\index{binääripuu}
+\index{binxxripuu@binääripuu}
 
 \begin{samepage}
 \key{Binääripuu} on juurellinen puu,
@@ -520,9 +520,9 @@ Esimerkiksi seuraava puu on binääripuu:
 Binääripuun solmuilla on kolme luontevaa järjestystä,
 jotka syntyvät rekursiivisesta läpikäynnistä:
 
-\index{esijärjestys}
-\index{sisäjärjestys}
-\index{jälkijärjestys}
+\index{esijxrjestys@esijärjestys}
+\index{sisxjxrjestys@sisäjärjestys}
+\index{jxlkijxrjestys@jälkijärjestys}
 
 \begin{itemize}
 \item \key{esijärjestys}: juuri, vasen alipuu, oikea alipuu
@@ -563,3 +563,4 @@ Esimerkiksi molemmissa puissa
 
 esijärjestys on $(1,2)$ ja jälkijärjestys on $(2,1)$,
 mutta siitä huolimatta puiden rakenteet eivät ole samat.
+

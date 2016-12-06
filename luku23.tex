@@ -1,6 +1,6 @@
 \chapter{Matriisit}
 
-\index{matriisi}
+\index{matriisi@matriisi}
 
 \key{Matriisi} on kaksiulotteista taulukkoa
 vastaava matemaattinen käsite,
@@ -22,7 +22,7 @@ jossa $i$ on rivi ja $j$ on sarake.
 Esimerkiksi yllä olevassa matriisissa
 $A[2,3]=8$ ja $A[3,1]=9$.
 
-\index{vektori}
+\index{vektori@vektori}
 
 Matriisin erikoistapaus on \key{vektori},
 joka on kokoa $n \times 1$ oleva yksiulotteinen matriisi.
@@ -37,7 +37,7 @@ V =
 \]
 on vektori, jossa on 3 alkiota.
 
-\index{transpoosi}
+\index{transpoosi@transpoosi}
 
 Matriisin $A$ \key{transpoosi} $A^T$ syntyy,
 kun matriisin rivit ja sarakkeet vaihdetaan
@@ -52,7 +52,7 @@ A^T =
  \end{bmatrix}
 \]
 
-\index{neliömatriisi}
+\index{nelizmatriisi@neliömatriisi}
 
 Matriisi on \key{neliömatriisi}, jos sen
 korkeus ja leveys ovat samat.
@@ -123,7 +123,7 @@ Esimerkiksi
 
 \subsubsection{Matriisitulo}
 
-\index{matriisitulo}
+\index{matriisitulo@matriisitulo}
 
 Matriisien $A$ ja $B$ tulo $AB$ on määritelty,
 jos matriisi $A$ on kokoa $a \times n$
@@ -190,7 +190,7 @@ eli ei ole voimassa $A \cdot B = B \cdot A$.
 Kuitenkin matriisitulo
 on liitännäinen, eli on voimassa $A \cdot (B \cdot C)=(A \cdot B) \cdot C$.
 
-\index{ykkösmatriisi}
+\index{ykkzsmatriisi@ykkösmatriisi}
 
 \key{Ykkösmatriisi} on neliömatriisi,
 jonka lävistäjän jokainen alkio on 1
@@ -256,7 +256,7 @@ ole tarpeen kisakoodauksessa.
 
 \subsubsection{Matriisipotenssi}
 
-\index{matriisipotenssi}
+\index{matriisipotenssi@matriisipotenssi}
 
 Matriisin $A$ potenssi $A^k$ on
 määritelty, jos $A$ on neliömatriisi.
@@ -319,7 +319,7 @@ tehokasta potenssilaskua. Esimerkiksi
 
 \subsubsection{Determinantti}
 
-\index{determinantti}
+\index{determinantti@determinantti}
 
 Matriisin $A$ \key{determinantti} $\det(A)$
 on määritelty, jos $A$ on neliömatriisi.
@@ -330,7 +330,7 @@ kaavalla
 
 \[\det(A)=\sum_{j=1}^n A[1,j] C[1,j],\]
 
-\index{kofaktori}
+\index{kofaktori@kofaktori}
 
 missä $C[i,j]$ on matriisin $A$ \key{kofaktori}
 kohdassa $[i,j]$.
@@ -390,7 +390,7 @@ ja
 ) = 81.
 \]
 
-\index{käänteismatriisi}
+\index{kxxnteismatriisi@käänteismatriisi}
 
 Determinantti kertoo, onko matriisille
 $A$ olemassa \key{käänteismatriisia}
@@ -433,8 +433,8 @@ Esimerkiksi
 
 \section{Lineaariset rekursioyhtälöt}
 
-\index{rekursioyhtälö}
-\index{lineaarinen rekursioyhtälö}
+\index{rekursioyhtxlz@rekursioyhtälö}
+\index{lineaarinen rekursioyhtxlz@lineaarinen rekursioyhtälö}
 
 \key{Lineaarinen rekursioyhtälö}
 voidaan esittää funktiona $f(n)$,
@@ -456,7 +456,7 @@ voi laskea ajassa $O(k^3 \log n)$.
 
 \subsubsection{Fibonaccin luvut}
 
-\index{Fibonaccin luku}
+\index{Fibonaccin luku@Fibonaccin luku}
 
 Yksinkertainen esimerkki lineaarisesta rekursioyhtälöstä
 on Fibonaccin luvut määrittelevä funktio:
@@ -767,8 +767,8 @@ Tämä polku on $2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$.
 
 \subsubsection{Kirchhoffin lause}
 
-\index{Kirchhoffin lause}
-\index{virittävä puu}
+\index{Kirchhoffin lause@Kirchhoffin lause}
+\index{virittxvx puu@virittävä puu}
 
 \key{Kirchhoffin lause} laskee verkon virittävien puiden määrän
 verkkoa vastaavan matriisin determinantista.
@@ -820,7 +820,7 @@ Tällä verkolla on kolme virittävää puuta:
 %\path[draw,thick,-] (1c) -- (4c);
 \end{tikzpicture}
 \end{center}
-\index{Laplacen matriisi}
+\index{Laplacen matriisi@Laplacen matriisi}
 Muodostetaan verkosta \key{Laplacen matriisi} $L$,
 jossa $L[i,i]$ on solmun $i$ aste ja
 $L[i,j]=-1$, jos solmujen $i$ ja $j$ välillä on kaari,
@@ -865,4 +865,6 @@ täydellisessä $n$ solmun verkossa
   -1 & -1 & \cdots & n-1 \\
  \end{bmatrix}
 ) =n^{n-2}.\]
+
+
 

@@ -1,6 +1,6 @@
 \chapter{Järjestäminen}
 
-\index{järjestäminen}
+\index{jxrjestxminen@järjestäminen}
 
 \key{Järjestäminen}
 on keskeinen algoritmiikan ongelma.
@@ -91,7 +91,7 @@ on järjestettynä seuraava:
 
 \subsubsection{$O(n^2)$-algoritmit}
 
-\index{kuplajärjestäminen}
+\index{kuplajxrjestxminen@kuplajärjestäminen}
 
 Yksinkertaiset algoritmit taulukon
 järjestämiseen vievät aikaa $O(n^2)$.
@@ -272,7 +272,7 @@ algoritmin aikavaativuus on $O(n^2)$.
 
 \subsubsection{Inversiot}
 
-\index{inversio}
+\index{inversio@inversio}
 
 Kuplajärjestäminen on esimerkki algoritmista,
 joka perustuu taulukon vierekkäisten alkioiden
@@ -334,7 +334,7 @@ $\frac{n(n-1)}{2} = O(n^2)$ vaihtoa.
 
 \subsubsection{$O(n \log n)$-algoritmit}
 
-\index{lomitusjärjestäminen}
+\index{lomitusjxrjestxminen@lomitusjärjestäminen}
 
 Tehokkaat järjestämisalgoritmit vievät
 aikaa $O(n \log n)$.
@@ -498,8 +498,8 @@ vie yhteensä $O(n)$ aikaa.
 
 \subsubsection{Järjestämisen alaraja}
 
-\index{pikajärjestäminen}
-\index{kekojärjestäminen}
+\index{pikajxrjestxminen@pikajärjestäminen}
+\index{kekojxrjestxminen@kekojärjestäminen}
 
 Monet järjestämisalgoritmi saavuttavat
 aikavaativuuden $O(n \log n)$,
@@ -564,7 +564,7 @@ Puun korkeuden tulee olla tämän vuoksi vähintään
 
 \subsubsection{Laskemisjärjestäminen}
 
-\index{laskemisjärjestäminen}
+\index{laskemisjxrjestxminen@laskemisjärjestäminen}
 
 Järjestämisen alaraja $O(n \log n)$ ei koske algoritmeja,
 jotka eivät perustu alkioiden vertailuun vaan hyödyntävät
@@ -655,7 +655,7 @@ kirjanpidon taulukon indeksöinnissä.
 
 \section{Järjestäminen C++:ssa}
 
-\index{\texttt{sort}}
+\index{sort@\texttt{sort}}
 
 C++:n standardikirjastossa on funktio \texttt{sort},
 jonka avulla voi järjestää helposti taulukoita
@@ -706,7 +706,7 @@ on järjestettynä ''aainp''.
 
 \subsubsection{Vertailuoperaattori}
 
-\index{vertailuoperaattori}
+\index{vertailuoperaattori@vertailuoperaattori}
 
 Funktion \texttt{sort} käyttäminen vaatii,
 että järjestettävien alkioiden
@@ -768,7 +768,7 @@ struct P {
 
 \subsubsection{Vertailufunktio}
 
-\index{vertailufunktio}
+\index{vertailufunktio@vertailufunktio}
 
 On myös mahdollista antaa
 \texttt{sort}-funktiolle ulkopuolinen \key{vertailufunktio}.
@@ -791,7 +791,7 @@ sort(v.begin(), v.end(), cmp);
 
 \section{Binäärihaku}
 
-\index{binäärihaku}
+\index{binxxrihaku@binäärihaku}
 
 Tavallinen tapa etsiä alkiota $x$ taulukosta \texttt{t}
 on käyttää \texttt{for}-silmukkaa, joka käy läpi
@@ -977,4 +977,6 @@ tässä ei ole sallittua,
 että peräkkäiset arvot olisivat yhtä suuria.
 Silloin ei olisi mahdollista tietää,
 mihin suuntaan hakua tulee jatkaa.
+
+
 

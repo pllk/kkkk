@@ -17,9 +17,9 @@ sekä erilaisia tapoja pitää verkkoa muistissa algoritmeissa.
 
 \section{Käsitteitä}
 
-\index{verkko}
-\index{solmu}
-\index{kaari}
+\index{verkko@verkko}
+\index{solmu@solmu}
+\index{kaari@kaari}
 
 \key{Verkko} muodostuu \key{solmuista}
 ja niiden välisistä \key{kaarista}.
@@ -49,7 +49,7 @@ Esimerkiksi seuraavassa verkossa on 5 solmua ja 7 kaarta:
 \end{tikzpicture}
 \end{center}
 
-\index{polku}
+\index{polku@polku}
 
 \key{Polku} on solmusta $a$ solmuun $b$
 johtava reitti, joka kulkee verkon kaaria pitkin.
@@ -67,7 +67,7 @@ polkuja solmusta 1 solmuun 5 ovat:
 
 \subsubsection{Yhtenäisyys}
 
-\index{yhtenäinen verkko}
+\index{yhtenxinen verkko@yhtenäinen verkko}
 
 Verkko on \key{yhtenäinen}, jos siinä on polku
 mistä tahansa solmusta mihin tahansa solmuun.
@@ -103,7 +103,7 @@ koska esimerkiksi solmusta 1 ei ole polkua solmuun 2.
 \end{center}
 
 Verkon yhtenäiset osat muodostavat sen
-\key{komponentit}. \index{komponentti}
+\key{komponentit}. \index{komponentti@komponentti}
 Esimerkiksi seuraavassa verkossa on
 kolme komponenttia:
 $\{1,\,2,\,3\}$,
@@ -132,7 +132,7 @@ $\{8\}$.
 \end{tikzpicture}
 \end{center}
 
-\index{puu}
+\index{puu@puu}
 
 \key{Puu} on yhtenäinen verkko,
 jossa on $n$ solmua ja $n-1$ kaarta.
@@ -159,7 +159,7 @@ Esimerkiksi seuraava verkko on puu:
 
 \subsubsection{Kaarten suunnat}
 
-\index{suunnattu verkko}
+\index{suunnattu verkko@suunnattu verkko}
 
 Verkko on \key{suunnattu},
 jos verkon kaaria pystyy
@@ -188,14 +188,14 @@ $3 \rightarrow 1 \rightarrow 2 \rightarrow 5$.
 Sen sijaan solmusta 5 ei lähde polkua mihinkään muuhun
 solmuun.
 
-\index{vahvasti yhtenäinen verkko}
+\index{vahvasti yhtenxinen verkko@vahvasti yhtenäinen verkko}
 
 Suunnattu verkko on \key{vahvasti yhtenäinen},
 jos mistä tahansa solmusta on polku mihin
 tahansa toiseen solmuun.
 
-\index{sykli}
-\index{syklitön verkko}
+\index{sykli@sykli}
+\index{syklitzn verkko@syklitön verkko}
 
 \key{Sykli} on polku, jonka ensimmäinen
 ja viimeinen solmu on sama.
@@ -205,7 +205,7 @@ Jos verkossa ei ole yhtään sykliä, se on \key{syklitön}.
 
 \subsubsection{Kaarten painot}
 
-\index{painotettu verkko}
+\index{painotettu verkko@painotettu verkko}
 
 \key{Painotetussa} verkossa
 jokaiseen kaareen liittyy paino.
@@ -236,8 +236,8 @@ Jälkimmäinen polku on lyhin polku solmusta 1 solmuun 5.
 
 \subsubsection{Naapurit ja asteet}
 
-\index{naapuri}
-\index{aste}
+\index{naapuri@naapuri}
+\index{aste@aste}
 
 Kaksi solmua ovat \key{naapureita},
 jos ne ovat vierekkäin eli niiden välillä on kaari.
@@ -271,8 +271,8 @@ Tämä johtuu siitä, että jokainen kaari lisää
 kahden solmun astetta yhdellä.
 Niinpä solmujen asteiden summa on aina parillinen.
 
-\index{säännöllinen verkko}
-\index{täydellinen verkko}
+\index{szznnollinen verkko@säännöllinen verkko}
+\index{tzydellinen verkko@täydellinen verkko}
 
 Verkko on \key{säännöllinen},
 jos jokaisen solmun aste on vakio $d$.
@@ -281,8 +281,8 @@ jos jokaisen solmun aste on $n-1$ eli
 verkossa on kaikki mahdolliset kaaret
 solmujen välillä.
 
-\index{lähtöaste}
-\index{tuloaste}
+\index{lzhtzaste@lähtöaste}
+\index{tuloaste@tuloaste}
 
 Suunnatussa verkossa \key{lähtöaste}
 on solmusta lähtevien kaarten määrä ja
@@ -310,8 +310,8 @@ lähtöaste on 1 ja tuloaste on 2.
 
 \subsubsection{Väritykset}
 
-\index{väritys}
-\index{kaksijakoinen verkko}
+\index{vxritys@väritys}
+\index{kaksijakoinen verkko@kaksijakoinen verkko}
 
 Verkon \key{värityksessä} jokaiselle solmulle valitaan
 tietty väri niin, että millään kahdella
@@ -360,7 +360,7 @@ on kaksijakoinen, koska sen voi värittää seuraavasti:
 
 \subsubsection{Yksinkertaisuus}
 
-\index{yksinkertainen verkko}
+\index{yksinkertainen verkko@yksinkertainen verkko}
 
 Verkko on \key{yksinkertainen},
 jos mistään solmusta ei ole kaarta itseensä
@@ -404,7 +404,7 @@ Seuraavaksi käymme läpi kolme tavallista vaihtoehtoa.
 
 \subsubsection{Vieruslistaesitys}
 
-\index{vieruslista}
+\index{vieruslista@vieruslista}
 
 Tavallisin tapa pitää verkkoa muistissa on
 luoda jokaisesta solmusta \key{vieruslista},
@@ -500,7 +500,7 @@ for (auto u : v[s]) {
 
 \subsubsection{Vierusmatriisiesitys}
 
-\index{vierusmatriisi}
+\index{vierusmatriisi@vierusmatriisi}
 
 \key{Vierusmatriisi} on kaksiulotteinen taulukko,
 joka kertoo jokaisesta mahdollisesta kaaresta,
@@ -623,7 +623,7 @@ vastaa seuraava vierusmatriisi:
 
 \subsubsection{Kaarilistaesitys}
 
-\index{kaarilista}
+\index{kaarilista@kaarilista}
 
 \key{Kaarilista} sisältää kaikki verkon kaaret.
 Kaarilista on hyvä tapa tallentaa verkko,
@@ -697,5 +697,7 @@ v.push_back({{2,4},6});
 v.push_back({{3,4},5});
 v.push_back({{4,1},2});
 \end{lstlisting}
+
+
 
 

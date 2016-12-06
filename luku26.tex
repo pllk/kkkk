@@ -1,7 +1,7 @@
 \chapter{Merkkijonoalgoritmit}
 
-\index{merkkijono}
-\index{aakkosto}
+\index{merkkijono@merkkijono}
+\index{aakkosto@aakkosto}
 
 Merkkijonon $s$ merkit ovat $s[1],s[2],\ldots,s[n]$,
 missä $n$ on merkkijonon pituus.
@@ -10,7 +10,7 @@ joka määrittää, mitä merkkejä merkkijonossa voi esiintyä.
 Esimerkiksi aakkosto $\{\texttt{A},\texttt{B},\ldots,\texttt{Z}\}$
 sisältää englannin kielen suuret kirjaimet.
 
-\index{osajono}
+\index{osajono@osajono}
 
 \key{Osajono}
 sisältää merkkijonon merkit
@@ -20,7 +20,7 @@ Esimerkiksi merkkijonon \texttt{ALGORITMI}
 yksi osajono on \texttt{ORITM},
 joka muodostuu valitsemalla välin \texttt{ALG\underline{ORITM}I}.
 
-\index{alijono}
+\index{alijono@alijono}
 
 \key{Alijono}
 on osajoukko merkkijonon merkeistä.
@@ -29,10 +29,10 @@ Esimerkiksi merkkijonon \texttt{ALGORITMI}
 yksi alijono on \texttt{LGRMI}, joka muodostuu
 valitsemalla merkit \texttt{A\underline{LG}O\underline{R}IT\underline{MI}}.
 
-\index{alkuosa}
-\index{loppuosa}
-\index{prefiksi}
-\index{suffiksi}
+\index{alkuosa@alkuosa}
+\index{loppuosa@loppuosa}
+\index{prefiksi@prefiksi}
+\index{suffiksi@suffiksi}
 
 \key{Alkuosa} on merkkijonon
 alusta alkava osajono,
@@ -46,7 +46,7 @@ ja loppuosat ovat \texttt{A}, \texttt{SA},
 Alkuosa tai loppuosa on \key{aito},
 jos se ei ole koko merkkijono.
 
-\index{kierto}
+\index{kierto@kierto}
 
 \key{Kierto} syntyy
 siirtämällä jokin alkuosa merkkijonon loppuun
@@ -59,7 +59,7 @@ kierrot ovat
 \texttt{LAAPI} ja
 \texttt{AAPIL}.
 
-\index{jakso}
+\index{jakso@jakso}
 
 \key{Jakso} on alkuosa,
 jota toistamalla merkkijono muodostuu.
@@ -80,7 +80,7 @@ reunat ovat \texttt{A}, \texttt{ABA} ja
 Usein halutaan etsiä \key{pisin reuna},
 joka ei ole koko merkkijono.
 
-\index{leksikografinen järjestys}
+\index{leksikografinen jxrjestys@leksikografinen järjestys}
 
 Merkkijonojen vertailussa käytössä on yleensä
 \key{leksikografinen järjestys}, joka vastaa aakkosjärjestystä.
@@ -90,7 +90,7 @@ että $x[i]=y[i]$, kun $i<k$, ja $x[k]<y[k]$.
 
 \section{Trie-rakenne}
 
-\index{trie}
+\index{trie@trie}
 
 \key{Trie} on puurakenne,
 joka pitää yllä joukkoa merkkijonoja.
@@ -165,8 +165,8 @@ mihin solmuun solmusta $s$ pääsee merkillä $c$.
 
 \section{Merkkijonohajautus}
 
-\index{hajautus}
-\index{merkkijonohajautus}
+\index{hajautus@hajautus}
+\index{merkkijonohajautus@merkkijonohajautus}
 
 \key{Merkkijonohajautus}
 on tekniikka, jonka avulla voi esikäsittelyn
@@ -178,8 +178,8 @@ vertaaminen merkki kerrallaan.
 
 \subsubsection*{Hajautusarvon laskeminen}
 
-\index{hajautusarvo}
-\index{polynominen hajautus}
+\index{hajautusarvo@hajautusarvo}
+\index{polynominen hajautus@polynominen hajautus}
 
 Merkkijonon \key{hajautusarvo}
 on luku, joka lasketaan merkkijonon merkeistä
@@ -324,7 +324,7 @@ Niinpä algoritmin aikavaativuudeksi tulee $O(n \log m)$.
 
 \subsubsection*{Törmäykset ja parametrit}
 
-\index{törmäys}
+\index{tzzmxys@törmäys}
 
 Ilmeinen riski hajautusarvojen vertailussa
 on \key{törmäys}, mikä tarkoittaa, että kahdessa merkkijonossa on
@@ -406,7 +406,7 @@ Tapauksessa 3 tilanne on kuitenkin täysin toinen:
 törmäys tapahtuu käytännössä varmasti
 vielä valinnalla $B \approx 10^9$.
 
-\index{syntymäpäiväparadoksi}
+\index{syntymxpxivxparadoksi@syntymäpäiväparadoksi}
 
 Tapauksen 3 ilmiö tunnetaan nimellä
 \key{syntymäpäiväparadoksi}:
@@ -1124,3 +1124,4 @@ vector<int> z(string s) {
     return z;
 }
 \end{lstlisting}
+
