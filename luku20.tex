@@ -45,7 +45,7 @@ jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 \index{virtaus@virtaus}
 \index{maksimivirtaus@maksimivirtaus}
 
-Verkossa oleva \key{virtaus}
+\key{Virtaus}
 lähtee liikkeelle alkusolmusta ja päätyy loppusolmuun.
 Kunkin kaaren paino on kapasiteetti,
 joka ilmaisee, kuinka paljon virtausta kaaren
@@ -160,7 +160,7 @@ minimileikkaus ovat yhtä suuret.
 \index{Ford–Fulkersonin algoritmi}
 
 \key{Ford–Fulkersonin algoritmi} etsii verkon maksimivirtauksen.
-Algoritmin ideana on aloittaa tilanteesta,
+Algoritmi aloittaa tilanteesta,
 jossa virtaus on 0, ja etsiä sitten verkosta polkuja,
 jotka tuottavat siihen lisää virtausta.
 Kun mitään polkua ei enää pysty muodostamaan,
@@ -423,8 +423,8 @@ polku syvyyshaulla.
 Tämä toimii usein hyvin, mutta pahin tapaus on,
 että jokainen polku
 kasvattaa virtausta vain 1:llä ja algoritmi toimii hitaasti.
-Seuraavaksi käymme läpi kaksi tapaa polun valintaan,
-jotka estävät tämän ilmiön.
+Onneksi tämän ilmiön pystyy estämään käyttämällä
+seuraavia menetelmiä.
 
 \index{Edmonds–Karpin algoritmi}
 
@@ -1233,6 +1233,92 @@ Riittää täydentää maksimiparituksen verkkoa niin,
 että siinä on kaari $a \rightarrow b$ aina silloin,
 kun alkuperäisessä verkossa solmusta $a$ pääsee
 solmuun $b$ (mahdollisesti usean kaaren kautta).
+
+Nyt esimerkkiverkossa on seuraava tilanne:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle] (1a) at (0,6) {1};
+\node[draw, circle] (2a) at (0,5) {2};
+\node[draw, circle] (3a) at (0,4) {3};
+\node[draw, circle] (4a) at (0,3) {4};
+\node[draw, circle] (5a) at (0,2) {5};
+\node[draw, circle] (6a) at (0,1) {6};
+\node[draw, circle] (7a) at (0,0) {7};
+
+\node[draw, circle] (1b) at (4,6) {1};
+\node[draw, circle] (2b) at (4,5) {2};
+\node[draw, circle] (3b) at (4,4) {3};
+\node[draw, circle] (4b) at (4,3) {4};
+\node[draw, circle] (5b) at (4,2) {5};
+\node[draw, circle] (6b) at (4,1) {6};
+\node[draw, circle] (7b) at (4,0) {7};
+
+\node[draw, circle] (a) at (-3,3) {\phantom{0}};
+\node[draw, circle] (b) at (7,3) {\phantom{0}};
+
+
+%\path[draw,thick,->,>=latex] (1a) -- (5b);
+\path[draw,thick,->,>=latex] (1a) -- (6b);
+\path[draw,thick,->,>=latex] (1a) -- (7b);
+\path[draw,thick,->,>=latex] (1a) -- (3b);
+\path[draw,thick,->,>=latex] (1a) -- (4b);
+\path[draw,thick,->,>=latex] (5a) -- (6b);
+\path[draw,thick,->,>=latex] (5a) -- (7b);
+%\path[draw,thick,->,>=latex] (5a) -- (3b);
+\path[draw,thick,->,>=latex] (5a) -- (4b);
+\path[draw,thick,->,>=latex] (6a) -- (7b);
+%\path[draw,thick,->,>=latex] (6a) -- (7b);
+\path[draw,thick,->,>=latex] (6a) -- (3b);
+%\path[draw,thick,->,>=latex] (3a) -- (4b);
+%\path[draw,thick,->,>=latex] (2a) -- (6b);
+\path[draw,thick,->,>=latex] (2a) -- (7b);
+\path[draw,thick,->,>=latex] (2a) -- (3b);
+\path[draw,thick,->,>=latex] (2a) -- (4b);
+
+
+\path[draw,thick,->,>=latex] (a) -- (1a);
+\path[draw,thick,->,>=latex] (a) -- (2a);
+\path[draw,thick,->,>=latex] (a) -- (3a);
+\path[draw,thick,->,>=latex] (a) -- (4a);
+\path[draw,thick,->,>=latex] (a) -- (5a);
+\path[draw,thick,->,>=latex] (a) -- (6a);
+\path[draw,thick,->,>=latex] (a) -- (7a);
+
+\path[draw,thick,->,>=latex] (1b) -- (b);
+\path[draw,thick,->,>=latex] (2b) -- (b);
+\path[draw,thick,->,>=latex] (3b) -- (b);
+\path[draw,thick,->,>=latex] (4b) -- (b);
+\path[draw,thick,->,>=latex] (5b) -- (b);
+\path[draw,thick,->,>=latex] (6b) -- (b);
+\path[draw,thick,->,>=latex] (7b) -- (b);
+
+\path[draw=red,thick,->,line width=2pt] (1a) -- (5b);
+\path[draw=red,thick,->,line width=2pt] (5a) -- (3b);
+\path[draw=red,thick,->,line width=2pt] (3a) -- (4b);
+\path[draw=red,thick,->,line width=2pt] (2a) -- (6b);
+\path[draw=red,thick,->,line width=2pt] (6a) -- (7b);
+
+
+% \path[draw=red,thick,->,line width=2pt] (1a) -- (6b);
+% \path[draw=red,thick,->,line width=2pt] (1a) -- (7b);
+% \path[draw=red,thick,->,line width=2pt] (1a) -- (3b);
+% \path[draw=red,thick,->,line width=2pt] (1a) -- (4b);
+% \path[draw=red,thick,->,line width=2pt] (5a) -- (6b);
+% \path[draw=red,thick,->,line width=2pt] (5a) -- (7b);
+% \path[draw=red,thick,->,line width=2pt] (5a) -- (3b);
+% \path[draw=red,thick,->,line width=2pt] (5a) -- (4b);
+% \path[draw=red,thick,->,line width=2pt] (6a) -- (7b);
+% \path[draw=red,thick,->,line width=2pt] (6a) -- (7b);
+% \path[draw=red,thick,->,line width=2pt] (6a) -- (3b);
+% \path[draw=red,thick,->,line width=2pt] (3a) -- (4b);
+% \path[draw=red,thick,->,line width=2pt] (2a) -- (6b);
+% \path[draw=red,thick,->,line width=2pt] (2a) -- (7b);
+% \path[draw=red,thick,->,line width=2pt] (2a) -- (3b);
+% \path[draw=red,thick,->,line width=2pt] (2a) -- (4b);
+
+\end{tikzpicture}
+\end{center}
+
 
 \subsubsection{Dilworthin lause}
 

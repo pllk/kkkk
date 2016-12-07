@@ -66,7 +66,7 @@ juureksi solmu 1, solmut asettuvat seuraavaan järjestykseen:
 \index{lapsi@lapsi}
 \index{vanhempi@vanhempi}
 
-Tällöin solmun \key{lapset}
+Juurellisessa puussa solmun \key{lapset}
 ovat sen alemman tason naapurit
 ja solmun \key{vanhempi}
 on sen ylemmän tason naapuri.
@@ -77,12 +77,13 @@ lapset ovat solmut 3 ja 7 ja solmun 4 vanhempi on solmu 1.
 
 \index{alipuu@alipuu}
 
-Juurellisen puun rakenne on rekursiivinen:
+Juurellisen puun rakenne on \emph{rekursiivinen}:
 jokaisesta puun solmusta alkaa \key{alipuu},
 jonka juurena on solmu itse ja johon kuuluvat
 kaikki solmut, joihin solmusta pääsee kulkemalla alaspäin puussa.
 Esimerkiksi solmun 4 alipuussa
-ovat solmut 4, 3 ja 7.
+ovat solmut 4, 3 ja 7
+ja solmun 1 alipuuhun kuuluvat kaikki verkon solmut.
 
 \section{Puun läpikäynti}
 
