@@ -88,21 +88,21 @@ Nyt esimerkiksi tapahtumaa ''silmäluku on parillinen''
 vastaa joukko
 \[A = \{x_2,x_4,x_6\}.\]
 
-Jokaista alkeistapahtumaa $x$
+Jokaista alkeistapausta $x$
 vastaa todennäköisyys $p(x)$.
 Tämän ansiosta joukkoa $A$ vastaavan tapahtuman
 todennäköisyys $P(A)$ voidaan
-laskea alkeistapahtumien todennäköisyyksien
+laskea alkeistapausten todennäköisyyksien
 summana kaavalla
 \[P(A) = \sum_{x \in A} p(x).\]
 Esimerkiksi nopanheitossa $p(x)=1/6$
-jokaiselle alkeistapahtumalle $x$, joten
+jokaiselle alkeistapaukselle $x$, joten
 tapahtuman ''silmäluku on parillinen''
 todennäköisyys on
 \[p(x_2)+p(x_4)+p(x_6)=1/2.\]
 
 Alkeistapahtumat tulee aina valita niin,
-että kaikkien alkeistapahtumien
+että kaikkien alkeistapausten
 todennäköisyyksien summa on 1 eli $P(X)=1$.
 
 Koska todennäköisyyden tapahtumat ovat joukkoja,
@@ -137,8 +137,7 @@ laskea komplementin kautta
 miettimällä tilannetta käänteisesti.
 Esimerkiksi todennäköisyys saada
 silmäluku 6 ainakin kerran,
-kun noppaa heitetään kymmenen kertaa,
-on
+kun noppaa heitetään kymmenen kertaa, on
 \[1-(5/6)^{10}.\]
 
 Tässä $5/6$ on todennäköisyys,
@@ -179,7 +178,7 @@ jotka kuuluvat joukkoon $B$.
 
 Äskeisen esimerkin joukkoja käyttäen
 \[P(A | B)= 1/3,\]
-koska joukon $B$ alkeistapahtumat ovat
+koska joukon $B$ alkeistapaukset ovat
 $\{x_1,x_2,x_3\}$ ja niistä yhdessä
 silmäluku on parillinen.
 Tämä on todennäköisyys saada parillinen silmäluku,
@@ -193,7 +192,6 @@ Ehdollisen todennäköisyyden avulla
 leikkauksen $A \cap B$ todennäköisyys
 voidaan laskea kaavalla
 \[P(A \cap B)=P(A)P(B|A).\]
-
 Tapahtumat $A$ ja $B$ ovat \key{riippumattomat}, jos
 \[P(A|B)=P(A),\]
 jolloin $B$:n tapahtuminen ei vaikuta $A$:n
@@ -343,8 +341,8 @@ Geometrisessa jakaumassa $X$:n odotusarvo on
 joka muodostuu tiloista ja niiden välisistä siirtymistä.
 Jokaisesta tilasta tiedetään, millä todennäköisyydellä
 siitä siirrytään toisiin tiloihin.
-Luonteva tapa esittää Markovin ketju on
-muodostaa verkko, jonka solmut ovat tiloja
+Markovin ketju voidaan esittää verkkona,
+jonka solmut ovat tiloja
 ja kaaret niiden välisiä siirtymiä.
 
 \begin{task}
@@ -480,12 +478,16 @@ suurella todennäköisyydellä.
 Tutustumme seuraavaksi kolmeen esimerkkitehtävään,
 jotka voi ratkaista satunnaisuuden avulla.
 
-\subsubsection{Esimerkki 1}
+\subsubsection{Järjestystunnusluku}
+
+\index{järjestystunnusluku}
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ alkiota.
-Tehtäväsi on selvittää, mikä alkio on järjestetyssä
-taulukossa kohdassa $k$.
+Tehtäväsi on selvittää taulukon $k$.
+\key{järjestystunnusluku} eli mikä alkio on
+kohdassa $k$, kun taulukko järjestetään
+pienimmästä suurimpaan.
 \end{task}
 
 Helppo ratkaisu tehtävään on järjestää
@@ -531,7 +533,7 @@ vain yhden alkion verran.
 Tämän todennäköisyys on kuitenkin erittäin pieni,
 eikä näin tapahdu käytännössä.
 
-\subsubsection{Esimerkki 2}
+\subsubsection{Matriisitulon tarkastaminen}
 
 \index{matriisitulo@matriisitulo}
 
@@ -605,7 +607,7 @@ tekemällä tarkastuksen usealla
 satunnaisella matriisilla $X$ ennen vastauksen
 $AB=C$ ilmoittamista.
 
-\subsubsection{Esimerkki 3}
+\subsubsection{Verkon värittäminen}
 
 \index{vxritys@väritys}
 

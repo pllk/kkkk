@@ -6,10 +6,10 @@
 Merkkijonon $s$ merkit ovat $s[1],s[2],\ldots,s[n]$,
 missä $n$ on merkkijonon pituus.
 
-\key{Aakkosto} on joukko,
-joka määrittää, mitä merkkejä merkkijonossa voi esiintyä.
+\key{Aakkosto} sisältää ne merkit,
+joita merkkijonossa voi esiintyä.
 Esimerkiksi aakkosto $\{\texttt{A},\texttt{B},\ldots,\texttt{Z}\}$
-sisältää englannin kielen aakkoset.
+sisältää englannin kielen suuret kirjaimet.
 
 \index{osajono@osajono}
 
@@ -435,7 +435,11 @@ jolloin modulo $B$ tulee laskettua
 automaattisesti, kun muuttujan arvo pyörähtää ympäri.
 Tämä ei ole kuitenkaan hyvä valinta,
 koska muotoa $2^x$ olevaa moduloa vastaan
-pystyy tekemään testisyötteen, joka aiheuttaa varmasti törmäyksen.
+pystyy tekemään testisyötteen, joka aiheuttaa varmasti törmäyksen\footnote{
+J. Pachocki \& Jakub Radoszweski:
+''Where to use and how not to use polynomial string hashing''.
+\textit{Olympiads in Informatics}, 2013.
+}.
 
 \section{Z-algoritmi}
 
