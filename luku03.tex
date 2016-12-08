@@ -2,7 +2,7 @@
 
 \index{jxrjestxminen@järjestäminen}
 
-\key{Järjestäminen} (''sorting'')
+\key{Järjestäminen}
 on keskeinen algoritmiikan ongelma.
 Moni tehokas algoritmi
 perustuu järjestämiseen,
@@ -91,7 +91,7 @@ on järjestettynä seuraava:
 Yksinkertaiset algoritmit taulukon
 järjestämiseen vievät aikaa $O(n^2)$.
 Ehkä tunnetuin tällainen algoritmi on
-\key{kuplajärjestäminen} (''bubble sort''),
+\key{kuplajärjestäminen},
 joka muodostuu peräkkäisistä taulukon läpikäynneistä.
 
 Algoritmissa jokainen taulukon läpikäynti
@@ -256,11 +256,10 @@ läpikäynti tekee seuraavat vaihdot:
 \end{tikzpicture}
 \end{center}
 
-
 Kuplajärjestämisessä ensimmäisen läpikäynnin jälkeen suurin alkio
 on paikallaan, toisen läpikäynnin jälkeen
 kaksi suurinta alkiota on paikallaan, jne.
-Niinpä kuplajärjestäminen päättyy aina viimeistään $n$
+Niinpä kuplajärjestäminen päättyy aina viimeistään $n-1$
 läpikäynnin jälkeen.
 Koska jokainen läpikäynti vie aikaa $O(n)$,
 algoritmin aikavaativuus on $O(n^2)$.
@@ -272,17 +271,17 @@ algoritmin aikavaativuus on $O(n^2)$.
 Kuplajärjestäminen on esimerkki algoritmista,
 joka perustuu taulukon vierekkäisten alkioiden
 vaihtamiseen.
-Osoittautuu, että minkään tällaisen algoritmin
-aikavaativuus ei voi olla parempi kuin $O(n^2)$,
-koska tarvittava vaihtojen määrä
-saattaa olla luokkaa $O(n^2)$.
+Osoittautuu, että tällaisen algoritmin
+aikavaativuus on aina vähintään $O(n^2)$,
+koska pahimmassa tapauksessa taulukon
+järjestäminen $O(n^2)$ alkioparin vaihtamista.
 
 Hyödyllinen käsite järjestämisalgoritmien
 analyysissa on \key{inversio}.
-Se on indeksipari $(a,b)$, joille $a<b$
-ja $\texttt{t}[a]>\texttt{t}[b]$
-eli kaksi taulukon alkiota, jotka ovat väärässä
-järjestyksessä.
+Se on taulukossa oleva alkiopari
+$(\texttt{t}[a],\texttt{t}[b])$,
+missä $a<b$ ja $\texttt{t}[a]>\texttt{t}[b]$
+eli alkiot ovat väärässä järjestyksessä taulukossa.
 Esimerkiksi taulukon
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -307,32 +306,36 @@ Esimerkiksi taulukon
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-inversiot ovat $(4,5)$, $(4,6)$ ja $(7,8)$.
+inversiot ovat $(6,3)$, $(6,5)$ ja $(9,8)$.
 Inversioiden määrä kuvaa, miten lähellä
 järjestystä taulukko on.
-Järjestetyn taulukon inversioiden määrä on 0,
-ja käänteisesti järjestetyn taulukon
-inversioiden määrä on $1+2+\cdots+(n-1)=\frac{n(n-1)}{2}$.
+Taulukko on järjestyksessä tarkalleen
+silloin, kun siinä ei ole yhtään inversiota.
+Inversioiden määrä on suurin,
+kun taulukon järjestys on käänteinen,
+jolloin inversioita on
+\[1+2+\cdots+(n-1)=\frac{n(n-1)}{2} = O(n^2).\]
 
-Jos vierekkäiset alkiot ovat väärässä järjestyksessä,
-niiden vaihtaminen keskenään poistaa
-taulukosta yhden inversion.
-Niinpä inversioiden määrä on sama kuin
-taulukon järjestämiseen tarvittava vaihtojen määrä.
-Vierekkäisiä alkioita
-vaihtavan algoritmin aikavaativuus
-on aina ainakin $O(n^2)$,
-koska sen täytyy tehdä pahimmassa tapauksessa
-$\frac{n(n-1)}{2} = O(n^2)$ vaihtoa.
+Oleellinen havainto on,
+että jos vierekkäiset taulukon alkiot
+ovat väärässä järjestyksessä,
+niiden järjestyksen korjaaminen
+poistaa taulukosta tarkalleen yhden inversion.
+Niinpä jos järjestämisalgoritmi vaihtaa vain
+taulukon vierekkäisiä alkioita,
+jokainen vaihto voi poistaa enintään yhden inversion
+ja algoritmin aikavaativuus on varmasti ainakin $O(n^2)$.
 
 \subsubsection{$O(n \log n)$-algoritmit}
 
 \index{lomitusjxrjestxminen@lomitusjärjestäminen}
 
-Tehokkaat järjestämisalgoritmit vievät
-aikaa $O(n \log n)$.
+Taulukon järjestäminen on mahdollista
+tehokkaasti ajassa $O(n \log n)$
+algoritmilla, joka ei rajoitu vierekkäisten
+alkoiden vaihtamiseen.
 Yksi tällainen algoritmi on
-\key{lomitusjärjestäminen} (''merge sort''),
+\key{lomitusjärjestäminen},
 joka järjestää taulukon
 rekursiivisesti jakamalla sen
 pienemmiksi osataulukoiksi.
@@ -485,15 +488,16 @@ vie yhteensä $O(n)$ aikaa.
 
 \subsubsection{Järjestämisen alaraja}
 
-Monet järjestämisalgoritmi saavuttavat
-aikavaativuuden $O(n \log n)$,
-mutta kukaan ei ole onnistunut keksimään
-yleistä järjestämisalgoritmia,
-joka toimisi nopeammin kuin $O(n \log n)$.
-Tähän on yllättävä syy: on mahdollista todistaa,
-että tällaista algoritmia ei ole olemassa.
+Onko sitten mahdollista järjestää taulukkoa
+nopeammin kuin ajassa $O(n \log n)$?
+Osoittautuu, että tämä \emph{ei} ole mahdollista,
+kun rajoitumme
+järjestämis\-algoritmeihin,
+jotka perustuvat taulukon alkioiden
+vertailemiseen.
 
-Ideana todistuksessa on tarkastella järjestämistä
+Aikavaativuuden alaraja on mahdollista todistaa
+tarkastelemalla järjestämistä
 prosessina, jossa jokainen kahden alkion vertailu
 antaa lisää tietoa taulukon sisällöstä.
 Prosessista muodostuu seuraavanlainen puu:
@@ -543,19 +547,31 @@ ja muuten oikealle.
 Prosessin tulokset ovat taulukon mahdolliset
 järjestykset, joita on kaikkiaan $n!$ erilaista.
 Puun korkeuden tulee olla tämän vuoksi vähintään
-
-\[ \log_2(n!) = \log_2(1)+\log_2(2)+\cdots+\log_2(n) = O(n \log n).\]
+\[ \log_2(n!) = \log_2(1)+\log_2(2)+\cdots+\log_2(n).\]
+Voimme arvioida tätä summaa alaspäin
+valitsemalla summasta $n/2$
+viimeistä termiä ja muuttamalla kunkin
+termin arvoksi $\log_2(n/2)$.
+Tästä saadaan arvio
+\[ \log_2(n!) \ge (n/2) \cdot \log_2(n/2),\]
+eli puun korkeus ja sen myötä
+pienin mahdollinen järjestämisalgoritmin askelten
+määrä on ainakin luokkaa $n \log n$.
 
 \subsubsection{Laskemisjärjestäminen}
 
 \index{laskemisjxrjestxminen@laskemisjärjestäminen}
 
-Järjestämisen alaraja $O(n \log n)$ ei koske algoritmeja,
-jotka eivät perustu alkioiden vertailuun vaan hyödyntävät
-jotain muuta tietoa alkioista.
+Järjestämisen alaraja $n \log n$ ei koske algoritmeja,
+jotka eivät perustu alkioiden vertailemiseen
+vaan hyödyntävät jotain muuta tietoa alkioista.
 Esimerkki tällaisesta algoritmista on
-\key{laskemisjärjestäminen}, joka järjestää
-kokonaisluvuista koostuvan taulukon $O(n)$-ajassa.
+\key{laskemisjärjestäminen}, jonka avulla
+on mahdollista järjestää
+taulukko ajassa $O(n)$ olettaen,
+että jokainen taulukon alkio on
+kokonaisluku välillä $0 \ldots c$,
+missä $c$ on pieni vakio.
 
 Algoritmin ideana on luoda \emph{kirjanpito}, josta selviää,
 montako kertaa mikäkin alkio esiintyy taulukossa.
@@ -630,49 +646,58 @@ kokonaisaikavaativuus on $O(n)$.
 
 Laskemisjärjestäminen on hyvin tehokas algoritmi,
 mutta sen käyttäminen vaatii,
-että taulukon sisältönä on niin pieniä
-kokonaislukuja, että niitä voi käyttää
+että vakio $c$ on niin pieni,
+että taulukon alkioita voi käyttää
 kirjanpidon taulukon indeksöinnissä.
 
 \section{Järjestäminen C++:ssa}
 
 \index{sort@\texttt{sort}}
 
+Järjestämisalgoritmia
+ei yleensä koskaan kannata koodata itse,
+vaan on parempi ratkaisu käyttää
+ohjelmointikielen valmista toteutusta.
+Esimerkiksi
 C++:n standardikirjastossa on funktio \texttt{sort},
 jonka avulla voi järjestää helposti taulukoita
 ja muita tietorakenteita.
-Tätä funktiota kannattaa käyttää yleensä aina
-järjestämiseen algoritmeissa,
-koska funktio on toteutettu tehokkaasti ja varmasti toimivasti.
 
+Valmiin toteutuksen käyttämisessä on monia etuja.
+Ensinnäkin se säästää aikaa, koska järjestämisalgoritmia
+ei tarvitse kirjoittaa itse.
+Lisäksi valmis toteutus on varmasti tehokas ja toimiva:
+vaikka järjestämisalgoritmin toteuttaisi itse,
+siitä tulisi tuskin valmista toteutusta parempi.
+
+Tutustumme seuraavaksi C++:n \texttt{sort}-funktion
+käyttämiseen.
 Seuraava koodi järjestää vektorin \texttt{v}
 luvut pienimmästä suurimpaan:
 \begin{lstlisting}
 vector<int> v = {4,2,5,3,5,8,3};
 sort(v.begin(),v.end());
 \end{lstlisting}
-Järjestämisen jälkeen vektorin sisältö on
+Järjestämisen seurauksena
+vektorin sisällöksi tulee
 $\{2,3,3,4,5,5,8\}$.
-
-Oletuksena järjestys tapahtuu pienimmästä suurimpaan,
+Oletuksena \texttt{sort}-funktio järjestää
+siis alkiot pienimmästä suurimpaan,
 mutta järjestyksen saa käänteiseksi näin:
 \begin{lstlisting}
 sort(v.rbegin(),v.rend());
 \end{lstlisting}
-
 Tavallisen taulukon voi järjestää seuraavasti:
 \begin{lstlisting}
 int n = 7; // taulukon koko
 int t[] = {4,2,5,3,5,8,3};
 sort(t,t+n);
 \end{lstlisting}
-
-Seuraava koodi järjestää merkkijonon \texttt{s}:
+Seuraava koodi taas järjestää merkkijonon \texttt{s}:
 \begin{lstlisting}
 string s = "apina";
 sort(s.begin(), s.end());
 \end{lstlisting}
-
 Merkkijonon järjestäminen tarkoittaa,
 että sen merkit järjestetään aakkosjärjestykseen.
 Esimerkiksi merkkijono ''apina''
@@ -784,9 +809,11 @@ sort(v.begin(), v.end(), cmp);
 
 \index{binxxrihaku@binäärihaku}
 
-Tavallinen tapa etsiä alkiota $x$ taulukosta \texttt{t}
+Tavallinen tapa etsiä alkiota taulukosta
 on käyttää \texttt{for}-silmukkaa, joka käy läpi
-taulukon sisällön:
+taulukon sisällön alusta loppuun.
+Esimerkiksi seuraava koodi etsii alkiota
+$x$ taulukosta \texttt{t}.
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
@@ -797,7 +824,7 @@ for (int i = 1; i <= n; i++) {
 Tämän menetelmän aikavaativuus on $O(n)$,
 koska pahimmassa tapauksessa koko taulukko täytyy
 käydä läpi.
-Jos taulukon sisältö voi olla mitä tahansa,
+Jos taulukon sisältö voi olla mikä tahansa,
 tämä on kuitenkin tehokkain mahdollinen menetelmä,
 koska saatavilla ei ole lisätietoa siitä,
 mistä päin taulukkoa alkiota $x$ kannattaa etsiä.
@@ -805,7 +832,7 @@ mistä päin taulukkoa alkiota $x$ kannattaa etsiä.
 Tilanne on toinen silloin, kun taulukko on
 järjestyksessä.
 Tässä tapauksessa haku on mahdollista toteuttaa
-paljon nopeammin, koska alkioiden järjestys
+paljon nopeammin, koska taulukon järjestys
 ohjaa etsimään alkiota oikeasta suunnasta.
 Seuraavaksi käsiteltävä \key{binäärihaku}
 löytää alkion järjestetystä taulukosta

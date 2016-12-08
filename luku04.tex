@@ -2,7 +2,7 @@
 
 \index{tietorakenne@tietorakenne}
 
-\key{Tietorakenne} (''data structure'')
+\key{Tietorakenne}
 on tapa säilyttää tietoa tietokoneen muistissa.
 Sopivan tietorakenteen valinta on tärkeää,
 koska kullakin rakenteella on omat
@@ -140,7 +140,6 @@ cout << c << "\n"; // tiva
 \index{set@\texttt{set}}
 \index{unordered\_set@\texttt{unordered\_set}}
 
-
 \key{Joukko} on tietorakenne,
 joka sisältää kokoelman alkioita.
 Joukon perusoperaatiot ovat alkion lisäys,
@@ -181,9 +180,22 @@ cout << s.count(3) << "\n"; // 0
 cout << s.count(4) << "\n"; // 1
 \end{lstlisting}
 
+Joukkoa voi käsitellä muuten suunnilleen samoin
+kuin vektoria, mutta joukkoa ei voi indeksoida
+\texttt{[]}-merkinnällä.
+Seuraava koodi luo joukon, tulostaa sen 
+alkioiden määrän ja käy sitten läpi kaikki alkiot.
+\begin{lstlisting}
+set<int> s = {2,5,6,8};
+cout << s.size() << "\n"; // 4
+for (auto x : s) {
+    cout << x << "\n";
+}
+\end{lstlisting}
+
 Tärkeä joukon ominaisuus on,
 että tietty alkio voi esiintyä siinä
-vain kerran.
+enintään kerran.
 Niinpä funktio \texttt{count} palauttaa aina
 arvon 0 (alkiota ei ole joukossa) tai 1 (alkio on joukossa)
 ja funktio \texttt{insert} ei lisää alkiota
@@ -241,16 +253,23 @@ cout << s.count(5) << "\n"; // 2
 
 \key{Hakemisto} on taulukon yleistys,
 joka sisältää kokoelman avain-arvo-pareja.
-Siinä missä taulukossa avaimet ovat aina peräkkäiset
-kokonaisluvut $0,1,2,\ldots$,
-hakemistossa ne voivat
-olla mitä tahansa tyyppiä.
+Taulukon avaimet ovat aina peräkkäiset
+kokonaisluvut $0,1,\ldots,n-1$,
+missä $n$ on taulukon koko,
+mutta hakemiston avaimet voivat
+olla mitä tahansa tyyppiä
+eikä niiden tarvitse olla peräkkäin.
 
-Joukkoa vastaavasti C++ sisältää sekä
-binääripuuhun että hajautustauluun perustuvat
-hakemistot \texttt{map} ja \texttt{unordered\_map},
-joissa alkion käsittely vie aikaa vastaavasti
-$O(\log n)$ ja keskimäärin $O(1)$.
+C++ sisältää kaksi toteutusta hakemistolle
+samaan tapaan kuin joukolle.
+Rakenne
+\texttt{map} perustuu
+tasapainoiseen binääripuuhun ja sen
+alkioiden käsittely vie aikaa $O(\log n)$,
+kun taas rakenne
+\texttt{unordered\_map} perustuu
+hajautustauluun ja sen alkioiden
+käsittely vie keskimäärin aikaa $O(1)$.
 
 Seuraava koodi toteuttaa hakemiston,
 jossa avaimet ovat merkkijonoja ja
@@ -276,19 +295,15 @@ jonka arvona on 0:
 map<string,int> m;
 cout << m["aybabtu"] << "\n"; // 0
 \end{lstlisting}
-
-Komennolla \texttt{count} voi
+Funktiolla \texttt{count} voi
 tutkia, esiintyykö avain hakemistossa:
-
 \begin{lstlisting}
 if (m.count("aybabtu")) {
     cout << "avain on hakemistossa";
 }
 \end{lstlisting}
-
 Seuraava koodi listaa hakemiston
 kaikki avaimet ja arvot:
-
 \begin{lstlisting}
 for (auto x : m) {
     cout << x.first << " " << x.second << "\n";
@@ -327,7 +342,7 @@ Huomaa epäsymmetria iteraattoreissa:
 kun taas \texttt{s.end()} osoittaa tietorakenteen ulkopuolelle.
 Iteraattoreiden rajaama joukon väli on siis puoliavoin.
 
-\subsubsection{Taulukon välit}
+\subsubsection{Välien käsittely}
 
 Iteraattoreita tarvitsee
 C++:n standardikirjaston funktioissa, jotka käsittelevät
@@ -408,9 +423,9 @@ cout << *it << "\n";
 % koska se osoitti aluksi joukon viimeisen
 % alkion jälkeiseen kohtaan.
 
-Funktio \texttt{find} palauttaa iteraattorin
-annettuun alkioon joukossa.
-Mutta jos alkiota ei esiinny joukossa,
+Funktio $\texttt{find}(x)$ palauttaa iteraattorin
+joukon alkioon, jonka arvo on $x$.
+Poikkeuksena jos alkiota $x$ ei esiinny joukossa,
 iteraattoriksi tulee \texttt{end}.
 
 \begin{lstlisting}
@@ -426,13 +441,19 @@ iteraattorin pienimpään alkioon,
 joka on suurempi kuin $x$.
 Jos tällaisia alkioita ei ole joukossa,
 funktiot palauttavat arvon \texttt{end}.
+Näitä funktioita ei voi käyttää
+\texttt{unordered\_set}-rakenteessa,
+joka ei pidä yllä alkioiden järjestystä.
 
+\begin{samepage}
 Esimerkiksi seuraava koodi etsii joukosta
 alkion, joka on lähinnä lukua $x$:
 
 \begin{lstlisting}
 auto a = s.lower_bound(x);
-if (a == s.begin()) {
+if (a == s.begin() && a == s.end()) {
+    cout << "joukko on tyhjä\n";
+} else if (a == s.begin()) {
     cout << *a << "\n";
 } else if (a == s.end()) {
     a--;
@@ -443,15 +464,22 @@ if (a == s.begin()) {
     else cout << *a << "\n";
 }
 \end{lstlisting}
-Iteraattori \texttt{a}
-osoittaa pienimpään alkioon,
+
+Koodi käy läpi mahdolliset tapaukset
+iteraattorin \texttt{a} avulla.
+Iteraattori
+osoittaa aluksi pienimpään alkioon,
 joka on ainakin yhtä suuri kuin $x$.
-Jos tämä on joukon ensimmäinen alkio,
-tämä on $x$:ää lähin alkio.
-Jos tällaista alkiota ei ole,
+Jos \texttt{a} on samaan aikaan \texttt{begin}
+ja \texttt{end}, joukko on tyhjä.
+Muuten jos \texttt{a} on \texttt{begin},
+sen osoittama alkio on $x$:ää lähin alkio.
+Jos taas \texttt{a} on \texttt{end},
 $x$:ää lähin alkio on joukon viimeinen alkio.
-Muussa tapauksessa $x$:ää lähin alkio
-on joko $a$:n osoittama alkio tai tätä edellinen alkio.
+Jos mikään edellisistä tapauksista ei päde,
+niin $x$:ää lähin alkio
+on joko $a$:n osoittama alkio tai sitä edellinen alkio.
+\end{samepage}
 
 \section{Muita tietorakenteita}
 
@@ -462,36 +490,49 @@ on joko $a$:n osoittama alkio tai tätä edellinen alkio.
 
 \key{Bittijoukko} (\texttt{bitset}) on taulukko,
 jonka jokaisen alkion arvo on 0 tai 1.
-Bittijoukon etuna on, että jokainen alkio
-vie vain yhden bitin tilaa muistissa.
-Niinpä bittijoukon käyttäminen säästää muistia,
-jos arvot 0 ja 1 riittävät.
-
-Esimerkiksi jos \texttt{int}-tyyppisessä
-taulukossa on $n$ arvoa,
-jokainen arvo vie tilaa 32 bittiä ja taulukko
-vie muistia $32n$ bittiä.
-Käyttämällä bittijoukkoa tilaa
-kuluu vain $n$ bittiä eli 32 kertaa vähemmän.
-
-Seuraava koodi luo bittijoukon, jossa on 10 alkiota
-(indeksointi $0 \ldots 9$).
-Bittijoukkoa voi käyttää samalla tavalla kuin taulukkoa.
-Lisäksi funktio \texttt{count} kertoo ykkösbittien
-määrän bittijoukossa.
+Esimerkiksi
+seuraava koodi luo bittijoukon, jossa on 10 alkiota.
 \begin{lstlisting}
 bitset<10> s;
 s[2] = 1;
 s[5] = 1;
+s[6] = 1;
+s[8] = 1;
 cout << s[4] << "\n"; // 0
 cout << s[5] << "\n"; // 1
-cout << s.count() << "\n"; // 2
 \end{lstlisting}
 
-Bittijoukon toinen etu muistinkäytön lisäksi on,
-että sen sisältöä voi käsitellä suoraan bittioperaatioilla.
-Seuraava koodi näyttää esimerkkejä tästä:
+Bittijoukon etuna on, että se vie tavallista
+taulukkoa vähemmän muistia,
+koska jokainen alkio vie
+vain yhden bitin muistia.
+Esimerkiksi $n$ bitin tallentaminen
+\texttt{int}-taulukkona vie $32n$
+bittiä tilaa, mutta bittijoukkona
+vain $n$ bittiä tilaa.
+Lisäksi bittijoukon sisältöä
+voi käsitellä tehokkaasti bittioperaatioilla,
+minkä ansiosta sillä voi tehostaa algoritmeja.
 
+Seuraava koodi näyttää toisen tavan
+bittijoukon luomiseen:
+
+\begin{lstlisting}
+bitset<10> s(string("0010011010"));
+cout << s[4] << "\n"; // 0
+cout << s[5] << "\n"; // 1
+\end{lstlisting}
+
+Funktio \texttt{count} palauttaa
+bittijoukon ykkösbittien määrän:
+
+\begin{lstlisting}
+bitset<10> s(string("0010011010"));
+cout << s.count() << "\n"; // 4
+\end{lstlisting}
+
+Seuraava koodi näyttää esimerkkejä
+bittioperaatioiden käyttämisestä:
 \begin{lstlisting}
 bitset<10> a(string("0010110110"));
 bitset<10> b(string("1011011000"));
@@ -643,7 +684,8 @@ priority_queue<int,vector<int>,greater<int>> q;
 \section{Vertailu järjestämiseen}
 
 Monen tehtävän voi ratkaista tehokkaasti joko
-sopivilla tietorakenteilla tai järjestämisellä.
+käyttäen sopivia tietorakenteilla
+tai taulukon järjestämistä.
 Vaikka erilaiset ratkaisutavat olisivat kaikki
 periaatteessa tehokkaita, niissä voi olla
 käytännössä merkittäviä eroja.
@@ -673,9 +715,9 @@ Joukon ei tarvitse säilyttää lukuja
 järjestyksessä, joten
 \texttt{set}-ra\-ken\-teen sijasta voi
 käyttää myös \texttt{unordered\_set}-ra\-ken\-net\-ta.
-Tämä on usein hyvä tapa parantaa algoritmin
-käytännön tehokkuutta.
-Algoritmin toteutus säilyy samana ja vain tietorakenne vaihtuu.
+Tämä on helppo tapa parantaa algoritmin
+tehokkuutta, koska
+algoritmin toteutus säilyy samana ja vain tietorakenne vaihtuu.
 Uuden algoritmin aikavaativuus on $O(n)$.
 
 \subsubsection{Ratkaisu 3}
@@ -689,7 +731,7 @@ Järjestämisen aikavaativuus on $O(n \log n)$ ja
 läpikäynnin aikavaativuus on $O(n)$,
 joten kokonaisaikavaativuus on $O(n \log n)$.
 
-\subsubsection{Vertailu}
+\subsubsection{Tehokkuusvertailu}
 
 Seuraavassa taulukossa on mittaustuloksia
 äskeisten algoritmien tehokkuudesta,
@@ -707,14 +749,14 @@ $5 \cdot 10^6$ & $10{,}0$ s & $2{,}3$ s & $0{,}9$ s \\
 \end{tabular}
 \end{center}
 
-Ensimmäinen havainto on, että rakenteiden
-\texttt{set} ja \texttt{unordered\_set}
-tehokkuudessa on merkittävä ero:
-rakennetta \texttt{unordered\_set}
-käyttävä ratkaisu 2 on testitapauksesta
-riippuen 4–5 kertaa nopeampi
-kuin muuten samanlainen ratkaisu 1,
-joka käyttää \texttt{set}-rakennetta.
+Ratkaisut 1 ja 2 ovat muuten samanlaisia,
+mutta ratkaisu 1 käyttää \texttt{set}-rakennetta,
+kun taas ratkaisu 2 käyttää
+\texttt{unordered\_set}-rakennetta.
+Tässä tapauksessa tällä valinnalla on
+merkittävä vaikutus suoritusaikaan,
+koska ratkaisu 2 on 4–5 kertaa
+nopeampi kuin ratkaisu 1.
 
 Tehokkain ratkaisu on kuitenkin järjestämistä
 käyttävä ratkaisu 3, joka on vielä puolet
@@ -723,12 +765,10 @@ Kiinnostavaa on, että sekä ratkaisun 1 että
 ratkaisun 3 aikavaativuus on $O(n \log n)$,
 mutta siitä huolimatta
 ratkaisu 3 vie aikaa vain kymmenesosan.
-
-Syynä nopeuseroon on, että
-ratkaisussa 3 järjestäminen on kevyt
+Tämän voi selittää sillä, että
+järjestäminen on kevyt
 operaatio ja se täytyy tehdä vain kerran
-algoritmin alussa, minkä jälkeen loppuosan
-aikavaativuus on lineaarinen.
-Ratkaisu 1 puolestaan pitää yllä monimutkaista
+ratkaisussa 3 algoritmin alussa,
+minkä jälkeen algoritmin loppuosa on lineaarinen.
+Ratkaisu 1 taas pitää yllä monimutkaista
 tasapainoista binääripuuta koko algoritmin ajan.
-
