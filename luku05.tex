@@ -21,15 +21,13 @@ tehtävään.
 
 \index{osajoukko@osajoukko}
 
-Joukon osajoukkoja ovat kaikki mahdolliset
-tavat valita osa joukon alkioista.
-Kun joukossa on $n$ alkiota,
-sillä on $2^n$ osajoukkoa.
-Esimerkiksi joukon $\{1,2,3\}$
-osajoukot ovat $\emptyset$,
+Usein esiintyvä tehtävä on käydä läpi
+kaikki joukon $\{1,2,\ldots,n\}$ osajoukot,
+joita on yhteensä $2^n$ kappaletta.
+Esimerkiksi jos joukko on $\{1,2,3\}$,
+sen osajoukot ovat $\emptyset$,
 $\{1\}$, $\{2\}$, $\{3\}$,
-$\{1,2\}$, $\{1,3\}$, $\{2,3\}$ ja $\{1,2,3\}$,
-missä $\emptyset$ on tyhjä joukko.
+$\{1,2\}$, $\{1,3\}$, $\{2,3\}$ ja $\{1,2,3\}$.
 
 \subsubsection{Menetelmä 1}
 
@@ -39,7 +37,7 @@ Seuraava funktio \texttt{haku} muodostaa
 joukon $\{1,2,\ldots,n\}$ osajoukot.
 Funktio pitää yllä vektoria \texttt{v},
 johon se kokoaa osajoukossa olevat luvut.
-Osajoukkojen muodostus alkaa
+Osajoukkojen muodostaminen alkaa
 tekemällä funktiokutsu \texttt{haku(1)}.
 
 \begin{lstlisting}
@@ -62,8 +60,8 @@ joko luku $k$ lisätään tai ei lisätä osajoukkoon.
 Aina kun $k=n+1$, kaikki luvut on käyty läpi
 ja yksi osajoukko on muodostettu.
 
-Esimerkiksi kun $n=3$, funktion suoritus etenee
-seuraavan kuvan mukaisesti.
+Esimerkiksi kun $n=3$, funktiokutsut
+muodostavat seuraavan kuvan mukaisen puun.
 Joka kutsussa 
 vasen haara jättää luvun pois osajoukosta
 ja oikea haara lisää sen osajoukkoon.
@@ -129,12 +127,12 @@ joka taas vastaa lukua väliltä $0 \ldots 2^n-1$.
 Bittiesityksen ykkösbitit ilmaisevat,
 mitkä joukon alkiot on valittu osajoukkoon.
 
-Tarkastellaan esimerkiksi joukkoa $\{1,2,3,4,5\}$.
-Nyt jokaista joukon osajoukkoa vastaa jokin
-5 bitin jono.
-Esimerkiksi osajoukon $\{2,3,5\}$ bittiesitys on 01101,
-jossa bitit 1 ja 4 ovat nollia
-ja bitit 2, 3, ja 5 ovat ykkösiä.
+Tavallinen käytäntö on tulkita kokonaisluvun
+bittiesitys osajoukkona niin,
+että alkio $k$ kuuluu osajoukkoon,
+jos lopusta lukien $k$. bitti on 1.
+Esimerkiksi luvun 25 bittiesitys on 11001,
+mikä vastaa osajoukkoa $\{1,4,5\}$.
 
 Seuraava koodi käy läpi $n$ alkion joukon
 osajoukkojen bittiesitykset:
@@ -164,10 +162,9 @@ for (int b = 0; b < (1<<n); b++) {
 
 \index{permutaatio@permutaatio}
 
-Joukon permutaatiot ovat alkioiden mahdolliset
-järjestykset.
-Kun joukossa on $n$ alkiota,
-permutaatioita on kaikkiaan $n!$.
+Seuraava tehtävämme on käydä läpi
+kaikki joukon $\{1,2,\ldots,n\}$ permutaatiot,
+joita on yhteensä $n!$ kappaletta.
 Esimerkiksi joukon $\{1,2,3\}$
 permutaatiot ovat $(1,2,3)$, $(1,3,2)$,
 $(2,1,3)$, $(2,3,1)$, $(3,1,2)$ ja $(3,2,1)$.
@@ -349,10 +346,10 @@ void haku(int y) {
         return;
     }
     for (int x = 0; x < n; x++) {
-        if (xx[x] || d1[x+y] || d2[x-y+n-1]) continue;
-        xx[x] = d1[x+y] = d2[x-y+n-1] = 1;
+        if (r1[x] || r2[x+y] || r3[x-y+n-1]) continue;
+        r1[x] = r2[x+y] = r3[x-y+n-1] = 1;
         haku(y+1);
-        xx[x] = d1[x+y] = d2[x-y+n-1] = 0;
+        r1[x] = r2[x+y] = r3[x-y+n-1] = 0;
     }
 }
 \end{lstlisting}
@@ -369,18 +366,36 @@ kun $0 \le y < n$.
 Jos taas $y=n$, yksi ratkaisu on valmis
 ja funktio kasvattaa muuttujaa $c$.
 
-Taulukko \texttt{xx} pitää kirjaa,
+Taulukko \texttt{r1} pitää kirjaa,
 millä laudan pystyriveillä on jo kuningatar.
-Vastaavasti taulukot \texttt{d1} ja \texttt{d2}
+Vastaavasti taulukot \texttt{r2} ja \texttt{r3}
 pitävät kirjaa vinoriveistä.
 Tällaisille riveille ei voi laittaa enää toista
 kuningatarta.
 Esimerkiksi $4 \times 4$ -laudan tapauksessa
-vinorivit on numeroitu seuraavasti:
+rivit on numeroitu seuraavasti:
 
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
+    \draw (0-6, 0) grid (4-6, 4);
+    \node at (-6+0.5,3.5) {$0$};
+    \node at (-6+1.5,3.5) {$1$};
+    \node at (-6+2.5,3.5) {$2$};
+    \node at (-6+3.5,3.5) {$3$};
+    \node at (-6+0.5,2.5) {$0$};
+    \node at (-6+1.5,2.5) {$1$};
+    \node at (-6+2.5,2.5) {$2$};
+    \node at (-6+3.5,2.5) {$3$};
+    \node at (-6+0.5,1.5) {$0$};
+    \node at (-6+1.5,1.5) {$1$};
+    \node at (-6+2.5,1.5) {$2$};
+    \node at (-6+3.5,1.5) {$3$};
+    \node at (-6+0.5,0.5) {$0$};
+    \node at (-6+1.5,0.5) {$1$};
+    \node at (-6+2.5,0.5) {$2$};
+    \node at (-6+3.5,0.5) {$3$};
+
     \draw (0, 0) grid (4, 4);
     \node at (0.5,3.5) {$0$};
     \node at (1.5,3.5) {$1$};
@@ -417,8 +432,9 @@ vinorivit on numeroitu seuraavasti:
     \node at (8.5,0.5) {$2$};
     \node at (9.5,0.5) {$3$};
 
-    \node at (2,-1) {\texttt{d1}};
-    \node at (8,-1) {\texttt{d2}};
+    \node at (-4,-1) {\texttt{r1}};
+    \node at (2,-1) {\texttt{r2}};
+    \node at (8,-1) {\texttt{r3}};
 
   \end{scope}
 \end{tikzpicture}
@@ -454,7 +470,7 @@ Esimerkiksi $7 \times 7$ -ruudukossa on
 oikeaan alakulmaan, joista yksi on seuraava:
 
 \begin{center}
-\begin{tikzpicture}[scale=.65]
+\begin{tikzpicture}[scale=.55]
   \begin{scope}
     \draw (0, 0) grid (7, 7);
     \draw[thick,->] (0.5,6.5) -- (0.5,4.5) -- (2.5,4.5) --
@@ -500,8 +516,45 @@ rekursiokutsuja: 76 miljardia
 Reitin ensimmäinen askel on joko alaspäin
 tai oikealle. Tästä valinnasta seuraavat tilanteet
 ovat symmetrisiä ruudukon lävistäjän suhteen.
-Niinpä voimme mennä aina ensin alaspäin
-ja kertoa lopuksi reittien määrä 2:lla.
+Esimerkiksi seuraavat ratkaisut ovat
+symmetrisiä keskenään:
+
+\begin{center}
+\begin{tabular}{ccc}
+\begin{tikzpicture}[scale=.55]
+  \begin{scope}
+    \draw (0, 0) grid (7, 7);
+    \draw[thick,->] (0.5,6.5) -- (0.5,4.5) -- (2.5,4.5) --
+          (2.5,3.5) -- (0.5,3.5) -- (0.5,0.5) --
+          (3.5,0.5) -- (3.5,1.5) -- (1.5,1.5) --
+          (1.5,2.5) -- (4.5,2.5) -- (4.5,0.5) --
+          (5.5,0.5) -- (5.5,3.5) -- (3.5,3.5) --
+          (3.5,5.5) -- (1.5,5.5) -- (1.5,6.5) --
+          (4.5,6.5) -- (4.5,4.5) -- (5.5,4.5) --
+          (5.5,6.5) -- (6.5,6.5) -- (6.5,0.5);
+  \end{scope}
+\end{tikzpicture}
+& \hspace{20px}
+& 
+\begin{tikzpicture}[scale=.55]
+  \begin{scope}[yscale=1,xscale=-1,rotate=-90]
+    \draw (0, 0) grid (7, 7);
+    \draw[thick,->] (0.5,6.5) -- (0.5,4.5) -- (2.5,4.5) --
+          (2.5,3.5) -- (0.5,3.5) -- (0.5,0.5) --
+          (3.5,0.5) -- (3.5,1.5) -- (1.5,1.5) --
+          (1.5,2.5) -- (4.5,2.5) -- (4.5,0.5) --
+          (5.5,0.5) -- (5.5,3.5) -- (3.5,3.5) --
+          (3.5,5.5) -- (1.5,5.5) -- (1.5,6.5) --
+          (4.5,6.5) -- (4.5,4.5) -- (5.5,4.5) --
+          (5.5,6.5) -- (6.5,6.5) -- (6.5,0.5);
+  \end{scope}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+
+Tämän ansiosta voimme tehdä päätöksen,
+että reitin ensimmäinen askel on alaspäin,
+ja kertoa lopuksi reittien määrän 2:lla.
 
 \begin{itemize}
 \item
@@ -515,8 +568,22 @@ rekursiokutsuja: 38 miljardia
 Jos reitti menee oikean alakulman ruutuun ennen kuin
 se on käynyt kaikissa muissa ruuduissa,
 siitä ei voi mitenkään enää saada kelvollista ratkaisua.
-Niinpä voimme hylätä haun aikana kaikki tällaiset reitit.
+Näin on esimerkiksi seuraavassa tilanteessa:
 
+\begin{center}
+\begin{tikzpicture}[scale=.55]
+  \begin{scope}
+    \draw (0, 0) grid (7, 7);
+    \draw[thick,->] (0.5,6.5) -- (0.5,4.5) -- (2.5,4.5) --
+          (2.5,3.5) -- (0.5,3.5) -- (0.5,0.5) --
+          (3.5,0.5) -- (3.5,1.5) -- (1.5,1.5) --
+          (1.5,2.5) -- (4.5,2.5) -- (4.5,0.5) --
+          (6.5,0.5);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+Niinpä voimme keskeyttää hakuhaaran heti,
+jos tulemme oikean alakulman ruutuun liian aikaisin.
 \begin{itemize}
 \item
 suoritusaika: 119 sekuntia
@@ -529,10 +596,12 @@ rekursiokutsuja: 20 miljardia
 Jos reitti osuu seinään niin, että kummallakin puolella
 on ruutu, jossa reitti ei ole vielä käynyt,
 ruudukko jakautuu kahteen osaan.
-Näin on esimerkiksi seuraavassa tilanteessa:
+Esimerkiksi seuraavassa tilanteessa
+sekä vasemmalla että
+oikealla puolella on tyhjä ruutu:
 
 \begin{center}
-\begin{tikzpicture}[scale=.65]
+\begin{tikzpicture}[scale=.55]
   \begin{scope}
     \draw (0, 0) grid (7, 7);
     \draw[thick,->] (0.5,6.5) -- (0.5,4.5) -- (2.5,4.5) --
@@ -543,9 +612,8 @@ Näin on esimerkiksi seuraavassa tilanteessa:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
 Nyt ei ole enää mahdollista käydä kaikissa ruuduissa,
-joten voimme hylätä kaikki tällaiset reitit.
+joten voimme keskeyttää hakuhaaran.
 Tämä optimointi on hyvin hyödyllinen:
 
 \begin{itemize}
@@ -558,11 +626,30 @@ rekursiokutsuja: 221 miljoonaa
 \subsubsection{Optimointi 4}
 
 Äskeisen optimoinnin ideaa voi yleistää:
+ruudukko jakaantuu kahteen osaan,
 jos nykyisen ruudun ylä- ja alapuolella on
-seinä tai aiemmin käyty ruutu
-sekä vasemmalla ja oikealla on
-vielä käymätön ruutu (tai päinvastoin),
-voimme hylätä reitin.
+tyhjä ruutu sekä vasemmalla ja oikealla
+puolella on seinä tai aiemmin käyty ruutu
+(tai päinvastoin).
+
+Esimerkiksi seuraavassa tilanteessa
+nykyisen ruudun ylä- ja alapuolella on
+tyhjä ruutu eikä reitti voi enää edetä
+molempiin ruutuihin:
+\begin{center}
+\begin{tikzpicture}[scale=.55]
+  \begin{scope}
+    \draw (0, 0) grid (7, 7);
+    \draw[thick,->] (0.5,6.5) -- (0.5,4.5) -- (2.5,4.5) --
+          (2.5,3.5) -- (0.5,3.5) -- (0.5,0.5) --
+          (3.5,0.5) -- (3.5,1.5) -- (1.5,1.5) --
+          (1.5,2.5) -- (4.5,2.5) -- (4.5,0.5) --
+          (5.5,0.5) -- (5.5,4.5) -- (3.5,4.5);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+Haku tehostuu entisestään, kun keskeytämme
+hakuhaaran kaikissa tällaisissa tapauksissa:
 
 \begin{itemize}
 \item
@@ -577,7 +664,7 @@ mistä lähdimme liikkeelle.
 Alkuperäinen algoritmi vei aikaa 483 sekuntia,
 ja nyt optimointien jälkeen algoritmi vie aikaa
 vain 0{,}6 sekuntia.
-Optimointien ansiosta algoritmin nopeutui
+Optimointien ansiosta algoritmi nopeutui
 siis lähes 1000-kertaisesti.
 
 Tämä on yleinen ilmiö peruuttavassa haussa,
@@ -596,8 +683,15 @@ koska ne karsivat eniten haaroja.
 jossa hakutehtävä jaetaan kahteen yhtä suureen osaan.
 Kumpaankin osaan tehdään erillinen haku,
 ja lopuksi hakujen tulokset yhdistetään.
-Puolivälihaun hyötynä on, että sen avulla voi
-parantaa haun aikavaativuutta.
+
+Puolivälihaun käyttäminen edellyttää,
+että erillisten hakujen tulokset pystyy
+yhdistämään tehokkaasti.
+Tällöin puolivälihaku on tehokkaampi
+kuin yksi haku, joka käy läpi koko hakualueen.
+Tyypillisesti puolivälihaku tehostaa algoritmia
+niin, että aikavaativuuden kertoimesta $2^n$
+tulee kerroin $2^{n/2}$.
 
 \begin{samepage}
 Tutustumme puolivälihakuun seuraavan tehtävän kautta:
@@ -629,7 +723,7 @@ Tämän jälkeen riittää tarkastaa,
 onko mahdollista valita yksi luku listasta $S_A$
 ja toinen luku listasta $S_B$ niin,
 että lukujen summa on $x$.
-Tämän on mahdollista tarkalleen silloin,
+Tämä on mahdollista tarkalleen silloin,
 kun alkuperäisen listan luvuista saa summan $x$.
 
 Tarkastellaan esimerkkiä,
@@ -654,10 +748,10 @@ valitsemalla kummastakin listasta yksi luku.
 
 Vaikka aikavaativuudet $O(2^n)$ ja $O(2^{n/2})$
 muistuttavat toisiaan, niiden ero on merkittävä.
-Vakiokertoimilla \emph{on} siis väliä, jos ne esiintyvät
+Vakiokertoimilla \emph{on} siis väliä, kun ne esiintyvät
 potenssin eksponentissa.
 Esimerkiksi jos $n=40$, $O(2^n)$-algoritmin suoritus
-veisi tunteja aikaa, kun taas $O(2^{n/2})$
+veisi tunteja aikaa, kun taas $O(2^{n/2})$-algoritmi
 valmistuu sekunnin murto-osassa.
 
 

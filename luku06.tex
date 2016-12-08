@@ -207,7 +207,7 @@ olisi mahdollista osallistua kahteen tapahtumaan.
 \subsubsection*{Algoritmi 2}
 
 Toinen idea on valita aina seuraavaksi tapahtuma,
-joka alkaa mahdollisimman aikaisin.
+joka \emph{alkaa} mahdollisimman aikaisin.
 Tämä algoritmi valitsee esimerkissä tapahtumat
 \\
 \begin{center}
@@ -249,7 +249,7 @@ kaksi myöhempää tapahtumaa.
 \subsubsection*{Algoritmi 3}
 
 Kolmas idea on valita aina seuraavaksi tapahtuma,
-joka päättyy mahdollisimman aikaisin.
+joka \emph{päättyy} mahdollisimman aikaisin.
 Tämä algoritmi valitsee esimerkissä tapahtumat
 \\
 \begin{center}
@@ -352,17 +352,16 @@ ja $D$ tuottaa $-8$ pistettä,
 joten pistesumma on $-10$.
 
 Yllättävää kyllä, tehtävän optimaalinen ratkaisu
-ei riipu lainkaan deadlineista.
-Toimiva ahne strategia on
+ei riipu lainkaan deadlineista,
+vaan toimiva ahne strategia on
+yksinkertaisesti
 suorittaa tehtävät järjestyksessä keston mukaan
 lyhimmästä pisimpään.
 Syynä tähän on, että jos missä tahansa vaiheessa
 suoritetaan peräkkäin kaksi tehtävää,
 joista ensimmäinen kestää toista kauemmin,
 tehtävien järjestyksen vaihtaminen parantaa ratkaisua.
-
 Esimerkiksi jos peräkkäin ovat tehtävät
-
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -381,9 +380,7 @@ Esimerkiksi jos peräkkäin ovat tehtävät
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
 ja $a>b$, niin järjestyksen muuttaminen muotoon
-
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -402,7 +399,6 @@ ja $a>b$, niin järjestyksen muuttaminen muotoon
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
 antaa $X$:lle $b$ pistettä vähemmän ja $Y$:lle $a$ pistettä enemmän,
 joten kokonaismuutos pistemäärään on $a-b > 0$.
 Optimiratkaisussa
@@ -443,7 +439,6 @@ $x$:n pienentäminen pienentää summaa.
 Niinpä $x$ kannattaa siirtää mahdollisimman
 lähelle mediaania eli optimiratkaisu on
 valita $x$ mediaaniksi.
-
 Jos $n$ on parillinen ja mediaaneja on kaksi,
 kumpikin mediaani sekä kaikki niiden välillä
 olevat luvut tuottavat optimaalisen ratkaisun.
@@ -463,9 +458,7 @@ jolloin summaksi tulee
 (1-4)^2+(2-4)^2+(9-4)^2+(2-4)^2+(6-4)^2=46.
 \]
 
-\noindent
-Nyt yleisessä tapauksessa
-paras valinta $x$:n arvoksi on lukujen
+Nyt paras valinta $x$:n arvoksi on lukujen
 \textit{keskiarvo}.
 Esimerkissä lukujen keskiarvo on $(1+2+9+2+6)/5=4$.
 
@@ -489,19 +482,15 @@ $x=s/n$ eli taulukon lukujen keskiarvo.
 \index{koodisana@koodisana}
 \index{binxxrikoodi@binäärikoodi}
 
-Tarkastellaan tehtävää, jossa annettuna on merkkijono ja
-sille tulee muodostaa \key{koodi},
-jossa jokaista merkkiä vastaa tietty \key{koodisana}.
-Oletetaan, että koodin tulee olla \key{binäärikoodi}
-eli koodisanojen tulee muodostua biteistä 0 ja 1.
-Tällaisen koodin avulla voidaan muodostaa merkkijonoa
-vastaava bittiesitys.
-
-Yksi mahdollisuus on muodostaa vakiopituinen
-koodi eli valita koodisanat niin,
-että jokaisen koodisanan pituus on sama.
-Esimerkiksi jos aakkostossa on neljä merkkiä,
-tarvittava koodisanan pituus on 2:
+Tarkastellaan ongelmaa, jossa
+tehtävänä on muodostaa annetulle merkkijonolle bittiesitys.
+Tämän voi tehdä käyttämällä \key{binäärikoodia},
+joka määrittää kullekin merkille
+biteistä muodostuvan \key{koodisanan}.
+Tällöin bittiesitys syntyy korvaamalla jokainen
+merkkijonon merkki vastaavalla koodisanalla.
+Esimerkiksi seuraava binäärikoodi määrittää
+koodisanat merkeille \texttt{A}–\texttt{D}:
 \begin{center}
 \begin{tabular}{rr}
 merkki & koodisana \\
@@ -512,16 +501,20 @@ merkki & koodisana \\
 \texttt{D} & 11 \\
 \end{tabular}
 \end{center}
-Nyt esimerkiksi merkkijonoa \texttt{AABACDACA}
-vastaa seuraava bittiesitys, jonka pituus on 18 bittiä:
-\[000001001011001000\]
-
+Tämä koodi on \key{vakiopituinen}
+eli jokainen koodisana on yhtä pitkä.
+Esimerkiksi merkkijonoa
+\texttt{AABACDACA} vastaa bittiesitys
+\[000001001011001000,\]
+jonka pituus on 18 bittiä.
 Bittiesitystä on kuitenkin mahdollista lyhentää
-ottamalla käyttöön koodi, jonka koodisanat voivat
-olla keskenään eripituisia.
-Ideana on valita usein esiintyville merkeille
-lyhyitä koodisanoja ja harvoin esiintyville
-merkeille pitkiä koodisanoja.
+muuttamalla koodia niin, että se soveltuu
+paremmin merkkijonon koodaamiseen.
+Ideana on muodostaa koodi, jonka koodisanat
+voivat olla keskenään eripituisia.
+Jos merkki esiintyy usein merkkijonossa,
+sen koodisana on lyhyt, ja muuten sen
+koodisana on pitkä.
 Tässä tapauksessa hyvä koodi on seuraava:
 \begin{center}
 \begin{tabular}{rr}
@@ -533,52 +526,67 @@ merkki & koodisana \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
+Tätä koodia käyttäen merkkijonoa \texttt{AABACDACA}
+vastaa bittiesitys
+\[001100101110100,\]
+jonka pituus on vain 15 bittiä.
+Paremman koodin ansiosta onnistuimme siis säästämään
+3 bittiä tilaa merkkijonon bittiesityksessä.
 
-Nyt merkkijonon \texttt{AABACDACA}
-bittiesityksen pituus on vain 15:
-\[001100101110100\]
-
-Huomaa, että koodissa ei saa esiintyä kahta koodisanaa,
-joista toinen on toisen alkuosa,
-koska alkuperäisen merkkijonon palauttaminen
-bittiesityksestä ei olisi välttämättä mahdollista.
-Esimerkiksi seuraava koodi ei ole kelvollinen:
+Huomaa, että koodin tulee olla aina sellainen,
+että mikään koodisana ei ole toisen koodisanan
+alkuosa.
+Esimerkiksi ei ole sallittua, että koodissa
+olisi molemmat koodisanat 10 ja 1011.
+Tämä rajoitus johtuu siitä,
+että haluamme myös pystyä palauttamaan
+alkuperäisen merkkijonon bittiesityksestä.
+Jos koodisana voisi olla toisen alkuosa,
+tämä ei välttämättä olisi mahdollista.
+Tarkastellaan esimerkkinä seuraavaa koodia,
+joka \emph{ei} ole kelvollinen:
 \begin{center}
 \begin{tabular}{rr}
 merkki & koodisana \\
 \hline
-\texttt{A} & 0 \\
-\texttt{B} & 00 \\
-\texttt{C} & 1 \\
-\texttt{D} & 11 \\
+\texttt{A} & 10 \\
+\texttt{B} & 11 \\
+\texttt{C} & 1011 \\
+\texttt{D} & 111 \\
 \end{tabular}
 \end{center}
-
-Nyt koodisana 0 on koodisanan 00 alkuosa,
-minkä vuoksi ei ole mahdollista tietää, tarkoittaako bittiesitys
-001 merkkijonoa \texttt{AAC} vai merkkijonoa \texttt{BC}.
+Tätä koodia käyttäen ei olisi mahdollista tietää,
+tarkoittaako bittiesitys 1011
+merkkijonoa \texttt{AB} vai merkkijonoa \texttt{C}.
 
 \subsubsection{Optimaalinen koodi}
 
-Optimaalinen koodi on sellainen, jossa merkkijonon bittiesitys
-on mahdollisimman lyhyt.
-Esimerkiksi merkkijonon \texttt{AABACDACA} tapauksessa
-optimaalinen koodi on yllä esitetty koodi,
-jota käyttäen bittiesityksen pituus on 15.
+\key{Optimaalinen koodi} tuottaa
+merkkijonolle bittiesityksen,
+joka on lyhin mahdollinen.
+Esimerkiksi optimaalinen koodi
+merkkijonolle \texttt{AABACDACA} on
+yllä esitetty koodi,
+jota käyttäen bittiesityksen pituus on 15 bittiä.
+Ei ole olemassa koodia,
+jota käyttäen merkkijonon voisi koodata
+14 bitillä tai lyhyemmin.
 
 \key{Huffmanin koodaus} on yleinen menetelmä,
-jonka avulla voi muodostaa optimaalisen koodin merkkijonolle.
+joka muodostaa optimaalisen koodin merkkijonolle.
 Siinä on ideana muodostaa koodia vastaava binääripuu
 merkkien esiintymiskertojen perusteella.
-
 Aluksi jokaista merkkijonon merkkiä vastaa solmu,
 jonka painona on merkin esiintymiskertojen määrä merkkijonossa.
 Tämän jälkeen joka vaiheessa yhdistetään kaksi solmua,
 joiden painot ovat pienimmät.
 Näin jatketaan, kunnes koodi on valmis.
 
-Esimerkiksi merkkijonon \texttt{AABACDACA} tapauksessa
-alkutilanne on seuraava:
+Tarkastellaan nyt, miten Huffmanin koodaus
+muodostaa optimaalisen koodin merkkijonolle
+\texttt{AABACDACA}.
+Alkutilanteessa on neljä solmua,
+jotka vastaavat merkkijonossa olevia merkkejä:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -622,15 +630,15 @@ Tuloksena on:
 Tämän jälkeen yhdistetään solmut, joiden paino on 2:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (0,0) {$5$};
-\node[draw, circle] (3) at (2,0) {$2$};
+\node[draw, circle] (1) at (1,0) {$5$};
+\node[draw, circle] (3) at (3,1) {$2$};
 \node[draw, circle] (2) at (4,0) {$1$};
 \node[draw, circle] (4) at (6,0) {$1$};
 \node[draw, circle] (5) at (5,1) {$2$};
 \node[draw, circle] (6) at (4,2) {$4$};
 
-\node[color=blue] at (0,-0.75) {\texttt{A}};
-\node[color=blue] at (2,-0.75) {\texttt{C}};
+\node[color=blue] at (1,-0.75) {\texttt{A}};
+\node[color=blue] at (3,1-0.75) {\texttt{C}};
 \node[color=blue] at (4,-0.75) {\texttt{B}};
 \node[color=blue] at (6,-0.75) {\texttt{D}};
 
@@ -643,16 +651,16 @@ Tämän jälkeen yhdistetään solmut, joiden paino on 2:
 Lopuksi yhdistetään kaksi viimeistä solmua:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (0,0) {$5$};
-\node[draw, circle] (3) at (2,0) {$2$};
+\node[draw, circle] (1) at (2,2) {$5$};
+\node[draw, circle] (3) at (3,1) {$2$};
 \node[draw, circle] (2) at (4,0) {$1$};
 \node[draw, circle] (4) at (6,0) {$1$};
 \node[draw, circle] (5) at (5,1) {$2$};
 \node[draw, circle] (6) at (4,2) {$4$};
 \node[draw, circle] (7) at (3,3) {$9$};
 
-\node[color=blue] at (0,-0.75) {\texttt{A}};
-\node[color=blue] at (2,-0.75) {\texttt{C}};
+\node[color=blue] at (2,2-0.75) {\texttt{A}};
+\node[color=blue] at (3,1-0.75) {\texttt{C}};
 \node[color=blue] at (4,-0.75) {\texttt{B}};
 \node[color=blue] at (6,-0.75) {\texttt{D}};
 
@@ -665,8 +673,9 @@ Lopuksi yhdistetään kaksi viimeistä solmua:
 \end{tikzpicture}
 \end{center}
 
-Tuloksena olevasta puusta saadaan kutakin merkkiä vastaava
-koodisana kulkemalla puun huipulta alas merkkiin asti.
+Nyt kaikki solmut ovat puussa, joten koodi on valmis.
+Kutakin merkkiä vastaava koodisana saadaan
+kulkemalla puun huipulta alas merkkiin asti.
 Aina vasemmalle mentäessä koodisanaan tulee bitti 0
 ja oikealle mentäessä koodisanaan tulee bitti 1.
 Tuloksena on optimaalinen koodi:
@@ -681,4 +690,112 @@ merkki & koodisana \\
 \end{tabular}
 \end{center}
 
+\subsubsection{Miksi algoritmi toimii?}
 
+Huffmanin koodaus on ahne algoritmi, koska se
+yhdistää aina kaksi solmua, joiden painot ovat
+pienimmät.
+Miksi on varmaa, että tämä menetelmä tuottaa
+aina optimaalisen koodin?
+
+Merkitään $c(x)$ merkin $x$ esiintymiskertojen
+määrää merkkijonossa sekä $s(x)$
+merkkiä $x$ vastaavan koodisanan pituutta.
+Näitä merkintöjä käyttäen merkkijonon
+bittiesityksen pituus on
+\[\sum_x c(x) \cdot s(x),\]
+missä summa käy läpi kaikki merkkijonon merkit.
+Esimerkiksi äskeisessä esimerkissä
+bittiesityksen pituus on
+\[5 \cdot 1 + 1 \cdot 3 + 2 \cdot 2 + 1 \cdot 3 = 15.\]
+Hyödyllinen havainto on, että $s(x)$ on yhtä suuri kuin
+merkkiä $x$ vastaavan solmun \emph{syvyys} puussa
+eli matka puun huipulta solmuun.
+
+Perustellaan ensin, miksi optimaalista koodia vastaa
+aina binääripuu, jossa jokaisesta solmusta lähtee
+alaspäin joko kaksi haaraa tai ei yhtään haaraa.
+Tehdään vastaoletus, että jostain solmusta lähtisi
+alaspäin vain yksi haara.
+Esimerkiksi seuraavassa puussa tällainen tilanne on solmussa $a$:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle, minimum size=20pt] (3) at (3,1) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (2) at (4,0) {$b$};
+\node[draw, circle, minimum size=20pt] (5) at (5,1) {$a$};
+\node[draw, circle, minimum size=20pt] (6) at (4,2) {\phantom{$a$}};
+
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (3) -- (6);
+\path[draw,thick,-] (5) -- (6);
+\end{tikzpicture}
+\end{center}
+Tällainen solmu $a$ on kuitenkin aina turha, koska se
+tuo vain yhden bitin lisää polkuihin, jotka kulkevat
+solmun kautta, eikä sen avulla voi erottaa kahta
+koodisanaa toisistaan. Niinpä kyseisen solmun voi poistaa
+puusta, minkä seurauksena syntyy parempi koodi,
+eli optimaalista koodia vastaavassa puussa ei voi olla
+solmua, josta lähtee vain yksi haara.
+
+Perustellaan sitten, miksi on joka vaiheessa optimaalista
+yhdistää kaksi solmua, joiden painot ovat pienimmät.
+Tehdään vastaoletus, että solmun $a$ paino on pienin,
+mutta sitä ei saisi yhdistää aluksi toiseen solmuun,
+vaan sen sijasta tulisi yhdistää solmu $b$
+ja jokin toinen solmu:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle, minimum size=20pt] (1) at (0,0) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (2) at (-2,-1) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (3) at (2,-1) {$a$};
+\node[draw, circle, minimum size=20pt] (4) at (-3,-2) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (5) at (-1,-2) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (8) at (-2,-3) {$b$};
+\node[draw, circle, minimum size=20pt] (9) at (0,-3) {\phantom{$a$}};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (2) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (5) -- (8);
+\path[draw,thick,-] (5) -- (9);
+\end{tikzpicture}
+\end{center}
+Solmuille $a$ ja $b$ pätee
+$c(a) \le c(b)$ ja $s(a) \le s(b)$.
+Solmut aiheuttavat bittiesityksen pituuteen lisäyksen
+\[c(a) \cdot s(a) + c(b) \cdot s(b).\]
+Tarkastellaan sitten toista tilannetta,
+joka on muuten samanlainen kuin ennen,
+mutta solmut $a$ ja $b$ on vaihdettu keskenään:
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\node[draw, circle, minimum size=20pt] (1) at (0,0) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (2) at (-2,-1) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (3) at (2,-1) {$b$};
+\node[draw, circle, minimum size=20pt] (4) at (-3,-2) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (5) at (-1,-2) {\phantom{$a$}};
+\node[draw, circle, minimum size=20pt] (8) at (-2,-3) {$a$};
+\node[draw, circle, minimum size=20pt] (9) at (0,-3) {\phantom{$a$}};
+
+\path[draw,thick,-] (1) -- (2);
+\path[draw,thick,-] (1) -- (3);
+\path[draw,thick,-] (2) -- (4);
+\path[draw,thick,-] (2) -- (5);
+\path[draw,thick,-] (5) -- (8);
+\path[draw,thick,-] (5) -- (9);
+\end{tikzpicture}
+\end{center}
+Osoittautuu, että tätä puuta vastaava koodi on
+\emph{yhtä hyvä tai parempi} kuin alkuperäinen koodi, joten vastaoletus
+on väärin ja Huffmanin koodaus
+toimiikin oikein, jos se yhdistää aluksi solmun $a$
+jonkin solmun kanssa.
+Tämän perustelee seuraava epäyhtälöketju:
+\[\begin{array}{rcl}
+c(b) & \ge & c(a) \\
+c(b)\cdot(s(b)-s(a)) & \ge & c(a)\cdot (s(b)-s(a)) \\
+c(b)\cdot s(b)-c(b)\cdot s(a) & \ge & c(a)\cdot s(b)-c(a)\cdot s(a) \\
+c(a)\cdot s(a)+c(b)\cdot s(b) & \ge & c(a)\cdot s(b)+c(b)\cdot s(a) \\
+\end{array}\]
