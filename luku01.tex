@@ -95,8 +95,8 @@ int main() {
 Koodin alussa oleva \texttt{\#include}-rivi
 on \texttt{g++}-kääntäjän tarjoama tapa
 ottaa mukaan kaikki standardikirjaston sisältö.
-Tämän ansiosta koodissa ei tarvitse erikseen
-ottaa mukaan kirjastoja \texttt{iostream},
+Tämän ansiosta koodissa ei tarvitse ottaa
+erikseen mukaan kirjastoja \texttt{iostream},
 \texttt{vector}, \texttt{algorithm}, jne.,
 vaan ne kaikki ovat käytettävissä automaattisesti.
 
@@ -158,7 +158,7 @@ molemmat seuraavat syötteet:
 123    456
 apina
 \end{lstlisting}
-Tulostaminen tapahtuu puolestaan seuraavasti
+Tulostaminen tapahtuu puolestaan
 \texttt{cout}-virran kautta:
 \begin{lstlisting}
 int a = 123, b = 456;
@@ -235,6 +235,8 @@ tiedostoon ''output.txt''.
 
 \index{kokonaisluku@kokonaisluku}
 
+\subsubsection{Kokonaisluvut}
+
 Tavallisin kokonaislukutyyppi kisakoodauksessa on \texttt{int}.
 Tämä on 32-bittinen tyyppi,
 jonka sallittu lukuväli on $-2^{31} \ldots 2^{31}-1$
@@ -270,9 +272,10 @@ Ongelman voi korjata vaihtamalla muuttujan \texttt{a}
 tyypiksi \texttt{long long} tai kirjoittamalla
 laskun muodossa \texttt{(long long)a*a}.
 
-Yleensä tehtävät laaditaan niin, että tyyppi
-\texttt{long long} riittää niiden ratkaisuun.
-On kuitenkin hyvä tietää, että \texttt{g++}-kääntäjä sisältää myös 128-bittisen
+Yleensä tehtävät laaditaan niin, että tyypin
+\texttt{long long} käyttäminen riittää.
+On kuitenkin hyvä tietää, että
+\texttt{g++}-kääntäjä tarjoaa myös 128-bittisen
 tyypin \texttt{\_\_int128\_t}, jonka lukuväli on
 $-2^{127} \ldots 2^{127}-1$ eli noin $-10^{38} \ldots 10^{38}$.
 Tämä tyyppi ei kuitenkaan ole käytettävissä kaikissa kisajärjestelmissä.
@@ -405,7 +408,7 @@ mahdollisimman nopeasti.
 Monet kisakoodarit käyttävätkin lyhennysmerkintöjä
 tyypeille ja muille koodin osille.
 
-\subsubsection{Tyyppimääritelmät}
+\subsubsection{Tyyppinimet}
 \index{typedef@\texttt{typedef}}
 Komennolla \texttt{typedef} voi antaa lyhyemmän
 nimen tyypille.
@@ -414,12 +417,13 @@ joten tyypille voi antaa lyhyemmän nimen \texttt{ll}:
 \begin{lstlisting}
 typedef long long ll;
 \end{lstlisting}
-Tämän jälkeen seuraavat kaksi koodia tarkoittavat samaa:
+Tämän jälkeen koodin
 \begin{lstlisting}
 long long a = 123456789;
 long long b = 987654321;
 cout << a*b << "\n";
 \end{lstlisting}
+voi lyhentää seuraavasti:
 \begin{lstlisting}
 ll a = 123456789;
 ll b = 987654321;
@@ -470,7 +474,6 @@ Makro on mahdollista määritellä myös niin,
 että sille voi antaa parametreja.
 Tämän ansiosta makrolla voi lyhentää esimerkiksi
 komentorakenteita.
-
 Määritellään esimerkiksi seuraava makro:
 \begin{lstlisting}
 #define REP(i,a,b) for (int i = a; i <= b; i++)
@@ -536,7 +539,7 @@ oleva polynomi. Esimerkiksi
 \[\sum_{x=1}^n x = 1+2+3+\ldots+n = \frac{n(n+1)}{2}\]
 ja
 \[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2 = \frac{n(n+1)(2n+1)}{6}.\]
-\noindent
+
 \key{Aritmeettinen summa} on summa, \index{aritmeettinen summa@aritmeettinen summa}
 jossa jokaisen vierekkäisen luvun erotus on vakio.
 Esimerkiksi
@@ -545,7 +548,7 @@ on aritmeettinen summa,
 jossa vakio on 4.
 Aritmeettinen summa voidaan laskea kaavalla
 \[\frac{n(a+b)}{2},\]
-jossa summan ensimmäinen luku on $a$,
+missä summan ensimmäinen luku on $a$,
 viimeinen luku on $b$ ja lukujen määrä on $n$.
 Esimerkiksi
 \[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
@@ -553,18 +556,15 @@ Kaava perustuu siihen, että summa muodostuu $n$ luvusta
 ja luvun suuruus on keskimäärin $(a+b)/2$.
 
 \index{geometrinen summa@geometrinen summa}
-~\\
-\noindent
 \key{Geometrinen summa} on summa,
 jossa jokaisen vierekkäisen luvun suhde on vakio.
 Esimerkiksi
 \[3+6+12+24\]
 on geometrinen summa,
 jossa vakio on 2.
-Siinä pätee $6/3=2$, $12/6=2$ ja $24/12=2$.
 Geometrinen summa voidaan laskea kaavalla
 \[\frac{bx-a}{x-1},\]
-jossa summan ensimmäinen luku on $a$,
+missä summan ensimmäinen luku on $a$,
 viimeinen luku on $b$ ja vierekkäisten lukujen suhde on $x$.
 Esimerkiksi
 \[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
@@ -587,15 +587,16 @@ Geometrisen summan sukulainen on
 \key{Harmoninen summa} on summa muotoa
 \[ \sum_{x=1}^n \frac{1}{x} = 1+\frac{1}{2}+\frac{1}{3}+\ldots+\frac{1}{n}.\]
 
-Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
-Summaa voi näet arvioida ylöspäin
+Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$,
+koska summaa voi arvioida ylöspäin
 muuttamalla jokaista termiä $1/k$ niin,
 että $k$:ksi tulee alempi 2:n potenssi.
 Esimerkiksi tapauksessa $n=6$ arvioksi tulee
 \[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6} \le
 1+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{4}.\]
-Tämän seurauksena summa jakaantuu $\log_2(n)+1$ samaa
-rationaalilukua toistavaan osaan, joista jokaisen summa on enintään 1.
+Tämän seurauksena summa jakaantuu $\log_2(n)+1$ osaan
+($1$, $2 \cdot 1/2$, $4 \cdot 1/4$, jne.),
+joista jokaisen summa on enintään 1.
 
 \subsubsection{Joukko-oppi}
 
@@ -605,6 +606,7 @@ rationaalilukua toistavaan osaan, joista jokaisen summa on enintään 1.
 \index{yhdiste@yhdiste}
 \index{erotus@erotus}
 \index{osajoukko@osajoukko}
+\index{perusjoukko}
 
 \key{Joukko} on kokoelma alkioita.
 Esimerkiksi joukko
@@ -631,16 +633,24 @@ Esimerkiksi jos $A=\{1,2,5\}$ ja $B=\{2,4\}$,
 niin $A \cap B = \{2\}$.
 \item \key{Yhdiste} $A \cup B$ sisältää alkiot,
 jotka ovat ainakin toisessa joukoista $A$ ja $B$.
-Esimerkin tilanteessa $A \cup B = \{1,2,4,5\}$.
+Esimerkiksi jos $A=\{3,7\}$ ja $B=\{2,3,8\}$,
+niin $A \cup B = \{2,3,7,8\}$.
 \item \key{Komplementti} $\bar A$ sisältää alkiot,
 jotka eivät ole joukossa $A$.
-Tämän tulkinta riippuu siitä, mitkä kaikki
-alkiot ovat olemassa.
+Komplementin tulkinta riippuu siitä, mikä on
+\key{perusjoukko} eli joukko, jossa on kaikki
+mahdolliset alkiot. Esimerkiksi jos
+$A=\{1,2,5,7\}$ ja perusjoukko on $P=\{1,2,\ldots,10\}$,
+niin $\bar A = \{3,4,6,8,9,10\}$.
 \item \key{Erotus} $A \setminus B = A \cap \bar B$ sisältää alkiot,
 jotka ovat joukossa $A$ mutta eivät joukossa $B$.
-Esimerkin tilanteessa $A \setminus B = \{1,5\}$.
+Huomaa, että $B$:ssä voi olla alkioita,
+joita ei ole $A$:ssa.
+Esimerkiksi jos $A=\{2,3,7,8\}$ ja $B=\{3,5,8\}$,
+niin $A \setminus B = \{2,7\}$.
 \end{itemize}
 \end{samepage}
+
 
 Merkintä $A \subset S$ tarkoittaa,
 että $A$ on $S$:n \key{osajoukko}
@@ -653,13 +663,13 @@ $\emptyset$,
 $\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ ja $\{2,4,7\}$.
 \end{center}
 
-Usein esiintyviä joukkoja ovat seuraavat:
+Usein esiintyviä joukkoja ovat
 
 \begin{itemize}[noitemsep]
-\item $\mathbb{N}$ (luonnolliset luvut)
-\item $\mathbb{Z}$ (kokonaisluvut)
-\item $\mathbb{Q}$ (rationaaliluvut)
-\item $\mathbb{R}$ (reaaliluvut)
+\item $\mathbb{N}$ (luonnolliset luvut),
+\item $\mathbb{Z}$ (kokonaisluvut),
+\item $\mathbb{Q}$ (rationaaliluvut) ja
+\item $\mathbb{R}$ (reaaliluvut).
 \end{itemize}
 
 Luonnollisten lukujen joukko $\mathbb{N}$ voidaan määritellä
@@ -667,10 +677,11 @@ tilanteesta riippuen kahdella tavalla:
 joko $\mathbb{N}=\{0,1,2,\ldots\}$
 tai $\mathbb{N}=\{1,2,3,...\}$.
 
-Joukon voi muodostaa myös säännöllä
-\[\{f(n) : n \in S\}.\]
+Joukon voi muodostaa myös säännöllä muotoa
+\[\{f(n) : n \in S\},\]
+missä $f(n)$ on jokin funktio.
 Tällainen joukko sisältää kaikki alkiot
-muotoa $f(n)$, jossa $n$ on valittu joukosta $S$.
+$f(n)$, jossa $n$ on valittu joukosta $S$.
 Esimerkiksi joukko
 \[X=\{2n : n \in \mathbb{Z}\}\]
 sisältää kaikki parilliset kokonaisluvut.
@@ -707,8 +718,7 @@ $A$ & $B$ & $\lnot A$ & $\lnot B$ & $A \land B$ & $A \lor B$ & $A \Rightarrow B$
 
 Negaatio $\lnot A$ muuttaa lausekkeen käänteiseksi.
 Lauseke $A \land B$ on tosi, jos molemmat $A$ ja $B$ ovat tosia,
-ja lauseke $A \lor B$ on tosi, jos $A$ tai $B$ tai molemmat
-ovat tosia.
+ja lauseke $A \lor B$ on tosi, jos $A$ tai $B$ on tosi.
 Lauseke $A \Rightarrow B$ on tosi,
 jos $A$:n ollessa tosi myös $B$:n on aina tosi.
 Lauseke $A \Leftrightarrow B$ on tosi,
@@ -730,12 +740,12 @@ lauseke liittyy jollakin tavalla joukon alkioihin.
 Tavalliset kvanttorit
 ovat $\forall$ (kaikille) ja $\exists$ (on olemassa).
 Esimerkiksi
-\[\forall x (\exists y (y > x))\]
-tarkoittaa kokonaislukujen joukossa,
-että jokaiselle luvulle $x$ on olemassa
-jokin luku $y$ niin, että $y$ on $x$:ää suurempi.
-Tämän lausekkeen arvo on tosi, koska kokonaislukuja
-on äärettömästi.
+\[\forall x (\exists y (y < x))\]
+tarkoittaa, että jokaiselle joukon
+alkiolle $x$ on olemassa
+jokin joukon alkio $y$ niin, että $y$ on $x$:ää pienempi.
+Tämä lauseke on tosi kokonaislukujen joukossa,
+mutta lauseke on epätosi luonnollisten lukujen joukossa.
 
 Tässä esitettyjen merkintöjä avulla on mahdollista esittää
 monenlaisia loogisia väitteitä.
@@ -744,8 +754,7 @@ Esimerkiksi
 tarkoittaa kokonaislukujen joukossa, että jos luku $x$ ei ole alkuluku,
 niin on olemassa luvut $a$ ja $b$,
 joiden tulo on $x$ ja jotka molemmat ovat suurempia kuin 1.
-Tämänkin lausekkeen arvo on tosi.
-
+Tämän lausekkeen arvo on tosi.
 
 \subsubsection{Funktioita}
 
@@ -755,16 +764,17 @@ funktio $\lceil x \rceil$ pyöristää luvun $x$
 ylöspäin kokonaisluvuksi. Esimerkiksi
 \[ \lfloor 3/2 \rfloor = 1 \hspace{10px} \textrm{ja} \hspace{10px} \lceil 3/2 \rceil = 2.\]
 
-Funktio $\min(x_1,x_2,\ldots,x_n)$ valitsee pienimmän arvon
-ja
-funktio $\min(x_1,x_2,\ldots,x_n)$ valitsee suurimman arvon.
+Funktiot $\min(x_1,x_2,\ldots,x_n)$
+ja $\max(x_1,x_2,\ldots,x_n)$
+palauttavat pienimmän ja suurimman
+arvoista $x_1,x_2,\ldots,x_n$.
 Esimerkiksi
 \[ \min(1,2,3)=1 \hspace{10px} \textrm{ja} \hspace{10px} \max(1,2,3)=3.\]
 
 \index{kertoma@kertoma}
 
 \key{Kertoma} $n!$ määritellään
-\[\prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdots n\]
+\[\prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n\]
 eli toisin sanoen rekursiivisesti
 \[
 \begin{array}{lcl}
@@ -794,15 +804,16 @@ suljetun muodon kaava
 
 \index{logaritmi@logaritmi}
 
-\key{Logaritmi} merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
-Logaritmi on potenssilaskun käänteisoperaatio:
+Luvun $x$
+\key{logaritmi} merkitään $\log_k(x)$, missä $k$ on logaritmin kantaluku.
+Logaritmin määritelmän mukaan
 $\log_k(x)=a$ tarkalleen silloin, kun $k^a=x$.
 
 Algoritmiikassa hyödyllinen tulkinta on,
 että logaritmi $\log_k(x)$ ilmaisee, montako kertaa lukua $x$
 täytyy jakaa $k$:lla, ennen kuin tulos on 1.
-Esimerkiksi $\log_2(32)=5$, koska 2:lla jakaminen
-muuttaa lukua 32 seuraavasti:
+Esimerkiksi $\log_2(32)=5$,
+koska lukua 32 täytyy jakaa 2:lla 5 kertaa:
 
 \[32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \]
 
@@ -817,8 +828,8 @@ Samoin logaritmi muuttaa jakolaskun vähennyslaskuksi:
 \[\log_k(\frac{a}{b}) = \log_k(a)-\log_k(b)\]
 Lisäksi on voimassa kaava
 \[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
-jonka ansiosta logaritmeja voi laskea mille tahansa kantaluvulle
-kiinteän kantaluvun funktiolla.
+jonka ansiosta logaritmeja voi laskea mille tahansa kantaluvulle,
+jos on keino laskea logaritmeja jollekin kantaluvulle.
 
 \index{luonnollinen logaritmi@luonnollinen logaritmi}
 \index{Neperin luku@Neperin luku}

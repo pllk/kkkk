@@ -125,7 +125,8 @@ Suuntaamattomassa verkossa on Eulerin polku,
 jos kaikki kaaret ovat samassa yhtenäisessä komponentissa ja
 \begin{itemize}
 \item jokaisen solmun aste on parillinen \textit{tai}
-\item tasan kahden solmun aste on pariton.
+\item tarkalleen kahden solmun aste on pariton ja kaikkien
+muiden solmujen aste on parillinen.
 \end{itemize}
 
 Ensimmäisessä tapauksessa Eulerin polku on samalla myös Eulerin kierros.
@@ -167,14 +168,16 @@ kaikki kaaret ovat samassa vahvasti yhtenäisessä
 komponentissa ja
 \begin{itemize}
 \item jokaisen solmun lähtö- ja tuloaste on sama \textit{tai}
-\item alkusolmussa lähtöaste on yhden suurempi kuin tuloaste,
-loppusolmussa tuloaste on yhden suurempi kuin lähtöaste
+\item yhdessä solmussa lähtöaste on yhden suurempi kuin tuloaste,
+toisessa solmussa tuloaste on yhden suurempi kuin lähtöaste
 ja kaikissa muissa solmuissa lähtö- ja tuloaste on sama.
 \end{itemize}
 
 Tilanne on vastaava kuin suuntaamattomassa verkossa:
 ensimmäisessä tapauksessa Eulerin polku on myös Eulerin kierros,
-ja toisessa tapauksessa verkossa on vain Eulerin polku.
+ja toisessa tapauksessa verkossa on vain Eulerin polku,
+jonka lähtösolmussa lähtöaste on suurempi ja
+päätesolmussa tuloaste on suurempi.
 
 Esimerkiksi verkossa
 \begin{center}

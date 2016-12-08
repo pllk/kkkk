@@ -12,7 +12,7 @@ osan pisteistä tai ei pisteitä lainkaan.
 
 \key{Aikavaativuus} on kätevä tapa arvioida,
 kuinka nopeasti algoritmi toimii.
-Se arvioi algoritmin tehokkuutta funktiona,
+Se esittää algoritmin tehokkuuden funktiona,
 jonka parametrina on syötteen koko.
 Aikavaativuuden avulla algoritmista voi päätellä ennen koodaamista,
 onko se riittävän tehokas tehtävän ratkaisuun.
@@ -81,11 +81,11 @@ for (int i = 1; i <= n; i += 2) {
 }
 \end{lstlisting}
 
-Seuraavan koodin aikavaativuus on $O(n^2)$:
+Seuraavan koodin aikavaativuus on puolestaan $O(n^2)$:
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= i; j++) {
+    for (int j = i+1; j <= n; j++) {
         // koodia
     }
 }
@@ -153,7 +153,7 @@ void f(int n) {
 }
 \end{lstlisting}
 Kutsu $\texttt{f}(n)$ aiheuttaa yhteensä $n$ funktiokutsua,
-ja jokainen funktiokutsu vie vakioajan,
+ja jokainen funktiokutsu vie aikaa $O(1)$,
 joten aikavaativuus on $O(n)$.
 
 Tarkastellaan sitten seuraavaa funktiota:
@@ -282,9 +282,9 @@ että algoritmi on \emph{tehokas}.
 Useimmat tässä kirjassa esitettävät algoritmit
 ovat polynomisia.
 Silti on paljon ongelmia, joihin ei tunneta
-polynomista algoritmia eli ei mitään tehokasta
-ratkaisutapaa.
-Esimerkiksi \key{NP-vaikeat} ongelmat ovat
+polynomista algoritmia eli ongelmaa ei osata
+ratkaista tehokkaasti.
+\key{NP-vaikeat} ongelmat ovat
 tärkeä joukko ongelmia,
 joihin ei tiedetä polynomista algoritmia.
 
@@ -302,7 +302,7 @@ Oletetaan esimerkiksi, että tehtävän aikaraja on
 yksi sekunti ja syötteen koko on $n=10^5$.
 Jos algoritmin aikavaativuus on $O(n^2)$,
 algoritmi suorittaa noin $(10^5)^2=10^{10}$ komentoa.
-Tähän kuluu aikaa ainakin kymmenen sekunnin luokkaa,
+Tähän kuluu aikaa arviolta kymmeniä sekunteja,
 joten algoritmi vaikuttaa liian hitaalta tehtävän ratkaisemiseen.
 
 Käänteisesti syötteen koosta voi päätellä,
@@ -343,7 +343,7 @@ todelliseen ajankäyttöön.
 
 \index{suurin alitaulukon summa@suurin alitaulukon summa}
 
-Yleensä ohjelmointitehtävän ratkaisuun on monta
+Usein ohjelmointitehtävän ratkaisuun on monta
 luontevaa algoritmia, joiden aikavaativuudet eroavat.
 Tutustumme seuraavaksi klassiseen ongelmaan,
 jonka suoraviivaisen ratkaisun aikavaativuus on $O(n^3)$,
@@ -479,25 +479,30 @@ Tämän muutoksen jälkeen koodin aikavaativuus on $O(n^2)$.
 Yllättävää kyllä, tehtävään on olemassa myös
 $O(n)$-aikainen ratkaisu eli koodista pystyy
 karsimaan vielä yhden silmukan.
-Ratkaisun ideana on laskea taulukon jokaiseen
-kohtaan, mikä on suurin mahdollinen summa
-kyseiseen kohtaan päättyvässä alitaulukossa,
-ja valita suurin näistä summista.
+Ideana on laskea taulukon jokaiseen
+kohtaan, mikä on suurin alitaulukon
+summa, jos alitaulukko päättyy kyseiseen kohtaan
+Tämän jälkeen ratkaisu tehtävään on suurin
+näistä summista.
 
-Kun alitaulukon loppukohta $k$ on valittu,
-summan muodostamiseen on kaksi vaihtoehtoa.
-Yksi mahdollisuus on, että summassa
-on vain yksi luku: kohdassa $k$ oleva luku.
-Muussa tapauksessa summassa on ensin
-kohtaan $k-1$ päättyvän alitaulukon
-summa ja sitten kohdassa $k$ oleva luku.
+Tarkastellaan alitaulukon etsimistä,
+kun valittuna on alitaulukon loppukohta $k$.
+Vaihtoehtoja on kaksi:
+\begin{enumerate}
+\item Alitaulukossa on vain kohdassa $k$ oleva luku.
+\item Alitaulukossa on ensin jokin kohtaan $k-1$ päättyvä alitaulukko
+ja sen jälkeen kohdassa $k$ oleva luku.
+\end{enumerate}
 
-Koska tavoitteena on saada aikaan mahdollisimman
-suuri summa, jälkimmäisessä tapauksessa myös
-kohtaan $k-1$ päättyvän alitaulukon summa tulee valita niin,
-että se on mahdollisimman suuri.
+Koska tavoitteena on löytää alitaulukko,
+jonka lukujen summa on suurin,
+tapauksessa 2 myös kohtaan $k-1$ päättyvän
+alitaulukon tulee olla sellainen,
+että sen summa on suurin.
 Niinpä tehokas ratkaisu syntyy käymällä läpi
-kaikki loppukohdat $k$ järjestyksessä.
+kaikki alitaulukon loppukohdat järjestyksessä
+ja laskemalla jokaiseen kohtaan suurin
+mahdollinen kohtaan päättyvän alitaulukon summa.
 
 Seuraava koodi toteuttaa ratkaisun:
 
@@ -525,8 +530,7 @@ Seuraava taulukko näyttää, kuinka nopeasti äskeiset
 ratkaisut toimivat eri $n$:n arvoilla
 nykyaikaisella tietokoneella.
 
-Jokainen syöte on muodostettu satunnaisesti,
-ja taulukon luvut ovat välillä $-10^9 \ldots 10^9$.
+Jokaisessa testissä syöte on muodostettu satunnaisesti.
 Ajankäyttöön ei ole laskettu syötteen lukemiseen
 kuluvaa aikaa.
 
@@ -547,8 +551,9 @@ Vertailu osoittaa,
 että pienillä syötteillä kaikki algoritmit
 ovat tehokkaita,
 mutta suuremmat syötteet tuovat esille
-huomattavia eroja algoritmien suoritusajassa.
-$O(n)$-aikainen ratkaisu 3 on ainoa,
-joka pystyy ratkaisemaan kaikki syötteet
-alle 10 sekunnissa.
-
+merkittäviä eroja algoritmien suoritusajassa.
+$O(n^3)$-aikainen ratkaisu 1 alkaa hidastua,
+kun $n=10^3$, ja $O(n^2)$-aikainen ratkaisu 2
+alkaa hidastua, kun $n=10^4$.
+Vain $O(n)$-aikainen ratkaisu 3 selvittää
+suurimmatkin syötteet salamannopeasti.
