@@ -475,20 +475,20 @@ jonka nollakohdat ovat $x=0$ ja $x=2s/n$
 ja pienin arvo on näiden keskikohta
 $x=s/n$ eli taulukon lukujen keskiarvo.
 
-\section{Huffmanin koodaus}
+\section{Tiedonpakkaus}
 
-\index{Huffmanin koodaus@Huffmanin koodaus}
-\index{koodi@koodi}
-\index{koodisana@koodisana}
+\index{tiedonpakkaus}
 \index{binxxrikoodi@binäärikoodi}
+\index{koodisana@koodisana}
 
-Tarkastellaan ongelmaa, jossa
-tehtävänä on muodostaa annetulle merkkijonolle bittiesitys.
-Tämän voi tehdä käyttämällä \key{binäärikoodia},
+Tarkastellaan ongelmaa, jossa tehtävänä on
+\emph{pakata} annettu merkkijono niin,
+että se vie vähemmän tilaa.
+Käytämme tähän \key{binäärikoodia},
 joka määrittää kullekin merkille
 biteistä muodostuvan \key{koodisanan}.
-Tällöin bittiesitys syntyy korvaamalla jokainen
-merkkijonon merkki vastaavalla koodisanalla.
+Tällöin merkkijonon voi pakata
+korvaamalla jokaisen merkin vastaavalla koodisanalla.
 Esimerkiksi seuraava binäärikoodi määrittää
 koodisanat merkeille \texttt{A}–\texttt{D}:
 \begin{center}
@@ -503,19 +503,18 @@ merkki & koodisana \\
 \end{center}
 Tämä koodi on \key{vakiopituinen}
 eli jokainen koodisana on yhtä pitkä.
-Esimerkiksi merkkijonoa
-\texttt{AABACDACA} vastaa bittiesitys
+Esimerkiksi merkkijono
+\texttt{AABACDACA} on pakattuna
 \[000001001011001000,\]
-jonka pituus on 18 bittiä.
-Bittiesitystä on kuitenkin mahdollista lyhentää
-muuttamalla koodia niin, että se soveltuu
-paremmin merkkijonon koodaamiseen.
-Ideana on muodostaa koodi, jonka koodisanat
-voivat olla keskenään eripituisia.
-Jos merkki esiintyy usein merkkijonossa,
-sen koodisana on lyhyt, ja muuten sen
-koodisana on pitkä.
-Tässä tapauksessa hyvä koodi on seuraava:
+eli se vie tilaa 18 bittiä.
+Pakkausta on kuitenkin mahdollista parantaa
+ottamalla käyttöön \key{muuttuvan pituinen} koodi,
+jossa koodisanojen pituus voi vaihdella.
+Tällöin voimme antaa usein esiintyville merkeille
+lyhyen koodisanan ja harvoin esiintyville
+merkeille pitkän koodisanan.
+Osoittautuu, että yllä olevaa merkkijonoa
+silmällä pitäen \key{optimaalinen} koodi on seuraava:
 \begin{center}
 \begin{tabular}{rr}
 merkki & koodisana \\
@@ -526,12 +525,11 @@ merkki & koodisana \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
-Tätä koodia käyttäen merkkijonoa \texttt{AABACDACA}
-vastaa bittiesitys
+Tätä koodia käyttäen merkkijono on pakattuna
 \[001100101110100,\]
-jonka pituus on vain 15 bittiä.
+ja tilaa kuluu vain 15 bittiä.
 Paremman koodin ansiosta onnistuimme siis säästämään
-3 bittiä tilaa merkkijonon bittiesityksessä.
+3 bittiä tilaa pakkauksessa.
 
 Huomaa, että koodin tulee olla aina sellainen,
 että mikään koodisana ei ole toisen koodisanan
@@ -540,7 +538,7 @@ Esimerkiksi ei ole sallittua, että koodissa
 olisi molemmat koodisanat 10 ja 1011.
 Tämä rajoitus johtuu siitä,
 että haluamme myös pystyä palauttamaan
-alkuperäisen merkkijonon bittiesityksestä.
+alkuperäisen merkkijonon pakkauksen jälkeen.
 Jos koodisana voisi olla toisen alkuosa,
 tämä ei välttämättä olisi mahdollista.
 Tarkastellaan esimerkkinä seuraavaa koodia,
@@ -556,31 +554,33 @@ merkki & koodisana \\
 \end{tabular}
 \end{center}
 Tätä koodia käyttäen ei olisi mahdollista tietää,
-tarkoittaako bittiesitys 1011
+tarkoittaako pakattu merkkijono 1011
 merkkijonoa \texttt{AB} vai merkkijonoa \texttt{C}.
 
-\subsubsection{Optimaalinen koodi}
+\index{Huffmanin koodaus}
 
-\key{Optimaalinen koodi} tuottaa
-merkkijonolle bittiesityksen,
-joka on lyhin mahdollinen.
-Esimerkiksi optimaalinen koodi
-merkkijonolle \texttt{AABACDACA} on
-yllä esitetty koodi,
-jota käyttäen bittiesityksen pituus on 15 bittiä.
-Ei ole olemassa koodia,
-jota käyttäen merkkijonon voisi koodata
-14 bitillä tai lyhyemmin.
+\subsubsection{Huffmanin koodaus}
 
-\key{Huffmanin koodaus} on yleinen menetelmä,
-joka muodostaa optimaalisen koodin merkkijonolle.
-Siinä on ideana muodostaa koodia vastaava binääripuu
-merkkien esiintymiskertojen perusteella.
+\key{Huffmanin koodaus} on ahne algoritmi,
+joka muodostaa optimaalisen koodin
+merkkijonon pakkaamista varten.
+Se muodostaa merkkien esiintymiskertojen
+perustella binääripuun, josta voidaan lukea
+merkkejä vastaavat koodisanat
+liikkumalla huipulta merkkiä vastaavaan solmuun.
+Liikkuminen vasemmalle vastaa
+bittiä 0 ja liikkuminen oikealle
+vastaa bittiä 1.
+
 Aluksi jokaista merkkijonon merkkiä vastaa solmu,
 jonka painona on merkin esiintymiskertojen määrä merkkijonossa.
-Tämän jälkeen joka vaiheessa yhdistetään kaksi solmua,
-joiden painot ovat pienimmät.
-Näin jatketaan, kunnes koodi on valmis.
+Sitten joka vaiheessa puusta valitaan
+kaksi painoltaan pienintä solmua
+ja ne yhdistetään luomalla niiden
+yläpuolelle uusi solmu,
+jonka paino on solmujen yhteispaino.
+Näin jatketaan, kunnes kaikki solmut
+on yhdistetty ja koodi on valmis.
 
 Tarkastellaan nyt, miten Huffmanin koodaus
 muodostaa optimaalisen koodin merkkijonolle
@@ -623,6 +623,9 @@ Tuloksena on:
 \node[color=blue] at (4,-0.75) {\texttt{B}};
 \node[color=blue] at (6,-0.75) {\texttt{D}};
 
+\node at (4.3,0.7) {0};
+\node at (5.7,0.7) {1};
+
 \path[draw,thick,-] (2) -- (5);
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
@@ -641,6 +644,11 @@ Tämän jälkeen yhdistetään solmut, joiden paino on 2:
 \node[color=blue] at (3,1-0.75) {\texttt{C}};
 \node[color=blue] at (4,-0.75) {\texttt{B}};
 \node[color=blue] at (6,-0.75) {\texttt{D}};
+
+\node at (4.3,0.7) {0};
+\node at (5.7,0.7) {1};
+\node at (3.3,1.7) {0};
+\node at (4.7,1.7) {1};
 
 \path[draw,thick,-] (2) -- (5);
 \path[draw,thick,-] (4) -- (5);
@@ -664,6 +672,13 @@ Lopuksi yhdistetään kaksi viimeistä solmua:
 \node[color=blue] at (4,-0.75) {\texttt{B}};
 \node[color=blue] at (6,-0.75) {\texttt{D}};
 
+\node at (4.3,0.7) {0};
+\node at (5.7,0.7) {1};
+\node at (3.3,1.7) {0};
+\node at (4.7,1.7) {1};
+\node at (2.3,2.7) {0};
+\node at (3.7,2.7) {1};
+
 \path[draw,thick,-] (2) -- (5);
 \path[draw,thick,-] (4) -- (5);
 \path[draw,thick,-] (3) -- (6);
@@ -674,11 +689,7 @@ Lopuksi yhdistetään kaksi viimeistä solmua:
 \end{center}
 
 Nyt kaikki solmut ovat puussa, joten koodi on valmis.
-Kutakin merkkiä vastaava koodisana saadaan
-kulkemalla puun huipulta alas merkkiin asti.
-Aina vasemmalle mentäessä koodisanaan tulee bitti 0
-ja oikealle mentäessä koodisanaan tulee bitti 1.
-Tuloksena on optimaalinen koodi:
+Puusta voidaan lukea seuraavat koodisanat:
 \begin{center}
 \begin{tabular}{rr}
 merkki & koodisana \\
