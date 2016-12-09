@@ -20,7 +20,7 @@ tai pienin mahdollinen.
 \item
 \key{Ratkaisuiden määrän laskeminen}:
 Haluamme laskea, kuinka monta mahdollista
-ratkaisua on olemassa yhteensä.
+ratkaisua on olemassa.
 \end{itemize}
 
 Tutustumme dynaamiseen ohjelmointiin ensin
@@ -385,24 +385,16 @@ jälkeen rivi
         d[i] %= m;
 \end{lstlisting}
 
-Nyt olemme käyneet läpi kaikki dynaamisen ohjelmoinnin
-perusasiat ja voimme alkaa tutustua
-tarkemmin tekniikan mahdollisuuksiin.
-Käymme seuraavaksi läpi joukon esimerkkejä,
-jotka näyttävät, millä tavoin dynaamista ohjelmointia
-voi hyödyntää erilaisissa tilanteissa.
-
 \section{Pisin nouseva alijono}
 
 \index{pisin nouseva alijono@pisin nouseva alijono}
 
 \begin{task}
 Taulukossa on $n$ kokonaislukua $x_1,x_2,\ldots,x_n$.
-Taulukon nouseva alijono muodostuu valitsemalla
-taulukosta järjestyksessä lukuja niin,
-että jokainen luku on edellistä suurempi.
-Tehtäväsi on selvittää,
-kuinka pitkä on taulukon pisin nouseva alijono.
+Tehtäväsi on selvittää taulukon
+\key{pisin nouseva alijono}, joka muodostuu
+joukosta taulukon lukuja niin, että kukin
+luku on edellistä suurempi.
 \end{task}
 
 \begin{samepage}
@@ -432,10 +424,7 @@ Esimerkiksi taulukossa
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-
-\noindent
 pisin nouseva alijono sisältää 4 lukua:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (2,1);
@@ -452,6 +441,10 @@ pisin nouseva alijono sisältää 4 lukua:
 \node at (6.5,0.5) {$8$};
 \node at (7.5,0.5) {$3$};
 
+\draw[thick,->] (1.5,-0.25) .. controls (1.75,-1.00) and (2.25,-1.00) .. (2.4,-0.25);
+\draw[thick,->] (2.6,-0.25) .. controls (3.0,-1.00) and (4.0,-1.00) .. (4.4,-0.25);
+\draw[thick,->] (4.6,-0.25) .. controls (5.0,-1.00) and (6.0,-1.00) .. (6.5,-0.25);
+
 \footnotesize
 \node at (0.5,1.4) {$1$};
 \node at (1.5,1.4) {$2$};
@@ -464,15 +457,12 @@ pisin nouseva alijono sisältää 4 lukua:
 \end{tikzpicture}
 \end{center}
 
-Ongelman rekursiivinen esitys on laskea,
-kuinka pitkä on pisin taulukon kohtaan $k$
-päättyvä nouseva alijono.
-Olkoon $f(k)$ pisimmän kohtaan $k$
-päättyvän nousevan alijonon pituus.
-Tätä funktiota käyttäen ratkaisu tehtävään on suurin
+Merkitään $f(k)$ kohtaan $k$ päättyvän
+pisimmän nousevan alijonon pituutta,
+jolloin ratkaisu tehtävään on suurin
 arvoista $f(1),f(2),\ldots,f(n)$.
-
-Esimerkkitaulukossa funktion arvot ovat:
+Esimerkiksi yllä olevassa taulukossa
+funktion arvot ovat seuraavat:
 \[
 \begin{array}{lcl}
 f(1) & = & 1 \\
@@ -486,52 +476,44 @@ f(8) & = & 2 \\
 \end{array}
 \]
 
-Esimerkiksi $f(1)=1$,
-koska pisin kohtaan 0 päättyvä nouseva alijono on $(6)$.
-Vastaavasti $f(6)=2$,
-mikä vastaa alijonoja $(2,4)$ ja $(1,4)$.
-Funktion suurin arvo on kohdassa 7,
-koska kohtaan 7 päättyy alijono $(2,5,7,8)$.
-
-Arvon $f(k)$ laskemisessa on kaksi tapausta.
-Yksinkertainen tapaus on, että kohtaan $k$
-päättyvässä alijonossa on vain kohdan $k$ luku $x_k$,
+Arvon $f(k)$ laskemisessa on kaksi vaihtoehtoa,
+millainen kohtaan $k$ päättyvä pisin nouseva alijono on:
+\begin{enumerate}
+\item Pisin nouseva alijono sisältää vain luvun $x_k$,
 jolloin $f(k)=1$.
-Rekursiivisessa tapauksessa kohtaan $k$ päättyvä alijono
-muodostuu yhdistämällä
-kohtaan $i<k$ päättyvä nouseva alijono
-sekä luku $x_k$.
-Koska alijonon tulee olla nouseva,
-taulukon luvuille täytyy päteä ehto $x_i < x_k$.
+\item Valitaan jokin kohta $i$, jolle pätee $i<k$
+ja $x_i<x_k$.
+Pisin nouseva alijono saadaan liittämällä
+kohtaan $i$ päättyvän pisimmän nousevan alijonon perään luku $x_k$.
+Tällöin $f(k)=f(i)+1$.
+\end{enumerate}
 
-Rekursiivisessa tapauksessa $f(k)$:n
-voi laskea arvoista
-$f(1),f(2),\ldots,f(k-1)$
-käymällä läpi kaikki vaihtoehdot
-kohdalle $i<k$.
-Jos $x_i<x_k$, syntyy nouseva alijono,
-jonka pituus on $f(i)+1$,
-ja arvoksi $f(k)$ tulee valita näistä arvoista suurin.
-Algoritmin aikavaativuus on $O(n^2)$,
-koska jokaisessa kohdassa täytyy käydä
-läpi kaikki aiemmat kohdat.
+Tarkastellaan esimerkkinä arvon $f(7)$ laskemista.
+Paras ratkaisu on ottaa pohjaksi kohtaan 5
+päättyvä pisin nouseva alijono $[2,5,7]$
+ja lisätä sen perään luku $x_7=8$.
+Tuloksena on alijono $[2,5,7,8]$ ja $f(7)=f(5)+1=4$.
 
+Suoraviivainen tapa toteuttaa algoritmi on
+käydä kussakin kohdassa $k$ läpi kaikki kohdat
+$i=1,2,\ldots,k-1$, joissa voi olla alijonon
+edellinen luku.
+Tällaisen algoritmin aikavaativuus on $O(n^2)$.
+Yllättävää kyllä, algoritmin voi toteuttaa myös
+ajassa $O(n \log n)$, mutta tämä on vaikeampaa.
 
 \section{Reitinhaku ruudukossa}
 
 \begin{task}
-Annettuna on $n \times n$ -kokoinen ruudukko,
-jonka jokaisessa ruudussa on luku.
-Tehtäväsi on etsiä reitti ruudukon vasemmasta
-yläkulmasta oikeaan alakulmaan niin,
-että lukujen summa reitillä on mahdollisimman suuri.
+Tehtäväsi on etsiä $n \times n$ -ruudukossa
+reitti vasemmasta yläkulmasta oikeaan alakulmaan
+niin, että lukujen summa reitillä on mahdollisimman suuri.
 Saat liikkua joka askeleella yhden ruudun
 oikealle tai alaspäin.
 \end{task}
 
 Seuraavassa ruudukossa paras reitti
 on merkitty harmaalla taustalla:
-\\
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -545,14 +527,31 @@ on merkitty harmaalla taustalla:
     \fill [color=lightgray] (4, 6) rectangle (5, 5);
     \fill [color=lightgray] (4, 5) rectangle (5, 4);
     \draw (0, 4) grid (5, 9);
-    
-    \setcounter{row}{1}
-    \setrow {3}{7}{9}{2}{7}
-    \setrow {9}{8}{3}{5}{5}
-    \setrow {1}{7}{9}{8}{5}
-    \setrow {3}{8}{6}{4}{10}
-    \setrow {6}{3}{9}{7}{8}
-
+    \node at (0.5,8.5) {3};
+    \node at (1.5,8.5) {7};
+    \node at (2.5,8.5) {9};
+    \node at (3.5,8.5) {2};
+    \node at (4.5,8.5) {7};
+    \node at (0.5,7.5) {9};
+    \node at (1.5,7.5) {8};
+    \node at (2.5,7.5) {3};
+    \node at (3.5,7.5) {5};
+    \node at (4.5,7.5) {5};
+    \node at (0.5,6.5) {1};
+    \node at (1.5,6.5) {7};
+    \node at (2.5,6.5) {9};
+    \node at (3.5,6.5) {8};
+    \node at (4.5,6.5) {5};
+    \node at (0.5,5.5) {3};
+    \node at (1.5,5.5) {8};
+    \node at (2.5,5.5) {6};
+    \node at (3.5,5.5) {4};
+    \node at (4.5,5.5) {10};
+    \node at (0.5,4.5) {6};
+    \node at (1.5,4.5) {3};
+    \node at (2.5,4.5) {9};
+    \node at (3.5,4.5) {7};
+    \node at (4.5,4.5) {8};
   \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -572,7 +571,6 @@ Rekursio syntyy havainnosta,
 että ruutuun $(y,x)$ saapuvan reitin
 täytyy tulla joko vasemmalta ruudusta $(y,x-1)$
 tai ylhäältä ruudusta $(y-1,x)$:
-\\
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -604,6 +602,10 @@ joista kannattaa valita se,
 joka tuottaa suuremman summan:
 \[ f(y,x) = \max(f(y,x-1),f(y-1,x))+r(y,x)\]
 
+Ratkaisun aikavaativuus on $O(n^2)$, koska jokaisessa
+ruudussa $f(y,x)$ saadaan laskettua vakioajassa
+viereisten ruutujen arvoista.
+
 \section{Repunpakkaus}
 
 \index{repunpakkaus@repunpakkaus}
@@ -619,7 +621,6 @@ ja arvojen summa on mahdollisimman suuri.
 
 \begin{samepage}
 Esimerkiksi jos tavarat ovat
-
 \begin{center}
 \begin{tabular}{rrr}
 tavara & paino & arvo \\
@@ -631,7 +632,6 @@ D & 5 & 3 \\
 \end{tabular}
 \end{center}
 \end{samepage}
-
 ja suurin sallittu yhteispaino on 12,
 niin paras ratkaisu on pakata reppuun tavarat $B$ ja $D$.
 Niiden yhteispaino $6+5=11$ ei ylitä rajaa 12
@@ -646,45 +646,43 @@ Käymme seuraavaksi läpi molemmat ratkaisut.
 
 \subsubsection{Ratkaisu 1}
 
-\textit{Maksimointi:} Määritellään funktio $f(k,u)$:
-suurin mahdollinen tavaroiden
-yhteisarvo, kun reppuun pakataan jokin osajoukko
-$k$ ensimmäisestä tavarasta
-niin, että tavaroiden yhteispaino on $u$.
-Ratkaisu tehtävään on suurin arvoista
+\textit{Maksimointi:} Merkitään $f(k,u)$
+suurinta mahdollista tavaroiden yhteisarvoa,
+kun reppuun pakataan jokin osajoukko
+tavaroista $1 \ldots k$,
+jossa tavaroiden yhteispaino on $u$.
+Ratkaisu tehtävään on suurin arvo
 $f(n,u)$, kun $0 \le u \le x$.
-
 Rekursiivinen kaava funktion laskemiseksi on
 \[f(k,u) = \max(f(k-1,u),f(k-1,u-p_k)+a_k),\]
-koska viimeinen tavara joko otetaan mukaan tai ei
-oteta mukaan ratkaisuun.
-Pohjatapauksina $f(0,0)=0$ ja $f(0,u)=-\infty$,
-kun $u \neq 0$. Ratkaisun aikavaativuus on $O(nx)$.
+koska kohdassa $k$ oleva tavara joko otetaan tai ei oteta
+mukaan ratkaisuun.
+Pohjatapauksina on $f(0,0)=0$ ja $f(0,u)=-\infty$,
+kun $u \neq 0$. Tämän ratkaisun aikavaativuus on $O(nx)$.
 
 \subsubsection{Ratkaisu 2}
 
-\textit{Minimointi:} Määritellään funktio $f(k,u)$:
-pienin mahdollinen tavaroiden yhteispaino,
+\textit{Minimointi:} Merkitään $f(k,u)$
+pienintä mahdollista tavaroiden yhteispainoa,
 kun reppuun pakataan jokin osajoukko
-$k$ ensimmäisestä tavarasta ja niiden yhteisarvo on $u$.
-Ratkaisu tehtävään on suurin arvoista
-$u$, kun $0 \le u \le s$ ja $f(n,u) \le x$,
+tavaroista $1 \ldots k$,
+jossa tavaroiden yhteisarvo on $u$.
+Ratkaisu tehtävään on suurin arvo $u$,
+jolle pätee $0 \le u \le s$ ja $f(n,u) \le x$,
 missä $s=\sum_{i=1}^n a_i$.
-
 Rekursiivinen kaava funktion laskemiseksi on
-\[f(k,u) = \min(f(k-1,u),f(k-1,u-a_k)+p_k),\]
-samaan tapaan kuin edellisessä ratkaisussa.
-Pohjatapauksina $f(0,0)=0$ ja $f(0,u)=\infty$, kun $u \neq 0$.
-Ratkaisun aikavaativuus on $O(ns)$.
-
+\[f(k,u) = \min(f(k-1,u),f(k-1,u-a_k)+p_k)\]
+ratkaisua 1 vastaavasti.
+Pohjatapauksina on $f(0,0)=0$ ja $f(0,u)=\infty$, kun $u \neq 0$.
+Tämän ratkaisun aikavaativuus on $O(ns)$.
 
 ~\\
-\noindent
-Kiinnostava seikka on, että ratkaisuilla on eri aikavaativuus.
-Ratkaisussa 1 tavaroiden painot vaikuttavat aikavaativuuteen
-mutta arvot eivät vaikuta.
-Ratkaisussa 2 vuorostaan tavaroiden arvot vaikuttavat aikavaativuuteen
-mutta painot eivät vaikuta.
+Kiinnostava seikka on, että eri asiat syötteessä
+vaikuttavat ratkaisuiden tehokkuuteen.
+Ratkaisussa 1 tavaroiden painot vaikuttavat tehokkuuteen
+mutta arvoilla ei ole merkitystä.
+Ratkaisussa 2 puolestaan tavaroiden arvot vaikuttavat
+tehokkuuteen mutta painoilla ei ole merkitystä.
 
 \section{Editointietäisyys}
 
@@ -702,7 +700,6 @@ Sallitut operaatiot ovat:
 \item merkin poisto (esim. \texttt{ABC} $\rightarrow$ \texttt{AC})
 \item merkin muutos (esim. \texttt{ABC} $\rightarrow$ \texttt{ADC})
 \end{itemize}
-
 
 Esimerkiksi merkkijonojen \texttt{TALO} ja \texttt{PALLO}
 editointietäisyys on 2, koska voi tehdä ensin
@@ -724,33 +721,28 @@ miten editoinnin voi suorittaa?
 \end{task}
 
 Merkkijonojen \texttt{x} ja \texttt{y}
-editointietäisyys on mahdollista
+editointietäisyyden voi
 laskea dynaamisella ohjelmoinnilla ajassa $O(nm)$.
-Ideana on merkitä funktiolla $f(a,b)$
+Merkitään funktiolla $f(a,b)$
 editointietäisyyttä \texttt{x}:n $a$
 ensimmäisen merkin sekä
 \texttt{y}:n $b$:n ensimmäisen merkin välillä.
-Osoittautuu, että funktion $f$ avulla saa sekä
+Tämän funktion avulla saa sekä
 laskettua tehokkaasti editointietäisyyden että
 selvitettyä, mitkä ovat tarvittavat editointioperaatiot.
-
 Funktion pohjatapaukset ovat
-
 \[
 \begin{array}{lcl}
 f(0,b) & = & b \\
 f(a,0) & = & a \\
 \end{array}
 \]
-
-\noindent
 ja yleisessä tapauksessa pätee kaava
 \[ f(a,b) = \min(f(a,b-1)+1,f(a-1,b)+1,f(a-1,b-1)+c),\]
 missä $c=0$, jos \texttt{x}:n merkki $a$
 ja \texttt{y}:n merkki $b$ ovat samat,
 ja muussa tapauksessa $c=1$.
 Kaava käy läpi mahdollisuudet lyhentää merkkijonoja:
-
 \begin{itemize}
 \item $f(a,b-1)$ tarkoittaa, että $x$:ään lisätään merkki
 \item $f(a-1,b)$ tarkoittaa, että $x$:stä poistetaan merkki
@@ -760,7 +752,6 @@ sama merkki ($c=0$) tai $x$:n merkki muutetaan $y$:n merkiksi ($c=1$)
 
 Seuraava taulukko sisältää funktion $f$ arvot
 esimerkin tapauksessa:
-
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -919,8 +910,8 @@ yksi mahdollinen ratkaisu on
 \end{center}
 ja ratkaisujen kokonaismäärä on 781.
 
-Yksi tapa ratkaista tehtävä dynaamisella ohjelmoinnilla
-on käydä läpi ruudukkoa rivi riviltä.
+Tehtävän voi ratkaista dynaamisella ohjelmoinnilla
+käymällä ruudukkoa läpi rivi riviltä.
 Jokainen ratkaisun rivi pelkistyy merkkijonoksi,
 jossa on $m$ merkkiä joukosta $\{\sqcap, \sqcup, \sqsubset, \sqsupset \}$.
 Esimerkiksi yllä olevassa ratkaisussa on 4 riviä,
@@ -936,19 +927,18 @@ $\sqsubset \sqsupset \sqsubset \sqsupset \sqcup \sqcup \sqcap$ ja
 $\sqsubset \sqsupset \sqsubset \sqsupset \sqsubset \sqsupset \sqcup$.
 \end{itemize}
 
-
-Tehtävään sopiva dynaamisen ohjelmoinnin funktio on $f(k,x)$,
+Tehtävään sopiva rekursiivinen funktio on $f(k,x)$,
 joka laskee, montako tapaa on muodostaa ratkaisu
-ruudukon ylimmältä riviltä riville $k$ niin,
-että viimeistä riviä vastaa merkkijono $x$.
+ruudukon riveille $1 \ldots k$ niin,
+että riviä $k$ vastaa merkkijono $x$.
 Dynaaminen ohjelmointi on mahdollista,
 koska jokaisen rivin sisältöä
 rajoittaa vain edellisen rivin sisältö.
 
-Riveistä muodostuva kokonaisratkaisu on kelvollinen,
-jos ensimmäisellä rivillä ei ole merkkiä $\sqcup$,
-viimeisellä rivillä ei ole merkkiä $\sqcap$
-ja kaikki peräkkäiset rivit ovat keskenään yhteensopivat.
+Riveistä muodostuva ratkaisu on kelvollinen,
+jos rivillä 1 ei ole merkkiä $\sqcup$,
+rivillä $n$ ei ole merkkiä $\sqcap$
+ja kaikki peräkkäiset rivit ovat \emph{yhteensopivat}.
 Esimerkiksi rivit
 $\sqcup \sqsubset \sqsupset \sqcup \sqcap \sqcap \sqcup$ ja
 $\sqsubset \sqsupset \sqsubset \sqsupset \sqcup \sqcup \sqcap$ 
@@ -960,36 +950,30 @@ eivät ole yhteensopivat.
 
 Koska rivillä on $m$ merkkiä ja jokaiselle merkille on 4
 vaihtoehtoa, erilaisia rivejä on korkeintaan $4^m$.
-Käytännössä tämä määrä on pienempi,
-koska rivillä olevaa merkkiä $\sqsubset$
-täytyy aina seurata merkki $\sqsupset$,
-joten osa riveistä ei voi koskaan esiintyä
-kelvollisessa ratkaisussa.
-
-Ratkaisun aikavaativuus on $O(n 4^{2m})$,
+Niinpä ratkaisun aikavaativuus on $O(n 4^{2m})$,
 koska joka rivillä käydään läpi $O(4^m)$
 vaihtoehtoa rivin sisällölle
-ja jokaista vaihtoehtoa kohden $O(4^m)$
+ja jokaista vaihtoehtoa kohden on $O(4^m)$
 vaihtoehtoa edellisen rivin sisällölle.
 Käytännössä ruudukko kannattaa kääntää niin
 päin, että pienempi sivun pituus on $m$:n roolissa,
 koska $m$:n suuruus on ratkaiseva ajankäytön kannalta.
 
 Ratkaisua on mahdollista tehostaa parantamalla rivien esitystapaa merkkijonoina.
-Itse asiassa ainoa seuraavalla rivillä tarvittava tieto on,
-missä kohtaa riviltä lähtee laattoja alaspäin.
+Osoittautuu, että ainoa seuraavalla rivillä tarvittava tieto on,
+missä kohdissa riviltä lähtee laattoja alaspäin.
 Niinpä rivin voikin tallentaa käyttämällä vain merkkejä
 $\sqcap$ ja $\Box$, missä $\Box$ kokoaa yhteen vanhat merkit
 $\sqcup$, $\sqsubset$ ja $\sqsupset$.
-Tämän muutoksen ansiosta erilaisia rivejä on vain $2^m$
+Tällöin erilaisia rivejä on vain $2^m$
 ja aikavaativuudeksi tulee $O(n 2^{2m})$.
 
 Mainittakoon lopuksi, että laatoitusten määrän laskemiseen
 on myös yllättävä suora kaava
-\[ \prod_{a=1}^{\lfloor n/2 \rfloor} \prod_{b=1}^{\lfloor m/2 \rfloor} 4 \cdot (\cos^2 \frac{\pi a}{n + 1} + \cos^2 \frac{\pi b}{m+1}).\]
+\[ \prod_{a=1}^{\lceil n/2 \rceil} \prod_{b=1}^{\lceil m/2 \rceil} 4 \cdot (\cos^2 \frac{\pi a}{n + 1} + \cos^2 \frac{\pi b}{m+1}).\]
 Tämä kaava on sinänsä hyvin tehokas,
 koska se laskee laatoitusten määrän ajassa $O(nm)$,
 mutta käytännön ongelma kaavan käyttämisessä
-on välitulosten tallentaminen riittävän tarkkoina lukuina.
+on, kuinka tallentaa välitulokset riittävän tarkkoina lukuina.
 
 
