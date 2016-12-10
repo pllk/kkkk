@@ -350,20 +350,13 @@ jonka suoraviivaisen ratkaisun aikavaativuus on $O(n^3)$,
 mutta algoritmia parantamalla aikavaativuudeksi
 tulee ensin $O(n^2)$ ja lopulta $O(n)$.
 
-\begin{task}
-Annettuna on taulukko, jossa on $n$ kokonaislukua.
-Tehtäväsi on etsiä alitaulukko (taulukon yhtenäinen väli),
-jonka lukujen summa on mahdollisimman suuri.
-\end{task}
-
+Annettuna on taulukko, jossa on $n$ kokonaislukua
+$x_1,x_2,\ldots,x_n$, ja tehtävänä on etsiä
+taulukon \key{suurin alitaulukon summa}
+eli mahdollisimman suuri summa
+taulukon yhtenäisellä välillä.
 Tehtävän kiinnostavuus on siinä, että taulukossa
 saattaa olla negatiivisia lukuja.
-Vaikka negatiiviset luvut pienentävät summaa,
-niitä kannattaa joskus ottaa mukaan ratkaisuun,
-koska negatiivisen luvun kummallakin puolella voi
-olla positiivisia lukuja, jotka kumoavat negatiivisen
-luvun vaikutuksen.
-
 Esimerkiksi taulukossa
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -389,7 +382,8 @@ Esimerkiksi taulukossa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-optimiratkaisu on valita alitaulukko seuraavasti:
+\begin{samepage}
+suurimman summan $10$ tuottaa seuraava alitaulukko:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (6,1);
@@ -415,12 +409,8 @@ optimiratkaisu on valita alitaulukko seuraavasti:
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
-Tämän alitaulukon summa on $2+4+(-3)+5+2=10$,
-joka on suurin mahdollinen alitaulukon summa.
-Tässä tapauksessa kannattaa ottaa mukaan summaan
-luku $-3$, koska sen molemmilla puolilla
-olevat luvut kasvattavat summaa.
 
 \subsubsection{Ratkaisu 1}
 
@@ -436,7 +426,7 @@ for (int a = 1; a <= n; a++) {
     for (int b = a; b <= n; b++) {
         int s = 0;
         for (int c = a; c <= b; c++) {
-            s += t[c];
+            s += x[c];
         }
         p = max(p,s);
     }
@@ -444,7 +434,7 @@ for (int a = 1; a <= n; a++) {
 cout << p << "\n";
 \end{lstlisting}
 
-Koodi olettaa, että luvut on tallennettu taulukkoon \texttt{t},
+Koodi olettaa, että luvut on tallennettu taulukkoon \texttt{x},
 jota indeksoidaan $1 \ldots n$.
 Muuttujat $a$ ja $b$ valitsevat alitaulukon ensimmäisen
 ja viimeisen luvun, ja alitaulukon summa lasketaan muuttujaan $s$.
@@ -466,7 +456,7 @@ int p = 0;
 for (int a = 1; a <= n; a++) {
     int s = 0;
     for (int b = a; b <= n; b++) {
-        s += t[b];
+        s += x[b];
         p = max(p,s);
     }
 }
@@ -509,7 +499,7 @@ Seuraava koodi toteuttaa ratkaisun:
 \begin{lstlisting}
 int p = 0, s = 0;
 for (int k = 1; k <= n; k++) {
-    s = max(t[k],s+t[k]);
+    s = max(x[k],s+x[k]);
     p = max(p,s);
 }
 cout << p << "\n";

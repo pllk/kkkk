@@ -689,23 +689,27 @@ tai taulukon järjestämistä.
 Vaikka erilaiset ratkaisutavat olisivat kaikki
 periaatteessa tehokkaita, niissä voi olla
 käytännössä merkittäviä eroja.
-Näin on esimerkiksi seuraavassa tehtävässä:
 
-\begin{task}
-Annettuna on kokonaisluku $n$ sekä listat $A$ ja $B$,
-joista kummallakin on $n$ lukua.
-Mikään luku ei esiinny monta kertaa samalla listalla.
-Tehtäväsi on selvittää, moniko luku esiintyy
-kummallakin listalla.
-\end{task}
+Tarkastellaan seuraavaksi ongelmaa, jossa
+annettuna on kaksi listaa $A$ ja $B$,
+joista kummassakin on $n$ kokonaislukua.
+Tehtävänä on selvittää, moniko luku
+esiintyy kummassakin listassa.
+Esimerkiksi jos listat ovat
+\[A = \{5,2,8,9,4\} \hspace{10px} \textrm{ja} \hspace{10px} B = \{3,2,9,5\},\]
+niin vastaus on 3, koska luvut 2, 5
+ja 9 esiintyvät kummassakin listassa.
+Suoraviivainen ratkaisu tehtävään on käydä läpi
+kaikki lukuparit ajassa $O(n^2)$, mutta seuraavaksi
+keskitymme tehokkaampiin ratkaisuihin.
 
 \subsubsection{Ratkaisu 1}
 
-Ensimmäinen ratkaisu on tallentaa listan $A$ luvut joukkoon
-ja käydä sitten läpi listan $B$ luvut ja
-tarkistaa jokaisesta, esiintyykö se myös listalla $A$.
+Tallennetaan listan $A$ luvut joukkoon
+ja käydään sitten läpi listan $B$ luvut ja
+tarkistetaan jokaisesta, esiintyykö se myös listassa $A$.
 Joukon ansiosta on tehokasta tarkastaa,
-esiintyykö listan $B$ luku listalla $A$.
+esiintyykö listan $B$ luku listassa $A$.
 Kun joukko toteutetaan \texttt{set}-rakenteella,
 algoritmin aikavaativuus on $O(n \log n)$.
 
@@ -722,8 +726,7 @@ Uuden algoritmin aikavaativuus on $O(n)$.
 
 \subsubsection{Ratkaisu 3}
 
-Vaihtoehtoinen lähestymistapa on käyttää tietorakenteiden
-sijasta järjestämistä.
+Tietorakenteiden sijasta voimme käyttää järjestämistä.
 Järjestetään ensin listat $A$ ja $B$,
 minkä jälkeen yhteiset luvut voi löytää
 käymällä listat rinnakkain läpi.
