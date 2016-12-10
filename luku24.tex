@@ -23,16 +23,16 @@ $P(\textrm{''silmäluku ei ole 6''})=5/6$
 ja $P(\textrm{''silmäluku on parillinen''})=1/2$.
 
 Todennäköisyyden laskemiseen on
-kaksi tavallista tapaa. Tutustumme niihin
-seuraavan tehtävän avulla:
-
-\begin{task}
-Korttipakassa on 52 korttia, jotka jakaantuvat
-neljään maahan (hertta, risti, ruutu, pata).
-Kussakin maassa on 13 korttia, joiden arvot ovat $1,2,\ldots,13$.
-Sinulle annetaan kolme satunnaista korttia pakasta.
-Mikä on todennäköisyys, että jokaisen kortin arvo on sama?
-\end{task}
+kaksi tavallista tapaa.
+Tarkastellaan esimerkkinä tavallista
+52 kortin korttipakkaa.
+Kortit jakaantuvat neljään maahan
+(hertta, risti, ruutu, pata)
+ja kussakin maassa on 13 korttia,
+joiden arvot ovat $1,2,\ldots,13$.
+Kun nostat sekoitetusta korttipakasta
+kolme päällimmäistä korttia,
+mikä on todennäköisyys, että jokaisen kortin arvo on sama?
 
 \subsubsection*{Laskutapa 1}
 
@@ -251,18 +251,48 @@ Kaava pätee myös silloin, kun satunnaismuuttujat riippuvat toisistaan.
 
 Esimerkiksi kahden nopan heitossa silmälukujen summan odotusarvo on
 \[E[X_1+X_2]=E[X_1]+E[X_2]=7/2+7/2=7.\]
-Seuraava tehtävä on hieman vaativampi:
 
-\begin{task}
-Pöydällä on $n$ hattua ja $n$ palloa.
-Jokainen pallo sijoitetaan satunnaisesti johonkin hattuun.
-Mikä on odotusarvo, montako hattua on tyhjiä?
-\end{task}
+Tarkastellaan sitten tehtävää,
+jossa $n$ laatikkoon sijoitetaan
+satunnaisesti $n$ palloa
+ja laskettavana on odotusarvo,
+montako laatikkoa jää tyhjäksi.
+Kullakin pallolla on yhtä suuri todennäköisyys
+päätyä mihin tahansa laatikkoon.
+Esimerkiksi jos $n=2$, niin
+vaihtoehdot ovat seuraavat:
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) rectangle (1,1);
+\draw (1.2,0) rectangle (2.2,1);
+\draw (3,0) rectangle (4,1);
+\draw (4.2,0) rectangle (5.2,1);
+\draw (6,0) rectangle (7,1);
+\draw (7.2,0) rectangle (8.2,1);
+\draw (9,0) rectangle (10,1);
+\draw (10.2,0) rectangle (11.2,1);
 
-Todennäköisyys, että yksittäinen hattu on tyhjä,
-on $(\frac{n-1}{n})^n$, koska mikään pallo ei saa mennä sinne.
-Odotusarvon lineaarisuuden ansiosta tyhjien hattujen
-määrän odotusarvo on $n \cdot (\frac{n-1}{n})^n$.
+\draw[fill=blue] (0.5,0.2) circle (0.1);
+\draw[fill=red] (1.7,0.2) circle (0.1);
+\draw[fill=red] (3.5,0.2) circle (0.1);
+\draw[fill=blue] (4.7,0.2) circle (0.1);
+\draw[fill=blue] (6.25,0.2) circle (0.1);
+\draw[fill=red] (6.75,0.2) circle (0.1);
+\draw[fill=blue] (10.45,0.2) circle (0.1);
+\draw[fill=red] (10.95,0.2) circle (0.1);
+\end{tikzpicture}
+\end{center}
+Tässä tapauksessa odotusarvo
+tyhjien laatikoiden määrälle on
+\[\frac{0+0+1+1}{4} = \frac{1}{2}.\]
+Yleisessä tapauksessa
+todennäköisyys, että yksittäinen hattu on tyhjä,
+on
+\[\Big(\frac{n-1}{n}\Big)^n,\]
+koska mikään pallo ei saa mennä sinne.
+Niinpä odotusarvon lineaarisuuden ansiosta tyhjien hattujen
+määrän odotusarvo on
+\[n \cdot \Big(\frac{n-1}{n}\Big)^n.\]
 
 \subsubsection{Jakaumat}
 
@@ -345,15 +375,15 @@ Markovin ketju voidaan esittää verkkona,
 jonka solmut ovat tiloja
 ja kaaret niiden välisiä siirtymiä.
 
-\begin{task}
-Rakennuksessa on $n$ kerrosta.
-Aloitat kerroksesta 1 ja liikut joka askeleella
-satunnaisesti kerroksen ylöspäin tai alaspäin.
-Poikkeuksena kerroksesta 1 liikut aina ylöspäin
+Tarkastellaan esimerkkinä tehtävää,
+jossa olet alussa $n$-kerroksisen
+rakennuksen kerroksessa 1.
+Joka askeleella liikut satunnaisesti
+kerroksen ylöspäin tai alaspäin,
+paitsi kerroksesta 1 liikut aina ylöspäin
 ja kerroksesta $n$ aina alaspäin.
 Mikä on todennäköisyys, että olet $m$
 askeleen jälkeen kerroksessa $k$?
-\end{task}
 
 Tehtävässä kukin rakennuksen kerros
 on yksi tiloista, ja kerrosten välillä liikutaan
@@ -482,18 +512,14 @@ jotka voi ratkaista satunnaisuuden avulla.
 
 \index{järjestystunnusluku}
 
-\begin{task}
-Annettuna on taulukko, jossa on $n$ alkiota.
-Tehtäväsi on selvittää taulukon $k$.
-\key{järjestystunnusluku} eli mikä alkio on
-kohdassa $k$, kun taulukko järjestetään
+Taulukon $k$. \key{järjestystunnusluku}
+on kohdassa $k$ oleva alkio,
+kun alkiot järjestetään
 pienimmästä suurimpaan.
-\end{task}
-
-Helppo ratkaisu tehtävään on järjestää
-taulukko ajassa $O(n \log n)$, minkä jälkeen
-haluttu alkio on kohdassa $k$.
-Mutta onko tarpeen järjestää koko taulukkoa
+On helppoa laskea mikä tahansa
+järjestystunnusluku ajassa $O(n \log n)$
+järjestämällä taulukko,
+mutta onko tarpeen järjestää koko taulukkoa
 yhden alkion selvittämiseksi?
 
 Osoittautuu, että tehtävän voi ratkaista myös
@@ -509,19 +535,18 @@ taulukon oikeaan osaan.
 Tämä vie aikaa $O(n)$, kun taulukossa on $n$ alkiota.
 Oletetaan, että vasemmassa osassa on $a$
 alkiota ja oikeassa osassa on $b$ alkiota.
-
 Nyt jos $a=k-1$, alkio $x$ on haluttu alkio.
 Jos $a>k-1$, etsitään rekursiivisesti
 vasemmasta osasta, mikä on kohdassa $k$ oleva alkio.
 Jos taas $a<k-1$, etsitään rekursiivisesti
-oikeasta osasta, mikä on kohdassa $k-1-a$ oleva alkio.
-Haku jatkuu vastaavasti, kunnes alkio on löytynyt.
+oikeasta osasta, mikä on kohdassa $k-a-1$ oleva alkio.
+Haku jatkuu vastaavalla tavalla rekursiivisesti,
+kunnes haluttu alkio on löytynyt.
 
 Kun alkiot $x$ valitaan satunnaisesti,
 taulukon koko suunnilleen puolittuu
 joka vaiheessa, joten kohdassa $k$ olevan
 alkion etsiminen vie aikaa
-
 \[n+n/2+n/4+n/8+\cdots=O(n).\]
 
 Algoritmin pahin tapaus on silti $O(n^2)$,
@@ -537,16 +562,11 @@ eikä näin tapahdu käytännössä.
 
 \index{matriisitulo@matriisitulo}
 
-\begin{task}
-Annettuna on kolme $n \times n$ -kokoista matriisia
-$A$, $B$ ja $C$.
-Tehtäväsi on tarkastaa, päteekö $AB=C$.
-\end{task}
-
-Yksi tapa ratkaista tehtävä on laskea matriisitulo
-$AB$ ja tarkastaa, onko se sama kuin $C$.
-Matriisitulon laskemiseen menee aikaa
-$O(n^3)$ perusalgoritmilla, mutta voisi toivoa,
+Seuraava tehtävämme on \emph{tarkastaa},
+päteekö matriisitulo $AB=C$, kun $A$, $B$ ja $C$
+ovat $n \times n$ -kokoisia matriiseja.
+Tehtävän voi ratkaista laskemalla matriisitulon
+$AB$ (perusalgoritmilla ajassa $O(n^3)$), mutta voisi toivoa,
 että ratkaisun tarkastaminen olisi helpompaa
 kuin sen laskeminen alusta alkaen uudestaan.
 
@@ -611,13 +631,10 @@ $AB=C$ ilmoittamista.
 
 \index{vxritys@väritys}
 
-\begin{task}
 Annettuna on verkko, jossa on $n$ solmua ja $m$ kaarta.
-Etsi tapa värittää verkon solmut kahdella värillä
+Tehtävänä on etsiä tapa värittää verkon solmut kahdella värillä
 niin, että ainakin $m/2$ kaaressa
 päätesolmut ovat eri väriset.
-\end{task}
-
 Esimerkiksi verkossa
 \begin{center}
 \begin{tikzpicture}[scale=0.9]

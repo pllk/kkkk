@@ -261,7 +261,7 @@ voidaan laskea $O(1)$-ajassa kaavalla
 \subsubsection*{Hajautuksen käyttö}
 
 Hajautusarvot tarjoavat nopean tavan merkkijonojen
-vertailuun.
+vertailemiseen.
 Ideana on vertailla merkkijonojen koko sisällön
 sijasta niiden hajautusarvoja.
 Jos hajautusarvot ovat samat,
@@ -269,65 +269,40 @@ myös merkkijonot ovat \textit{todennäköisesti} samat,
 ja jos taas hajautusarvot eivät ole samat,
 merkkijonot eivät ole samat.
 
-Hajautuksen avulla pystyy usein tehostamaan
-raa'an voiman algoritmia niin, että siitä tulee
-tehokas. Näin on esimerkiksi seuraavassa tehtävässä:
+Hajautuksen avulla voi usein tehostaa
+raa'an voiman algoritmia niin, että siitä tulee tehokas.
+Tarkastellaan esimerkkinä
+raa'an voiman algoritmia, joka laskee,
+montako kertaa merkkijono $p$
+esiintyy osajonona merkkijonossa $s$.
+Algoritmi käy läpi kaikki kohdat,
+joissa $p$ voi esiintyä,
+ja vertailee merkkijonoja merkki merkiltä.
+Tällaisen algoritmin aikavaativuus on $O(n^2)$.
 
-\begin{task}
-Annettuna on merkkijono $a$,
-jossa on $n$ merkkiä,
-sekä merkkijono $b$,
-jossa on $m$ merkkiä.
-Tehtäväsi on selvittää, montako kertaa
-merkkijono $b$ esiintyy merkkijonon $a$ osajonona.
-\end{task}
-
-Raa'an voiman algoritmi tehtävään
-on käydä läpi kaikki mahdolliset kohdat,
-joissa $b$ voi esiintyä $a$:n osajonona,
-ja vertailla jokaisessa kohdassa $a$:n ja $b$:n merkkejä.
-Mahdollisia kohtia on $O(n)$ ja kukin vertailu
-vie aikaa $O(m)$, joten algoritmin aikavaativuus on $O(nm)$.
-
-Algoritmia on mahdollista tehostaa hajautuksen avulla,
+Voimme kuitenkin tehostaa algoritmia hajautuksen avulla,
 koska algoritmissa vertaillaan merkkijonojen osajonoja.
-Hajautusta käyttäen kukin vertailu vie aikaa vain $O(1)$
-ja tuloksena on algoritmi, jonka aikavaativuus on $O(n)$.
-Tämä on tehokkain mahdollinen algoritmi tehtävään.
+Hajautusta käyttäen kukin vertailu vie aikaa vain $O(1)$,
+koska vertailua ei tehdä merkki merkiltä
+vaan suoraan hajautusarvon perusteella.
+Tuloksena on algoritmi, jonka aikavaativuus on $O(n)$,
+joka on paras mahdollinen aikavaativuus tehtävään.
 
-Yhdistämällä hajautus ja binäärihaku on mahdollista
-vertailla myös osajonojen aakkosjärjestystä.
-Tätä voi hyödyntää seuraavassa tehtävässä:
-
-\begin{task}
-Annettuna on merkkijono,
-jossa on $n$ merkkiä,
-sekä kokonaisluku $m$.
-Tehtäväsi on etsiä merkkijonon
-aakkosjärjestyksessä pienin osajono,
-jonka pituus on $m$.
-\end{task}
-
-Raa'an voiman algoritmi käy läpi
-merkkijonon $m$-pituiset osajonot
-ja pitää muistissa pienintä löydettyä osajonoa.
-Algoritmin aikavaativuus on $O(nm)$,
-koska tarkastettavia osajonoja on $O(n)$ ja jokaisen osajonon kohdalla
-tehdään $O(m)$-aikainen vertailu aiempaan osajonoon.
-
-Hajautuksen avulla kahden osajonon
-aakkosjärjestyksen voi selvittää logaritmisessa
-ajassa etsimällä ensin binäärihaulla,
-kuinka pitkä on osajonojen yhteinen alkuosa,
-ja vertaamalla sitten alkuosan jälkeistä merkkiä.
-Niinpä algoritmin aikavaativuudeksi tulee $O(n \log m)$.
+Yhdistämällä hajautus ja \emph{binäärihaku} on mahdollista
+myös selvittää logaritmisessa ajassa,
+kumpi kahdesta osajonosta on suurempi
+aakkosjärjestyksessä.
+Tämä onnistuu tutkimalla ensin binäärihaulla,
+kuinka pitkä on merkkijonojen yhteinen alkuosa,
+minkä jälkeen yhteisen alkuosan jälkeinen merkki
+kertoo, kumpi merkkijono on suurempi.
 
 \subsubsection*{Törmäykset ja parametrit}
 
 \index{tzzmxys@törmäys}
 
 Ilmeinen riski hajautusarvojen vertailussa
-on \key{törmäys}, mikä tarkoittaa, että kahdessa merkkijonossa on
+on \key{törmäys}, joka tarkoittaa, että kahdessa merkkijonossa on
 eri sisältö mutta niiden hajautusarvot ovat samat.
 Tällöin hajautusarvojen perusteella merkkijonot
 näyttävät samalta, vaikka todellisuudessa ne eivät ole samat,
@@ -348,14 +323,12 @@ olla riittävän suuri.
 Hyvä ratkaisu on valita vakioiksi suuria
 satunnaislukuja. Tavallinen tapa on valita vakiot
 läheltä lukua $10^9$, esimerkiksi
-
 \[
 \begin{array}{lcl}
 A & = & 911382323 \\
 B & = & 972663749 \\
 \end{array}
 \]
-
 Tällainen valinta takaa sen,
 että hajautusarvot jakautuvat
 riittävän tasaisesti välille $0 \ldots B-1$.
@@ -1012,40 +985,34 @@ arvot suoraan Z-taulukon alusta:
 
 \subsubsection{Z-taulukon käyttö}
 
-Z-taulukon avulla pystyy ratkaisemaan
-tehokkaasti monia merkkijonotehtäviä.
-Ratkaistaan esimerkkinä seuraava tehtävä:
-\begin{task}
-Annettuna on merkkijono $a$,
-jossa on $n$ merkkiä,
-sekä merkkijono $b$,
-jossa on $m$ merkkiä.
-Tehtäväsi on selvittää, montako kertaa
-merkkijono $b$ esiintyy merkkijonon $a$ osajonona.
-\end{task}
+Ratkaistaan esimerkkinä tehtävä,
+jossa laskettavana on,
+montako kertaa merkkijono $p$
+esiintyy osajonona merkkijonossa $s$.
+Ratkaisimme tehtävän aiemmin tehokkaasti
+merkkijonohajautuksen avulla,
+ja nyt Z-algoritmi tarjoaa siihen
+vaihtoehtoisen lähestymistavan.
 
-\noindent
 Usein esiintyvä idea Z-algoritmin yhteydessä
 on muodostaa merkkijono,
 jonka osana on useita välimerkeillä
 erotettuja merkkijonoja.
 Tässä tehtävässä sopiva merkkijono on
-$b$\texttt{\#}$a$,
-jossa merkkijonojen $b$ ja $a$ välissä on
+$p$\texttt{\#}$s$,
+jossa merkkijonojen $p$ ja $s$ välissä on
 erikoismerkki \texttt{\#},
 jota ei esiinny merkkijonoissa.
-
-Merkkijonon $b$\texttt{\#}$a$ hyötynä on,
-että sitä vastaava Z-taulukko kertoo,
-missä kohdissa merkkijonoa $a$
-esiintyy merkkijono $b$.
+Nyt merkkijonoa $p$\texttt{\#}$s$
+vastaava Z-taulukko kertoo,
+missä kohdissa merkkijonoa $p$
+esiintyy merkkijono $s$.
 Tällaiset kohdat ovat tarkalleen ne
-Z-taulukon kohdat, joissa on luku $m$.
-Algoritmin aikavaativuus on $O(n)$,
-koska riittää muodostaa Z-taulukko ja käydä se läpi.
+Z-taulukon kohdat, joissa on
+merkkijonon $p$ pituus.
 
 \begin{samepage}
-Esimerkiksi jos $a=$\texttt{HATTIVATTI} ja $b=$\texttt{ATT},
+Esimerkiksi jos $s=$\texttt{HATTIVATTI} ja $p=$\texttt{ATT},
 niin Z-taulukosta tulee:
 
 \begin{center}
@@ -1100,19 +1067,22 @@ niin Z-taulukosta tulee:
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-
 Taulukon kohdissa 6 ja 11 on luku 3,
 mikä tarkoittaa, että \texttt{ATT}
 esiintyy vastaavissa kohdissa merkkijonossa
 \texttt{HATTIVATTI}.
 
-\subsubsection{Algoritmin toteutus}
+Tuloksena olevan algoritmin aikavaativuus on
+$O(n)$, koska riittää muodostaa Z-taulukko
+ja käydä se läpi.
+
+\subsubsection{Toteutus}
 
 Seuraavassa on lyhyt Z-algoritmin toteutus,
 joka palauttaa Z-taulukon vektorina.
 Huomaa, että tässä toteutuksessa merkkijonossa
 ja taulukossa on 0-indeksointi
-toisin kuin yllä olevissa esimerkeissä.
+toisin kuin aiemmin tässä luvussa.
 
 \begin{lstlisting}
 vector<int> z(string s) {

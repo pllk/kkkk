@@ -8,14 +8,24 @@ tehokkaasti niin, että jokaista yhdistelmää
 ei tarvitse muodostaa erikseen, koska
 yhdistelmien määrä on usein suuri.
 
-Tarkastellaan esimerkkinä seuraavaa tehtävää:
-\begin{task}
-Monellako tavalla luvun $n$ voi esittää positiivisten
-kokonaislukujen summana?
-Esimerkiksi luvun 4 voi esittää 8 tavalla:
-$1+1+1+1$, $1+1+2$, $1+2+1$, $2+1+1$,
-$2+2$, $3+1$, $1+3$ ja $4$.
-\end{task}
+Tarkastellaan esimerkkinä tehtävää,
+jossa laskettavana on,
+monellako tavalla luvun $n$ voi esittää positiivisten
+kokonaislukujen summana.
+Esimerkiksi luvun 4 voi esittää 8 tavalla
+seuraavasti:
+\begin{multicols}{2}
+\begin{itemize}
+\item $1+1+1+1$
+\item $1+1+2$
+\item $1+2+1$
+\item $2+1+1$
+\item $2+2$
+\item $3+1$
+\item $1+3$
+\item $4$
+\end{itemize}
+\end{multicols}
 
 Kombinatorisen tehtävän ratkaisun voi usein
 laskea rekursiivisen funktion avulla.
@@ -568,19 +578,16 @@ Esimerkiksi
 ja
 \[ |A \cap B \cap C| = |A| + |B| + |C| - |A \cup B|  - |A \cup C|  - |B \cup C| + |A \cup B \cup C| .\]
 
-\subsubsection{Esimerkki}
-
-Tarkastellaan esimerkkinä seuraavaa tehtävää:
+\subsubsection{Epäjärjestykset}
 
 \index{epxjxrjestys@epäjärjestys}
 
-\begin{task}
-Lukujonon $(1,2,\ldots,n)$
-\key{epäjärjestys} on permutaatio,
+Lasketaan esimerkkinä,
+montako tapaa on muodostaa luvuista
+$(1,2,\ldots,n)$ \key{epäjärjestys}
+eli permutaatio,
 jossa mikään luku ei ole alkuperäisellä paikallaan.
-Tehtäväsi on laskea, montako epäjärjestystä on olemasassa.
-Esimerkiksi jos $n=3$, niin epäjärjestyksiä on kaksi: $(2,3,1)$ ja $(3,1,2)$
-\end{task}
+Esimerkiksi jos $n=3$, niin epäjärjestyksiä on kaksi: $(2,3,1)$ ja $(3,1,2)$.
 
 Yksi tapa lähestyä tehtävää on käyttää inkluusio-ekskluusiota.
 Olkoon joukko $X_k$ niiden permutaatioiden joukko,
@@ -650,18 +657,13 @@ ja $c(k)$ on niiden yhdistelmien määrä,
 jotka pysyvät ennallaan, kun asentoa
 muutetaan tavalla $k$.
 
-Tutustumme Burnsiden lemmaan seuraavan tehtävän kautta:
-
-\begin{task}
-Helminauhassa on $n$ helmeä,
-joista jokaisen väri on väliltä $1,2,\ldots,m$.
-Montako erilaista helminauhaa on olemassa?
+Lasketaan esimerkkinä, montako
+erilaista tapaa on
+muodostaa $n$ helmen helminauha,
+kun kunkin helmen värin tulee olla
+väliltä $1,2,\ldots,m$.
 Kaksi helminauhaa ovat symmetriset,
 jos ne voi saada näyttämään samalta pyörittämällä.
-\end{task}
-
-\begin{samepage}
-\noindent
 Esimerkiksi helminauhan
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -672,7 +674,6 @@ Esimerkiksi helminauhan
 \draw[fill=green] (-1,0) circle (0.3);
 \end{tikzpicture}
 \end{center}
-\end{samepage}
 kanssa symmetriset helminauhat ovat seuraavat:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]

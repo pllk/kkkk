@@ -200,18 +200,19 @@ Tämä tasapainottaa sitä, miten usein erien välinen
 työläs toimenpide tapahtuu sekä miten paljon työtä
 erän sisällä täytyy tehdä.
 
-Eräkäsittelyä voi käyttää esimerkiksi seuraavassa tehtävässä:
-
-\begin{task}
-Ruudukossa on $k \times k$ ruutua,
+Tarkastellaan esimerkkinä tehtävää, jossa
+ruudukossa on $k \times k$ ruutua,
 jotka ovat aluksi valkoisia.
-Tehtäväsi on suorittaa $n$ operaatiota ruudukkoon.
-Tyypin 1 operaatio värittää ruudun $(y,x)$ mustaksi
-ja tyypin 2 operaatio etsii ruudusta $(y,x)$ lähimmän
-mustan ruudun.
-Ruutujen $(y_1,x_1)$ ja $(y_2,x_2)$
+Tehtävänä on suorittaa $n$ operaatiota ruudukkoon:
+\begin{itemize}
+\item
+Tyypin 1 operaatio värittää ruudun $(y,x)$ mustaksi.
+\item
+Tyypin 2 operaatio etsii ruudusta $(y,x)$ lähimmän
+mustan ruudun, kun
+ruutujen $(y_1,x_1)$ ja $(y_2,x_2)$
 etäisyys on $|y_1-y_2|+|x_1-x_2|$.
-\end{task}
+\end{itemize}
 
 Ratkaisuna on jakaa operaatiot $O(\sqrt n)$ erään,
 joista jokaisessa on $O(\sqrt n)$ operaatiota.
@@ -252,22 +253,19 @@ pienellä parametrilla
 ja toinen osa on tehokas pienellä parametrilla,
 ja sopiva jakokohta kulkee suunnilleen arvon $\sqrt n$ kohdalla.
 
-Tapauskäsittelyä voi käyttää esimerkiksi seuraavassa
-tehtävässä:
-
-\begin{task}
-Puussa on $n$ solmua, joista jokaisella on tietty väri.
-Solmujen värit on numeroitu $1,2,\ldots,m$.
-Tehtäväsi on etsiä puusta kaksi solmua,
+Tarkastellaan esimerkkinä tehtävää, jossa
+puussa on $n$ solmua, joista jokaisella on tietty väri.
+Tavoitteena on etsiä puusta kaksi solmua,
 jotka ovat samanvärisiä ja mahdollisimman
 kaukana toisistaan.
-\end{task}
 
-Ideana on käydä läpi värit yksi kerrallaan ja
-etsiä kullekin värille kaksi solmua, jotka ovat
+Tehtävän voi ratkaista
+käymällä läpi värit yksi kerrallaan ja
+etsimällä kullekin värille kaksi solmua, jotka ovat
 mahdollisimman kaukana toisistaan.
-Värillä $c$ algoritmin toiminta riippuu siitä,
-miten paljon puussa on $c$-värisiä solmuja.
+Tietyllä värillä $c$ algoritmin toiminta riippuu siitä,
+montako kyseisen väristä solmua puussa on.
+Tapaukset ovat seuraavat:
 
 \subsubsection*{Tapaus 1: $c \le \sqrt n$}
 
@@ -332,11 +330,10 @@ siis yhteensä $O(n \sqrt n)$ askelta.
 
 \subsubsection*{Esimerkki}
 
-\begin{task}
-Annettuna on joukko välejä taulukossa.
-Tehtävänä on selvittää kullekin välille,
+Tarkastellaan esimerkkinä tehtävää,
+jossa annettuna on joukko välejä taulukossa
+ja  tehtävänä on selvittää kullekin välille,
 montako eri lukua taulukossa on kyseisellä välillä.
-\end{task}
 
 Mo'n algoritmissa kyselyt järjestetään aina samalla
 tavalla, ja tehtävästä riippuva osa on,
@@ -364,9 +361,7 @@ väli muuttuu. Esimerkiksi jos nykyinen kysely koskee väliä
 \node at (8.5, 0.5) {4};
 \end{tikzpicture}
 \end{center}
-
 ja seuraava kysely koskee väliä
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (7,1);
@@ -382,7 +377,6 @@ ja seuraava kysely koskee väliä
 \node at (8.5, 0.5) {4};
 \end{tikzpicture}
 \end{center}
-
 niin tapahtuu kolme muutosaskelta:
 välin vasen reuna siirtyy askeleen oikealle
 ja välin oikea reuna siirtyy kaksi askelta oikealle.
