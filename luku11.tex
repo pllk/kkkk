@@ -317,7 +317,6 @@ jos on mahdollista värittää se kahdella värillä.
 Osoittautuu, että verkko on kaksijakoinen tarkalleen silloin,
 kun siinä ei ole sykliä, johon kuuluu
 pariton määrä solmuja.
-
 Esimerkiksi verkko
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -362,7 +361,6 @@ jos mistään solmusta ei ole kaarta itseensä
 eikä minkään kahden solmun välillä ole
 monta kaarta samaan suuntaan.
 Usein oletuksena on, että verkko on yksinkertainen.
-
 Esimerkiksi verkko
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -577,6 +575,7 @@ Tätä esitystapaa käyttäen esimerkiksi verkkoa
 \path[draw,thick,->,>=latex] (4) -- node[font=\small,label=left:2] {} (1);
 \end{tikzpicture}
 \end{center}
+\begin{samepage}
 vastaa seuraava vierusmatriisi:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -607,6 +606,7 @@ vastaa seuraava vierusmatriisi:
 \node at (3.5,4.5) {4};
 \end{tikzpicture}
 \end{center}
+\end{samepage}
 
 \subsubsection{Kaarilistaesitys}
 
@@ -674,6 +674,7 @@ Esimerkiksi verkon
 \path[draw,thick,->,>=latex] (4) -- node[font=\small,label=left:2] {} (1);
 \end{tikzpicture}
 \end{center}
+\begin{samepage}
 voi tallentaa seuraavasti:
 \begin{lstlisting}
 v.push_back({{1,2},5});
@@ -682,7 +683,4 @@ v.push_back({{2,4},6});
 v.push_back({{3,4},5});
 v.push_back({{4,1},2});
 \end{lstlisting}
-
-
-
-
+\end{samepage}
