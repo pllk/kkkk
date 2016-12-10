@@ -9,22 +9,21 @@ jotka vastaavat tason pisteitä.
 Kun pyyhkäisyviiva törmää pisteeseen,
 tapahtuma käsitellään ja tehtävän ratkaisu edistyy.
 
-Seuraava tehtävä tarjoaa yksinkertaisen
-esimerkin tekniikasta:
-\begin{task}
-Yrityksessä on töissä $n$ henkilöä.
-Tiedät jokaisesta henkilöstä,
+Tarkastellaan esimerkkinä tekniikan
+käyttämisestä tehtävää,
+jossa yrityksessä on töissä $n$ henkilöä
+ja jokaisesta henkilöstä tiedetään,
 milloin hän tuli töihin ja lähti töistä
 tiettynä päivänä.
-Mikä on suurin määrä henkilöitä,
-jotka olivat samaan aikaan töissä?
-\end{task}
+Tehtävänä on laskea,
+mikä on suurin määrä henkilöitä,
+jotka olivat samaan aikaan töissä.
+
 Tehtävän voi ratkaista mallintamalla tilanteen
 niin, että jokaista henkilöä vastaa kaksi tapahtumaa:
 tuloaika töihin ja lähtöaika töistä.
 Pyyhkäisyviiva käy läpi tapahtumat aikajärjestyksessä
 ja pitää kirjaa, montako henkilöä on töissä milloinkin.
-
 Esimerkiksi tilannetta
 \begin{center}
 \begin{tabular}{ccc}
@@ -133,20 +132,15 @@ ja pyyhkäisyviivan läpikäynti vie aikaa $O(n)$.
 
 Tässä luvussa tutustumme kolmeen klassiseen tehtävään,
 jotka ratkeavat tehokkaasti pyyhkäisyviivan avulla.
-Ensimmäinen tehtävämme on laskea tasossa olevien
-janojen leikkauspisteiden määrä.
 
 \section{Janojen leikkauspisteet}
 
 \index{leikkauspiste@leikkauspiste}
 
-\begin{task}
-Annettuna on $n$ janaa,
-joista jokainen on vaaka- tai pystysuuntainen.
-Monessako pisteessä kaksi
-janaa leikkaa toisiaan?
-\end{task}
-
+Annettuna on $n$ janaa, joista jokainen
+on vaaka- tai pystysuuntainen.
+Tehtävänä on laskea tehokkaasti, monessako pisteessä
+kaksi janaa leikkaavat toisensa.
 Esimerkiksi tilanteessa
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
@@ -235,13 +229,9 @@ kokonaisaikavaativuus on $O(n \log n)$.
 
 \index{lzhin pistepari@lähin pistepari}
 
-\begin{task}
-Annettuna on $n$ pistettä
-kaksiulotteisessa tasossa
-ja tehtäväsi on etsiä kaksi pistettä,
-jotka ovat mahdollisimman lähellä toisiaan.
-\end{task}
-
+Seuraava tehtävämme on etsiä $n$ pisteen
+joukosta kaksi pistettä, jotka ovat
+mahdollisimman lähellä toisiaan.
 Esimerkiksi tilanteessa
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -853,9 +843,10 @@ Seuraava kuvasarja esittää Andrew'n algoritmin toimintaa:
 \draw (0,0)--(0,2)--(2,4)--(6,3)--(7,1);
 \end{tikzpicture}
 \\
-17 & & 18 & & 19 & & 20 \\
+17 & & 18 & & 19 & & 20
 \end{tabular}
 \\\\\\
+\indent
 Algoritmi tarkastaa ristitulon avulla,
 muodostavatko kolme pistettä vasemmalle
 kääntyvän osan.
