@@ -404,15 +404,15 @@ kun taas $2^n=1048576$.
 Niinpä tietyillä $n$:n arvoilla permutaatioita ei ehdi
 käydä läpi mutta osajoukot ehtii käydä läpi.
 
-Tutustumme tekniikkaan seuraavan tehtävän kautta:
-
-\begin{task}
-Montako permutaatiota voit muodostaa
-luvuista $\{ 0,1,\ldots,n-1 \}$ niin,
-että missään kohdassa ei ole kahta peräkkäistä lukua?
-Esimerkiksi kun $n=4$, ratkaisuja on 2: $(1,3,0,2)$
-ja $(2,0,3,1)$.
-\end{task}
+Lasketaan esimerkkinä, monessako
+joukon $\{0,1,\ldots,n-1\}$
+permutaatiossa ei ole 
+missään kohdassa kahta peräkkäistä lukua.
+Esimerkiksi tapauksessa $n=4$ ratkaisuja on kaksi:
+\begin{itemize}
+\item $(1,3,0,2)$
+\item $(2,0,3,1)$
+\end{itemize}
 
 Merkitään $f(x,k)$:llä,
 monellako tavalla osajoukon
@@ -478,25 +478,18 @@ for (int i = 0; i < n; i++) {
 }
 \end{lstlisting}
 
-\subsubsection{Osajoukkojen laskeminen}
+\subsubsection{Osajoukkojen summat}
 
-Dynaamisen ohjelmoinnin avulla voi ratkaista
-myös seuraavan tehtävän:
-
-\begin{task}
-Tarkastellaan $n$-alkioisen joukon osajoukkoja.
-Jokaista osajoukkoa $x$ vastaa arvo $c(x)$.
-Tehtäväsi on jokaiselle osajoukolle $x$
+Tarkastellaan sitten
+joukon $\{0,1,\ldots,n-1\}$ osajoukkoja,
+kun jokaista osajoukkoa $x$ vastaa arvo $c(x)$.
+Tehtävänä on jokaiselle osajoukolle $x$
 summa
 \[s(x)=\sum_{y \subset x} c(y) \]
 eli bittimuodossa ilmaistuna
 \[s(x)=\sum_{y \& x = y} c(y). \]
-\end{task}
-
-\noindent
 Seuraavassa on esimerkki funktioiden arvoista,
 kun $n=3$:
-
 \begin{center}
 \begin{tabular}{rrr}
 $x$ & $c(x)$ & $s(x)$ \\
@@ -511,7 +504,6 @@ $x$ & $c(x)$ & $s(x)$ \\
 111 & 0 & 12 \\
 \end{tabular}
 \end{center}
-
 Esimerkiksi $s(110)=c(000)+c(010)+c(100)+c(110)=7$. 
 
 Tehtävä on mahdollista ratkaista ajassa $O(2^n n)$

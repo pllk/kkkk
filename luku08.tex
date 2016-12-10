@@ -30,14 +30,66 @@ yhteen suuntaan, mikä takaa, että algoritmi toimii tehokkaasti.
 Tutustumme seuraavaksi kahden osoittimen tekniikkaan
 kahden esimerkkitehtävän kautta.
 
-\subsubsection{Lukuvälin summa}
+\subsubsection{Alitaulukon summa}
 
-\begin{task}
-Annettuna on taulukko, jossa on $n$ positiivista kokonaislukua.
-Tehtäväsi on tutkia, onko taulukossa väliä,
+Annettuna on taulukko, jossa on $n$ positiivista kokonaislukua
+$t_1,t_2,\ldots,t_n$.
+Tehtävänä on selvittää, onko taulukossa alitaulukkoa,
 jossa lukujen summa on $x$.
-\end{task}
+Esimerkiksi taulukossa
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw (0,0) grid (8,1);
 
+\node at (0.5,0.5) {$1$};
+\node at (1.5,0.5) {$3$};
+\node at (2.5,0.5) {$2$};
+\node at (3.5,0.5) {$5$};
+\node at (4.5,0.5) {$1$};
+\node at (5.5,0.5) {$1$};
+\node at (6.5,0.5) {$2$};
+\node at (7.5,0.5) {$3$};
+
+\footnotesize
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\end{tikzpicture}
+\end{center}
+tällainen alitaulukko on seuraava:
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\fill[color=lightgray] (2,0) rectangle (6,1);
+\draw (0,0) grid (8,1);
+
+\node at (0.5,0.5) {$1$};
+\node at (1.5,0.5) {$3$};
+\node at (2.5,0.5) {$2$};
+\node at (3.5,0.5) {$5$};
+\node at (4.5,0.5) {$1$};
+\node at (5.5,0.5) {$1$};
+\node at (6.5,0.5) {$2$};
+\node at (7.5,0.5) {$3$};
+
+\footnotesize
+\node at (0.5,1.4) {$1$};
+\node at (1.5,1.4) {$2$};
+\node at (2.5,1.4) {$3$};
+\node at (3.5,1.4) {$4$};
+\node at (4.5,1.4) {$5$};
+\node at (5.5,1.4) {$6$};
+\node at (6.5,1.4) {$7$};
+\node at (7.5,1.4) {$8$};
+\end{tikzpicture}
+\end{center}
+
+Osoittautuu, että tämän tehtävän voi ratkaista
+ajassa $O(n)$ kahden osoittimen tekniikalla.
 Ideana on käydä taulukkoa läpi kahden osoittimen
 avulla, jotka rajaavat välin taulukosta.
 Joka vuorolla vasen osoitin liikkuu
@@ -207,30 +259,31 @@ Koska sekä vasen että oikea osoitin liikkuvat
 $O(n)$ askelta algoritmin aikana,
 algoritmin aikavaativuus on $O(n)$.
 
-\subsubsection{Lukujen valinta}
+\subsubsection{Kahden luvun summa}
 
-\begin{task}
-Annettuna on taulukko, jossa on $n$ kokonaislukua.
-Tehtäväsi on tutkia, voiko taulukosta valita kaksi lukua
-niin, että niiden summa on $x$.
-\end{task}
+\index{2SUM-ongelma}
 
-Tämänkin tehtävän voi ratkaista kahden osoittimen
-tekniikalla, kuitenkin niin,
-että osoittimet liikkuvat eri suuntiin.
-Ideana on järjestää ensin taulukon luvut
-pienimmästä suurimpaan ja
-sitten käydä taulukkoa läpi kahdella osoittimella,
-jotka lähtevät liikkelle sen molemmista päistä.
+Annettuna on taulukko, jossa on $n$ kokonaislukua,
+sekä kokonaisluku $x$.
+Tehtävänä on etsiä taulukosta kaksi lukua,
+joiden summa on $x$, tai todeta,
+että tämä ei ole mahdollista.
+Tämä ongelma tunnetaan tunnetaan nimellä
+\key{2SUM} ja se ratkeaa tehokkaasti
+kahden osoittimen tekniikalla.
 
+Taulukon luvut järjestetään ensin
+pienimmästä suurimpaan, minkä jälkeen
+taulukkoa aletaan käydä läpi kahdella osoittimella,
+jotka lähtevät liikkelle taulukon molemmista päistä.
 Vasen osoitin aloittaa taulukon alusta ja
 liikkuu joka vaiheessa askeleen eteenpäin.
 Oikea osoitin taas aloittaa taulukon lopusta
-ja peruuttaa taaksepäin niin kauan, kunnes osoitinten
+ja peruuttaa vuorollaan taaksepäin, kunnes osoitinten
 määrittämän välin lukujen summa on enintään $x$.
 Jos summa on tarkalleen $x$, ratkaisu on löytynyt.
 
-Tarkastellaan esimerkkinä algoritmin toimintaa
+Tarkastellaan algoritmin toimintaa
 seuraavassa taulukossa, kun tavoitteena on muodostaa
 summa $x=12$:
 \begin{center}
@@ -375,23 +428,33 @@ että lukujen summa olisi yhteensä $x$.
 Binäärihaku suoritetaan $n$ kertaa ja
 jokainen binäärihaku vie aikaa $O(\log n)$.
 
+\index{3SUM-ongelma}
+Hieman vaikeampi ongelma on \key{3SUM},
+jossa taulukosta tuleekin etsiä kolme lukua,
+joiden summa on $x$.
+Tämä ongelma on mahdollista ratkaista ajassa $O(n^2)$.
+Keksitkö, miten se tapahtuu?
+
 \section{Lähin pienempi edeltäjä}
 
 \index{lzhin pienempi edeltxjx@lähin pienempi edeltäjä}
 
 Tasoitetun analyysin avulla arvioidaan usein
-tietorakenteeseen tehtävien operaatioiden määrää.
+tietorakenteeseen kohdistuvien operaatioiden määrää.
 Algoritmin operaatiot voivat jakautua epätasaisesti
 niin, että useimmat operaatiot tehdään tietyssä
-algoritmin vaiheessa. Näin on seuraavassa tehtävässä:
+algoritmin vaiheessa, mutta operaatioiden
+yhteismäärä on kuitenkin rajoitettu.
 
-\begin{task}
-Annettuna on taulukko, jossa on $n$ lukua.
-Tehtäväsi on etsiä jokaiselle luvulle
-sitä lähinnä oleva pienempi luku
-taulukon alkuosassa
-tai todeta, että tällaista lukua ei ole olemassa.
-\end{task}
+Tarkastellaan esimerkkinä ongelmaa,
+jossa tehtävänä on etsiä kullekin taulukon
+alkiolle
+\key{lähin pienempi edeltäjä} eli
+lähinnä oleva pienempi alkio taulukon alkuosassa.
+On mahdollista, ettei tällaista alkiota ole olemassa,
+jolloin algoritmin tulee huomata asia.
+Osoittautuu, että tehtävä on mahdollista ratkaista
+tehokkaasti ajassa $O(n)$ sopivan tietorakenteen avulla.
 
 Tehokas ratkaisu tehtävään on käydä
 taulukko läpi alusta loppuun ja pitää samalla yllä ketjua,
@@ -400,7 +463,6 @@ ja jokainen seuraava luku on luvun lähin
 pienempi edeltäjä.
 Jos ketjussa on vain yksi luku,
 käsiteltävällä luvulla ei ole pienempää edeltäjää.
-
 Joka askeleella ketjun alusta poistetaan lukuja
 niin kauan, kunnes ketjun ensimmäinen luku on 
 pienempi kuin käsiteltävä taulukon luku tai ketju on tyhjä.
@@ -408,7 +470,6 @@ Tämän jälkeen käsiteltävä luku lisätään ketjun alkuun.
 
 Tarkastellaan esimerkkinä algoritmin toimintaa
 seuraavassa taulukossa:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -437,7 +498,6 @@ seuraavassa taulukossa:
 Aluksi luvut 1, 3 ja 4 liittyvät ketjuun, koska jokainen luku on
 edellistä suurempi. Siis luvun 4 lähin pienempi edeltäjä on luku 3,
 jonka lähin pienempi edeltäjä on puolestaan luku 1. Tilanne näyttää tältä:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (3,1);
@@ -470,7 +530,6 @@ jonka lähin pienempi edeltäjä on puolestaan luku 1. Tilanne näyttää tält�
 Taulukon seuraava luku 2 on pienempi kuin ketjun kaksi ensimmäistä lukua 4 ja 3.
 Niinpä luvut 4 ja 3 poistetaan ketjusta, minkä jälkeen luku 2
 lisätään ketjun alkuun. Sen lähin pienempi edeltäjä on luku 1:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (4,1);
@@ -502,7 +561,6 @@ lisätään ketjun alkuun. Sen lähin pienempi edeltäjä on luku 1:
 Seuraava luku 5 on suurempi kuin luku 2,
 joten se lisätään suoraan ketjun alkuun ja
 sen lähin pienempi edeltäjä on luku 2:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (4,0) rectangle (5,1);
@@ -544,35 +602,37 @@ luku, se vain lisätään ketjun alkuun,
 mikä on tehokasta.
 Joskus taas ketjussa voi olla useita
 suurempia lukuja, joiden poistaminen vie aikaa.
-
 Oleellista on kuitenkin, että jokainen
 taulukossa oleva luku liittyy
 tarkalleen kerran ketjuun ja poistuu
 korkeintaan kerran ketjusta.
 Niinpä jokainen luku aiheuttaa $O(1)$
-ketjuun liittyvää operaatiota, ja tämän
-seurauksena algoritmin kokonaisaikavaativuus on $O(n)$.
+ketjuun liittyvää operaatiota
+ja algoritmin kokonaisaikavaativuus on $O(n)$.
 
 \section{Liukuvan ikkunan minimi}
 
+\index{liukuva ikkuna}
 \index{liukuvan ikkunan minimi@liukuvan ikkunan minimi}
 
-\begin{task}
-Annettuna on taulukko, jossa on $n$ lukua,
-sekä kokonaisluku $k$.
-Taulukon halki kulkee ikkuna, joka käy
-läpi taulukon kaikki $k$-kokoiset välit.
-Tehtäväsi on ilmoittaa jokaisesta ikkunasta
-pienin välillä oleva luku.
-\end{task}
+\key{Liukuva ikkuna} on taulukon halki kulkeva
+aktiivinen alitaulukko, jonka pituus on vakio.
+Jokaisessa liukuvan ikkunan sijainnissa
+halutaan tyypillisesti laskea jotain tietoa
+ikkunan alueelle osuvista alkioista.
+Kiinnostava tehtävä on pitää yllä
+\key{liukuvan ikkunan minimiä}.
+Tämä tarkoittaa, että jokaisessa liukuvan ikkunan
+sijainnissa tulee ilmoittaa pienin alkio
+ikkunan alueella.
 
-Tämän tehtävän voi ratkaista lähes samalla
-tavalla kuin edellisen tehtävän.
+Liukuvan ikkunan minimit voi laskea
+lähes samalla tavalla kuin lähimmät
+pienimmät edeltäjät.
 Ideana on pitää yllä ketjua, jonka alussa
 on ikkunan viimeinen luku ja jossa jokainen
 luku on edellistä pienempi. Joka vaiheessa
 ketjun viimeinen luku on ikkunan pienin luku.
-
 Kun liukuva ikkuna liikkuu eteenpäin ja välille
 tulee uusi luku, ketjusta poistetaan kaikki luvut,
 jotka ovat uutta lukua suurempia.
@@ -611,7 +671,6 @@ kun ikkunan koko $k=4$.
 
 Liukuva ikkuna aloittaa matkansa taulukon vasemmasta reunasta.
 Ensimmäisessä ikkunan sijainnissa pienin luku on 1:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (0,0) rectangle (4,1);
@@ -646,7 +705,6 @@ Kun ikkuna siirtyy eteenpäin, mukaan tulee luku 3,
 joka on pienempi kuin luvut 5 ja 4 ketjun alussa.
 Niinpä luvut 5 ja 4 poistuvat ketjusta ja luku 3
 siirtyy sen alkuun. Pienin luku on edelleen 1.
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (5,1);
@@ -676,11 +734,10 @@ siirtyy sen alkuun. Pienin luku on edelleen 1.
 \end{tikzpicture}
 \end{center}
 
-Ikkuna siirtyy taas eteenpäin, jonka seurauksena pienin luku 1
+Ikkuna siirtyy taas eteenpäin, minkä seurauksena pienin luku 1
 putoaa pois ikkunasta. Niinpä se poistetaan ketjun lopusta
 ja uusi pienin luku on 3. Lisäksi uusi ikkunaan tuleva luku 4
 lisätään ketjun alkuun.
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (6,1);
@@ -713,7 +770,6 @@ Seuraavaksi ikkunaan tuleva luku 1 on pienempi
 kuin kaikki ketjussa olevat luvut.
 Tämän seurauksena koko ketju tyhjentyy ja
 siihen jää vain luku 1:
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (7,1);
@@ -747,7 +803,6 @@ siihen jää vain luku 1:
 Lopuksi ikkuna saapuu viimeiseen sijaintiinsa.
 Luku 2 lisätään ketjun alkuun,
 mutta ikkunan pienin luku on edelleen 1.
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (4,0) rectangle (8,1);
