@@ -38,14 +38,10 @@ perusesimerkkejä, joista on hyvä lähteä liikkeelle.
 \section{Kolikkotehtävä}
 
 Aloitamme dynaamisen ohjelmoinnin tutun tehtävän kautta:
-
-\begin{task}
-Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$,
-ja tehtäväsi on muodostaa kolikoista rahamäärä $x$.
-Jokaista kolikkoa on saatavilla rajattomasti.
-Mikä on pienin määrä kolikoita,
-joilla rahamäärän voi muodostaa?
-\end{task}
+Muodostettavana on rahamäärä $x$
+käyttäen mahdollisimman vähän kolikoita.
+Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$
+ja jokaista kolikkoa on saatavilla rajattomasti.
 
 Luvussa 6.1 ratkaisimme tehtävän ahneella algoritmilla,
 joka muodostaa rahamäärän valiten mahdollisimman
@@ -58,6 +54,13 @@ ei välttämättä valitse pienintä määrää kolikoita.
 Nyt on aika ratkaista tehtävä tehokkaasti
 dynaamisella ohjelmoinnilla niin,
 että algoritmi toimii millä tahansa kolikoilla.
+Ratkaisu perustuu rekursiiviseen funktioon,
+joka käy läpi kaikki vaihtoehdot rahamäärän
+muodostamiseen täydellisen haun kaltaisesti.
+Ratkaisu toimii kuitenkin tehokkaasti, koska
+se tallentaa välituloksia muistitaulukkoon,
+minkä ansiosta sen ei tarvitse laskea samoja
+asioita moneen kertaan.
 
 \subsubsection{Rekursiivinen esitys}
 
@@ -288,21 +291,15 @@ while (x > 0) {
 
 \subsubsection{Ratkaisuiden määrän laskeminen}
 
-Tarkastellaan sitten tehtävän muunnelmaa,
-jossa laskettavana on ratkaisuiden yhteismäärä:
-\begin{task}
-Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$,
-ja tehtäväsi on muodostaa kolikoista rahamäärä $x$.
-Jokaista kolikkoa on saatavilla rajattomasti.
-Monellako eri tavalla voit muodostaa rahamäärän?
-\end{task}
-
-\noindent
+Tarkastellaan sitten kolikkotehtävän muunnelmaa,
+joka on muuten samanlainen kuin ennenkin,
+mutta laskettavana on mahdollisten ratkaisuiden yhteismäärä
+optimaalisen ratkaisun sijasta.
 Esimerkiksi jos kolikot ovat $\{1,3,4\}$ ja rahamäärä on 5,
-niin ratkaisuja on 6:
+niin ratkaisuja on kaikkiaan 6:
 
-%\begin{multicols}{2}
-\begin{itemize}[noitemsep]
+\begin{multicols}{2}
+\begin{itemize}
 \item $1+1+1+1+1$
 \item $1+1+3$
 \item $1+3+1$
@@ -310,7 +307,7 @@ niin ratkaisuja on 6:
 \item $1+4$
 \item $4+1$
 \end{itemize}
-%\end{multicols}
+\end{multicols}
 
 Ratkaisujen määrän laskeminen tapahtuu melko samalla tavalla
 kuin optimiratkaisun etsiminen.
@@ -323,25 +320,17 @@ Tässä tapauksessa voimme muodostaa funktion $f(x)$,
 joka kertoo, monellako tavalla rahamäärän $x$
 voi muodostaa kolikoista.
 Esimerkiksi $f(5)=6$, kun kolikot ovat $\{1,3,4\}$.
-
 Funktion $f(x)$ saa laskettua rekursiivisesti kaavalla
-
 \[ f(x) = f(x-c_1)+f(x-c_2)+\cdots+f(x-c_k),\]
-
-\noindent
 koska rahamäärän $x$ muodostamiseksi pitää
 valita jokin kolikko $c_i$ ja muodostaa sen jälkeen rahamäärä $x-c_i$.
 Pohjatapauksina ovat $f(0)=1$, koska rahamäärä 0 syntyy
 ilman yhtään kolikkoa,
 sekä $f(x)=0$, kun $x<0$, koska negatiivista rahamäärää
 ei ole mahdollista muodostaa.
-
 Yllä olevassa esimerkissä funktioksi tulee
-
-\[ f(x) = f(x-1)+f(x-3)+f(x-4), \]
-
+\[ f(x) = f(x-1)+f(x-3)+f(x-4) \]
 ja funktion ensimmäiset arvot ovat:
-
 \[
 \begin{array}{lcl}
 f(0) & = & 1 \\
@@ -385,19 +374,27 @@ jälkeen rivi
         d[i] %= m;
 \end{lstlisting}
 
+Nyt olemme käyneet läpi kaikki dynaamisen
+ohjelmoinnin perusasiat.
+Dynaamista ohjelmointia voi soveltaa monilla
+tavoilla erilaisissa tehtävissä,
+minkä vuoksi tutustumme seuraavaksi
+joukkoon tehtäviä, jotka esittelevät
+dynaamisen ohjelmoinnin mahdollisuuksia.
+
 \section{Pisin nouseva alijono}
 
 \index{pisin nouseva alijono@pisin nouseva alijono}
 
-\begin{task}
-Taulukossa on $n$ kokonaislukua $x_1,x_2,\ldots,x_n$.
-Tehtäväsi on selvittää taulukon
-\key{pisin nouseva alijono}, joka muodostuu
-joukosta taulukon lukuja niin, että kukin
-luku on edellistä suurempi.
-\end{task}
-
-\begin{samepage}
+Annettuna on taulukko, jossa on $n$
+kokonaislukua $x_1,x_2,\ldots,x_n$.
+Tehtävänä on selvittää,
+kuinka pitkä on taulukon
+\key{pisin nouseva alijono}
+eli vasemmalta oikealle kulkeva
+ketju taulukon alkioita,
+jotka on valittu niin,
+että jokainen alkio on edellistä suurempi.
 Esimerkiksi taulukossa
 
 \begin{center}
@@ -423,7 +420,6 @@ Esimerkiksi taulukossa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-\end{samepage}
 pisin nouseva alijono sisältää 4 lukua:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -504,13 +500,14 @@ ajassa $O(n \log n)$, mutta tämä on vaikeampaa.
 
 \section{Reitinhaku ruudukossa}
 
-\begin{task}
-Tehtäväsi on etsiä $n \times n$ -ruudukossa
-reitti vasemmasta yläkulmasta oikeaan alakulmaan
-niin, että lukujen summa reitillä on mahdollisimman suuri.
-Saat liikkua joka askeleella yhden ruudun
-oikealle tai alaspäin.
-\end{task}
+Seuraava tehtävämme on etsiä reitti
+$n \times n$ -ruudukon vasemmasta yläkulmasta
+oikeaan alakulmaan.
+Jokaisessa ruudussa on luku, ja reitti
+tulee muodostaa niin, että reittiin kuuluvien
+lukujen summa on mahdollisimman suuri.
+Rajoituksena ruudukossa on mahdollista
+liikkua vain oikealla ja alaspäin.
 
 Seuraavassa ruudukossa paras reitti
 on merkitty harmaalla taustalla:
@@ -555,7 +552,6 @@ on merkitty harmaalla taustalla:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
 Tällä reitillä lukujen summa on $3+9+8+7+9+8+5+10+8=67$,
 joka on suurin mahdollinen summa vasemmasta yläkulmasta
 oikeaan alakulmaan.
@@ -610,14 +606,15 @@ viereisten ruutujen arvoista.
 
 \index{repunpakkaus@repunpakkaus}
 
-\begin{task}
-Sinulla on $n$ tavaraa, joiden painot ovat
+\key{Repunpakkaus} on klassinen ongelma,
+jossa annettuna on $n$ tavaraa,
+joiden painot ovat
 $p_1,p_2,\ldots,p_n$ ja arvot ovat
 $a_1,a_2,\ldots,a_n$.
-Tehtäväsi on valita reppuun pakattavat tavarat
-niin, että painojen summa on enintään $x$
-ja arvojen summa on mahdollisimman suuri.
-\end{task}
+Tehtävänä on valita reppuun pakattavat tavarat
+niin, että tavaroiden
+painojen summa on enintään $x$
+ja tavaroiden arvojen summa on mahdollisimman suuri.
 
 \begin{samepage}
 Esimerkiksi jos tavarat ovat
@@ -660,6 +657,10 @@ mukaan ratkaisuun.
 Pohjatapauksina on $f(0,0)=0$ ja $f(0,u)=-\infty$,
 kun $u \neq 0$. Tämän ratkaisun aikavaativuus on $O(nx)$.
 
+Esimerkin tilanteessa optimiratkaisu on
+$f(4,11)=6$, joka muodostuu seuraavan ketjun kautta:
+\[f(4,11)=f(3,6)+3=f(2,6)+3=f(1,0)+3+3=f(0,0)+3+3=6.\]
+
 \subsubsection{Ratkaisu 2}
 
 \textit{Minimointi:} Merkitään $f(k,u)$
@@ -675,6 +676,10 @@ Rekursiivinen kaava funktion laskemiseksi on
 ratkaisua 1 vastaavasti.
 Pohjatapauksina on $f(0,0)=0$ ja $f(0,u)=\infty$, kun $u \neq 0$.
 Tämän ratkaisun aikavaativuus on $O(ns)$.
+
+Esimerkin tilanteessa optimiratkaisu on
+$f(4,6)=11$, joka muodostuu seuraavan ketjun kautta:
+\[f(4,6)=f(3,3)+5=f(2,3)+5=f(1,0)+6+5=f(0,0)+6+5=11.\]
 
 ~\\
 Kiinnostava seikka on, että eri asiat syötteessä
@@ -710,19 +715,12 @@ operaation \texttt{TALO} $\rightarrow$ \texttt{TALLO}
 Tämä on pienin mahdollinen määrä operaatioita, koska
 selvästikään yksi operaatio ei riitä.
 
-Tutustumme editointietäisyyteen seuraavan tehtävän kautta:
-\begin{task}
-Annettuna on merkkijono \texttt{x},
-jossa on $n$ merkkiä,
-sekä merkkijono \texttt{y},
-jossa on $m$ merkkiä.
-Mikä on merkkijonojen editointietäisyys ja
-miten editoinnin voi suorittaa?
-\end{task}
-
-Merkkijonojen \texttt{x} ja \texttt{y}
-editointietäisyyden voi
-laskea dynaamisella ohjelmoinnilla ajassa $O(nm)$.
+Oletetaan, että annettuna on merkkijonot
+\texttt{x} (pituus $n$ merkkiä) ja
+\texttt{y} (pituus $m$ merkkiä),
+ja haluamme laskea niiden editointietäisyyden.
+Tämä onnistuu tehokkaasti dynaamisella
+ohjelmoinnilla ajassa $O(nm)$.
 Merkitään funktiolla $f(a,b)$
 editointietäisyyttä \texttt{x}:n $a$
 ensimmäisen merkin sekä
@@ -730,6 +728,7 @@ ensimmäisen merkin sekä
 Tämän funktion avulla saa sekä
 laskettua tehokkaasti editointietäisyyden että
 selvitettyä, mitkä ovat tarvittavat editointioperaatiot.
+
 Funktion pohjatapaukset ovat
 \[
 \begin{array}{lcl}
@@ -749,7 +748,6 @@ Kaava käy läpi mahdollisuudet lyhentää merkkijonoja:
 \item $f(a-1,b-1)$ tarkoittaa, että $x$:ssä ja $y$:ssä on
 sama merkki ($c=0$) tai $x$:n merkki muutetaan $y$:n merkiksi ($c=1$)
 \end{itemize}
-
 Seuraava taulukko sisältää funktion $f$ arvot
 esimerkin tapauksessa:
 \begin{center}
@@ -876,16 +874,12 @@ kuin merkkijonoilla \texttt{PAL} ja \texttt{TAL}, jne.
 \section{Laatoitukset}
 
 Joskus dynaamisen ohjelmoinnin tila on monimutkaisempi kuin
-kiinteä yhdistelmä lukuja. Näin on seuraavassa tehtävässä:
-
-\begin{task}
-Sinulla on käytettävissäsi rajaton määrä laattoja kokoa $1 \times 2$
-ja $2 \times 1$,
-ja tehtäväsi on täyttää niillä $n \times m$ -kokoinen ruudukko.
-Kuinka monta mahdollista tapaa tähän on?
-\end{task}
-\noindent
-Esimerkiksi kun ruudukon koko on $4 \times 7$,
+kiinteä yhdistelmä lukuja.
+Tarkastelemme lopuksi tehtävää, jossa
+laskettavana on, monellako tavalla
+kokoa $1 \times 2$ ja $2 \times 1$ olevilla laatoilla
+voi täyttää $n \times m$ -kokoisen ruudukon.
+Esimerkiksi ruudukolle kokoa $4 \times 7$
 yksi mahdollinen ratkaisu on
 \begin{center}
 \begin{tikzpicture}[scale=.65]
@@ -908,7 +902,7 @@ yksi mahdollinen ratkaisu on
 
 \end{tikzpicture}
 \end{center}
-ja ratkaisujen kokonaismäärä on 781.
+ja ratkaisujen yhteismäärä on 781.
 
 Tehtävän voi ratkaista dynaamisella ohjelmoinnilla
 käymällä ruudukkoa läpi rivi riviltä.

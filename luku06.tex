@@ -23,22 +23,20 @@ Tämän perusteleminen on usein hankalaa.
 \section{Kolikkotehtävä}
 
 Aloitamme ahneisiin algoritmeihin tutustumisen
-seuraavasta tehtävästä:
-
-\begin{task}
+tehtävästä, jossa muodostettavana on
+rahamäärä $x$ kolikoista.
 Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$,
-ja tehtäväsi on muodostaa kolikoista rahamäärä $x$.
-Jokaista kolikkoa on saatavilla rajattomasti.
-Mikä on pienin määrä kolikoita,
-joilla rahamäärän voi muodostaa?
-\end{task}
+ja jokaista kolikkoa saatavilla rajattomasti.
+Tehtävänä on selvittää, mikä on pienin määrä
+kolikoita, joilla rahamäärän voi muodostaa.
 
-\noindent
-Esimerkiksi jos kolikot ovat eurokolikot eli sentteinä
-\[\{1,2,5,10,20,50,100,200\}\]
-ja muodostettava rahamäärä on 520,
-kolikoita tarvitaan vähintään 4.
-Optimiratkaisu on valita kolikot $200+200+100+20$.
+Esimerkiksi jos muodostettava
+rahamäärä on 520
+ja kolikot ovat eurokolikot eli sentteinä
+\[\{1,2,5,10,20,50,100,200\},\]
+niin kolikoita tarvitaan vähintään 4.
+Tämä on mahdollista valitsemalla kolikot
+$\{20,100,200,200\}$, joiden summa on 520.
 
 \subsubsection{Ahne algoritmi}
 
@@ -117,17 +115,13 @@ millä tahansa kolikoilla ja rahamäärällä.
 
 Monet aikataulutukseen liittyvät ongelmat
 ratkeavat ahneesti.
-Näin on esimerkiksi seuraavassa klassisessa tehtävässä:
-
-\begin{task}
+Klassinen ongelma on seuraava:
 Annettuna on $n$ tapahtumaa,
 jotka alkavat ja päättyvät tiettyinä hetkinä.
 Tehtäväsi on suunnitella aikataulu,
 jota seuraamalla pystyt osallistumaan
 mahdollisimman moneen tapahtumaan.
 Et voi osallistua tapahtumaan vain osittain.
-\end{task}
-
 Esimerkiksi jos tapahtumat ovat
 \begin{center}
 \begin{tabular}{lll}
@@ -184,11 +178,9 @@ algoritmi valitsee tapahtumat
 \end{tikzpicture}
 \end{center}
 ja tuottaa optimiratkaisun.
-
 Lyhimpien tapahtumien valinta ei ole kuitenkaan
-aina toimiva strategia.
-Algoritmi epäonnistuu esimerkiksi seuraavassa tilanteessa:
-\\
+aina toimiva strategia,
+vaan algoritmi epäonnistuu esimerkiksi seuraavassa tilanteessa:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -198,7 +190,6 @@ Algoritmi epäonnistuu esimerkiksi seuraavassa tilanteessa:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
 Kun lyhyt tapahtuma valitaan mukaan,
 on mahdollista osallistua vain yhteen tapahtumaan.
 Kuitenkin valitsemalla pitkät tapahtumat
@@ -209,7 +200,6 @@ olisi mahdollista osallistua kahteen tapahtumaan.
 Toinen idea on valita aina seuraavaksi tapahtuma,
 joka \emph{alkaa} mahdollisimman aikaisin.
 Tämä algoritmi valitsee esimerkissä tapahtumat
-\\
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -225,10 +215,8 @@ Tämä algoritmi valitsee esimerkissä tapahtumat
 \end{tikzpicture}
 \end{center}
 ja tuottaa optimiratkaisun.
-
 Tämä algoritmi ei kuitenkaan toimi
 esimerkiksi seuraavassa tilanteessa:
-\\
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -238,7 +226,6 @@ esimerkiksi seuraavassa tilanteessa:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
 Kun ensimmäisenä alkava tapahtuma
 valitaan mukaan, mitään muuta tapahtumaa
 ei ole mahdollista valita.
@@ -251,7 +238,6 @@ kaksi myöhempää tapahtumaa.
 Kolmas idea on valita aina seuraavaksi tapahtuma,
 joka \emph{päättyy} mahdollisimman aikaisin.
 Tämä algoritmi valitsee esimerkissä tapahtumat
-\\
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -267,7 +253,6 @@ Tämä algoritmi valitsee esimerkissä tapahtumat
 \end{tikzpicture}
 \end{center}
 ja tuottaa optimiratkaisun.
-
 Osoittautuu, että tämä ahne algoritmi
 tuottaa \textit{aina} optimiratkaisun.
 Algoritmi toimii, koska on aina kokonaisuuden
@@ -291,7 +276,6 @@ kuin aiemmin päättyvän tapahtuman jälkeen.
 
 \section{Tehtävät ja deadlinet}
 
-\begin{task}
 Annettuna on $n$ tehtävää,
 joista jokaisella on kesto ja deadline.
 Tehtäväsi on valita järjestys,
@@ -299,12 +283,10 @@ jossa suoritat tehtävät.
 Saat kustakin tehtävästä $d-x$ pistettä,
 missä $d$ on tehtävän deadline ja $x$
 on tehtävän valmistumishetki.
-Mikä on suurin mahdollinen pistesumma?
-\end{task}
+Mikä on suurin mahdollinen
+yhteispistemäärä, jonka voit saada tehtävistä?
 
-\begin{minipage}{\textwidth}
 Esimerkiksi jos tehtävät ovat
-
 \begin{center}
 \begin{tabular}{lll}
 tehtävä & kesto & deadline \\
@@ -315,12 +297,8 @@ $C$ & 2 & 7 \\
 $D$ & 4 & 5 \\
 \end{tabular}
 \end{center}
-\end{minipage}
-
-\noindent
 niin optimaalinen ratkaisu on suorittaa
 tehtävät seuraavasti:
-
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -349,7 +327,7 @@ tehtävät seuraavasti:
 Tässä ratkaisussa $C$ tuottaa 5 pistettä,
 $B$ tuottaa 0 pistettä, $A$ tuottaa $-7$ pistettä
 ja $D$ tuottaa $-8$ pistettä,
-joten pistesumma on $-10$.
+joten yhteispistemäärä on $-10$.
 
 Yllättävää kyllä, tehtävän optimaalinen ratkaisu
 ei riipu lainkaan deadlineista,
@@ -409,21 +387,23 @@ järjestyksessä keston mukaan.
 
 \section{Keskiluvut}
 
-\subsubsection{Itseisarvosumma}
+Tarkastelemme seuraavaksi ongelmaa, jossa
+annettuna on $n$ lukua $a_1,a_2,\ldots,a_n$
+ja tehtävänä on etsiä luku $x$ niin, että summa
+\[|a_1-x|^c+|a_2-x|^c+\cdots+|a_n-x|^c\]
+on mahdollisimman pieni.
+Keskitymme tapauksiin, joissa $c=1$ tai $c=2$.
 
-\begin{task}
-Annettuna on $n$ lukua $a_1,a_2,\ldots,a_n$.
-Tehtäväsi on etsiä luku $x$, joka minimoi summan
-$|a_1-x|+|a_2-x|+\cdots+|a_n-x|.$
-\end{task}
+\subsubsection{Tapaus $c=1$}
 
+Tässä tapauksessa minimoitavana on summa
+\[|a_1-x|+|a_2-x|+\cdots+|a_n-x|.\]
 Esimerkiksi jos luvut ovat $[1,2,9,2,6]$,
-niin paras ratkaisu on $x=2$,
+niin paras ratkaisu on valita $x=2$,
 jolloin summaksi tulee
 \[
 |1-2|+|2-2|+|9-2|+|2-2|+|6-2|=12.
 \]
-
 Yleisessä tapauksessa paras valinta $x$:n arvoksi
 on lukujen \textit{mediaani}
 eli keskimmäinen luku järjestyksessä.
@@ -443,25 +423,19 @@ Jos $n$ on parillinen ja mediaaneja on kaksi,
 kumpikin mediaani sekä kaikki niiden välillä
 olevat luvut tuottavat optimaalisen ratkaisun.
 
-\subsubsection{Neliösumma}
+\subsubsection{Tapaus $c=2$}
 
-\begin{task}
-Annettuna on $n$ lukua $a_1,a_2,\ldots,a_n$.
-Tehtäväsi on etsiä luku $x$, joka minimoi summan
-$(a_1-x)^2+(a_2-x)^2+\cdots+(a_n-x)^2.$
-\end{task}
-
+Tässä tapauksessa minimoitavana on summa
+\[(a_1-x)^2+(a_2-x)^2+\cdots+(a_n-x)^2.\]
 Esimerkiksi jos luvut ovat $[1,2,9,2,6]$,
 niin paras ratkaisu on $x=4$,
 jolloin summaksi tulee
 \[
 (1-4)^2+(2-4)^2+(9-4)^2+(2-4)^2+(6-4)^2=46.
 \]
-
-Nyt paras valinta $x$:n arvoksi on lukujen
+Yleisessä tapauksessa paras valinta $x$:n arvoksi on lukujen
 \textit{keskiarvo}.
 Esimerkissä lukujen keskiarvo on $(1+2+9+2+6)/5=4$.
-
 Tämän tuloksen voi johtaa järjestämällä summan
 uudestaan muotoon
 \[
@@ -481,8 +455,8 @@ $x=s/n$ eli taulukon lukujen keskiarvo.
 \index{binxxrikoodi@binäärikoodi}
 \index{koodisana@koodisana}
 
-Tarkastellaan ongelmaa, jossa tehtävänä on
-\emph{pakata} annettu merkkijono niin,
+Annettuna on merkkijono ja tehtävänä on
+\emph{pakata} merkkijono niin,
 että se vie vähemmän tilaa.
 Käytämme tähän \key{binäärikoodia},
 joka määrittää kullekin merkille
