@@ -18,14 +18,10 @@ Esimerkkejä kyselyistä ovat:
 
 \section{Tehokas nouseminen}
 
-\begin{task}
-Annettuna on juurellinen puu, jonka solmut on numeroitu
-$1 \ldots n$ ja juurisolmu on 1.
-Tehtäväsi on vastata
-tehokkaasti kyselyihin muotoa ''mikä solmu on
-$k$ askelta ylempänä solmua $x$''.
-\end{task}
-
+Tehokas nouseminen puussa tarkoittaa,
+että voimme selvittää nopeasti,
+mihin solmuun päätyy kulkemalla
+$k$ askelta ylöspäin solmusta $x$ alkaen.
 Merkitään $f(x,k)$ solmua,
 joka on $k$ askelta ylempänä solmua $x$.
 Esimerkiksi seuraavassa puussa
@@ -225,15 +221,13 @@ alipuuta vastaa seuraava taulukon osa:
 \end{center}
 Tämän ansiosta solmutaulukon avulla voi käsitellä tehokkaasti
 puun alipuihin liittyviä kyselyitä.
-Voimme ratkaista esimerkiksi seuraavan tehtävän:
-
-\begin{task}
-Annettuna on juurellinen puu, jossa on $n$ solmua
-ja jokaisella solmulla on tietty arvo.
-Tehtäväsi on käsitellä kyselyt muotoa
-''muuta solmun $x$ arvoa'' sekä
-''laske arvojen summa solmun $x$ alipuussa''.
-\end{task}
+Ratkaistaan esimerkkinä tehtävä,
+jossa kuhunkin puun solmuun liittyy
+arvo ja toteutettavana on seuraavat kyselyt:
+\begin{itemize}
+\item muuta solmun $x$ arvoa
+\item laske arvojen summa solmun $x$ alipuussa
+\end{itemize}
 
 Tarkastellaan seuraavaa puuta,
 jossa siniset luvut ovat solmujen arvoja.
@@ -387,15 +381,12 @@ eli pystymme vastaamaan kyselyihin tehokkaasti.
 
 Solmutaulukon avulla voi myös käsitellä tehokkaasti
 polkuja, jotka kulkevat juuresta tiettyyn solmuun puussa.
-Näin on seuraavassa tehtävässä:
-
-\begin{task}
-Annettuna on juurellinen puu, jossa on $n$ solmua
-ja jokaisella solmulla on tietty arvo.
-Tehtäväsi on käsitellä kyselyt muotoa
-''muuta solmun $x$ arvoa'' sekä
-''laske arvojen summa juuresta solmuun $x$''.
-\end{task}
+Ratkaistaan seuraavaksi tehtävä,
+jossa toteutettavana on seuraavat kyselyt:
+\begin{itemize}
+\item muuta solmun $x$ arvoa
+\item muuta arvojen summa juuresta solmuun $x$
+\end{itemize}
 
 Esimerkiksi seuraavassa puussa polulla solmusta 1
 solmuun 8 arvojen summa on $4+5+3=12$.
@@ -575,19 +566,13 @@ onnistuvat ajassa $O(\log n)$.
 
 \index{alin yhteinen esivanhempi@alin yhteinen esivanhempi}
 
-Kahden puussa olevan solmun
+Kahden puun solmun
 \key{alin yhteinen esivanhempi}
 on mahdollisimman alhaalla puussa oleva solmu,
 jonka alipuuhun kumpikin solmu kuuluu.
-Luonteva tehtävä on:
-
-\begin{task}
-Annettuna on puu, jossa on $n$ solmua.
-Tehtäväsi on vastata kyselyihin
-''mikä on solmujen $a$ ja $b$ alin yhteinen esivanhempi''.
-\end{task}
-
-\begin{samepage}
+Tyypillinen tehtävä on vastata tehokkaasti
+joukkoon kyselyitä, jossa selvitettävänä on
+kahden solmun alin yhteinen esivanhempi.
 Esimerkiksi puussa
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -608,7 +593,6 @@ Esimerkiksi puussa
 \path[draw,thick,-] (7) -- (8);
 \end{tikzpicture}
 \end{center}
-\end{samepage}
 solmujen 5 ja 8 alin yhteinen esivanhempi on solmu 2
 ja solmujen 3 ja 4 alin yhteinen esivanhempi on solmu 1.
 
@@ -881,13 +865,11 @@ Kummassakin tapauksessa esikäsittely vie aikaa $O(n \log n)$.
 
 \subsubsection{Solmujen etäisyydet}
 
-Myös seuraava tehtävä palautuu alimman yhteisen
-esivanhemman hakuun:
-\begin{task}
-Annettuna on juurellinen puu, jonka solmut on numeroitu $1 \ldots n$.
-Tehtäväsi on vastata kyselyihin
-''laske solmujen $a$ ja $b$ etäisyys puussa''.
-\end{task}
+Tarkastellaan lopuksi tehtävää,
+jossa kyselyissä tulee laskea tehokkaasti
+kahden solmun etäisyys eli solmujen välisen polun pituus puussa.
+Osoittautuu, että tämä tehtävä
+palautuu alimman yhteisen esivanhemman etsimiseen.
 
 Valitaan ensin mikä tahansa
 solmu puun juureksi.
