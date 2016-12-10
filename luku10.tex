@@ -168,12 +168,12 @@ $x$ & = & 29 &   00000000000000000000000000011101 \\
 \index{bittisiirto@bittisiirto}
 
 Vasen bittisiirto $x < < k$ tuottaa luvun, jossa luvun $x$ bittejä
-on siirretty $k$ askelta vasemmalle
-(luvun loppuun tulee $k$ nollabittiä).
+on siirretty $k$ askelta vasemmalle eli
+luvun loppuun tulee $k$ nollabittiä.
 Oikea bittisiirto $x > > k$ tuottaa puolestaan
 luvun, jossa luvun $x$ bittejä
-on siirretty $k$ askelta oikealle 
-(luvun lopusta lähtee pois $k$ viimeistä bittiä).
+on siirretty $k$ askelta oikealle eli
+luvun lopusta lähtee pois $k$ viimeistä bittiä.
 
 Esimerkiksi $14 < < 2 = 56$,
 koska $14$ on bitteinä 1110,
@@ -192,8 +192,8 @@ alaspäin pyöristäen.
 
 Luvun bitit indeksoidaan oikealta vasemmalle
 nollasta alkaen.
-Luvussa $1 < < k$ on tarkalleen yksi ykkösbitti
-kohdassa $k$, joten sen avulla voi käsitellä
+Luvussa $1 < < k$ on yksi ykkösbitti
+kohdassa $k$ ja kaikki muut bitit ovat nollia, joten sen avulla voi käsitellä
 muiden lukujen yksittäisiä bittejä.
 
 Luvun $x$ bitti $k$ on ykkösbitti, jos
@@ -241,7 +241,7 @@ jos $x$ \& $(x-1) = 0$.
 
 \subsubsection*{Lisäfunktiot}
 
-GCC:n g++-kääntäjä sisältää mm. seuraavat funktiot
+Kääntäjä g++ sisältää mm. seuraavat funktiot
 bittien käsittelyyn:
 
 \begin{itemize}
@@ -258,9 +258,7 @@ ykkösten määrä bittiesityksessä
 $\texttt{\_\_builtin\_parity}(x)$:
 ykkösten määrän parillisuus
 \end{itemize}
-
 \begin{samepage}
-\noindent
 Nämä funktiot käsittelevät \texttt{int}-lukuja,
 mutta funktioista on myös \texttt{long long} -versiot,
 joiden lopussa on pääte \texttt{ll}.
@@ -365,34 +363,29 @@ Seuraava koodi käy läpi joukon $\{0,1,\ldots,n-1\}$ osajoukot:
 
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
-    // osajoukon käsittely
+    // osajoukon b käsittely
 }
 \end{lstlisting}
-
-\noindent
 Seuraava koodi käy läpi
 osajoukot, joissa on $k$ alkiota:
-
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
     if (__builtin_popcount(b) == k) {
-        // osajoukon käsittely
+        // osajoukon b käsittely
     }
 }
 \end{lstlisting}
-
-\noindent
-Seuraava koodi käy läpi bittiesitystä
-$x$ vastaavan joukon osajoukot:
+Seuraava koodi käy läpi joukon $x$ osajoukot:
 \begin{lstlisting}
 int b = 0;
 do {
-    // osajoukon käsittely
-} while (b=b-x&x);
+    // osajoukon b käsittely
+} while (b=(b-x)&x);
 \end{lstlisting}
-
-Yllä olevien koodien tavoin tämä koodi käy osajoukot
-läpi bittiesityksen suuruusjärjestyksessä.
+Esimerkiksi jos $x$ esittää joukkoa $\{2,5,7\}$,
+niin koodi käy läpi osajoukot
+$\emptyset$, $\{2\}$, $\{5\}$, $\{7\}$,
+$\{2,5\}$, $\{2,7\}$, $\{5,7\}$ ja $\{2,5,7\}$.
 
 \section{Dynaaminen ohjelmointi}
 
@@ -408,7 +401,7 @@ että $n$-alkioisen joukon permutaatioiden määrä ($n!$)
 on selvästi suurempi kuin osajoukkojen määrä ($2^n$).
 Esimerkiksi jos $n=20$, niin $n!=2432902008176640000$,
 kun taas $2^n=1048576$.
-Niinpä sopivilla $n$:n arvoilla permutaatioita ei ehdi
+Niinpä tietyillä $n$:n arvoilla permutaatioita ei ehdi
 käydä läpi mutta osajoukot ehtii käydä läpi.
 
 Tutustumme tekniikkaan seuraavan tehtävän kautta:
@@ -523,7 +516,7 @@ Esimerkiksi $s(110)=c(000)+c(010)+c(100)+c(110)=7$.
 
 Tehtävä on mahdollista ratkaista ajassa $O(2^n n)$
 laskemalla arvoja funktiolle $f(x,k)$:
-mikä on lukujen $c(y)$ summa, missä $y$:n saa $x$:stä
+mikä on lukujen $c(y)$ summa, missä $x$:stä saa $y$:n
 muuttamalla millä tahansa tavalla bittien $0,1,\ldots,k$
 joukossa ykkösbittejä nollabiteiksi.
 Tämän funktion avulla ilmaistuna $s(x)=f(x,n-1)$.

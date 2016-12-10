@@ -16,12 +16,12 @@ Ideana on tarkastella yksittäisen operaation
 sijasta kaikkia operaatioita algoritmin
 aikana ja laskea niiden ajankäytölle yhteinen raja.
 
-\section{Kaksi osoitinta}
+\section{Kahden osoittimen tekniikka}
 
-\index{kaksi osoitinta@kaksi osoitinta}
+\index{kahden osoittimen tekniikka}
 
-Kahden osoittimen tekniikka on taulukon käsittelyssä
-käytettävä tekniikka, jossa taulukkoa käydään läpi
+\key{Kahden osoittimen tekniikka} on taulukon käsittelyssä
+käytettävä menetelmä, jossa taulukkoa käydään läpi
 kahden osoittimen avulla.
 Molemmat osoittimet liikkuvat algoritmin aikana,
 mutta rajoituksena on, että ne voivat liikkua vain
@@ -30,7 +30,7 @@ yhteen suuntaan, mikä takaa, että algoritmi toimii tehokkaasti.
 Tutustumme seuraavaksi kahden osoittimen tekniikkaan
 kahden esimerkkitehtävän kautta.
 
-\subsubsection{Esimerkki 1}
+\subsubsection{Lukuvälin summa}
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ positiivista kokonaislukua.
@@ -207,7 +207,7 @@ Koska sekä vasen että oikea osoitin liikkuvat
 $O(n)$ askelta algoritmin aikana,
 algoritmin aikavaativuus on $O(n)$.
 
-\subsubsection{Esimerkki 2}
+\subsubsection{Lukujen valinta}
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ kokonaislukua.
@@ -226,7 +226,7 @@ jotka lähtevät liikkelle sen molemmista päistä.
 Vasen osoitin aloittaa taulukon alusta ja
 liikkuu joka vaiheessa askeleen eteenpäin.
 Oikea osoitin taas aloittaa taulukon lopusta
-ja peruuttaa niin kauan, kunnes osoitinten
+ja peruuttaa taaksepäin niin kauan, kunnes osoitinten
 määrittämän välin lukujen summa on enintään $x$.
 Jos summa on tarkalleen $x$, ratkaisu on löytynyt.
 
@@ -383,8 +383,7 @@ Tasoitetun analyysin avulla arvioidaan usein
 tietorakenteeseen tehtävien operaatioiden määrää.
 Algoritmin operaatiot voivat jakautua epätasaisesti
 niin, että useimmat operaatiot tehdään tietyssä
-algoritmin vaiheessa ja muuten niitä tehdään vähän.
-Näin on seuraavassa tehtävässä:
+algoritmin vaiheessa. Näin on seuraavassa tehtävässä:
 
 \begin{task}
 Annettuna on taulukko, jossa on $n$ lukua.

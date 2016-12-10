@@ -158,7 +158,7 @@ int summa(int a, int b) {
 
 Ideana on laskea välin $[a,b]$ summa 
 laskemalla ensin välin $[1,b]$ summa
-ja poistamalla siitä sitten välin $[1,a-1]$ summa.
+ja vähentämällä siitä sitten välin $[1,a-1]$ summa.
 Summataulukosta riittää hakea kaksi arvoa
 ja aikaa kuluu vain $O(1)$.
 Huomaa, että 1-indeksoinnin ansiosta
@@ -440,12 +440,12 @@ Välit ovat $[2,5]$ ja $[4,7]$:
 \end{center}
 Välin $[2,5]$ minimi on 3 ja välin $[4,7]$ minimi on 1.
 Tämän seurauksena välin $[2,7]$ minimi on pienempi näistä eli 1.
-
-Mainittakoon, että $O(1)$-aikaiset minimikyselyt pystyy
-toteuttamaan myös niin, että esikäsittely vie aikaa
-vain $O(n)$ eikä $O(n \log n)$.
-Tämä on kuitenkin selvästi vaikeampaa, eikä 
-sillä ole merkitystä kisakoodauksessa.
+% 
+% Mainittakoon, että $O(1)$-aikaiset minimikyselyt pystyy
+% toteuttamaan myös niin, että esikäsittely vie aikaa
+% vain $O(n)$ eikä $O(n \log n)$.
+% Tämä on kuitenkin selvästi vaikeampaa, eikä 
+% sillä ole merkitystä kisakoodauksessa.
 
 \section{Binääri-indeksipuu}
 
@@ -666,9 +666,10 @@ seuraavat välien summat muuttuvat:
 \end{tikzpicture}
 \end{center}
 
-Myös tässä tapauksessa muutos kohdistuu $O(\log n)$ kohtaan
-binääri-indeksi\-puussa, koska kaikki välit,
-joihin muutos vaikuttaa, ovat eripituisia.
+Myös tässä tapauksessa kaikki välit,
+joihin muutos vaikuttaa, ovat eripituisia,
+joten muutos kohdistuu $O(\log n)$ kohtaan
+binääri-indeksipuussa.
 
 \subsubsection{Toteutus}
 
@@ -712,9 +713,9 @@ void lisaa(int k, int x) {
 \end{lstlisting}
 
 Kummankin yllä olevan funktion aikavaativuus on $O(\log n)$,
-koska jokainen käsiteltävä taulukon väli on eripituinen
-ja yksittäinen bittioperaatio riittää siirtymään
-seuraavaan väliin.
+koska funktiot muuttavat $O(\log n)$ kohtaa
+binääri-indeksipuussa ja uuteen kohtaan siirtyminen
+vie aikaa $O(1)$ bittioperaation avulla.
 
 \section{Segmenttipuu}
 
@@ -1060,13 +1061,16 @@ voi tallentaa taulukkoon seuraavasti:
 \node at (14.5,1.4) {$15$};
 \end{tikzpicture}
 \end{center}
-
-Tätä tallennustapaa käyttäen puussa liikkuminen on helppoa.
-Kohdassa $k$ olevasta solmusta ylempi solmu on kohdassa
-$\lfloor k/2 \rfloor$ ja alemmat solmut ovat kohdissa
-$2k$ (vasen) ja $2k+1$ (oikea).
-Lisäksi parillisten kohtien solmut ovat vasemmalla
-ja parittomien kohtien solmut oikealla.
+Tätä tallennustapaa käyttäen kohdassa $k$
+olevalle solmulle pätee, että
+\begin{itemize}
+\item ylempi solmu on kohdassa $\lfloor k/2 \rfloor$,
+\item vasen alempi solmu on kohdassa $2k$ ja
+\item oikea alempi solmu on kohdassa $2k+1$.
+\end{itemize}
+Huomaa, että tämän seurauksena solmun kohta on parillinen,
+jos se on vasemmalla ylemmästä solmusta katsoen,
+ja pariton, jos se on oikealla.
 
 \subsubsection{Toteutus}
 
@@ -1128,9 +1132,9 @@ segmenttipuun tasoja ylöspäin.
 
 Segmenttipuu mahdollistaa summan lisäksi minkä
 tahansa välikyselyn,
-jossa vierekkäisten välien $[a,b]$ ja $[c,d]$
+jossa vierekkäisten välien $[a,b]$ ja $[b+1,c]$
 tuloksista pystyy laskemaan tehokkaasti
-välin $[a,d]$ tuloksen.
+välin $[a,c]$ tuloksen.
 Tällaisia kyselyitä
 ovat esimerkiksi minimi ja maksimi,
 suurin yhteinen tekijä
@@ -1252,10 +1256,8 @@ kulkemalla puussa huipulta alaspäin:
 
 \subsubsection{Indeksien pakkaus}
 
-Tämän luvun tietorakenteiden
-rajoituksena on,
-että ne on rakennettu taulukon päälle
-ja alkiot on indeksoitu
+Taulukon päälle rakennettujen tietorakenteiden
+rajoituksena on, että alkiot on indeksoitu
 kokonaisluvuin $1,2,\ldots,n$.
 Tästä seuraa ongelmia,
 jos tarvittavat indeksit ovat suuria.
@@ -1294,13 +1296,13 @@ p(10^9) & = & 3 \\
 
 \subsubsection{Välin muuttaminen}
 
-Tähän asti tavoitteemme on ollut toteuttaa
-tehokkaasti välikyselyjä ja muuttaa yksittäisiä
-taulukon arvoja.
+Tähän asti olemme toteuttaneet tietorakenteita,
+joissa voi tehdä tehokkaasti välikyselyitä
+ja muuttaa yksittäisiä taulukon arvoja.
 Tarkastellaan lopuksi käänteistä tilannetta,
 jossa pitääkin muuttaa välejä ja 
 kysellä yksittäisiä arvoja.
-Tavoitteena on nyt toteuttaa operaatio,
+Keskitymme operaatioon,
 joka kasvattaa kaikkia välin $[a,b]$ arvoja $x$:llä.
 
 Yllättävää kyllä,
