@@ -21,13 +21,14 @@ tehtävään.
 
 \index{osajoukko@osajoukko}
 
-Usein esiintyvä tehtävä on käydä läpi
-kaikki joukon $\{1,2,\ldots,n\}$ osajoukot,
+Aloitamme tapauksesta, jossa tehtävän
+mahdollisia ratkaisuja ovat
+$n$-alkioisen joukon osajoukot.
+Tällöin täydellisen haun tulee
+käydä läpi kaikki joukon osa\-joukot,
 joita on yhteensä $2^n$ kappaletta.
-Esimerkiksi jos joukko on $\{1,2,3\}$,
-sen osajoukot ovat $\emptyset$,
-$\{1\}$, $\{2\}$, $\{3\}$,
-$\{1,2\}$, $\{1,3\}$, $\{2,3\}$ ja $\{1,2,3\}$.
+Käymme seuraavaksi läpi kaksi menetelmää
+tällaisen haun toteuttamiseen.
 
 \subsubsection{Menetelmä 1}
 
@@ -162,12 +163,13 @@ for (int b = 0; b < (1<<n); b++) {
 
 \index{permutaatio@permutaatio}
 
-Seuraava tehtävämme on käydä läpi
-kaikki joukon $\{1,2,\ldots,n\}$ permutaatiot,
-joita on yhteensä $n!$ kappaletta.
-Esimerkiksi joukon $\{1,2,3\}$
-permutaatiot ovat $(1,2,3)$, $(1,3,2)$,
-$(2,1,3)$, $(2,3,1)$, $(3,1,2)$ ja $(3,2,1)$.
+Toinen usein esiintyvä tilanne on,
+että tehtävän ratkaisut ovat $n$-alkioisen
+joukon permutaatioita,
+jolloin täydellisen haun tulee
+käydä läpi $n!$ mahdollista permutaatiota.
+Myös tässä tapauksessa on kaksi luontevaa
+menetelmää täydellisen haun toteuttamiseen.
 
 \subsubsection{Menetelmä 1}
 
@@ -210,14 +212,13 @@ joukon koko $n$, permutaatio on tullut valmiiksi.
 
 \index{next\_permutation@\texttt{next\_permutation}}
 
-Vaihtoehtoinen tapa käydä läpi permutaatiot
-on käyttää C++:n standardikirjastoon kuuluvaa
-funktiota \texttt{next\_permutation}.
-Se muuttaa taulukossa olevan permutaation
-seuraavaksi järjestyksessä olevaksi permutaatioksi.
-
-Seuraava koodi muodostaa joukon $\{1,2,\ldots,n\}$
-permutaatiot käyttäen apuna funktiota \texttt{next\_permutation}:
+Toinen ratkaisu on aloittaa permutaatiosta
+$\{1,2,\ldots,n\}$ ja muodostaa joka askeleella
+järjestyksessä seuraava permutaatio.
+C++:n standardikirjastossa on funktio
+\texttt{next\_permutation}, joka tekee tämän muunnoksen.
+Seuraava koodi käy läpi joukon $\{1,2,\ldots,n\}$
+permutaatiot funktion avulla:
 
 \begin{lstlisting}
 vector<int> v;
@@ -241,14 +242,13 @@ mahdollisiin suuntiin, joihin ratkaisua voi laajentaa.
 Haaran tutkimisen jälkeen haku peruuttaa takaisin
 ja jatkaa muihin mahdollisiin suuntiin.
 
-Tarkastellaan esimerkkinä seuraavaa tehtävää:
+\index{kuningatarongelma}
 
-\begin{task}
-Montako tapaa on asettaa $n$ kuningatarta
-$n \times n$ -shakkilaudalle niin,
-että mitkään kaksi kuningatarta eivät uhkaa toisiaan?
-\end{task}
-
+Tarkastellaan esimerkkinä \key{kuningatarongelmaa},
+jossa laskettavana on,
+monellako tavalla $n \times n$ -shakkilaudalle
+voidaan asettaa $n$ kuningatarta niin,
+että mitkään kaksi kuningatarta eivät uhkaa toisiaan.
 Esimerkiksi kun $n=4$, mahdolliset ratkaisut ovat seuraavat:
 
 \begin{center}
@@ -282,7 +282,7 @@ Esimerkiksi kun $n=4$, osa peruuttavan haun muodostamasta
 puusta näyttää seuraavalta:
 
 \begin{center}
-\begin{tikzpicture}[scale=.45]
+\begin{tikzpicture}[scale=.55]
   \begin{scope}
     \draw (0, 0) grid (4, 4);
 
@@ -334,7 +334,8 @@ eivät kelpaa, koska niissä kuningattaret uhkaavat
 toisiaan.
 Sen sijaan neljäs osaratkaisu kelpaa,
 ja sitä on mahdollista laajentaa loppuun asti
-kokonaiseksi ratkaisuksi.
+kokonaiseksi ratkaisuksi
+asettamalla kaksi kuningatarta lisää laudalle.
 
 \begin{samepage}
 Seuraava koodi toteuttaa peruuttavan haun:
@@ -451,20 +452,22 @@ nykyaikaisella tietokoneella (14772512 ratkaisua).
 \section{Haun optimointi}
 
 Peruuttavaa hakua on usein mahdollista tehostaa
-huomattavasti erilaisten optimointien avulla.
-Tarkastellaan esimerkkinä seuraavaa tehtävää:
+erilaisten optimointien avulla.
+Ideana on lisätä hakuun ''älykkyyttä''
+niin, että haku pystyy havaitsemaan
+mahdollisimman aikaisin,
+jos muodosteilla oleva ratkaisu ei voi
+johtaa kokonaiseen ratkaisuun.
+Tällaiset optimoinnit karsivat haaroja
+hakupuusta, millä voi olla suuri vaikutus
+peruuttavan haun tehokkuuteen.
 
-\begin{task}
-Aloitat $n \times n$ -ruudukon
-vasemmasta yläkulmasta ja tehtäväsi on päästä
-oikeaan alakulmaan.
-Saat liikkua joka vuorolla askeleen
-ylöspäin, alaspäin, vasemmalle tai oikealle.
-Sinun tulee käydä reitin aikana tasan kerran
-kussakin ruudussa.
-Montako erilaista reittiä on olemassa?
-\end{task}
-
+Tarkastellaan esimerkkinä tehtävää,
+jossa laskettavana on reittien määrä
+$n \times n$ -ruudukon
+vasemmasta yläkulmasta oikeaan alakulmaan,
+kun reitin aikana tulee käydä tarkalleen kerran 
+jokaisessa ruudussa.
 Esimerkiksi $7 \times 7$ -ruudukossa on
 111712 mahdollista reittiä vasemmasta yläkulmasta
 oikeaan alakulmaan, joista yksi on seuraava:
@@ -491,13 +494,12 @@ Lähdemme liikkeelle suoraviivaisesta peruuttavaa hakua
 käyttävästä algoritmista
 ja teemme siihen pikkuhiljaa optimointeja,
 jotka nopeuttavat hakua eri tavoin.
-
 Mittaamme jokaisen optimoinnin jälkeen
 algoritmin suoritusajan sekä rekursiokutsujen yhteismäärän,
 jotta näemme selvästi, mikä vaikutus kullakin
 optimoinnilla on haun tehokkuuteen.
 
-\subsubsection{Algoritmi}
+\subsubsection{Perusalgoritmi}
 
 Algoritmin ensimmäisessä versiossa ei ole mitään optimointeja,
 vaan peruuttava haku käy läpi kaikki mahdolliset tavat
@@ -693,32 +695,36 @@ Tyypillisesti puolivälihaku tehostaa algoritmia
 niin, että aikavaativuuden kertoimesta $2^n$
 tulee kerroin $2^{n/2}$.
 
-\begin{samepage}
-Tutustumme puolivälihakuun seuraavan tehtävän kautta:
-\begin{task}
-Annettuna on lista, jossa on $n$ lukua,
-sekä lisäksi kokonaisluku $x$.
-Tehtäväsi on selvittää, voiko listan luvuista
-valita osajoukon niin, että osajoukon lukujen summa on $x$.
-\end{task}
-\end{samepage}
+Tarkastellaan ongelmaa, jossa annettuna
+on $n$ lukua sisältävä lista sekä kokonaisluku $x$.
+Tehtävänä on selvittää, voiko listalta valita
+joukon lukuja niin, että niiden summa on $x$.
+Esimerkiksi jos lista on $[2,4,5,9]$ ja $x=15$,
+voimme valita listalta luvut $[2,4,9]$,
+jolloin $2+4+9=15$.
+Jos taas lista säilyy ennallaan ja $x=14$,
+mikään valinta ei täytä vaatimusta.
 
 Tavanomainen ratkaisu tehtävään on käydä kaikki
 listan alkioiden osajoukot läpi ja tarkastaa,
 onko jonkin osajoukon summa $x$.
 Tällainen ratkaisu kuluttaa aikaa $O(2^n)$,
 koska erilaisia osajoukkoja on $2^n$.
-Puolivälihaun avulla on kuitenkin mahdollista luoda
+Seuraavaksi näemme,
+miten puolivälihaun avulla on mahdollista luoda
 tehokkaampi $O(2^{n/2})$-aikainen ratkaisu.
+Huomaa, että aikavaativuuksissa $O(2^n)$ ja
+$O(2^{n/2})$ on merkittävä ero, koska
+$2^{n/2}$ tarkoittaa samaa kuin $\sqrt{2^n}$.
 
 Ideana on jakaa syötteenä oleva lista
 kahteen listaan $A$ ja $B$,
-joista kumpikin sisältää noin puolet alkioista.
+joista kumpikin sisältää noin puolet luvuista.
 Ensimmäinen haku muodostaa kaikki osajoukot
 listan $A$ luvuista ja laittaa muistiin niiden summat
 listaan $S_A$.
-Toinen haku käsittelee vastaavasti listan $B$ luvut
-ja laittaa niiden summat listaan $S_B$.
+Toinen haku muodostaa vastaavasti listan
+$B$ perusteella listan $S_B$.
 Tämän jälkeen riittää tarkastaa,
 onko mahdollista valita yksi luku listasta $S_A$
 ja toinen luku listasta $S_B$ niin,
@@ -727,31 +733,23 @@ Tämä on mahdollista tarkalleen silloin,
 kun alkuperäisen listan luvuista saa summan $x$.
 
 Tarkastellaan esimerkkiä,
-jossa lista on $\{2,4,5,9\}$
+jossa lista on $[2,4,5,9]$
 ja $x=15$.
-Puolivälihaku muodostaa listat $A=\{2,4\}$
-ja $B=\{5,9\}$ sekä summalistat
-$S_A=\{0,2,4,6\}$ ja $S_B=\{0,5,9,14\}$.
+Puolivälihaku jakaa luvut kahteen
+listaan niin, että $A=[2,4]$
+ja $B=[5,9]$.
+Näistä saadaan edelleen summalistat
+$S_A=[0,2,4,6]$ ja $S_B=[0,5,9,14]$.
 Summa $x=15$ on mahdollista muodostaa,
 koska voidaan valita $S_A$:sta luku $6$
 ja $S_B$:stä luku $9$.
-Tämä vastaa ratkaisua $\{2,4,9\}$.
+Tämä valinta vastaa ratkaisua $[2,4,9]$.
 
-Ratkaisun aikavaativuus on huolellisesti toteutettuna
-vain $O(2^{n/2})$.
-Listat $S_A$ ja $S_B$ on kumpikin mahdollista
-muodostaa ajassa $O(2^{n/2})$ niin,
-että niiden luvut ovat järjestyksessä.
-Tämän jälkeen on mahdollista tutkia ajassa
-$O(2^{n/2})$, voiko lukua $x$ muodostaa
-valitsemalla kummastakin listasta yksi luku.
-
-Vaikka aikavaativuudet $O(2^n)$ ja $O(2^{n/2})$
-muistuttavat toisiaan, niiden ero on merkittävä.
-Vakiokertoimilla \emph{on} siis väliä, kun ne esiintyvät
-potenssin eksponentissa.
-Esimerkiksi jos $n=40$, $O(2^n)$-algoritmin suoritus
-veisi tunteja aikaa, kun taas $O(2^{n/2})$-algoritmi
-valmistuu sekunnin murto-osassa.
-
-
+Ratkaisun aikavaativuus on $O(2^{n/2})$,
+koska kummassakin listassa $A$ ja $B$
+on $n/2$ lukua ja niiden osajoukkojen
+summien laskeminen listoihin $S_A$ ja $S_B$
+vie aikaa $O(2^{n/2})$.
+Tämän jälkeen on mahdollista tarkastaa
+ajassa $O(2^{n/2})$, voiko summaa $x$ muodostaa
+listojen $S_A$ ja $S_B$ luvuista.
