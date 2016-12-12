@@ -108,7 +108,7 @@ $\texttt{t}[1],\texttt{t}[2],\ldots,\texttt{t}[n]$:
 \begin{lstlisting}
 while (true) {
     bool x = false;
-    for (int j = 1; j <= n-1; j++) {
+    for (int i = 1; i <= n-1; i++) {
         if (t[i] > t[i+1]) {
             swap(t[i],t[i+1]);
             x = true;
@@ -270,11 +270,11 @@ algoritmin aikavaativuus on $O(n^2)$.
 
 Kuplajärjestäminen on esimerkki algoritmista,
 joka perustuu taulukon vierekkäisten alkioiden
-vaihtamiseen.
+vaihtamiseen keskenään.
 Osoittautuu, että tällaisen algoritmin
 aikavaativuus on aina vähintään $O(n^2)$,
 koska pahimmassa tapauksessa taulukon
-järjestäminen $O(n^2)$ alkioparin vaihtamista.
+järjestäminen vaatii $O(n^2)$ alkioparin vaihtamista.
 
 Hyödyllinen käsite järjestämisalgoritmien
 analyysissa on \key{inversio}.
@@ -316,12 +316,12 @@ kun taulukon järjestys on käänteinen,
 jolloin inversioita on
 \[1+2+\cdots+(n-1)=\frac{n(n-1)}{2} = O(n^2).\]
 
-Oleellinen havainto on,
-että jos vierekkäiset taulukon alkiot
+Jos vierekkäiset taulukon alkiot
 ovat väärässä järjestyksessä,
 niiden järjestyksen korjaaminen
 poistaa taulukosta tarkalleen yhden inversion.
-Niinpä jos järjestämisalgoritmi vaihtaa vain
+Niinpä jos järjestämisalgoritmi pystyy
+vaihtamaan keskenään vain
 taulukon vierekkäisiä alkioita,
 jokainen vaihto voi poistaa enintään yhden inversion
 ja algoritmin aikavaativuus on varmasti ainakin $O(n^2)$.
@@ -362,15 +362,14 @@ joten se on valmiiksi järjestyksessä.
 Muuten algoritmi jakaa välin
 kahteen osaan: vasen osa on väli $a \ldots c$
 ja oikea osa on väli $c+1 \ldots b$, missä $c=(a+b)/2$.
-Algoritmi järjestää osat rekursiivisesti
+Funktion järjestää osat rekursiivisesti
 kutsumalla itseään.
 
-Algoritmi kutsuu funktiota \texttt{merge},
-joka lomittaa välin vasemman ja oikean osan alkiot.
-Tämä tarkoittaa, että alkiot kerätään yhteen niin,
-että koko taulukon väli on järjestyksessä.
-Lomitus
-on mahdollista toteuttaa ajassa $O(n)$
+Rekursiivisen järjestämisen jälkeen funktio \texttt{merge}
+lomittaa välin vasemman ja oikean osan alkiot
+eli kerää alkiot yhteen niin,
+että koko väli on järjestyksessä.
+Lomitus on mahdollista toteuttaa ajassa $O(n)$
 valitsemalla alkiot järjestyksessä vasemman ja
 oikean osan alusta alkaen.
 
@@ -739,7 +738,7 @@ v.push_back({1,2});
 sort(v.begin(), v.end());
 \end{lstlisting}
 
-Koodin suorituksen jälkeen parien järjestys on
+Koodin suorituksen jälkeen järjestys on
 $(1,2)$, $(1,5)$, $(2,3)$.
 
 \index{tuple@\texttt{tuple}}
@@ -777,7 +776,7 @@ ja toissijaisesti y-koordinaatin mukaan.
 \begin{lstlisting}
 struct P {
     int x, y;
-    bool operator<(const p& a) {
+    bool operator<(const P& a) {
         if (this.x != a.x) return this.x < a.x;
         else return this.y < a.y;
     }
@@ -918,8 +917,7 @@ joka palauttaa \texttt{true}, jos $x$ on kelvollinen
 ratkaisu, ja muuten \texttt{false}.
 Lisäksi tiedämme, että $\texttt{ok}(x)$ on \texttt{false}
 aina kun $x<k$ ja \texttt{true} aina kun $x \geq k$.
-
-Toisin sanoen haluamme löytää funktion \texttt{ok} muutoskohdan,
+Toisin sanoen haluamme löytää funktion \texttt{ok} \emph{muutoskohdan},
 jossa arvosta \texttt{false} tulee arvo \texttt{true}.
 Tilanne näyttää seuraavalta:
 
