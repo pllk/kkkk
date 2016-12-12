@@ -14,10 +14,10 @@ Tarkastellaan esimerkkinä tuttua ongelmaa,
 jossa toteutettavana on summakysely taulukkoon.
 Halutut operaatiot ovat:
 
-\begin{enumerate}
-\item[(1)] muuta kohdassa $x$ olevaa lukua
-\item[(2)] laske välin $[a,b]$ lukujen summa
-\end{enumerate}
+\begin{itemize}
+\item muuta kohdassa $x$ olevaa lukua
+\item laske välin $[a,b]$ lukujen summa
+\end{itemize}
 
 Olemme aiemmin ratkaisseet tehtävän
 binääri-indeksipuun ja segmenttipuun avulla,
@@ -203,15 +203,16 @@ erän sisällä täytyy tehdä.
 Tarkastellaan esimerkkinä tehtävää, jossa
 ruudukossa on $k \times k$ ruutua,
 jotka ovat aluksi valkoisia.
-Tehtävänä on suorittaa $n$ operaatiota ruudukkoon:
+Tehtävänä on suorittaa $n$ operaatiota ruudukkoon,
+joista jokainen on jompikumpi seuraavista:
 \begin{itemize}
 \item
-Tyypin 1 operaatio värittää ruudun $(y,x)$ mustaksi.
+väritä ruutu $(y,x)$ mustaksi
 \item
-Tyypin 2 operaatio etsii ruudusta $(y,x)$ lähimmän
-mustan ruudun, kun
+etsi ruudusta $(y,x)$ lähin
+musta ruutu, kun
 ruutujen $(y_1,x_1)$ ja $(y_2,x_2)$
-etäisyys on $|y_1-y_2|+|x_1-x_2|$.
+etäisyys on $|y_1-y_2|+|x_1-x_2|$
 \end{itemize}
 
 Ratkaisuna on jakaa operaatiot $O(\sqrt n)$ erään,
