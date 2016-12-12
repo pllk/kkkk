@@ -255,7 +255,7 @@ Algoritmi muodostaa solmusta $x$ alkaen uuden polun
 kulkien vain sellaisia kaaria, jotka eivät ole
 mukana kierroksessa.
 Koska jokaisen solmun aste on parillinen,
-ennemmin tai myöhemmin polku palaa takaisin solmuun.
+ennemmin tai myöhemmin polku palaa takaisin lähtösolmuun $x$.
 
 \begin{samepage}
 Tarkastellaan algoritmin toimintaa seuraavassa verkossa:
@@ -582,17 +582,15 @@ jonka osajonoina ovat kaikki mahdolliset
 $n$ merkin yhdistelmät.
 Esimerkiksi kun $k=2$ ja $n=3$,
 niin eräs de Bruijnin jono on
-
 \[0001011100.\]
-
 Tämän merkkijonon osajonoina ovat kaikki 3 merkin yhdistelmät
 000, 001, 010, 011, 100, 101, 110 ja 111.
 
-Osoittautuu, että lyhimmän merkkijonon
+Osoittautuu, että de Bruijnin jonon
 pituus on aina $k^n+n-1$, jolloin jokainen
 $n$ merkin osajono esiintyy tarkalleen
 kerran merkkijonossa.
-Tällainen merkkijono
+Lisäksi de Bruijnin jono
 vastaa Eulerin kierrosta sopivasti
 muodostetussa verkossa.
 
@@ -695,7 +693,7 @@ Sen avulla on mahdollista löytää nopeasti ratsun kierros
 suurestakin ruudukosta.
 
 Heuristiikassa on ideana siirtää ratsua aina niin,
-että se päätyy ruutuun, josta on mahdollisimman vähän
+että se päätyy ruutuun, josta on mahdollisimman \emph{vähän}
 mahdollisuuksia jatkaa kierrosta.
 Esimerkiksi seuraavassa tilanteessa on valittavana
 viisi ruutua, joihin ratsu voi siirtyä:
