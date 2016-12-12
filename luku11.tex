@@ -221,9 +221,10 @@ Esimerkiksi seuraava verkko on painotettu:
 \end{tikzpicture}
 \end{center}
 
-Painotetussa verkossa polun pituus on 
+Nyt polun pituus on 
 polulla olevien kaarten painojen summa.
-Esimerkiksi polun $1 \rightarrow 2 \rightarrow 5$
+Esimerkiksi yllä olevassa verkossa
+polun $1 \rightarrow 2 \rightarrow 5$
 pituus on $5+7=12$ ja polun
 $1 \rightarrow 3 \rightarrow 4 \rightarrow 5$ pituus on $1+7+3=11$.
 Jälkimmäinen on lyhin polku solmusta 1 solmuun 5.
@@ -450,8 +451,8 @@ Painotetun verkon tapauksessa rakennetta voi laajentaa näin:
 vector<pair<int,int>> v[N];
 \end{lstlisting}
 
-Nyt vieruslistalla on pareja, joiden ensimmäinen jäsen on
-kaaren kohdesolmu ja toinen jäsen on kaaren paino.
+Nyt vieruslistalla on pareja, joiden ensimmäinen kenttä on
+kaaren kohdesolmu ja toinen kenttä on kaaren paino.
 Esimerkiksi verkon
 
 \begin{center}
@@ -499,7 +500,6 @@ Vierusmatriisista on nopeaa tarkistaa,
 onko kahden solmun välillä kaari.
 Toisaalta matriisi vie paljon tilaa,
 jos verkko on suuri.
-
 Vierusmatriisi tallennetaan taulukkona
 
 \begin{lstlisting}
@@ -508,9 +508,10 @@ int v[N][N];
 
 jossa arvo $\texttt{v}[a][b]$ ilmaisee,
 onko kaari solmusta $a$ solmuun $b$ mukana verkossa.
-Yksinkertaisin tapa luoda vierusmatriisi
-on käyttää arvoja 1 (mukana) ja 0 (ei mukana).
-Tällöin esimerkiksi verkkoa
+Jos kaari on mukana verkossa,
+niin $\texttt{v}[a][b]=1$,
+ja muussa tapauksessa $\texttt{v}[a][b]=0$.
+Nyt esimerkiksi verkkoa
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
