@@ -54,10 +54,10 @@ ei välttämättä valitse pienintä määrää kolikoita.
 Nyt on aika ratkaista tehtävä tehokkaasti
 dynaamisella ohjelmoinnilla niin,
 että algoritmi toimii millä tahansa kolikoilla.
-Ratkaisu perustuu rekursiiviseen funktioon,
+Algoritmi perustuu rekursiiviseen funktioon,
 joka käy läpi kaikki vaihtoehdot rahamäärän
 muodostamiseen täydellisen haun kaltaisesti.
-Ratkaisu toimii kuitenkin tehokkaasti, koska
+Algoritmi toimii kuitenkin tehokkaasti, koska
 se tallentaa välituloksia muistitaulukkoon,
 minkä ansiosta sen ei tarvitse laskea samoja
 asioita moneen kertaan.
@@ -151,7 +151,7 @@ int f(int x) {
 \end{lstlisting}
 
 Koodi olettaa, että käytettävät kolikot ovat
-$\texttt{c}[1], \texttt{c}[2], \ldots, \texttt{c}[n]$,
+$\texttt{c}[1], \texttt{c}[2], \ldots, \texttt{c}[k]$,
 ja arvo $10^9$ kuvastaa ääretöntä.
 Tämä on toimiva funktio, mutta se ei ole vielä tehokas,
 koska funktio käy läpi valtavasti erilaisia tapoja
@@ -312,11 +312,11 @@ niin ratkaisuja on kaikkiaan 6:
 Ratkaisujen määrän laskeminen tapahtuu melko samalla tavalla
 kuin optimiratkaisun etsiminen.
 Erona on, että optimiratkaisun etsivässä rekursiossa
-valitaan yleensä pienin tai suurin aiempi arvo,
+valitaan pienin tai suurin aiempi arvo,
 kun taas ratkaisujen määrän laskevassa rekursiossa lasketaan
 yhteen kaikki vaihtoehdot.
 
-Tässä tapauksessa voimme muodostaa funktion $f(x)$,
+Tässä tapauksessa voimme määritellä funktion $f(x)$,
 joka kertoo, monellako tavalla rahamäärän $x$
 voi muodostaa kolikoista.
 Esimerkiksi $f(5)=6$, kun kolikot ovat $\{1,3,4\}$.
@@ -725,9 +725,11 @@ Merkitään funktiolla $f(a,b)$
 editointietäisyyttä \texttt{x}:n $a$
 ensimmäisen merkin sekä
 \texttt{y}:n $b$:n ensimmäisen merkin välillä.
-Tämän funktion avulla saa sekä
-laskettua tehokkaasti editointietäisyyden että
-selvitettyä, mitkä ovat tarvittavat editointioperaatiot.
+Tätä funktiota käyttäen
+merkkijonojen
+\texttt{x} ja \texttt{y} editointietäisyys
+on $f(n,m)$, ja funktio kertoo myös tarvittavat
+editointioperaatiot.
 
 Funktion pohjatapaukset ovat
 \[
