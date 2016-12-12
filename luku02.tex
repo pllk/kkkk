@@ -332,9 +332,11 @@ Tämä tieto helpottaa algoritmin suunnittelua,
 koska se rajaa pois monia lähestymistapoja,
 joiden tuloksena olisi hitaampi aikavaativuus.
 
+\index{vakiokerroin}
+
 Aikavaativuus ei kerro kuitenkaan kaikkea algoritmin
 tehokkuudesta, koska se kätkee toteutuksessa olevat
-vakiokertoimet. Esimerkiksi aikavaativuuden $O(n)$
+\key{vakiokertoimet}. Esimerkiksi aikavaativuuden $O(n)$
 algoritmi voi tehdä käytännössä $n/2$ tai $5n$ operaatiota.
 Tällä on merkittävä vaikutus algoritmin
 todelliseen ajankäyttöön.
@@ -471,7 +473,7 @@ $O(n)$-aikainen ratkaisu eli koodista pystyy
 karsimaan vielä yhden silmukan.
 Ideana on laskea taulukon jokaiseen
 kohtaan, mikä on suurin alitaulukon
-summa, jos alitaulukko päättyy kyseiseen kohtaan
+summa, jos alitaulukko päättyy kyseiseen kohtaan.
 Tämän jälkeen ratkaisu tehtävään on suurin
 näistä summista.
 
@@ -492,7 +494,7 @@ että sen summa on suurin.
 Niinpä tehokas ratkaisu syntyy käymällä läpi
 kaikki alitaulukon loppukohdat järjestyksessä
 ja laskemalla jokaiseen kohtaan suurin
-mahdollinen kohtaan päättyvän alitaulukon summa.
+mahdollinen kyseiseen kohtaan päättyvän alitaulukon summa.
 
 Seuraava koodi toteuttaa ratkaisun:
 
