@@ -123,7 +123,7 @@ puun käsittelemällä kaaret käänteisessä järjestyksessä.
 
 \key{Kruskalin algoritmi} aloittaa pienimmän
 virittävän
-puun rakentamisen tilanteesta,
+puun muodostamisen tilanteesta,
 jossa puussa ei ole yhtään kaaria.
 Sitten algoritmi alkaa lisätä
 puuhun kaaria järjestyksessä
@@ -532,8 +532,8 @@ käymällä ketju läpi alkiosta $x$ alkaen.
 
 \begin{lstlisting}
 int id(int x) {
-  while (x != k[x]) x = k[x];
-  return x;
+    while (x != k[x]) x = k[x];
+    return x;
 }
 \end{lstlisting}
 
@@ -605,7 +605,7 @@ liittää puuhun uuden solmun.
 Lopulta kaikki solmut on lisätty puuhun
 ja pienin virittävä puu on valmis.
 
-Primin algoritmin toiminta on hyvin lähellä
+Primin algoritmin toiminta on lähellä
 Dijkstran algoritmia.
 Erona on, että Dijkstran algoritmissa valitaan
 kaari, jonka kautta syntyy lyhin polku alkusolmusta
