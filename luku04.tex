@@ -96,7 +96,7 @@ vector<int> v(10);
 \end{lstlisting}
 \begin{lstlisting}
 // koko 10, alkuarvo 5
-vector<int> v(10, 5)
+vector<int> v(10, 5);
 \end{lstlisting}
 
 Vektori on toteutettu sisäisesti tavallisena taulukkona.
@@ -647,7 +647,7 @@ pystyy toteuttamaan myös \texttt{set}-rakenteella.
 Prioriteettijonon etuna on kuitenkin,
 että sen kekoon perustuva sisäinen
 toteutus on yksinkertaisempi
-kuin \texttt{set}-rakenteen binääripuu,
+kuin \texttt{set}-rakenteen tasapainoinen binääripuu,
 minkä vuoksi rakenne on kevyempi ja
 operaatiot ovat tehokkaampia.
 
@@ -684,13 +684,13 @@ priority_queue<int,vector<int>,greater<int>> q;
 \section{Vertailu järjestämiseen}
 
 Monen tehtävän voi ratkaista tehokkaasti joko
-käyttäen sopivia tietorakenteilla
+käyttäen sopivia tietorakenteita
 tai taulukon järjestämistä.
 Vaikka erilaiset ratkaisutavat olisivat kaikki
 periaatteessa tehokkaita, niissä voi olla
 käytännössä merkittäviä eroja.
 
-Tarkastellaan seuraavaksi ongelmaa, jossa
+Tarkastellaan ongelmaa, jossa
 annettuna on kaksi listaa $A$ ja $B$,
 joista kummassakin on $n$ kokonaislukua.
 Tehtävänä on selvittää, moniko luku
