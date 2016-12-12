@@ -4,9 +4,9 @@ Tässä luvussa tutustumme
 syvyyshakuun ja leveyshakuun, jotka
 ovat keskeisiä menetelmiä verkon läpikäyntiin.
 Molemmat algoritmit lähtevät liikkeelle
-tietystä verkon solmusta ja 
+tietystä alkusolmusta ja 
 käyvät läpi kaikki solmut,
-joihin aloitussolmusta pääsee.
+joihin alkusolmusta pääsee.
 Algoritmien erona on,
 missä järjestyksessä ne kulkevat verkossa.
 
@@ -163,7 +163,7 @@ void haku(int s) {
 
 \key{Leveyshaku}
 käy solmut läpi järjestyksessä sen mukaan,
-kuinka kaukana ne ovat aloitussolmusta.
+kuinka kaukana ne ovat alkusolmusta.
 Niinpä leveyshaun avulla pystyy laskemaan
 etäisyyden aloitussolmusta kaikkiin
 muihin solmuihin.
