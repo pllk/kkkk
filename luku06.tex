@@ -26,7 +26,7 @@ Aloitamme ahneisiin algoritmeihin tutustumisen
 tehtävästä, jossa muodostettavana on
 rahamäärä $x$ kolikoista.
 Kolikoiden arvot ovat $\{c_1,c_2,\ldots,c_k\}$,
-ja jokaista kolikkoa saatavilla rajattomasti.
+ja jokaista kolikkoa on saatavilla rajattomasti.
 Tehtävänä on selvittää, mikä on pienin määrä
 kolikoita, joilla rahamäärän voi muodostaa.
 
@@ -50,7 +50,7 @@ ja lopuksi 20.
 Mutta toimiiko ahne algoritmi aina oikein?
 
 Osoittautuu, että eurokolikoiden tapauksessa
-ahne algoritmi \emph{toimii} aina oikein,
+ahne algoritmi toimii \emph{aina} oikein,
 eli se tuottaa aina ratkaisun,
 jossa on pienin määrä kolikoita.
 Algoritmin toimivuuden voi perustella
@@ -413,8 +413,8 @@ joten mediaani on 2.
 
 Mediaanin valinta on paras ratkaisu,
 koska jos $x$ on mediaania pienempi,
-$x$:n suurentaminen pienentää summaa.
-Vastaavasti jos $x$ on mediaania suurempi,
+$x$:n suurentaminen pienentää summaa,
+ja vastaavasti jos $x$ on mediaania suurempi,
 $x$:n pienentäminen pienentää summaa.
 Niinpä $x$ kannattaa siirtää mahdollisimman
 lähelle mediaania eli optimiratkaisu on
@@ -456,8 +456,8 @@ $x=s/n$ eli taulukon lukujen keskiarvo.
 \index{koodisana@koodisana}
 
 Annettuna on merkkijono ja tehtävänä on
-\emph{pakata} merkkijono niin,
-että se vie vähemmän tilaa.
+\emph{pakata} se niin,
+että tilaa kuluu vähemmän.
 Käytämme tähän \key{binäärikoodia},
 joka määrittää kullekin merkille
 biteistä muodostuvan \key{koodisanan}.
@@ -487,8 +487,8 @@ jossa koodisanojen pituus voi vaihdella.
 Tällöin voimme antaa usein esiintyville merkeille
 lyhyen koodisanan ja harvoin esiintyville
 merkeille pitkän koodisanan.
-Osoittautuu, että yllä olevaa merkkijonoa
-silmällä pitäen \key{optimaalinen} koodi on seuraava:
+Osoittautuu, että yllä olevalle merkkijonolle
+\key{optimaalinen} koodi on seuraava:
 \begin{center}
 \begin{tabular}{rr}
 merkki & koodisana \\
@@ -515,8 +515,8 @@ että haluamme myös pystyä palauttamaan
 alkuperäisen merkkijonon pakkauksen jälkeen.
 Jos koodisana voisi olla toisen alkuosa,
 tämä ei välttämättä olisi mahdollista.
-Tarkastellaan esimerkkinä seuraavaa koodia,
-joka \emph{ei} ole kelvollinen:
+Esimerkiksi seuraava koodi
+\emph{ei} ole kelvollinen:
 \begin{center}
 \begin{tabular}{rr}
 merkki & koodisana \\
