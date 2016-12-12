@@ -106,15 +106,15 @@ Kuplajärjestämisen voi toteuttaa seuraavasti,
 kun järjestettävä taulukko muodostuu alkioista
 $\texttt{t}[1],\texttt{t}[2],\ldots,\texttt{t}[n]$:
 \begin{lstlisting}
-bool stop = false;
-while (!stop) {
-    stop = true;
-    for (int i = 1; i <= n-1; i++) {
+while (true) {
+    bool x = false;
+    for (int j = 1; j <= n-1; j++) {
         if (t[i] > t[i+1]) {
             swap(t[i],t[i+1]);
-            stop = false;
+            x = true;
         }
     }
+    if (!x) break;
 }
 \end{lstlisting}
 
