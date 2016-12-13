@@ -41,8 +41,8 @@ int summa(int a, int b, int k, int c, int d) {
     if (b < c || a > d) return 0;
     if (a == c && b == d) return p[k];
     int w = (d-c+1)/2;
-    return summa(a, min(c+w-1,b), 2*k, a, a+w-1) +
-           summa(max(c+w,a), b, 2*k+1, a+w, b);
+    return summa(a, min(c+w-1,b), 2*k, c, c+w-1) +
+           summa(max(c+w,a), b, 2*k+1, c+w, d);
 }
 \end{lstlisting}
 Nyt välin $[a,b]$ summan saa laskettua
@@ -68,9 +68,9 @@ ovat samat, summan saa taulukosta \texttt{p}.
 Jos väli $[a,b]$ on kokonaan tai osittain välin $[c,d]$
 sisällä, haku jatkuu rekursiivisesti
 välin $[c,d]$ vasemmasta ja oikeasta puoliskosta.
-Kummankin puoliskon koko on $w=(d-c+1)/2$,
-joten vasen puolisko kattaa välin $[c,c+w/2-1]$
-ja oikea puolisko kattaa välin $[c+w/2,d]$.
+Kummankin puoliskon koko on $w=\frac{1}{2}(d-c+1)$,
+joten vasen puolisko kattaa välin $[c,c+w-1]$
+ja oikea puolisko kattaa välin $[c+w,d]$.
 
 Seuraava kuva näyttää,
 kuinka haku etenee puussa,
