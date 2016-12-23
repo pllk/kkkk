@@ -3,7 +3,7 @@
 \index{ahne algoritmi@ahne algoritmi}
 
 \key{Ahne algoritmi}
-muodostaa ongelman ratkaisun
+muodostaa tehtävän ratkaisun
 tekemällä joka askeleella
 sillä hetkellä parhaalta näyttävän valinnan.
 Ahne algoritmi ei koskaan 
@@ -36,7 +36,7 @@ ja kolikot ovat eurokolikot eli sentteinä
 \[\{1,2,5,10,20,50,100,200\},\]
 niin kolikoita tarvitaan vähintään 4.
 Tämä on mahdollista valitsemalla kolikot
-$\{20,100,200,200\}$, joiden summa on 520.
+$200+200+100+20$, joiden summa on 520.
 
 \subsubsection{Ahne algoritmi}
 
@@ -50,7 +50,7 @@ ja lopuksi 20.
 Mutta toimiiko ahne algoritmi aina oikein?
 
 Osoittautuu, että eurokolikoiden tapauksessa
-ahne algoritmi toimii \emph{aina} oikein,
+ahne algoritmi \emph{toimii} aina oikein,
 eli se tuottaa aina ratkaisun,
 jossa on pienin määrä kolikoita.
 Algoritmin toimivuuden voi perustella
@@ -67,10 +67,10 @@ kolikot $5+5$, ne voi korvata kolikolla 10.
 
 Vastaavasti kumpaakin kolikkoa 2 ja 20
 on optimiratkaisussa enintään kaksi,
-koska kolikot $2+2+2$ voi korvata kolikoilla $1+5$
-ja kolikot $20+20+20$ voi korvata kolikoilla $10+50$.
+koska kolikot $2+2+2$ voi korvata kolikoilla $5+1$
+ja kolikot $20+20+20$ voi korvata kolikoilla $50+10$.
 Lisäksi ratkaisussa ei voi olla yhdistelmiä
-$1+2+2$ ja $10+20+20$,
+$2+2+1$ ja $20+20+10$,
 koska ne voi korvata kolikoilla 5 ja 50.
 
 Näiden havaintojen perusteella
@@ -101,9 +101,9 @@ antaa väärän vastauksen.
 Tässä tehtävässä vastaesimerkki on helppoa keksiä:
 jos kolikot ovat $\{1,3,4\}$ ja muodostettava
 rahamäärä on 6, ahne algoritmi tuottaa ratkaisun
-$1+1+4$, kun taas optimiratkaisu on $3+3$.
+$4+1+1$, kun taas optimiratkaisu on $3+3$.
 
-Yleisessä tapauksessa tehtävän ratkaisuun
+Yleisessä tapauksessa kolikkotehtävän ratkaisuun
 ei tunneta ahnetta algoritmia,
 mutta palaamme tehtävään seuraavassa luvussa.
 Tehtävään on nimittäin olemassa dynaamista
@@ -122,7 +122,7 @@ Tehtäväsi on suunnitella aikataulu,
 jota seuraamalla pystyt osallistumaan
 mahdollisimman moneen tapahtumaan.
 Et voi osallistua tapahtumaan vain osittain.
-Esimerkiksi jos tapahtumat ovat
+Esimerkiksi tilanteessa
 \begin{center}
 \begin{tabular}{lll}
 tapahtuma & alkuaika & loppuaika \\
@@ -133,7 +133,7 @@ $C$ & 3 & 9 \\
 $D$ & 6 & 8 \\
 \end{tabular}
 \end{center}
-niin on mahdollista osallistua korkeintaan
+on mahdollista osallistua korkeintaan
 kahteen tapahtumaan.
 Yksi mahdollisuus on osallistua tapahtumiin
 $B$ ja $D$ seuraavasti:
@@ -159,10 +159,9 @@ mutta mikä niistä toimii kaikissa tapauksissa?
 \subsubsection*{Algoritmi 1}
 
 Ensimmäinen idea on valita ratkaisuun
-mahdollisimman lyhyitä tapahtumia.
+mahdollisimman \emph{lyhyitä} tapahtumia.
 Esimerkin tapauksessa tällainen
-algoritmi valitsee tapahtumat
-\\
+algoritmi valitsee seuraavat tapahtumat:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -177,7 +176,7 @@ algoritmi valitsee tapahtumat
   \end{scope}
 \end{tikzpicture}
 \end{center}
-ja tuottaa optimiratkaisun.
+
 Lyhimpien tapahtumien valinta ei ole kuitenkaan
 aina toimiva strategia,
 vaan algoritmi epäonnistuu esimerkiksi seuraavassa tilanteessa:
@@ -199,7 +198,7 @@ olisi mahdollista osallistua kahteen tapahtumaan.
 
 Toinen idea on valita aina seuraavaksi tapahtuma,
 joka \emph{alkaa} mahdollisimman aikaisin.
-Tämä algoritmi valitsee esimerkissä tapahtumat
+Tämä algoritmi valitsee esimerkissä seuraavat tapahtumat:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -214,9 +213,10 @@ Tämä algoritmi valitsee esimerkissä tapahtumat
   \end{scope}
 \end{tikzpicture}
 \end{center}
-ja tuottaa optimiratkaisun.
-Tämä algoritmi ei kuitenkaan toimi
-esimerkiksi seuraavassa tilanteessa:
+
+Tämäkään algoritmi ei kuitenkaan toimi aina.
+Esimerkiksi seuraavassa tilanteessa
+algoritmi valitsee vain yhden tapahtuman:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -237,7 +237,7 @@ kaksi myöhempää tapahtumaa.
 
 Kolmas idea on valita aina seuraavaksi tapahtuma,
 joka \emph{päättyy} mahdollisimman aikaisin.
-Tämä algoritmi valitsee esimerkissä tapahtumat
+Tämä algoritmi valitsee esimerkissä seuraavat tapahtumat:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -252,7 +252,7 @@ Tämä algoritmi valitsee esimerkissä tapahtumat
   \end{scope}
 \end{tikzpicture}
 \end{center}
-ja tuottaa optimiratkaisun.
+
 Osoittautuu, että tämä ahne algoritmi
 tuottaa \textit{aina} optimiratkaisun.
 Algoritmi toimii, koska on aina kokonaisuuden
@@ -333,7 +333,7 @@ Yllättävää kyllä, tehtävän optimaalinen ratkaisu
 ei riipu lainkaan deadlineista,
 vaan toimiva ahne strategia on
 yksinkertaisesti
-suorittaa tehtävät järjestyksessä keston mukaan
+suorittaa tehtävät \emph{järjestyksessä keston mukaan}
 lyhimmästä pisimpään.
 Syynä tähän on, että jos missä tahansa vaiheessa
 suoritetaan peräkkäin kaksi tehtävää,
@@ -439,11 +439,11 @@ Esimerkissä lukujen keskiarvo on $(1+2+9+2+6)/5=4$.
 Tämän tuloksen voi johtaa järjestämällä summan
 uudestaan muotoon
 \[
-(a_1^2+a_2^2+\cdots+a_n^2)-2x(a_1+a_2+\cdots+a_n)+nx^2.
+nx^2 - 2x(a_1+a_2+\cdots+a_n) + (a_1^2+a_2^2+\cdots+a_n^2).
 \]
-Ensimmäinen osa ei riipu $x$:stä, joten sen voi jättää huomiotta.
+Viimeinen osa ei riipu $x$:stä, joten sen voi jättää huomiotta.
 Jäljelle jäävistä osista muodostuu funktio
-$nx^2-2xs$, missä $s=a_1+a_2+\cdots+a_n$.
+$nx^2-2xs$, kun $s=a_1+a_2+\cdots+a_n$.
 Tämä on ylöspäin aukeava paraabeli,
 jonka nollakohdat ovat $x=0$ ja $x=2s/n$
 ja pienin arvo on näiden keskikohta
@@ -499,7 +499,10 @@ merkki & koodisana \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
-Tätä koodia käyttäen merkkijono on pakattuna
+Optimaalinen koodi tuottaa
+mahdollisimman lyhyen pakatun merkkijonon.
+Tässä tapauksessa optimaalinen koodi
+pakkaa merkkijonon muotoon
 \[001100101110100,\]
 ja tilaa kuluu vain 15 bittiä.
 Paremman koodin ansiosta onnistuimme siis säästämään
@@ -539,8 +542,8 @@ merkkijonoa \texttt{AB} vai merkkijonoa \texttt{C}.
 joka muodostaa optimaalisen koodin
 merkkijonon pakkaamista varten.
 Se muodostaa merkkien esiintymiskertojen
-perustella binääripuun, josta voidaan lukea
-merkkejä vastaavat koodisanat
+perustella binääripuun, josta voi lukea
+kunkin merkin koodisanan
 liikkumalla huipulta merkkiä vastaavaan solmuun.
 Liikkuminen vasemmalle vastaa
 bittiä 0 ja liikkuminen oikealle
