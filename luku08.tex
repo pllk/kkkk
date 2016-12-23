@@ -32,8 +32,7 @@ kahden esimerkkitehtävän kautta.
 
 \subsubsection{Alitaulukon summa}
 
-Annettuna on taulukko, jossa on $n$ positiivista kokonaislukua
-$t_1,t_2,\ldots,t_n$.
+Annettuna on taulukko, jossa on $n$ positiivista kokonaislukua.
 Tehtävänä on selvittää, onko taulukossa alitaulukkoa,
 jossa lukujen summa on $x$.
 Esimerkiksi taulukossa
@@ -61,10 +60,10 @@ Esimerkiksi taulukossa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-tällainen alitaulukko on seuraava:
+on alitaulukko, jossa lukujen summa on 8:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
-\fill[color=lightgray] (2,0) rectangle (6,1);
+\fill[color=lightgray] (2,0) rectangle (5,1);
 \draw (0,0) grid (8,1);
 
 \node at (0.5,0.5) {$1$};
@@ -93,7 +92,7 @@ ajassa $O(n)$ kahden osoittimen tekniikalla.
 Ideana on käydä taulukkoa läpi kahden osoittimen
 avulla, jotka rajaavat välin taulukosta.
 Joka vuorolla vasen osoitin liikkuu
-yhden askeleen eteenpäin, kun taas oikea osoitin
+yhden askeleen eteenpäin ja oikea osoitin
 liikkuu niin kauan eteenpäin kuin summa on enintään $x$.
 Jos välin summaksi tulee tarkalleen $x$, ratkaisu on löytynyt.
 
@@ -198,7 +197,7 @@ on löytynyt väli, jonka lukujen summa on $x$.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
-\fill[color=lightgray] (2,0) rectangle (6,1);
+\fill[color=lightgray] (2,0) rectangle (5,1);
 \draw (0,0) grid (8,1);
 
 \node at (0.5,0.5) {$1$};
@@ -211,7 +210,7 @@ on löytynyt väli, jonka lukujen summa on $x$.
 \node at (7.5,0.5) {$3$};
 
 \draw[thick,->] (2.5,-0.7) -- (2.5,-0.1);
-\draw[thick,->] (5.5,-0.7) -- (5.5,-0.1);
+\draw[thick,->] (4.5,-0.7) -- (4.5,-0.1);
 
 \footnotesize
 \node at (0.5,1.4) {$1$};
@@ -225,30 +224,30 @@ on löytynyt väli, jonka lukujen summa on $x$.
 \end{tikzpicture}
 \end{center}
 
-Algoritmin toteutus näyttää seuraavalta:
-
-\begin{lstlisting}
-int s = 0, b = 0;
-for (int a = 1; a <= n; a++) {
-    while (b<n && s+t[b+1] <= x) {
-        b++;
-        s += t[b];
-    }
-    if (s == x) {
-        // ratkaisu löytyi
-    }
-    s -= t[a];
-}
-\end{lstlisting}
-
-Muuttujat $a$ ja $b$ sisältävät vasemman ja oikean
-osoittimen kohdan.
-Muuttuja $s$ taas laskee lukujen summan välillä.
-Joka askeleella $a$ liikkuu askeleen eteenpäin
-ja $b$ liikkuu niin kauan kuin summa on enintään $x$.
+% Algoritmin toteutus näyttää seuraavalta:
+% 
+% \begin{lstlisting}
+% int s = 0, b = 0;
+% for (int a = 1; a <= n; a++) {
+%     while (b<n && s+t[b+1] <= x) {
+%         b++;
+%         s += t[b];
+%     }
+%     if (s == x) {
+%         // ratkaisu löytyi
+%     }
+%     s -= t[a];
+% }
+% \end{lstlisting}
+% 
+% Muuttujat $a$ ja $b$ sisältävät vasemman ja oikean
+% osoittimen kohdan.
+% Muuttuja $s$ taas laskee lukujen summan välillä.
+% Joka askeleella $a$ liikkuu askeleen eteenpäin
+% ja $b$ liikkuu niin kauan kuin summa on enintään $x$.
 
 Algoritmin aikavaativuus riippuu siitä,
-kauanko \texttt{while}-silmukan suoritus vie aikaa.
+kauanko oikean osoittimen liikkuminen vie aikaa.
 Tämä vaihtelee, koska oikea osoitin voi liikkua
 minkä tahansa matkan eteenpäin taulukossa.
 Kuitenkin oikea osoitin liikkuu \textit{yhteensä}
