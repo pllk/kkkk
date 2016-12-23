@@ -491,34 +491,6 @@ REP(i,1,n) {
 }
 \end{lstlisting}
 
-% Huomaa, että toisin kuin funktioissa,
-% makron parametri sijoitetaan lausekkeeseen
-% sellaisenaan.
-% Tästä voi tulla joskus yllättäviä ongelmia.
-% Näin on esimerkiksi seuraavassa makrossa:
-% 
-% \begin{lstlisting}
-% #define SQR(x) x*x
-% \end{lstlisting}
-% 
-% Nyt makroa
-% \begin{lstlisting}
-% cout << SQR(1+2) << "\n";
-% \end{lstlisting}
-% vastaa seuraava koodi:
-% \begin{lstlisting}
-% cout << 1+2*1+2 << "\n";
-% \end{lstlisting}
-% 
-% Tuloksena oleva koodi laskee siis $1+(2 \cdot 1)+2$,
-% vaikka tarkoitus olisi laskea $(1+2) \cdot (1+2)$.
-% Yleensä helppo korjaus ongelmaan on lisätä makron
-% lausekkeeseen sulkuja, tässä tapauksessa seuraavasti:
-% 
-% \begin{lstlisting}
-% #define SQR(x) (x)*(x)
-% \end{lstlisting}
-
 \section{Matematiikka}
 
 Matematiikka on tärkeässä asemassa kisakoodauksessa,
@@ -548,7 +520,7 @@ on aritmeettinen summa,
 jossa vakio on 4.
 Aritmeettinen summa voidaan laskea kaavalla
 \[\frac{n(a+b)}{2},\]
-missä summan ensimmäinen luku on $a$,
+jossa summan ensimmäinen luku on $a$,
 viimeinen luku on $b$ ja lukujen määrä on $n$.
 Esimerkiksi
 \[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
@@ -564,7 +536,7 @@ on geometrinen summa,
 jossa vakio on 2.
 Geometrinen summa voidaan laskea kaavalla
 \[\frac{bx-a}{x-1},\]
-missä summan ensimmäinen luku on $a$,
+jossa summan ensimmäinen luku on $a$,
 viimeinen luku on $b$ ja vierekkäisten lukujen suhde on $x$.
 Esimerkiksi
 \[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
@@ -579,16 +551,16 @@ josta kaava seuraa ratkaisemalla yhtälön
 Geometrisen summan erikoistapaus on usein kätevä kaava
 \[1+2+4+8+\ldots+2^{n-1}=2^n-1.\]
 
-Geometrisen summan sukulainen on
-\[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
+% Geometrisen summan sukulainen on
+% \[x+2x^2+3x^3+\cdots+k x^k = \frac{kx^{k+2}-(k+1)x^{k+1}+x}{(x-1)^2}. \]
 
 \index{harmoninen summa@harmoninen summa}
 
 \key{Harmoninen summa} on summa muotoa
 \[ \sum_{x=1}^n \frac{1}{x} = 1+\frac{1}{2}+\frac{1}{3}+\ldots+\frac{1}{n}.\]
 
-Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$,
-koska summaa voi arvioida ylöspäin
+Yläraja harmonisen summan suuruudelle on $\log_2(n)+1$.
+Summaa voi näet arvioida ylöspäin
 muuttamalla jokaista termiä $1/k$ niin,
 että $k$:ksi tulee alempi 2:n potenssi.
 Esimerkiksi tapauksessa $n=6$ arvioksi tulee
@@ -729,7 +701,7 @@ jos $A$:n ja $B$:n totuusarvo on sama.
 \key{Predikaatti} on lauseke, jonka arvo on tosi tai epätosi
 riippuen sen parametreista.
 Yleensä predikaattia merkitään suurella kirjaimella.
-Esimerkiksi voidaan määritellä predikaatti $P(x)$,
+Esimerkiksi voimme määritellä predikaatin $P(x)$,
 joka on tosi tarkalleen silloin, kun $x$ on alkuluku.
 Tällöin esimerkiksi $P(7)$ on tosi, kun taas $P(8)$ on epätosi.
 
@@ -738,16 +710,16 @@ Tällöin esimerkiksi $P(7)$ on tosi, kun taas $P(8)$ on epätosi.
 \key{Kvanttori} ilmaisee, että looginen
 lauseke liittyy jollakin tavalla joukon alkioihin.
 Tavalliset kvanttorit
-ovat $\forall$ (kaikille) ja $\exists$ (on olemassa).
+ovat $\forall$ (\key{kaikille}) ja $\exists$ (\key{on olemassa}).
 Esimerkiksi
 \[\forall x (\exists y (y < x))\]
 tarkoittaa, että jokaiselle joukon
 alkiolle $x$ on olemassa
 jokin joukon alkio $y$ niin, että $y$ on $x$:ää pienempi.
 Tämä lauseke on tosi kokonaislukujen joukossa,
-mutta lauseke on epätosi luonnollisten lukujen joukossa.
+mutta epätosi luonnollisten lukujen joukossa.
 
-Tässä esitettyjen merkintöjä avulla on mahdollista esittää
+Yllä esitettyjen merkintöjä avulla on mahdollista esittää
 monenlaisia loogisia väitteitä.
 Esimerkiksi
 \[\forall x (\lnot P(x) \Rightarrow (\exists a (\exists b (x = ab \land a > 1 \land b > 1))))\]
@@ -822,10 +794,12 @@ koska monessa tehokkaassa algoritmissa jokin asia puolittuu
 joka askeleella.
 Niinpä logaritmin avulla voi arvioida algoritmin tehokkuutta.
 
-Logaritmi muuttaa kertolaskun yhteenlaskuksi:
-\[\log_k(ab) = \log_k(a)+\log_k(b)\]
-Samoin logaritmi muuttaa jakolaskun vähennyslaskuksi:
-\[\log_k\Big(\frac{a}{b}\Big) = \log_k(a)-\log_k(b)\]
+Logaritmille pätee kaava
+\[\log_k(ab) = \log_k(a)+\log_k(b),\]
+josta seuraa edelleen
+\[\log_k(x^n) = n \cdot \log_k(x).\]
+Samoin logaritmille pätee
+\[\log_k\Big(\frac{a}{b}\Big) = \log_k(a)-\log_k(b).\]
 Lisäksi on voimassa kaava
 \[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
 minkä ansiosta logaritmeja voi laskea mille tahansa kantaluvulle,
@@ -838,7 +812,8 @@ Luvun $x$ \key{luonnollinen logaritmi} $\ln(x)$ on logaritmi, jonka kantaluku on
 \key{Neperin luku} $e \approx 2{,}71828$.
 
 Vielä yksi logaritmin ominaisuus on, että
-luvun $x$ numeroiden määrä $b$-järjestelmässä
+luvun $x$ numeroiden määrä $b$-kantaisessa
+lukujärjestelmässä
 on $\lfloor \log_b(x)+1 \rfloor$.
 Esimerkiksi luvun $123$ esitys
 2-järjestelmässä on 1111011 ja
