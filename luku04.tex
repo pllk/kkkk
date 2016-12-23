@@ -50,7 +50,7 @@ cout << v[2] << "\n"; // 5
 \end{lstlisting}
 
 Funktio \texttt{size} kertoo, montako alkiota vektorissa on.
-Seuraava koodi tulostaa kaikki vektorin alkiot:
+Seuraava koodi käy läpi ja tulostaa kaikki vektorin alkiot:
 
 \begin{lstlisting}
 for (int i = 0; i < v.size(); i++) {
@@ -84,7 +84,7 @@ cout << v.back() << "\n"; // 5
 Vektorin sisällön voi antaa myös sen luonnissa:
 
 \begin{lstlisting}
-vector<int> v = {2, 4, 2, 5, 1};
+vector<int> v = {2,4,2,5,1};
 \end{lstlisting}
 
 Kolmas tapa luoda vektori on ilmoittaa
@@ -115,7 +115,6 @@ jota pystyy käsittelemään lähes samaan
 tapaan kuin vektoria.
 Merkkijonon käsittelyyn liittyy lisäksi erikoissyntaksia
 ja funktioita, joita ei ole muissa tietorakenteissa.
-
 Merkkijonoja voi yhdistää toisiinsa \texttt{+}-merkin avulla.
 Funktio $\texttt{substr}(k,x)$ erottaa merkkijonosta
 osajonon, joka alkaa kohdasta $k$ ja jonka pituus on $x$.
@@ -158,8 +157,7 @@ Rakenteen \texttt{set} etuna on, että se säilyttää
 joukon alkioita järjestyksessä ja tarjoaa
 järjestykseen liittyviä funktioita,
 joita \texttt{unordered\_set} ei sisällä.
-Toisaalta \texttt{unordered\_set} on usein hieman nopeampi
-rakenne.
+Toisaalta \texttt{unordered\_set} on usein nopeampi rakenne.
 
 Seuraava koodi luo lukuja sisältävän joukon ja
 esittelee sen käyttämistä.
@@ -180,7 +178,7 @@ cout << s.count(3) << "\n"; // 0
 cout << s.count(4) << "\n"; // 1
 \end{lstlisting}
 
-Joukkoa voi käsitellä muuten suunnilleen samoin
+Joukkoa voi käsitellä muuten suunnilleen samalla tavalla
 kuin vektoria, mutta joukkoa ei voi indeksoida
 \texttt{[]}-merkinnällä.
 Seuraava koodi luo joukon, tulostaa sen 
@@ -229,7 +227,6 @@ s.insert(5);
 s.insert(5);
 cout << s.count(5) << "\n"; // 3
 \end{lstlisting}
-
 Funktio \texttt{erase} poistaa
 kaikki alkion esiintymät
 \texttt{multiset}-rakenteessa:
@@ -253,10 +250,10 @@ cout << s.count(5) << "\n"; // 2
 
 \key{Hakemisto} on taulukon yleistys,
 joka sisältää kokoelman avain-arvo-pareja.
-Taulukon avaimet ovat aina peräkkäiset
+Siinä missä taulukon avaimet ovat aina peräkkäiset
 kokonaisluvut $0,1,\ldots,n-1$,
 missä $n$ on taulukon koko,
-mutta hakemiston avaimet voivat
+hakemiston avaimet voivat
 olla mitä tahansa tyyppiä
 eikä niiden tarvitse olla peräkkäin.
 
@@ -340,7 +337,7 @@ Tilanne on siis tällainen:
 Huomaa epäsymmetria iteraattoreissa:
 \texttt{s.begin()} osoittaa tietorakenteen alkioon,
 kun taas \texttt{s.end()} osoittaa tietorakenteen ulkopuolelle.
-Iteraattoreiden rajaama joukon väli on siis puoliavoin.
+Iteraattoreiden rajaama joukon väli on siis \emph{puoliavoin}.
 
 \subsubsection{Välien käsittely}
 
@@ -351,7 +348,7 @@ Yleensä halutaan käsitellä tietorakenteiden kaikkia
 alkioita, jolloin funktiolle annetaan
 iteraattorit \texttt{begin} ja \texttt{end}.
 
-Seuraava koodi järjestää vektorin funktiolla \texttt{sort},
+Esimerkiksi seuraava koodi järjestää vektorin funktiolla \texttt{sort},
 kääntää sitten alkioiden järjestyksen funktiolla \texttt{reverse}
 ja sekoittaa lopuksi alkioiden järjestyksen funktiolla \texttt{random\_shuffle}.
 
@@ -642,9 +639,9 @@ suurimman alkion haku ja poisto.
 Lisäyksen ja poiston aikavaativuus on $O(\log n)$
 ja haun aikavaativuus on $O(1)$.
 
-Prioriteettijonon operaatiot
-pystyy toteuttamaan myös \texttt{set}-rakenteella.
-Prioriteettijonon etuna on kuitenkin,
+Vaikka prioriteettijonon operaatiot
+pystyy toteuttamaan myös \texttt{set}-ra\-ken\-teel\-la,
+prioriteettijonon etuna on,
 että sen kekoon perustuva sisäinen
 toteutus on yksinkertaisempi
 kuin \texttt{set}-rakenteen tasapainoinen binääripuu,
@@ -674,8 +671,7 @@ q.pop();
 \end{samepage}
 
 Seuraava määrittely luo käänteisen prioriteettijonon,
-jossa alkiot ovat järjestyksessä pienimmästä suurimpaan
-ja jonosta pystyy hakemaan ja poistamaan pienimmän alkion:
+jossa jonosta pystyy hakemaan ja poistamaan pienimmän alkion:
 
 \begin{lstlisting}
 priority_queue<int,vector<int>,greater<int>> q;
@@ -738,7 +734,8 @@ joten kokonaisaikavaativuus on $O(n \log n)$.
 
 Seuraavassa taulukossa on mittaustuloksia
 äskeisten algoritmien tehokkuudesta,
-kun $n$ vaihtelee ja listojen luvut ovat välillä $1 \ldots 10^9$:
+kun $n$ vaihtelee ja listojen luvut ovat
+satunnaisia lukuja välillä $1 \ldots 10^9$:
 
 \begin{center}
 \begin{tabular}{rrrr}
