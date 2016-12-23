@@ -27,12 +27,13 @@ $n$-alkioisen joukon osajoukot.
 Tällöin täydellisen haun tulee
 käydä läpi kaikki joukon osa\-joukot,
 joita on yhteensä $2^n$ kappaletta.
-Käymme seuraavaksi läpi kaksi menetelmää
+Käymme läpi kaksi menetelmää
 tällaisen haun toteuttamiseen.
 
 \subsubsection{Menetelmä 1}
 
-Kätevä tapa käydä läpi osajoukot on
+Kätevä tapa käydä läpi
+kaikki joukon osajoukot on
 käyttää rekursiota.
 Seuraava funktio \texttt{haku} muodostaa
 joukon $\{1,2,\ldots,n\}$ osajoukot.
@@ -44,7 +45,7 @@ tekemällä funktiokutsu \texttt{haku(1)}.
 \begin{lstlisting}
 void haku(int k) {
     if (k == n+1) {
-        // käsittele osajoukko
+        // käsittele osajoukko v
     } else {
         haku(k+1);
         v.push_back(k);
@@ -185,7 +186,7 @@ funktiota ilman parametreja.
 \begin{lstlisting}
 void haku() {
     if (v.size() == n) {
-        // käsittele permutaatio
+        // käsittele permutaatio v
     } else {
         for (int i = 1; i <= n; i++) {
             if (p[i]) continue;
@@ -226,7 +227,7 @@ for (int i = 1; i <= n; i++) {
     v.push_back(i);
 }
 do {
-    // käsittele permutaatio
+    // käsittele permutaatio v
 } while (next_permutation(v.begin(),v.end()));
 \end{lstlisting}
 
@@ -453,7 +454,7 @@ nykyaikaisella tietokoneella (14772512 ratkaisua).
 
 Peruuttavaa hakua on usein mahdollista tehostaa
 erilaisten optimointien avulla.
-Ideana on lisätä hakuun ''älykkyyttä''
+Tavoitteena on lisätä hakuun ''älykkyyttä''
 niin, että haku pystyy havaitsemaan
 mahdollisimman aikaisin,
 jos muodosteilla oleva ratkaisu ei voi
@@ -702,7 +703,7 @@ joukon lukuja niin, että niiden summa on $x$.
 Esimerkiksi jos lista on $[2,4,5,9]$ ja $x=15$,
 voimme valita listalta luvut $[2,4,9]$,
 jolloin $2+4+9=15$.
-Jos taas lista säilyy ennallaan ja $x=14$,
+Jos taas lista säilyy ennallaan ja $x=10$,
 mikään valinta ei täytä vaatimusta.
 
 Tavanomainen ratkaisu tehtävään on käydä kaikki
