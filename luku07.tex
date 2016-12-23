@@ -328,6 +328,7 @@ Pohjatapauksina ovat $f(0)=1$, koska rahamäärä 0 syntyy
 ilman yhtään kolikkoa,
 sekä $f(x)=0$, kun $x<0$, koska negatiivista rahamäärää
 ei ole mahdollista muodostaa.
+
 Yllä olevassa esimerkissä funktioksi tulee
 \[ f(x) = f(x-1)+f(x-3)+f(x-4) \]
 ja funktion ensimmäiset arvot ovat:
@@ -377,7 +378,7 @@ jälkeen rivi
 Nyt olemme käyneet läpi kaikki dynaamisen
 ohjelmoinnin perusasiat.
 Dynaamista ohjelmointia voi soveltaa monilla
-tavoilla erilaisissa tehtävissä,
+tavoilla erilaisissa tilanteissa,
 minkä vuoksi tutustumme seuraavaksi
 joukkoon tehtäviä, jotka esittelevät
 dynaamisen ohjelmoinnin mahdollisuuksia.
@@ -420,7 +421,7 @@ Esimerkiksi taulukossa
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-pisin nouseva alijono sisältää 4 lukua:
+pisin nouseva alijono sisältää 4 alkiota:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (2,1);
@@ -707,7 +708,7 @@ Sallitut operaatiot ovat:
 \end{itemize}
 
 Esimerkiksi merkkijonojen \texttt{TALO} ja \texttt{PALLO}
-editointietäisyys on 2, koska voi tehdä ensin
+editointietäisyys on 2, koska voimme tehdä ensin
 operaation \texttt{TALO} $\rightarrow$ \texttt{TALLO}
 (merkin lisäys) ja sen jälkeen operaation
 \texttt{TALLO} $\rightarrow$ \texttt{PALLO}
@@ -958,7 +959,7 @@ koska $m$:n suuruus on ratkaiseva ajankäytön kannalta.
 Ratkaisua on mahdollista tehostaa parantamalla rivien esitystapaa merkkijonoina.
 Osoittautuu, että ainoa seuraavalla rivillä tarvittava tieto on,
 missä kohdissa riviltä lähtee laattoja alaspäin.
-Niinpä rivin voikin tallentaa käyttämällä vain merkkejä
+Niinpä rivin voikin tallentaa käyttäen vain merkkejä
 $\sqcap$ ja $\Box$, missä $\Box$ kokoaa yhteen vanhat merkit
 $\sqcup$, $\sqsubset$ ja $\sqsupset$.
 Tällöin erilaisia rivejä on vain $2^m$
