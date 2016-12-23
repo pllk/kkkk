@@ -272,7 +272,7 @@ Kuplajärjestäminen on esimerkki algoritmista,
 joka perustuu taulukon vierekkäisten alkioiden
 vaihtamiseen keskenään.
 Osoittautuu, että tällaisen algoritmin
-aikavaativuus on aina vähintään $O(n^2)$,
+aikavaativuus on \emph{aina} vähintään $O(n^2)$,
 koska pahimmassa tapauksessa taulukon
 järjestäminen vaatii $O(n^2)$ alkioparin vaihtamista.
 
@@ -311,7 +311,7 @@ Inversioiden määrä kuvaa, miten lähellä
 järjestystä taulukko on.
 Taulukko on järjestyksessä tarkalleen
 silloin, kun siinä ei ole yhtään inversiota.
-Inversioiden määrä on suurin,
+Inversioiden määrä on puolestaan suurin,
 kun taulukon järjestys on käänteinen,
 jolloin inversioita on
 \[1+2+\cdots+(n-1)=\frac{n(n-1)}{2} = O(n^2).\]
@@ -361,7 +361,7 @@ Jos $a=b$, välillä on vain yksi alkio,
 joten se on valmiiksi järjestyksessä.
 Muuten algoritmi jakaa välin
 kahteen osaan: vasen osa on väli $a \ldots c$
-ja oikea osa on väli $c+1 \ldots b$, missä $c=(a+b)/2$.
+ja oikea osa on väli $c+1 \ldots b$, missä $c=\lfloor (a+b)/2 \rfloor$.
 Funktion järjestää osat rekursiivisesti
 kutsumalla itseään.
 
@@ -555,7 +555,7 @@ Tästä saadaan arvio
 \[ \log_2(n!) \ge (n/2) \cdot \log_2(n/2),\]
 eli puun korkeus ja sen myötä
 pienin mahdollinen järjestämisalgoritmin askelten
-määrä on ainakin luokkaa $n \log n$.
+määrä on pahimmassa tapauksessa ainakin luokkaa $n \log n$.
 
 \subsubsection{Laskemisjärjestäminen}
 
@@ -874,9 +874,9 @@ Ideana on käydä taulukkoa läpi hyppien
 ja hidastaa vauhtia, kun etsittävä alkio lähestyy.
 
 Haku käy taulukkoa läpi vasemmalta oikealle aloittaen
-hypyn pituudesta $n$.
+hypyn pituudesta $n/2$.
 Joka vaiheessa hypyn pituus puolittuu:
-ensin $n/2$, sitten $n/4$, sitten $n/8$ jne.,
+ensin $n/4$, sitten $n/8$, sitten $n/16$ jne.,
 kunnes lopulta hypyn pituus on 1.
 Hyppyjen jälkeen joko haettava alkio on löytynyt
 tai selviää, että sitä ei ole taulukossa.
@@ -884,7 +884,7 @@ tai selviää, että sitä ei ole taulukossa.
 Seuraava koodi toteuttaa äskeisen idean:
 \begin{lstlisting}
 int k = 1;
-for (int b = n; b >= 1; b /= 2) {
+for (int b = n/2; b >= 1; b /= 2) {
     while (k+b <= n && t[k+b] <= x) k += b;
 }
 if (t[k] == x) // alkio x löytyi kohdasta k
@@ -900,8 +900,8 @@ aina enintään kahdesti.
 
 \subsubsection{Muutoskohdan etsiminen}
 
-Käytännössä binäärihakua tarvitsee koodata
-harvoin alkion etsimiseen taulukosta,
+Käytännössä binäärihakua tarvitsee toteuttaa
+harvoin itse alkion etsimiseen taulukosta,
 koska sen sijasta voi käyttää standardikirjastoa.
 Esimerkiksi C++:n funktiot \texttt{lower\_bound}
 ja \texttt{upper\_bound} toteuttavat binäärihaun
@@ -909,7 +909,7 @@ ja tietorakenne \texttt{set} ylläpitää joukkoa,
 jonka operaatiot ovat $O(\log n)$-aikaisia.
 
 Sitäkin tärkeämpi binäärihaun käyttökohde on 
-funktion muutoskohdan etsiminen.
+funktion \emph{muutoskohdan} etsiminen.
 Oletetaan, että haluamme löytää pienimmän arvon $k$,
 joka on kelvollinen ratkaisu ongelmaan.
 Käytössämme on funktio $\texttt{ok}(x)$,
@@ -917,8 +917,8 @@ joka palauttaa \texttt{true}, jos $x$ on kelvollinen
 ratkaisu, ja muuten \texttt{false}.
 Lisäksi tiedämme, että $\texttt{ok}(x)$ on \texttt{false}
 aina kun $x<k$ ja \texttt{true} aina kun $x \geq k$.
-Toisin sanoen haluamme löytää funktion \texttt{ok} \emph{muutoskohdan},
-jossa arvosta \texttt{false} tulee arvo \texttt{true}.
+% Toisin sanoen haluamme löytää funktion \texttt{ok} \emph{muutoskohdan},
+% jossa arvosta \texttt{false} tulee arvo \texttt{true}.
 Tilanne näyttää seuraavalta:
 
 \begin{center}
