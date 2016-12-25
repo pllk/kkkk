@@ -411,7 +411,7 @@ vain silloin, kun tämä on välttämätöntä,
 jotta puun käsittely on tehokasta.
 
 Seuraava kuva näyttää, kuinka äskeinen puu muuttuu,
-kun siitä lasketaan puun alapuolelle merkityn välin summa:
+kun siitä lasketaan puun alle merkityn välin summa:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (16,1);
@@ -793,6 +793,7 @@ merkityllä välillä:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
+\fill[lightgray] (1,0) rectangle (6,1);
 \draw (0,0) grid (8,1);
 
 \node[anchor=center] at (0.5, 0.5) {3};
@@ -803,8 +804,6 @@ merkityllä välillä:
 \node[anchor=center] at (5.5, 0.5) {1};
 \node[anchor=center] at (6.5, 0.5) {1};
 \node[anchor=center] at (7.5, 0.5) {2};
-
-\draw [decoration={brace}, decorate, line width=0.5mm] (6,-0.25) -- (1,-0.25);
 \end{tikzpicture}
 \end{center}
 
@@ -975,8 +974,6 @@ Tässä tapauksessa
 segmenttipuu vie tilaa $O(n \log n)$,
 koska siinä on $O(\log n)$ tasoa, joista
 jokaisella hakemistorakenteet sisältävät $O(n)$ lukua.
-Tässä oletuksena on, että $k$ luvun tallentaminen
-hakemistoon vie tilaa $O(k)$.
 
 \section{Kaksiulotteisuus}
 
