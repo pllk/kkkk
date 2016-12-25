@@ -5,8 +5,7 @@
 \key{Kombinatoriikka} tarkoittaa yhdistelmien määrän laskemista.
 Yleensä tavoitteena on toteuttaa laskenta
 tehokkaasti niin, että jokaista yhdistelmää
-ei tarvitse muodostaa erikseen, koska
-yhdistelmien määrä on usein suuri.
+ei tarvitse muodostaa erikseen.
 
 Tarkastellaan esimerkkinä tehtävää,
 jossa laskettavana on,
@@ -73,11 +72,11 @@ kohtaa +-merkille ja niistä valitaan mikä tahansa osajoukko.
 \key{Binomikerroin} ${n \choose k}$ ilmaisee,
 monellako tavalla $n$ alkion joukosta
 voidaan muodostaa $k$ alkion osajoukko.
-Esimerkiksi ${5 \choose 2}=10$,
-koska alkioista $\{A,B,C,D,E\}$
-voidaan valita $10$ tavalla $2$ alkiota:
-\[ \{A,B\}, \{A,C\}, \{A,D\}, \{A,E\}, \{B,C\}, 
-\{B,D\}, \{B,E\}, \{C,D\}, \{C,E\}, \{D,E\} \]
+Esimerkiksi ${5 \choose 3}=10$,
+koska joukosta $\{1,2,3,4,5\}$
+voidaan valita $10$ tavalla $3$ alkiota:
+\[ \{1,2,3\}, \{1,2,4\}, \{1,2,5\}, \{1,3,4\}, \{1,3,5\}, 
+\{1,4,5\}, \{2,3,4\}, \{2,3,5\}, \{2,4,5\}, \{3,4,5\} \]
 
 \subsubsection{Laskutapa 1}
 
@@ -100,7 +99,7 @@ Rekursion pohjatapaukset ovat seuraavat:
 {n \choose 0}  =  {n \choose n} = 1
 \]
 
-Selityksenä on, että on aina yksi tapa
+Tämä johtuu siitä, että on aina yksi tapa
 muodostaa tyhjä osajoukko,
 samoin kuin valita kaikki alkiot osajoukkoon.
 
@@ -144,8 +143,10 @@ Nimi ''binomikerroin'' tulee siitä, että
 {n \choose n-1} a^1 b^{n-1} +
 {n \choose n} a^0 b^n. \]
 
-Binomikertoimet esiintyvät myös Pascalin
-kolmiossa, jonka reunoilla on lukua 1
+\index{Pascalin kolmio}
+
+Binomikertoimet esiintyvät myös \key{Pascalin
+kolmiossa}, jonka reunoilla on lukua 1
 ja jokainen luku saadaan
 kahden yllä olevan luvun summana:
 \begin{center}
@@ -215,7 +216,7 @@ sijoitustapoja on 10:
 \end{tikzpicture}
 \end{center}
 
-Tässä tapauksessa vastauksen kertoo suoraan binomikerroin ${n \choose k}$.
+Tässä tapauksessa vastauksen antaa suoraan binomikerroin ${n \choose k}$.
 
 \textit{Tapaus 2}: Samaan laatikkoon saa sijoittaa
 monta palloa.
@@ -272,7 +273,7 @@ merkki ''$\rightarrow$''.
 Esimerkiksi sijoitustapaa
 ylhäällä oikealla
 vastaa merkkijono ''$\rightarrow$ $\rightarrow$ o $\rightarrow$ o $\rightarrow$''.
-Niinpä sijoitustapojen määrä on ${n+k-1 \choose k}$.
+Niinpä sijoitustapojen määrä on ${k+n-1 \choose k}$.
 
 \textit{Tapaus 3}: Kuhunkin laatikkoon saa sijoittaa
 enintään yhden pallon ja lisäksi missään kahdessa
@@ -310,7 +311,7 @@ Tässä tapauksessa voi ajatella, että alussa $k$ palloa
 ovat laatikoissaan ja joka välissä on yksi tyhjä laatikko.
 Tämän jälkeen jää valittavaksi $n-k-(k-1)=n-2k+1$ tyhjän laatikon paikat.
 Mahdollisia välejä on $k+1$, joten tapauksen 2 perusteella
-sijoitustapoja on ${k+1+n-2k+1-1 \choose n-2k+1} = {n-k+1 \choose n-2k+1}$.
+sijoitustapoja on ${n-2k+1+k+1-1 \choose n-2k+1} = {n-k+1 \choose n-2k+1}$.
 
 \subsubsection{Multinomikerroin}
 
@@ -431,7 +432,7 @@ puiden lukumääriä:
 
 \begin{itemize}
 \item $n$ solmun binääripuiden määrä on $C_n$
-\item $n$ solmun yleisten puiden määrä on $C_{n-1}$
+\item $n$ solmun juurellisten puiden määrä on $C_{n-1}$
 \end{itemize}
 \noindent
 Esimerkiksi tapauksessa $C_3=5$ binääripuut ovat
