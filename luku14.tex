@@ -175,19 +175,11 @@ Esimerkiksi puussa
 \path[draw,thick,-] (2) -- (5);
 \path[draw,thick,-] (3) -- (6);
 \path[draw,thick,-] (3) -- (7);
-
-\path[draw,thick,-,color=red,line width=2pt] (6) -- (3);
-\path[draw,thick,-,color=red,line width=2pt] (3) -- (1);
-\path[draw,thick,-,color=red,line width=2pt] (1) -- (2);
-\path[draw,thick,-,color=red,line width=2pt] (2) -- (5);
 \end{tikzpicture}
 \end{center}
-läpimitta on 4, koska polku solmusta 3 solmuun 6
-on pituudeltaan 4.
-Läpimittaa vastaava polku ei ole
-välttämättä yksikäsitteinen.
-Esimerkiksi tässä puussa myös polku solmusta 7
-solmuun 6 on pituudeltaan 4.
+läpimitta on 4, jota vastaa kaksi polkua:
+solmujen 3 ja 6 välinen polku sekä
+solmujen 7 ja 6 välinen polku.
 
 Käymme seuraavaksi läpi kaksi tehokasta
 algoritmia puun läpimitan laskeminen.
@@ -195,7 +187,7 @@ Molemmat algoritmit laskevat läpimitan ajassa
 $O(n)$.
 Ensimmäinen algoritmi perustuu dynaamiseen
 ohjelmointiin, ja toinen algoritmi
-etsii kaukaisimmat solmut syvyyshakujen avulla.
+laskee läpimitan kahden syvyyshaun avulla.
 
 \subsubsection{Algoritmi 1}
 
@@ -207,7 +199,7 @@ kuinka pitkä on pisin polku,
 joka alkaa jostakin lehdestä,
 nousee kyseiseen solmuun asti
 ja laskeutuu toiseen lehteen.
-Pisin tällaisista poluista vastaa puun läpimittaa.
+Pisin tällainen polku vastaa puun läpimittaa.
 
 Esimerkissä pisin polku alkaa lehdestä 7,
 nousee solmuun 1 asti ja laskeutuu
@@ -236,7 +228,7 @@ sitten alas lehteen 6:
 \end{center}
 
 Algoritmi laskee ensin dynaamisella ohjelmoinnilla
-jokaiselle solmulle, kuinka pitkä on pisin solmu,
+jokaiselle solmulle, kuinka pitkä on pisin polku,
 joka lähtee solmusta alaspäin.
 Esimerkiksi yllä olevassa puussa pisin polku
 solmusta 1 alaspäin on pituudeltaan 2
@@ -492,7 +484,7 @@ kaikkiin suuntiin:
 jonka jokaisella solmulla on vasen ja oikea alipuu.
 On mahdollista, että alipuu on tyhjä,
 jolloin puu ei jatku siitä pidemmälle alaspäin.
-Niinpä jokaisella solmulla on 0, 1 tai 2 lasta.
+Binääripuun jokaisella solmulla on 0, 1 tai 2 lasta.
 
 Esimerkiksi seuraava puu on binääripuu:
 
