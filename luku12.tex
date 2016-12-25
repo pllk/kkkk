@@ -165,7 +165,7 @@ void haku(int s) {
 käy solmut läpi järjestyksessä sen mukaan,
 kuinka kaukana ne ovat alkusolmusta.
 Niinpä leveyshaun avulla pystyy laskemaan
-etäisyyden aloitussolmusta kaikkiin
+etäisyyden alkusolmusta kaikkiin
 muihin solmuihin.
 Leveyshaku on kuitenkin vaikeampi
 toteuttaa kuin syvyyshaku.
@@ -177,7 +177,7 @@ joihin pääsee yhdellä kaarella
 alkusolmusta.
 Tämän jälkeen vuorossa ovat
 solmut, joihin pääsee kahdella
-kaarella alkusolmusta jne.
+kaarella alkusolmusta, jne.
 Sama jatkuu, kunnes uusia käsiteltäviä
 solmuja ei enää ole.
 
@@ -331,8 +331,8 @@ joka sisältää solmut käsittelyjärjestyksessä.
 Koodi lisää aina uudet vastaan tulevat solmut
 jonon perään ja ottaa seuraavaksi käsiteltävän
 solmun jonon alusta,
-minkä ansiosta solmut käsitellään tasoittain
-alkusolmusta lähtien.
+minkä ansiosta solmut käsitellään
+kerroksittain alkusolmusta lähtien.
 
 Lisäksi koodi käyttää taulukoita
 \begin{lstlisting}
