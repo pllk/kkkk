@@ -37,12 +37,12 @@ int summa(int a, int b) {
 Ylhäältä alaspäin toteutettuna funktiosta tulee:
 
 \begin{lstlisting}
-int summa(int a, int b, int k, int c, int d) {
-    if (b < c || a > d) return 0;
-    if (a == c && b == d) return p[k];
-    int w = (d-c+1)/2;
-    return summa(a, min(c+w-1,b), 2*k, c, c+w-1) +
-           summa(max(c+w,a), b, 2*k+1, c+w, d);
+int summa(int a, int b, int k, int x, int y) {
+    if (b < x || a > y) return 0;
+    if (a == x && b == y) return p[k];
+    int d = (y-x+1)/2;
+    return summa(a, min(x+d-1,b), 2*k, x, x+d-1) +
+           summa(max(x+d,a), b, 2*k+1, x+d, y);
 }
 \end{lstlisting}
 Nyt välin $[a,b]$ summan saa laskettua
@@ -58,19 +58,19 @@ Aluksi $k$:n arvona on 1,
 koska summan laskeminen alkaa
 segmenttipuun juuresta.
 
-Väli $[c,d]$ on parametria $k$ vastaava väli,
+Väli $[x,y]$ on parametria $k$ vastaava väli,
 aluksi koko kyselyalue eli $[0,N-1]$.
-Jos väli $[a,b]$ on välin $[c,d]$
+Jos väli $[a,b]$ on välin $[x,y]$
 ulkopuolella, välin summa on 0.
-Jos taas välit $[a,b]$ ja $[c,d]$
+Jos taas välit $[a,b]$ ja $[x,y]$
 ovat samat, summan saa taulukosta \texttt{p}.
 
-Jos väli $[a,b]$ on kokonaan tai osittain välin $[c,d]$
+Jos väli $[a,b]$ on kokonaan tai osittain välin $[x,y]$
 sisällä, haku jatkuu rekursiivisesti
-välin $[c,d]$ vasemmasta ja oikeasta puoliskosta.
-Kummankin puoliskon koko on $w=\frac{1}{2}(d-c+1)$,
-joten vasen puolisko kattaa välin $[c,c+w-1]$
-ja oikea puolisko kattaa välin $[c+w,d]$.
+välin $[x,y]$ vasemmasta ja oikeasta puoliskosta.
+Kummankin puoliskon koko on $d=\frac{1}{2}(y-x+1)$,
+joten vasen puolisko kattaa välin $[x,x+d-1]$
+ja oikea puolisko kattaa välin $[x+d,y]$.
 
 Seuraava kuva näyttää,
 kuinka haku etenee puussa,
@@ -210,7 +210,7 @@ Tarkastellaan esimerkkinä tilannetta,
 jossa segmenttipuun
 tulee toteuttaa seuraavat operaatiot:
 \begin{itemize}
-\item lisää jokaisen välin $[a,b]$ alkioon arvo $x$
+\item lisää jokaisen välin $[a,b]$ alkioon arvo $u$
 \item laske välin $[a,b]$ alkioiden summa
 \end{itemize}
 Toteutamme puun, jonka jokaisessa
@@ -294,16 +294,16 @@ eli mitään muutoksia ei ole kesken.
 \end{tikzpicture}
 \end{center}
 
-Kun välin $[a,b]$ solmuja kasvatetaan $x$:llä,
+Kun välin $[a,b]$ solmuja kasvatetaan $u$:lla,
 alkaa kulku puun juuresta lehtiä kohti.
 Kulun aikana tapahtuu kahdenlaisia muutoksia puun solmuihin:
 
-Jos solmun väli $[c,d]$ kuuluu kokonaan
+Jos solmun väli $[x,y]$ kuuluu kokonaan
 muutettavalle välille $[a,b]$,
-solmun $z$-arvo kasvaa $x$:llä ja kulku pysähtyy.
-Jos taas väli $[c,d]$ kuuluu osittain välille $[a,b]$,
-solmun $s$-arvo kasvaa $hx$:llä,
-missä $h$ on välien $[a,b]$ ja $[c,d]$ yhteisen osan pituus,
+solmun $z$-arvo kasvaa $u$:llä ja kulku pysähtyy.
+Jos taas väli $[x,y]$ kuuluu osittain välille $[a,b]$,
+solmun $s$-arvo kasvaa $hu$:llä,
+missä $h$ on välien $[a,b]$ ja $[x,y]$ yhteisen osan pituus,
 ja kulku jatkuu rekursiivisesti alaspäin.
 
 Kasvatetaan esimerkiksi puun alle merkittyä väliä 2:lla:
@@ -397,7 +397,7 @@ Kasvatetaan esimerkiksi puun alle merkittyä väliä 2:lla:
 
 Välin $[a,b]$ summan laskenta tapahtuu myös
 kulkuna puun juuresta lehtiä kohti.
-Jos solmun väli $[c,d]$ kuuluu kokonaan väliin $[a,b]$,
+Jos solmun väli $[x,y]$ kuuluu kokonaan väliin $[a,b]$,
 kyselyn summaan lisätään solmun $s$-arvo
 sekä mahdollinen $z$-arvon tuottama lisäys.
 Muussa tapauksessa kulku jatkuu rekursiivisesti alaspäin solmun lapsiin.
@@ -510,12 +510,12 @@ koska muutokset $z_1$ ja $z_2$ aiheuttavat yhdessä muutoksen $z_1+z_2$.
 
 Laiskaa segmenttipuuta voi yleistää niin,
 että väliä muuttaa polynomi
-\[p(x) = t_k x^k + t_{k-1} x^{k-1} + \cdots + t_0.\]
+\[p(u) = t_k u^k + t_{k-1} u^{k-1} + \cdots + t_0.\]
 
 Ideana on, että välin ensimmäisen kohdan
 muutos on $p(0)$, toisen kohdan muutos on $p(1)$ jne.,
 eli välin $[a,b]$ kohdan $i$ muutos on $p(i-a)$.
-Esimerkiksi polynomin $p(x)=x+1$ lisäys välille
+Esimerkiksi polynomin $p(u)=u+1$ lisäys välille
 $[a,b]$ tarkoittaa, että kohta $a$ kasvaa 1:llä,
 kohta $a+1$ kasvaa 2:lla, kohta $a+2$ kasvaa 3:lla jne.
 
@@ -526,22 +526,22 @@ Arvo $s$ kertoo solmua vastaavan välin summan kuten ennenkin,
 ja arvot $z_0,z_1,\ldots,z_k$ ovat polynomin kertoimet,
 joka ilmaisee väliin kohdistuvan laiskan muutoksen.
 
-Nyt välin $[c,d]$ summa on
-\[s+\sum_{x=0}^{d-c} z_k x^k + z_{k-1} x^{k-1} + \cdots + z_0,\]
+Nyt välin $[x,y]$ summa on
+\[s+\sum_{u=0}^{y-x} z_k u^k + z_{k-1} u^{k-1} + \cdots + z_0,\]
 jonka saa laskettua tehokkaasti osissa summakaavoilla.
 Esimerkiksi termin $z_0$ summaksi tulee
-$(d-c+1)z_0$ ja termin $z_1 x$ summaksi tulee
-\[z_1(0+1+\cdots+d-c) = z_1 \frac{(d-c)(d-c+1)}{2} .\]
+$(y-x+1)z_0$ ja termin $z_1 u$ summaksi tulee
+\[z_1(0+1+\cdots+y-x) = z_1 \frac{(y-x)(y-x+1)}{2} .\]
 
 Kun muutos etenee alaspäin puussa,
-polynomin $p(x)$ indeksointi muuttuu,
-koska jokaisella välillä $[c,d]$
-polynomin arvot tulevat kohdista $x=0,1,\ldots,d-c$.
+polynomin $p(u)$ indeksointi muuttuu,
+koska jokaisella välillä $[x,y]$
+polynomin arvot tulevat kohdista $x=0,1,\ldots,y-x$.
 Tämä ei kuitenkaan tuota ongelmia,
-koska $p'(x)=p(x+h)$ on aina
-samanasteinen polynomi kuin $p(x)$.
-Esimerkiksi jos $p(x)=t_2 x^2+t_1 x-t_0$, niin
-\[p'(x)=t_2(x+h)^2+t_1(x+h)-t_0=t_2 x^2 + (2ht_2+t_1)x+t_2h^2+t_1h-t_0.\]
+koska $p'(u)=p(u+h)$ on aina
+samanasteinen polynomi kuin $p(u)$.
+Esimerkiksi jos $p(u)=t_2 u^2+t_1 u-t_0$, niin
+\[p'(u)=t_2(u+h)^2+t_1(u+h)-t_0=t_2 u^2 + (2ht_2+t_1)u+t_2h^2+t_1h-t_0.\]
 
 \section{Dynaaminen toteutus}
 
@@ -559,14 +559,14 @@ Solmut on kätevää tallentaa tietueina tähän tapaan:
 
 \begin{lstlisting}
 struct node {
-    int x;
-    int a, b;
+    int s;
+    int x, y;
     node *l, *r;
-    node(int x, int a, int b) : x(x), a(a), b(b) {}
+    node(int x, int a, int b) : s(s), x(x), y(y) {}
 };
 \end{lstlisting}
-Tässä $x$ on solmussa oleva arvo,
-$[a,b]$ on solmua vastaava väli
+Tässä $s$ on solmussa oleva arvo,
+$[x,y]$ on solmua vastaava väli
 ja $l$ ja $r$ osoittavat
 solmun vasempaan ja oikeaan alipuuhun.
 
