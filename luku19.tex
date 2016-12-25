@@ -526,23 +526,21 @@ Tällainen ratkaisu on mahdollista toteuttaa ajassa $O(2^n n^2)$.
 \index{de Bruijnin jono@de Bruijnin jono}
 
 \key{De Bruijnin jono}
-on lyhin $k$-merkkisen aakkoston merkkijono,
-jonka osajonoina ovat kaikki mahdolliset
-$n$ merkin yhdistelmät.
+on merkkijono, jonka osajonona on tarkalleen
+kerran jokainen $k$-merkkisen aakkoston
+$n$ merkin yhdistelmä.
+Tällaisen merkkijonon pituus on
+$k^n+n-1$ merkkiä.
 Esimerkiksi kun $k=2$ ja $n=3$,
-niin eräs de Bruijnin jono on
+niin yksi mahdollinen de Bruijnin jono on
 \[0001011100.\]
-Tämän merkkijonon osajonoina ovat kaikki 3 merkin yhdistelmät
+Tämän merkkijono osajonot ovat kaikki 
+kolmen bitin yhdistelmät
 000, 001, 010, 011, 100, 101, 110 ja 111.
 
-Osoittautuu, että de Bruijnin jonon
-pituus on aina $k^n+n-1$, jolloin jokainen
-$n$ merkin osajono esiintyy tarkalleen
-kerran merkkijonossa.
-Lisäksi de Bruijnin jono
+Osoittautuu, että de Bruijnin jono
 vastaa Eulerin kierrosta sopivasti
 muodostetussa verkossa.
-
 Ideana on muodostaa verkko niin,
 että jokaisessa solmussa on $n-1$
 merkin yhdistelmä ja liikkuminen
@@ -574,7 +572,7 @@ Eulerin kierros tässä verkossa tuottaa merkkijonon,
 joka sisältää kaikki $n$ merkin yhdistelmät,
 kun mukaan otetaan aloitussolmun merkit sekä
 kussakin kaaressa olevat merkit.
-Aloitussolmussa on $n-1$ merkkiä ja kaarissa
+Alkusolmussa on $n-1$ merkkiä ja kaarissa
 on $k^n$ merkkiä, joten tuloksena on
 lyhin mahdollinen merkkijono.
 
