@@ -37,7 +37,8 @@ Etumerkillisessä bittiesityksessä ei-negatiivisen luvun
 ensimmäinen bitti on 0 ja negatiivisen luvun
 ensimmäinen bitti on 1.
 Bittiesityksenä on \key{kahden komplementti},
-jossa positiivisesta luvusta saa negatiivisen muuttamalla
+jossa luvun luvun vastaluvun saa laskettua
+muuttamalla
 kaikki bitit käänteiseksi ja lisäämällä
 tulokseen yksi.
 
@@ -159,7 +160,7 @@ tilanne on seuraava:
 \begin{center}
 \begin{tabular}{rrrr}
 $x$ & = & 29 &   00000000000000000000000000011101 \\
-\textasciitilde$x$ & = & 30 & 11111111111111111111111111100010 \\
+\textasciitilde$x$ & = & $-30$ & 11111111111111111111111111100010 \\
 \end{tabular}
 \end{center}
 
@@ -397,8 +398,8 @@ Tällöin dynaamisen ohjelmoinnin tilana on
 joukon osajoukko sekä mahdollisesti muuta tietoa.
 
 Tekniikan hyötynä on,
-että $n$-alkioisen joukon permutaatioiden määrä ($n!$)
-on selvästi suurempi kuin osajoukkojen määrä ($2^n$).
+että $n$-alkioisen joukon permutaatioiden määrä $n!$
+on selvästi suurempi kuin osajoukkojen määrä $2^n$.
 Esimerkiksi jos $n=20$, niin $n!=2432902008176640000$,
 kun taas $2^n=1048576$.
 Niinpä tietyillä $n$:n arvoilla permutaatioita ei ehdi
@@ -483,7 +484,7 @@ for (int i = 0; i < n; i++) {
 Tarkastellaan sitten
 joukon $\{0,1,\ldots,n-1\}$ osajoukkoja,
 kun jokaista osajoukkoa $x$ vastaa arvo $c(x)$.
-Tehtävänä on jokaiselle osajoukolle $x$
+Tehtävänä on laskea jokaiselle osajoukolle $x$
 summa
 \[s(x)=\sum_{y \subset x} c(y) \]
 eli bittimuodossa ilmaistuna
