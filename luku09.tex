@@ -5,19 +5,16 @@
 \index{minimikysely@minimikysely}
 \index{maksimikysely@maksimikysely}
 
-\key{Välikysely} kohdistuu
-taulukkoon, jonka sisältönä on lukuja.
-Kyselyssä annetaan tietty taulukon väli $[a,b]$
-ja tehtävänä on laskea haluttu tieto välillä olevista luvuista.
+\key{Välikysely} kohdistuu taulukon välille $[a,b]$,
+ja tehtävänä on laskea haluttu tieto välillä olevista alkioista.
 Tavallisia välikyselyitä ovat:
-
 \begin{itemize}
-\item \key{summakysely}: laske välin $[a,b]$ lukujen summa
-\item \key{minimikysely}: etsi pienin luku välillä $[a,b]$
-\item \key{maksimikysely}: etsi suurin luku välillä $[a,b]$
+\item \key{summakysely}: laske välin $[a,b]$ summa
+\item \key{minimikysely}: etsi pienin alkio välillä $[a,b]$
+\item \key{maksimikysely}: etsi suurin alkio välillä $[a,b]$
 \end{itemize}
-
-Tarkastellaan esimerkkinä seuraavan taulukon väliä $[4,7]$:
+Esimerkiksi seuraavan taulukon välillä $[4,7]$
+summa on $4+6+1+3=14$, minimi on 1 ja maksimi on 6:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (7,1);
@@ -43,11 +40,9 @@ Tarkastellaan esimerkkinä seuraavan taulukon väliä $[4,7]$:
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-Välin $[4,7]$ summa on $4+6+1+3=14$, minimi on $1$
-ja maksimi on $6$.
 
 Helppo tapa vastata välikyselyyn on
-käydä läpi kaikki välin luvut silmukalla.
+käydä läpi kaikki välin alkiot silmukalla.
 Esimerkiksi seuraava funktio toteuttaa summakyselyn:
 
 \begin{lstlisting}
@@ -69,7 +64,7 @@ toteuttamaan huomattavasti nopeammin.
 \section{Staattisen taulukon kyselyt}
 
 Aloitamme yksinkertaisesta
-tilanteesta, jossa taulukko on staattinen
+tilanteesta, jossa taulukko on \key{staattinen}
 eli sen sisältö ei muutu kyselyiden välillä.
 Tällöin riittää muodostaa ennen kyselyitä
 taulukon pohjalta tietorakenne,
@@ -156,13 +151,13 @@ int summa(int a, int b) {
 }
 \end{lstlisting}
 
-Ideana on laskea välin $[a,b]$ summa 
-laskemalla ensin välin $[1,b]$ summa
-ja vähentämällä siitä sitten välin $[1,a-1]$ summa.
-Summataulukosta riittää hakea kaksi arvoa
+Funktio laskee välin $[a,b]$ summan
+vähentämällä välin $[1,b]$ summasta
+välin $[1,a-1]$ summan.
+Summataulukosta riittää siis hakea kaksi arvoa
 ja aikaa kuluu vain $O(1)$.
 Huomaa, että 1-indeksoinnin ansiosta
-yllä oleva toteutus toimii myös tapauksessa $a=1$,
+funktio toimii myös tapauksessa $a=1$,
 kunhan $\texttt{s}[0]=0$.
 
 Tarkastellaan esimerkiksi väliä $[4,7]$:
@@ -228,7 +223,7 @@ myös kaksiulotteiseen taulukkoon,
 jolloin summataulukosta voi laskea
 minkä tahansa suorakulmaisen alueen
 summan $O(1)$-ajassa.
-Ideana on tallentaa summataulukkoon summia
+Tällöin summataulukkoon tallennetaan summia
 alueista, jotka alkavat taulukon vasemmasta yläkulmasta.
 
 \begin{samepage}
