@@ -128,8 +128,9 @@ jossa puussa ei ole yhtään kaaria.
 Sitten algoritmi alkaa lisätä
 puuhun kaaria järjestyksessä
 kevyimmästä raskaimpaan.
-Algoritmi lisää kaaren mukaan puuhun,
-jos sen lisääminen ei muodosta sykliä.
+Kunkin kaaren kohdalla
+algoritmi ottaa kaaren mukaan puuhun,
+jos tämä ei aiheuta sykliä.
 
 Kruskalin algoritmi pitää yllä
 tietoa verkon komponenteista.
@@ -357,8 +358,8 @@ Tuloksena on virittävä puu, jonka paino on \emph{pienempi}:
 
 Niinpä on aina optimaalinen ratkaisu valita pienimpään
 virittävään puuhun verkon kevein kaari.
-Vastaavalla tavalla on mahdollista perustella
-seuraavaksi keveimmän kaaren valinta jne.
+Vastaavalla tavalla voimme perustella
+seuraavaksi keveimmän kaaren valinnan, jne.
 Niinpä Kruskalin algoritmi toimii oikein ja
 tuottaa aina pienimmän virittävän puun.
 
@@ -454,19 +455,20 @@ tilanne voisi olla:
 \end{center}
 Tässä tapauksessa alkiot 4, 5 ja 2
 ovat joukkojen edustajat.
-
 Minkä tahansa alkion edustaja
-löytyy kulkemalla polku loppuun alkiosta.
+löytyy kulkemalla alkiosta lähtevää polkua
+eteenpäin niin kauan, kunnes polku päättyy.
 Esimerkiksi alkion 6 edustaja on 2,
-koska polku on $6 \rightarrow 3 \rightarrow 2$.
+koska alkiosta 6 lähtevä
+polku on $6 \rightarrow 3 \rightarrow 2$.
 Tämän avulla voi selvittää,
 ovatko kaksi alkiota samassa joukossa:
 jos kummankin alkion edustaja on sama,
 alkiot ovat samassa joukossa,
-ja muuten eri joukoissa.
+ja muuten ne ovat eri joukoissa.
 
-Joukkojen yhdistäminen tapahtuu
-valitsemalla toisen edustaja
+Kahden joukon yhdistäminen tapahtuu
+valitsemalla toinen edustaja
 joukkojen yhteiseksi edustajaksi
 ja kytkemällä toinen edustaja siihen.
 Esimerkiksi joukot $\{1,4,7\}$ ja $\{2,3,6,8\}$
@@ -598,7 +600,7 @@ yhdistämällä pienemmän joukon suurempaan.
 
 \key{Primin algoritmi} on vaihtoehtoinen menetelmä
 verkon pienimmän virittävän puun muodostamiseen.
-Algoritmi aloittaa puun muodostamisen valitusta
+Algoritmi aloittaa puun muodostamisen jostakin
 verkon solmusta ja lisää puuhun aina kaaren,
 joka on mahdollisimman kevyt ja joka
 liittää puuhun uuden solmun.
@@ -725,7 +727,7 @@ Sama jatkuu, kunnes kaikki solmut ovat mukana puussa:
 \end{center}
 \end{samepage}
 
-\subsubsection{Algoritmin toteutus}
+\subsubsection{Toteutus}
 
 Dijkstran algoritmin tavoin Primin algoritmin voi toteuttaa
 tehokkaasti käyttämällä prioriteettijonoa.
@@ -738,6 +740,6 @@ eli sama kuin Dijkstran algoritmissa.
 Käytännössä Primin algoritmi on suunnilleen
 yhtä nopea kuin Kruskalin algoritmi,
 ja onkin makuasia, kumpaa algoritmia käyttää.
-Useimmat kisakoodarit käyttävät Kruskalin algoritmia.
+Useimmat kisakoodarit käyttävät kuitenkin Kruskalin algoritmia.
 
 
