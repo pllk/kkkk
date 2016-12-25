@@ -16,7 +16,7 @@ sisältää englannin kielen suuret kirjaimet.
 \key{Osajono}
 sisältää merkkijonon merkit
 yhtenäiseltä väliltä.
-Merkkijonon osajonojen määrä on $n(n+1)/2$.
+Merkkijonon osa\-jonojen määrä on $n(n+1)/2$.
 Esimerkiksi merkkijonon \texttt{ALGORITMI}
 yksi osajono on \texttt{ORITM},
 joka muodostuu valitsemalla välin \texttt{ALG\underline{ORITM}I}.
@@ -138,9 +138,10 @@ Merkki * solmussa tarkoittaa,
 että jokin merkkijono päättyy kyseiseen solmuun.
 Tämä merkki on tarpeen,
 koska merkkijono voi olla toisen merkkijonon alkuosa,
-kuten tässä puussa merkkijonot \texttt{SUU} ja \texttt{SUURI}.
+kuten tässä puussa merkkijono \texttt{SUU} 
+on merkkijonon \texttt{SUURI} alkuosa.
 
-Triessä merkkijono lisääminen ja hakeminen
+Triessä merkkijonon lisääminen ja hakeminen
 vievät aikaa $O(n)$, kun $n$ on merkkijonon pituus.
 Molemmat operaatiot voi toteuttaa lähtemällä liikkeelle juuresta
 ja kulkemalla alaspäin ketjua merkkien mukaisesti.
@@ -159,9 +160,9 @@ int t[N][A];
 missä $N$ on solmujen suurin mahdollinen määrä
 (eli tallennettavien merkkijonojen yhteispituus)
 ja $A$ on aakkoston koko.
-Ideana on numeroida solmut $1,2,3,\ldots$ niin,
-että juuren numero on 1.
-Nyt $\texttt{t}[s][c]$ kertoo,
+Trien solmut numeroidaan $1,2,3,\ldots$ niin,
+että juuren numero on 1,
+ja taulukon kohta $\texttt{t}[s][c]$ kertoo,
 mihin solmuun solmusta $s$ pääsee merkillä $c$.
 
 \section{Merkkijonohajautus}
@@ -267,7 +268,7 @@ sijasta niiden hajautusarvoja.
 Jos hajautusarvot ovat samat,
 myös merkkijonot ovat \textit{todennäköisesti} samat,
 ja jos taas hajautusarvot eivät ole samat,
-merkkijonot eivät ole samat.
+merkkijonot eivät \textit{varmasti} ole samat.
 
 Hajautuksen avulla voi usein tehostaa
 raa'an voiman algoritmia niin, että siitä tulee tehokas.
@@ -536,12 +537,12 @@ tiedon saa suoraan Z-taulukon lasketusta osasta.
 
 Z-algoritmin aikavaativuus on $O(n)$,
 koska algoritmi aloittaa merkki kerrallaan
-vertailun aina kohdasta $y+1$.
+vertailemisen vasta kohdasta $y+1$.
 Jos merkit täsmäävät, kohta $y$
 siirtyy eteenpäin
 eikä algoritmin tarvitse enää
 koskaan vertailla tätä kohtaa,
-vaan se pystyy hyödyntämään
+vaan algoritmi pystyy hyödyntämään
 Z-taulukon alussa olevaa tietoa.
 
 \subsubsection*{Esimerkki}
@@ -983,7 +984,7 @@ arvot suoraan Z-taulukon alusta:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Z-taulukon käyttö}
+\subsubsection{Z-taulukon käyttäminen}
 
 Ratkaistaan esimerkkinä tehtävä,
 jossa laskettavana on,
