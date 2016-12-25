@@ -71,16 +71,18 @@ aina silloin, kun verkko on syklitön.
 Jos taas verkossa on sykli,
 topologista järjestystä ei voi muodostaa,
 koska mitään syklissä olevaa solmua ei voi
-valita ennen toista topologiseen järjestykseen.
-
+valita ensimmäisenä topologiseen järjestykseen.
 Seuraavaksi näemme, miten syvyyshaun avulla
 voi muodostaa topologisen järjestyksen tai
 todeta, että tämä ei ole mahdollista syklin takia.
 
 \subsubsection{Algoritmi}
 
-Ideana on käydä läpi verkon solmut syvyyshaulla,
-jossa on kolme tilaa:
+Ideana on käydä läpi verkon solmut ja aloittaa
+solmusta uusi syvyyshaku aina silloin, kun solmua
+ei ole vielä käsitelty.
+Kunkin syvyyshaun aikana solmuilla on
+kolme mahdollista tilaa:
 
 \begin{itemize}
 \item tila 0: solmua ei ole käsitelty (valkoinen)
@@ -153,7 +155,7 @@ Sen jälkeen haku palaa takaisinpäin:
 \end{center}
 
 Tämän jälkeen listan sisältönä on $(6,3,2,1)$.
-Seuraavaksi syvyyshaun toinen vaihe alkaa solmusta 4:
+Sitten seuraava syvyyshaku alkaa solmusta 4:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
