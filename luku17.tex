@@ -123,7 +123,7 @@ ja ne muodostavat seuraavan komponenttiverkon:
 Komponentit ovat $A=\{1,2\}$,
 $B=\{3,6,7\}$, $C=\{4\}$ sekä $D=\{5\}$.
 
-Komponenttiverkko on syklitön suunnattu verkko,
+Komponenttiverkko on syklitön, suunnattu verkko,
 jonka käsittely on alkuperäistä verkkoa
 helpompaa, koska siinä ei ole syklejä.
 Niinpä komponenttiverkolle voi muodostaa
@@ -364,16 +364,16 @@ kummankin haun aikavaativuus on $O(n+m)$.
 Vahvasti yhtenäisyys liittyy myös \key{2SAT-ongelman} ratkaisemiseen.
 Siinä annettuna on looginen lauseke muotoa
 \[
-(a_1 \lor b_1) \land (a_2 \lor b_2) \land \cdots \land (a_m \lor b_m)
+(a_1 \lor b_1) \land (a_2 \lor b_2) \land \cdots \land (a_m \lor b_m),
 \]
-ja tehtävänä on valita muuttujille arvot niin,
-että lauseke on tosi,
-tai todeta, että tämä ei ole mahdollista.
+jossa jokainen $a_i$ ja $b_i$ on joko looginen muuttuja
+($x_1,x_2,\ldots,x_n$)
+tai loogisen muuttujan negaatio ($\lnot x_1, \lnot x_2, \ldots, \lnot x_n$).
 Merkit ''$\land$'' ja ''$\lor$'' tarkoittavat
 loogisia operaatioita ''ja'' ja ''tai''.
-Jokainen lausekkeessa esiintyvä $a_i$ ja $b_i$ on looginen muuttuja
-($x_1,x_2,\ldots,x_n$)
-tai sen negaatio ($\lnot x_1, \lnot x_2, \ldots, \lnot x_n$).
+Tehtävänä on valita muuttujille arvot niin,
+että lauseke on tosi,
+tai todeta, että tämä ei ole mahdollista.
 
 Esimerkiksi lauseke
 \[
@@ -395,10 +395,10 @@ L_2 = (x_1 \lor x_2) \land
 on epätosi riippumatta muuttujien valinnasta.
 Tämän näkee siitä, että muuttujalle $x_1$
 ei ole mahdollista arvoa, joka ei tuottaisi ristiriitaa.
-Jos $x_1$ on tosi, pitäisi päteä sekä $x_3$ että $\lnot x_3$,
+Jos $x_1$ on epätosi, pitäisi päteä sekä $x_2$ että $\lnot x_2$,
 mikä on mahdotonta.
-Jos taas $x_1$ on epätosi,
-pitäisi päteä sekä $x_2$ että $\lnot x_2$,
+Jos taas $x_1$ on tosi,
+pitäisi päteä sekä $x_3$ että $\lnot x_3$,
 mikä on myös mahdotonta.
 
 2SAT-ongelman saa muutettua verkoksi niin,
@@ -468,18 +468,21 @@ $\lnot x_i$:ään että $\lnot x_i$:stä $x_i$:ään,
 eli kumman tahansa arvon valitseminen
 muuttujalle $x_i$ pakottaisi myös valitsemaan
 vastakkaisen arvon, mikä on ristiriita.
+Jos taas verkossa ei ole tällaista
+solmua $x_i$, ratkaisu on olemassa.
 
-Lausekkeen $L_1$ verkossa tällaista
-muuttujaa $x_i$ ei ole,
+Lausekkeen $L_1$ verkossa
+mitkään solmut $x_i$ ja $\lnot x_i$
+eivät ole samassa vahvasti yhtenäisessä komponentissa,
 mikä tarkoittaa, että ratkaisu on olemassa.
 Lausekkeen $L_2$ verkossa taas kaikki solmut
-kuuluvat samaan vahvasti yhtenäiseen komponenttiin,
+ovat samassa vahvasti yhtenäisessä komponentissa,
 eli ratkaisua ei ole olemassa.
 
 Jos ratkaisu on olemassa, muuttujien arvot saa selville
 käymällä komponenttiverkko läpi käänteisessä
 topologisessa järjestyksessä.
-Tällöin verkosta otetaan käsittelyyn ja poistetaan
+Verkosta otetaan käsittelyyn ja poistetaan
 joka vaiheessa komponentti,
 josta ei lähde kaaria muihin jäljellä
 oleviin komponentteihin.
