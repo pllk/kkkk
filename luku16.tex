@@ -562,12 +562,11 @@ koska solmusta 4 päätyy solmuun 2 kulkemalla 6 askelta:
 Suoraviivainen tapa laskea arvo $f(x,k)$
 on käydä läpi polku askel askeleelta, mihin kuluu aikaa $O(k)$.
 Sopivan esikäsittelyn avulla voimme laskea kuitenkin
-minkä tahansa arvon $f(x,k)$ ajassa $O(\log u)$,
-missä $u$ on suurin mahdollinen $k$:n arvo,
-jonka laskeminen tulee olla mahdollista.
+minkä tahansa arvon $f(x,k)$ ajassa $O(\log k)$.
 
 Ideana on laskea etukäteen kaikki arvot $f(x,k)$, kun $k$ on 2:n potenssi
-ja enintään $u$.
+ja enintään $u$, missä $u$ on suurin mahdollinen määrä
+askeleita, joista olemme kiinnostuneita.
 Tämä onnistuu tehokkaasti, koska voimme käyttää rekursiota
 
 \begin{equation*}
@@ -658,6 +657,8 @@ joka saavuttaa nämä ominaisuudet.
 
 \key{Floydin algoritmi} kulkee verkossa eteenpäin rinnakkain
 kahdesta kohdasta.
+Algoritmissa on kaksi osoitinta $a$ ja $b$,
+jotka molemmat ovat ensin alkusolmussa.
 Osoitin $a$ liikkuu joka vuorolla askeleen eteenpäin,
 kun taas osoitin $b$ liikkuu kaksi askelta eteenpäin.
 Haku jatkuu, kunnes osoittimet kohtaavat:
