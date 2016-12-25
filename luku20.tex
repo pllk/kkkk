@@ -1,6 +1,8 @@
 \chapter{Virtauslaskenta}
 
-Virtauslaskennan keskeiset ongelmat ovat:
+Annettuna on suunnattu, painotettu verkko,
+josta on valittu tietty alkusolmu ja loppusolmu.
+Tarkastelemme seuraavia ongelmia:
 
 \begin{itemize}
 \item \key{Maksimivirtauksen etsiminen}:
@@ -15,10 +17,7 @@ Osoittautuu, että nämä ongelmat vastaavat toisiaan
 ja ne on mahdollista ratkaista samanaikaisesti
 toistensa avulla.
 
-Oletamme, että annettuna on suunnattu,
-painotettu verkko, 
-jossa on valittu tietty alkusolmu ja loppusolmu.
-Tarkastelemme esimerkkinä seuraavaa verkkoa,
+Käytämme esimerkkinä seuraavaa verkkoa,
 jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 
 \begin{center}
@@ -137,7 +136,7 @@ Alkuosasta loppuosaan kulkevat
 kaaret $2 \rightarrow 3$ ja $4 \rightarrow 5$,
 joiden yhteispaino on $6+1=7$.
 \\\\
-Ei ole sattumaa, että yllä olevassa verkossa
+Ei ole sattumaa, että esimerkkiverkossa
 sekä maksimivirtauksen suuruus
 että minimileikkauksen paino on 7.
 Virtauslaskennan keskeinen tulos on,
@@ -164,7 +163,7 @@ Algoritmi aloittaa tilanteesta,
 jossa virtaus on 0, ja alkaa sitten etsiä verkosta polkuja,
 jotka tuottavat siihen lisää virtausta.
 Kun mitään polkua ei enää pysty muodostamaan,
-maksimivirtaus on valmis.
+maksimivirtaus on tullut valmiiksi.
 
 Algoritmi käsittelee verkkoa muodossa,
 jossa jokaiselle kaarelle on vastakkaiseen
@@ -424,7 +423,7 @@ Tämä toimii usein hyvin, mutta pahin tapaus on,
 että jokainen polku
 kasvattaa virtausta vain 1:llä ja algoritmi toimii hitaasti.
 Onneksi tämän ilmiön pystyy estämään käyttämällä
-seuraavia menetelmiä.
+jompaakumpaa seuraavaa algoritmia:
 
 \index{Edmonds–Karpin algoritmi}
 
@@ -504,10 +503,12 @@ ja $4 \rightarrow 5$, jotka tuottavat minimileikkauksen $6+1=7$.
 
 Miksi sitten algoritmin tuottama virtaus ja leikkaus ovat
 varmasti maksimivirtaus ja minimileikkaus?
-Syynä tähän on, että virtauksen suuruus on
-\textit{aina} enintään yhtä suuri kuin leikkauksen paino.
-Niinpä kun virtaus ja leikkaus ovat yhtä suuret,
-ne ovat varmasti maksimivirtaus ja minimileikkaus.
+Syynä tähän on, että verkossa ei voi olla virtausta,
+jonka suuruus ylittäisi yhdenkään
+verkossa olevan leikkauksen painoa.
+Niinpä kun verkossa oleva
+virtaus ja leikkaus ovat yhtä suuret,
+ne ovat \emph{varmasti} maksimivirtaus ja minimileikkaus.
 
 Tarkastellaan mitä tahansa verkon leikkausta,
 jossa alkusolmu kuuluu osaan $A$,
@@ -543,7 +544,7 @@ Niinpä maksimivirtaus on pienempi tai yhtä suuri kuin
 mikä tahansa verkon leikkaus.
 
 Toisaalta Ford–Fulkersonin algoritmi tuottaa virtauksen,
-joka on tarkalleen yhtä suuri kuin verkossa oleva leikkaus.
+joka on \emph{tarkalleen} yhtä suuri kuin verkossa oleva leikkaus.
 Niinpä tämän virtauksen on oltava maksimivirtaus ja
 vastaavasti leikkauksen on oltava minimileikkaus.
 
@@ -618,7 +619,7 @@ ahneesti etsimällä alkusolmusta loppusolmuun
 kulkevia polkuja.
 
 Tarkastellaan sitten tehtävän muunnelmaa,
-jossa jokainen solmu (alku- ja loppusolmuja lukuun ottamatta)
+jossa jokainen solmu (alku- ja loppusolmua lukuun ottamatta)
 saa esiintyä enintään yhdellä polulla.
 Tämän rajoituksen seurauksena äskeisessä verkossa
 voi muodostaa vain yhden polun,
@@ -758,7 +759,7 @@ helposti virtauslaskennan avulla.
 
 \subsubsection{Maksimiparituksen etsiminen}
 
-Kaksijakoinen verkko voidaan esittää aina niin,
+Kaksijakoinen verkko voidaan esittää niin,
 että se muodostuu vasemman ja oikean puolen
 solmuista ja kaikki verkon kaaret kulkevat puolten välillä.
 Tarkastellaan esimerkkinä seuraavaa verkkoa:
@@ -809,7 +810,7 @@ Tässä verkossa maksimiparituksen koko on 3:
 \end{center}
 
 Kaksijakoisen verkon maksimiparitus
-vastaa aina maksimivirtausta verkossa,
+vastaa maksimivirtausta verkossa,
 johon on lisätty alkusolmu ja loppusolmu.
 Alkusolmusta on kaari jokaiseen vasemman
 puolen solmuun, ja vastaavasti loppusolmuun
@@ -873,10 +874,10 @@ jossa kaikki solmut paritetaan keskenään.
 
 Oletetaan, että haluamme muodostaa parituksen,
 johon kuuluvat kaikki vasemman puolen solmut.
-Merkitään $f(X)$ joukkoa, jonka jokainen solmu
-on jonkin joukon $X$ solmun naapuri.
+Olkoon $X$ jokin joukko vasemman puolen solmuja
+ja $f(X)$ näiden solmujen naapurien joukko.
 Hallin lauseen mukaan paritus on mahdollinen,
-kun jokaiselle vasemman puolen joukolle $X$
+kun jokaiselle joukolle $X$
 pätee $|X| \le |f(X)|$.
 
 Tarkastellaan Hallin lauseen merkitystä esimerkkiverkossa.
@@ -927,10 +928,10 @@ Valitaan sitten $X=\{2,4\}$, jolloin $f(X)=\{7\}$:
 
 Tässä tapauksessa $|X|=2$ ja $|f(X)|=1$, joten Hallin lauseen ehto
 ei ole voimassa.
-Tämä tarkoittaa, että ei ole mahdollista muodostaa paritusta,
-jossa ovat mukana kaikki vasemman puolen solmut
-(eli täydellistä paritusta).
-Tämä on odotettu tulos, koska verkon maksimiparitus on 3 eikä 4.
+Tämä tarkoittaa, että verkossa
+ei ole mahdollista muodostaa täydellistä paritusta,
+johon kuuluvat kaikki vasemman puolen solmut.
+Tämä on myös odotettu tulos, koska verkon maksimiparitus on 3 eikä 4.
 
 Jos Hallin lauseen ehto ei päde, osajoukko $X$
 kertoo syyn sille, miksi paritusta ei voi muodostaa.
@@ -953,14 +954,15 @@ jossa on mahdollisimman vähän solmuja.
 
 Yleisessä verkossa pienimmän solmupeitteen
 etsiminen on NP-vaikea ongelma.
-Kaksijakoisessa verkossa tilanne on kuitenkin
-toinen, koska \key{Kőnigin lause} tuo yhteyden
-maksimiparituksen ja pienimmän solmupeitteen välille.
-Lauseen mukaan maksimiparitus ja
-pienin solmupeite ovat aina yhtä suuria.
+Sen sijaan kaksijakoisessa verkossa
+\key{Kőnigin lauseen} nojalla maksimiparitus ja
+pienin solmupeite ovat aina yhtä suuria,
+minkä ansiosta
+pienimmän solmupeitteen voi
+etsiä tehokkaasti virtauslaskennan avulla.
 
-Esimerkiksi seuraavan verkon maksimiparituksen koko on 3:
-
+Tarkastellaan taas seuraavaa verkkoa,
+jonka maksimiparituksen koko on 3:
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
 \node[draw, circle] (1) at (2,4.5) {1};
@@ -984,10 +986,9 @@ Esimerkiksi seuraavan verkon maksimiparituksen koko on 3:
 \path[draw=red,thick,-,line width=2pt] (3) -- (6);
 \end{tikzpicture}
 \end{center}
-
-Niinpä myös pienimmän solmupeitteen koko on 3.
-Solmupeite voidaan muodostaa valitsemalla siihen
-solmut $\{1,3,7\}$:
+Kőnigin lauseen ansiosta tiedämme nyt,
+että myös pienimmän solmupeitteen koko on 3.
+Solmupeite voidaan muodostaa seuraavasti:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
@@ -1008,7 +1009,6 @@ solmut $\{1,3,7\}$:
 \path[draw,thick,-] (4) -- (7);
 \end{tikzpicture}
 \end{center}
-
 Pienin solmupeite muodostuu aina niin,
 että jokaisesta maksimiparituksen kaaresta
 toinen kaaren päätesolmuista kuuluu peitteeseen.
@@ -1026,11 +1026,10 @@ jossa on mahdollisimman monta solmua.
 Solmupeite ja riippumaton joukko liittyvät
 toisiinsa, koska solmupeitteen ulkopuolelle
 jäävät solmut muodostavat riippumattoman joukon.
-Niinpä jos verkossa on $n$ solmua ja
-pienin solmupeite muodostuu $k$ solmusta,
-niin suurin riippumaton joukko muodostuu $n-k$ solmusta.
-
-Tämän ansiosta Kőnigin lause lauseen avulla
+Vastaavasti pienimmän solmupeitteen ulkopuolelle
+jäävät solmut muodostavat suurimman
+riippumattoman joukon.
+Niinpä Kőnigin lauseen avulla
 saa selville myös kaksijakoisen verkon
 suurimman riippumattoman joukon.
 Esimerkkiverkossa suurin riippumaton joukko on seuraava:
@@ -1060,9 +1059,11 @@ Esimerkkiverkossa suurin riippumaton joukko on seuraava:
 \index{polkupeite@polkupeite}
 
 \key{Polkupeite} on joukko verkon polkuja,
-joka on muodostettu niin, että jokainen verkon solmu kuuluu
-ainakin yhteen polkuun. Seuraavaksi näemme, miten virtauslaskennan
-avulla voi etsiä pienimmän polkupeitteen suunnatussa,
+jotka on valittu niin, että jokainen verkon solmu kuuluu
+ainakin yhteen polkuun.
+Osoittautuu, että voimme muodostaa
+virtauslaskennan avulla
+pienimmän polkupeitteen suunnatussa,
 syklittömässä verkossa.
 
 Polkupeitteestä on kaksi muunnelmaa:
@@ -1110,12 +1111,10 @@ Voimme valita polut esimerkiksi seuraavasti:
 \node[draw, circle] (6) at (2,-2) {6};
 \node[draw, circle] (7) at (4,-2) {7};
 
-\path[draw,thick,->,>=latex] (1) -- (5);
-%\path[draw,thick,->,>=latex] (2) -- (6);
-\path[draw,thick,->,>=latex] (3) -- (4);
-\path[draw,thick,->,>=latex] (5) -- (6);
-%\path[draw,thick,->,>=latex] (6) -- (3);
-\path[draw,thick,->,>=latex] (6) -- (7);
+\path[draw=red,thick,->,line width=2pt] (1) -- (5);
+\path[draw=red,thick,->,line width=2pt] (5) -- (6);
+\path[draw=red,thick,->,line width=2pt] (6) -- (7);
+\path[draw=red,thick,->,line width=2pt] (3) -- (4);
 \end{tikzpicture}
 \end{center}
 
