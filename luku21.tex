@@ -16,15 +16,15 @@ jotka toteuttavat yhtälön. Voimme valita
 esimerkiksi
 \[
 \begin{array}{lcl}
-x = 0, \\
-y = 0, \\
-z = \sqrt[3]{33}.\\
+x = 3, \\
+y = \sqrt[3]{3}, \\
+z = \sqrt[3]{3}.\\
 \end{array}
 \]
 Sen sijaan kukaan ei tiedä, onko olemassa
-kolmea kokonaislukua $x$, $y$ ja $z$,
+kolmea \emph{kokonaislukua} $x$, $y$ ja $z$,
 jotka toteuttaisivat yhtälön, vaan kyseessä
-on avoin ongelma.
+on avoin lukuteorian ongelma.
 
 Tässä luvussa tutustumme lukuteorian peruskäsitteisiin ja
 -algoritmeihin.
@@ -79,9 +79,9 @@ Esimerkiksi luvun 84 jakajien summa on
 
 Luvun $n$ \key{jakajien tulo} on
 \[\mu(n)=n^{\tau(n)/2},\]
-koska jakajista voi muodostaa
+koska jakajista voidaan muodostaa
 $\tau(n)/2$ paria, joiden jokaisen tulona on $n$.
-Esimerkiksi luvun 84 jakajista muodostuu parit
+Esimerkiksi luvun 84 jakajista muodostuvat parit
 $1 \cdot 84$, $2 \cdot 42$, $3 \cdot 28$, jne.,
 ja jakajien tulo on $\mu(84)=84^6=351298031616$.
 
@@ -101,7 +101,6 @@ Jos nimittäin alkulukuja olisi äärellinen määrä,
 voisimme muodostaa joukon $P=\{p_1,p_2,\ldots,p_n\}$,
 joka sisältää kaikki alkuluvut.
 Esimerkiksi $p_1=2$, $p_2=3$, $p_3=5$, jne.
-
 Nyt kuitenkin voisimme muodostaa uuden alkuluvun
 \[p_1 p_2 \cdots p_n+1,\]
 joka on kaikkia $P$:n lukuja suurempi.
@@ -286,7 +285,7 @@ taulukosta tulee:
 \end{tikzpicture}
 \end{center}
 
-Seuraava koodi muodostaa
+Seuraava koodi toteuttaa
 Eratostheneen seulan.
 Koodi olettaa, että jokainen taulukon \texttt{a}
 alkio on aluksi 0.
@@ -440,7 +439,7 @@ int pot(int x, int n, int m) {
 \[x^{m-1} \bmod m = 1,\]
 kun $m$ on alkuluku ja $x$ ja $m$ ovat suhteelliset alkuluvut.
 Tällöin myös
-\[x^k \bmod m = (x^{k \bmod (m-1)}) \bmod m.\]
+\[x^k \bmod m = x^{k \bmod (m-1)} \bmod m.\]
 Yleisemmin \key{Eulerin lauseen} mukaan
 \[x^{\varphi(m)} \bmod m = 1,\]
 kun $x$ ja $m$ ovat suhteelliset alkuluvut.
@@ -639,10 +638,12 @@ x & = & 2 \bmod 3 \\
 ratkaisu on
 \[ 3 \cdot 21 \cdot 1 + 4 \cdot 15 \cdot 1 + 2 \cdot 35 \cdot 2 = 263.\]
 
-Kun luku $x$ on yhtälöryhmän ratkaisu,
-niin myös kaikki luvut muotoa
+Kun yksi ratkaisu $x$ on löytynyt,
+sen avulla voi muodostaa äärettömästi
+erilaisia ratkaisuja, koska kaikki luvut muotoa
 \[x+m_1 m_2 \cdots m_n\]
-ovat yhtälöryhmän ratkaisuja.
+ovat ratkaisuja.
+
 
 \section{Muita tuloksia}
 
@@ -654,17 +655,15 @@ ovat yhtälöryhmän ratkaisuja.
 esittää neljän neliöluvun summana eli muodossa $a^2+b^2+c^2+d^2$.
 Esimerkiksi luku 123 voidaan esittää muodossa $8^2+5^2+5^2+3^2$.
 
-Huomaa, että kaikkia positiivisia lukuja ei voi esittää
-muodossa $a^2+b^2+c^2$: esimerkiksi luvun 7
-esittäminen vaatii neljä neliölukua.
-
 \subsubsection{Zeckendorfin lause}
 
 \index{Zeckendorfin lause@Zeckendorfin lause}
 \index{Fibonaccin luku@Fibonaccin luku}
 
-\key{Zeckendorfin lauseen} mukaan jokainen positiivinen kokonaisluku voidaan
-esittää Fibonaccin lukujen summana niin, että
+\key{Zeckendorfin lauseen} mukaan
+jokaiselle positiiviselle kokonaisluvulle
+on olemassa yksikäsitteinen esitys
+Fibonaccin lukujen summana niin, että
 mitkään kaksi lukua eivät ole samat eivätkä peräkkäiset
 Fibonaccin luvut.
 Esimerkiksi luku 74 voidaan esittää muodossa
@@ -687,12 +686,10 @@ ovat Pythagoraan kolmikoita,
 missä $k>1$.
 Pythagoraan kolmikko on \key{primitiivinen},
 jos $a$, $b$ ja $c$ ovat suhteellisia alkulukuja,
-ja primitiivisista kolmikoista voi muodostaa
+ja primitiivisistä kolmikoista voi muodostaa
 kaikki muut kolmikot kertoimen $k$ avulla.
 
-\key{Eukleideen kaava} on tehokas menetelmä muodostaa
-Pythagoraan kolmikoita.
-Sen mukaan jokainen primitiivinen
+\key{Eukleideen kaavan} mukaan jokainen primitiivinen
 Pythagoraan kolmikko on muotoa
 \[(n^2-m^2,2nm,n^2+m^2),\]
 missä $0<m<n$, $n$ ja $m$ ovat suhteelliset
@@ -709,7 +706,7 @@ pienin mahdollinen Pythagoraan kolmikko
 tarkalleen silloin, kun
 \[(n-1)! \bmod n = n-1.\]
 Esimerkiksi luku 11 on alkuluku, koska
-\[10! \bmod 11 = 10\]
+\[10! \bmod 11 = 10,\]
 ja luku 12 ei ole alkuluku, koska
 \[11! \bmod 12 = 0 \neq 11.\]
 
