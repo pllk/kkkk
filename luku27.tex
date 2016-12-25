@@ -166,11 +166,13 @@ Jokaisen osan summan laskeminen vie aikaa $O(\sqrt n)$,
 joten summan laskemisen aikavaativuus on yhteensä $O(\sqrt n)$.
 
 Neliöjuurialgoritmeissa parametri $\sqrt n$
-johtuu siitä, että se saattaa kaksi asiaa tasapainoon.
+johtuu siitä, että se saattaa kaksi asiaa tasapainoon:
+esimerkiksi $n$ alkion taulukko jakautuu
+$\sqrt n$ osaan, joista jokaisessa on $\sqrt n$ alkiota.
 Käytännössä algoritmeissa
 ei ole kuitenkaan pakko käyttää
-tarkalleen parametria $\sqrt n$.
-Voi olla parempi ratkaisu valita toiseksi
+tarkalleen parametria $\sqrt n$,
+vaan voi olla parempi valita toiseksi
 parametriksi $k$ ja toiseksi $n/k$,
 missä $k$ on pienempi tai suurempi kuin $\sqrt n$.
 
@@ -203,7 +205,8 @@ erän sisällä täytyy tehdä.
 Tarkastellaan esimerkkinä tehtävää, jossa
 ruudukossa on $k \times k$ ruutua,
 jotka ovat aluksi valkoisia.
-Tehtävänä on suorittaa $n$ operaatiota ruudukkoon,
+Tehtävänä on suorittaa ruudukkoon
+$n$ operaatiota,
 joista jokainen on jompikumpi seuraavista:
 \begin{itemize}
 \item
@@ -247,11 +250,12 @@ ja muuttaa kertoimen $n$ kertoimeksi $\sqrt n$.
 
 \index{tapauskxsittely@tapauskäsittely}
 
-\key{Tapauskäsittelyssä} algoritmissa on useampia
-toimintatapoja, jotka aktivoituvat syötteestä riippuen.
+\key{Tapauskäsittelyssä} algoritmissa on useita
+toimintatapoja, jotka aktivoituvat syötteen
+ominaisuuksista riippuen.
 Tyypillisesti yksi algoritmin osa on tehokas
 pienellä parametrilla
-ja toinen osa on tehokas pienellä parametrilla,
+ja toinen osa on tehokas suurella parametrilla,
 ja sopiva jakokohta kulkee suunnilleen arvon $\sqrt n$ kohdalla.
 
 Tarkastellaan esimerkkinä tehtävää, jossa
@@ -264,14 +268,16 @@ Tehtävän voi ratkaista
 käymällä läpi värit yksi kerrallaan ja
 etsimällä kullekin värille kaksi solmua, jotka ovat
 mahdollisimman kaukana toisistaan.
-Tietyllä värillä $c$ algoritmin toiminta riippuu siitä,
+Tietyllä värillä algoritmin toiminta riippuu siitä,
 montako kyseisen väristä solmua puussa on.
+Oletetaan nyt, että käsittelyssä on väri $x$
+ja puussa on $c$ solmua, joiden väri on $x$.
 Tapaukset ovat seuraavat:
 
 \subsubsection*{Tapaus 1: $c \le \sqrt n$}
 
-Jos $c$-värisiä solmuja on vähän,
-käydään läpi kaikki $c$-väristen solmujen parit
+Jos $x$-värisiä solmuja on vähän,
+käydään läpi kaikki $x$-väristen solmujen parit
 ja valitaan pari, jonka etäisyys on suurin.
 Jokaisesta solmusta täytyy
 laskea etäisyys $O(\sqrt n)$ muuhun solmuun,
@@ -280,10 +286,10 @@ käsittely vie aikaa yhteensä $O(n \sqrt n)$.
 
 \subsubsection*{Tapaus 2: $c > \sqrt n$}
 
-Jos $c$-värisiä solmuja on paljon,
+Jos $x$-värisiä solmuja on paljon,
 käydään koko puu läpi ja
 lasketaan suurin etäisyys kahden
-$c$-värisen solmun välillä.
+$x$-värisen solmun välillä.
 Läpikäynnin aikavaativuus on $O(n)$,
 ja tapaus 2 aktivoituu korkeintaan $O(\sqrt n)$
 värille, joten tapauksen 2 solmut 
