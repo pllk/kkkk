@@ -62,6 +62,7 @@ polkuja solmusta 1 solmuun 5 ovat:
 \item $1 \rightarrow 4 \rightarrow 5$ (pituus 2)
 \item $1 \rightarrow 2 \rightarrow 4 \rightarrow 5$ (pituus 3)
 \item $1 \rightarrow 3 \rightarrow 4 \rightarrow 5$ (pituus 3)
+\item $1 \rightarrow 4 \rightarrow 2 \rightarrow 5$ (pituus 3)
 \item $1 \rightarrow 3 \rightarrow 4 \rightarrow 2 \rightarrow 5$ (pituus 4)
 \end{itemize}
 
@@ -202,7 +203,7 @@ Jos verkossa ei ole yhtään sykliä, se on \key{syklitön}.
 \index{painotettu verkko@painotettu verkko}
 
 \key{Painotetussa} verkossa
-jokaiseen kaareen liittyy paino.
+jokaiseen kaareen liittyy \key{paino}.
 Usein painot kuvaavat kaarien pituuksia.
 Esimerkiksi seuraava verkko on painotettu:
 \begin{center}
@@ -314,7 +315,7 @@ tietty väri niin, että millään kahdella
 vierekkäisellä solmulla ei ole samaa väriä.
 
 Verkko on \key{kaksijakoinen},
-jos on mahdollista värittää se kahdella värillä.
+jos se on mahdollista värittää kahdella värillä.
 Osoittautuu, että verkko on kaksijakoinen tarkalleen silloin,
 kun siinä ei ole sykliä, johon kuuluu
 pariton määrä solmuja.
@@ -385,7 +386,7 @@ Esimerkiksi verkko
 \path[draw,thick,-] (5) edge [loop left] (5);
 \end{tikzpicture}
 \end{center}
-ei ole yksinkertainen, koska solmusta 4 on kaari itseensä
+\emph{ei} ole yksinkertainen, koska solmusta 4 on kaari itseensä
 ja solmujen 2 ja 3 välillä on kaksi kaarta.
 
 \section{Verkko muistissa}
