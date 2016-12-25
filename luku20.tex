@@ -44,17 +44,18 @@ jossa solmu 1 on alkusolmu ja solmu 6 on loppusolmu:
 \index{virtaus@virtaus}
 \index{maksimivirtaus@maksimivirtaus}
 
-\key{Virtaus}
-lähtee liikkeelle alkusolmusta ja päätyy loppusolmuun.
+\key{Maksimivirtaus} on suurin
+mahdollinen verkossa kulkeva virtaus,
+joka lähtee liikkeelle alkusolmusta ja
+päätyy loppusolmuun.
 Kunkin kaaren paino on kapasiteetti,
 joka ilmaisee, kuinka paljon virtausta kaaren
 kautta voi kulkea.
-Kaikissa solmuissa alku- ja loppusolmua lukuun ottamatta
-tulevan ja lähtevän virtauksen on oltava yhtä suuri.
+Kaikissa verkon solmuissa alku-
+ja loppusolmua lukuun ottamatta
+lähtevän ja tulevan virtauksen on oltava yhtä suuri.
 
-\key{Maksimivirtaus} on suurin
-mahdollinen virtaus verkossa.
-Esimerkkiverkossa maksimivirtauksen suuruus on 7:
+Esimerkkiverkon maksimivirtaus on seuraava:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -78,33 +79,32 @@ Esimerkkiverkossa maksimivirtauksen suuruus on 7:
 Merkintä $v/k$ kaaressa tarkoittaa,
 että kaaressa kulkee virtausta $v$
 ja kaaren kapasiteetti on $k$.
-Virtauksen suuruus on 7, koska alkusolmusta
+Jokaiselle kaarelle tulee päteä $v \le k$.
+Tässä verkossa
+maksimivirtauksen suuruus on 7, koska alkusolmusta
 lähtevä virtaus on $3+4=7$ ja loppusolmuun
-saapuva virtaus on $5+2=7$.
+tuleva virtaus on $5+2=7$.
 
 Huomaa, että jokaisessa välisolmussa tulevan ja
-lähtevän virtauksen määrä on sama.
+lähtevän virtauksen määrä on yhtä suuri.
 Esimerkiksi solmuun 2 tulee virtausta $3+3=6$ yksikköä solmuista 1 ja 4
 ja siitä lähtee virtausta $6$ yksikköä solmuun 3.
-
-Virtaus 7 on verkon maksimivirtaus, koska verkon
-rakenteesta johtuen ei ole tapaa
-kuljettaa enempää virtausta verkossa.
 
 \subsubsection{Minimileikkaus}
 
 \index{leikkaus@leikkaus}
 \index{minimileikkaus@minimileikkaus}
 
-\key{Leikkaus} jakaa verkon solmut
-kahteen osaan niin, että alkusolmu ja loppusolmu
-ovat eri osissa.
-Leikkauksen paino on niiden kaarten yhteispaino,
-jotka kulkevat alkuosasta loppuosaan.
+\key{Minimileikkaus} on yhteispainoltaan
+pienin mahdollinen joukko verkon kaaria,
+joiden poistaminen estää kulkemisen
+alkusolmusta loppusolmuun.
+Leikkauksen jälkeen alkuosaan kuuluvat
+solmut, joihin pääsee alkusolmusta,
+ja loppuosaan kuuluvat muut verkon solmut,
+mukaan lukien loppusolmu.
 
-\key{Minimileikkaus}
-on leikkaus, jonka paino on pienin mahdollinen.
-Esimerkkiverkossa minimileikkaus on painoltaan 7:
+Esimerkkiverkon minimileikkaus on seuraava:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -132,7 +132,8 @@ Esimerkkiverkossa minimileikkaus on painoltaan 7:
 
 Tässä leikkauksessa alkuosassa ovat solmut $\{1,2,4\}$
 ja loppuosassa ovat solmut $\{3,5,6\}$.
-Alkuosasta loppuosaan kulkevat
+Minimileikkauksen paino on 7,
+koska alkuosasta loppuosaan kulkevat
 kaaret $2 \rightarrow 3$ ja $4 \rightarrow 5$,
 joiden yhteispaino on $6+1=7$.
 \\\\
@@ -508,7 +509,7 @@ jonka suuruus ylittäisi yhdenkään
 verkossa olevan leikkauksen painoa.
 Niinpä kun verkossa oleva
 virtaus ja leikkaus ovat yhtä suuret,
-ne ovat \emph{varmasti} maksimivirtaus ja minimileikkaus.
+ne ovat varmasti maksimivirtaus ja minimileikkaus.
 
 Tarkastellaan mitä tahansa verkon leikkausta,
 jossa alkusolmu kuuluu osaan $A$,
@@ -742,12 +743,11 @@ kun sama solmu ei saa esiintyä monessa polussa.
 \index{paritus@paritus}
 \index{maksimiparitus@maksimiparitus}
 
-\key{Paritus} on kokoelma verkon kaaria,
-jotka on valittu niin, että jokainen verkon solmu
-esiintyy enintään yhden kaaren päätesolmuna.
-Paritus muodostaa siis verkon solmuista joukon pareja.
-\key{Maksimiparitus}
-on puolestaan paritus, jossa parien määrä on mahdollisimman suuri.
+\key{Maksimiparitus} on suurin mahdollinen joukko
+verkon solmuista muodostettuja pareja,
+jolle pätee,
+että jokaisen parin välillä on kaari verkossa
+ja jokainen solmu kuuluu enintään yhteen pariin.
 
 Maksimiparituksen etsimiseen yleisessä
 verkossa on olemassa polynominen algoritmi,
@@ -946,16 +946,16 @@ yhdistää solmuun 7, mutta tämä ei ole mahdollista.
 \index{solmupeite@solmupeite}
 \index{pienin solmupeite@pienin solmupeite}
 
-\key{Solmupeite} on sellainen joukko
-verkon solmuja, että jokaisesta verkon kaaresta ainakin
-toinen kaaren päätesolmuista kuuluu joukkoon.
-\key{Pienin solmupeite} on puolestaan solmupeite,
-jossa on mahdollisimman vähän solmuja.
+\key{Kőnigin lause} tarjoaa tehokkaan
+tavan muodostaa kaksijakoiselle verkolle
+\key{pienin solmupeite} eli pienin sellainen
+solmujen joukko, että jokaisesta verkon kaaresta ainakin
+toinen päätesolmuista kuuluu joukkoon.
 
 Yleisessä verkossa pienimmän solmupeitteen
 etsiminen on NP-vaikea ongelma.
 Sen sijaan kaksijakoisessa verkossa
-\key{Kőnigin lauseen} nojalla maksimiparitus ja
+Kőnigin lauseen nojalla maksimiparitus ja
 pienin solmupeite ovat aina yhtä suuria,
 minkä ansiosta
 pienimmän solmupeitteen voi
@@ -1016,22 +1016,19 @@ toinen kaaren päätesolmuista kuuluu peitteeseen.
 \index{riippumaton joukko@riippumaton joukko}
 \index{suurin riippumaton joukko@suurin riippumaton joukko}
 
-\key{Riippumaton joukko}
-on joukko verkon solmuja, jossa minkään kahden solmun
+Kun verkosta valitaan kaikki solmut,
+jotka \emph{eivät} kuulu pienimpään
+solmupeitteeseen, syntyy 
+\key{suurin riippumaton joukko}.
+Tämä on suurin mahdollinen joukko solmuja,
+jossa minkään kahden solmun
 välillä ei ole kaarta.
-\key{Suurin riippumaton joukko}
-on taas riippumaton joukko,
-jossa on mahdollisimman monta solmua.
-
-Solmupeite ja riippumaton joukko liittyvät
-toisiinsa, koska solmupeitteen ulkopuolelle
-jäävät solmut muodostavat riippumattoman joukon.
-Vastaavasti pienimmän solmupeitteen ulkopuolelle
-jäävät solmut muodostavat suurimman
-riippumattoman joukon.
-Niinpä Kőnigin lauseen avulla
-saa selville myös kaksijakoisen verkon
-suurimman riippumattoman joukon.
+Pienimmän solmupeitteen tavoin
+riippumattoman joukon muodostaminen on
+NP-vaikea ongelma yleisessä verkossa,
+mutta Kőnigin lauseen avulla
+ongelma on mahdollista ratkaista
+tehokkaasti kaksijakoisessa verkossa.
 Esimerkkiverkossa suurin riippumaton joukko on seuraava:
 
 \begin{center}
