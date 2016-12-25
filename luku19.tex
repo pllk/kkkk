@@ -232,13 +232,8 @@ Niinpä verkossa on Eulerin polku solmusta 2 solmuun 5:
 suuntaamattomassa verkossa.
 Algoritmi olettaa, että kaikki kaaret ovat samassa
 komponentissa ja jokaisen solmun aste on parillinen.
-Jos verkossa on kaksi paritonasteista solmua,
-Hierholzerin algoritmilla voi myös muodostaa
-Eulerin polun lisäämällä kaaren
-paritonasteisten solmujen välille.
-Tämän jälkeen verkosta voi etsiä ensin
-Eulerin kierroksen ja poistaa siitä sitten
-ylimääräisen kaaren, jolloin tuloksena on Eulerin polku.
+Algoritmi on mahdollista toteuttaa niin, että sen
+aikavaativuus on $O(n+m)$.
 
 Hierholzerin algoritmi muodostaa ensin verkkoon jonkin kierroksen,
 johon kuuluu osa verkon kaarista.
@@ -255,6 +250,16 @@ kulkien vain sellaisia kaaria, jotka eivät ole
 mukana kierroksessa.
 Koska jokaisen solmun aste on parillinen,
 ennemmin tai myöhemmin polku palaa takaisin lähtösolmuun $x$.
+
+Jos verkossa on kaksi paritonasteista solmua,
+Hierholzerin algoritmilla voi myös muodostaa
+Eulerin polun lisäämällä kaaren
+paritonasteisten solmujen välille.
+Tämän jälkeen verkosta voi etsiä ensin
+Eulerin kierroksen ja poistaa siitä sitten
+ylimääräisen kaaren, jolloin tuloksena on Eulerin polku.
+
+\subsubsection{Esimerkki}
 
 \begin{samepage}
 Tarkastellaan algoritmin toimintaa seuraavassa verkossa:
@@ -384,61 +389,6 @@ $6 \rightarrow 3 \rightarrow 4 \rightarrow 7 \rightarrow 6$:
 
 Nyt kaikki kaaret ovat kierroksessa,
 joten Eulerin kierros on valmis.
-
-\subsubsection{Toteutus}
-
-Edellä kuvattu algoritmi on mukavaa toteuttaa
-niin, että solmujen vieruslistat on tallennettu joukkoina
-
-\begin{lstlisting}
-set<int> v[N];
-\end{lstlisting}
-
-jolloin verkosta on helppoa poistaa kahden solmun
-välinen kaari, kun se tulee mukaan kierrokseen.
-
-Seuraava koodi muodostaa Eulerin kierroksen
-solmusta $x$ alkaen.
-Se käyttää apuna pinoa
-\begin{lstlisting}
-stack<int> s;
-\end{lstlisting}
-jossa on aluksi vain kierroksen alkusolmu.
-Jos pinon ylimmän solmun $u$ aste on 0,
-niin algoritmi lisää solmun Eulerin kierrokseen.
-Muuten algoritmi rakentaa pinon päälle uuden alikierroksen
-solmusta $u$ alkaen ja poistaa kaikki alikierrokseen
-kuuluvat kaaret verkosta.
-
-\begin{lstlisting}
-s.push(x);
-while (!s.empty()) {
-    int u = s.top(); s.pop();
-    if (v[u].size() == 0) {
-        // lisää solmu u Eulerin kierrokseen
-    } else {
-        int a = u;
-        s.push(a);
-        do {
-            int b = *v[a].begin();
-            v[a].erase(b);
-            v[b].erase(a);
-            s.push(b);
-            a = b;
-        } while (a != u);
-    }
-}
-\end{lstlisting}
-Toteutuksen aikavaativuus on $O(n+m \log n)$,
-koska se käy läpi kaikki solmut ja kaaret
-ja kunkin kaaren poistaminen vie aikaa $O(\log n)$.
-
-Myös toteutus ajassa $O(n+m)$
-on mahdollista mutta vaikeampaa.
-Tämä vaatii verkon esittämistä niin,
-että kaaria pystyy poistamaan ajassa $O(1)$,
-mikä on mahdollista kahteen suuntaan
-linkitettyjen vieruslistojen avulla.
 
 \section{Hamiltonin polku}
 
