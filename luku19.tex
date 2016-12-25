@@ -13,10 +13,10 @@ Vaikka Eulerin ja Hamiltonin polut
 näyttävät päältä päin
 samantapaisilta käsitteiltä,
 niihin liittyy hyvin erilaisia laskennallisia ongelmia.
-
 Osoittautuu, että yksinkertainen verkon solmujen
 asteisiin liittyvä sääntö ratkaisee, onko verkossa
-Eulerin polkua, ja polun voi myös muodostaa tehokkaasti.
+Eulerin polkua, ja polun muodostamiseen on myös
+olemassa tehokas algoritmi.
 Sen sijaan Hamiltonin polun etsimiseen ei tunneta
 mitään tehokasta algoritmia, vaan kyseessä on
 NP-vaikea ongelma.
@@ -232,16 +232,15 @@ Niinpä verkossa on Eulerin polku solmusta 2 solmuun 5:
 suuntaamattomassa verkossa.
 Algoritmi olettaa, että kaikki kaaret ovat samassa
 komponentissa ja jokaisen solmun aste on parillinen.
-
 Jos verkossa on kaksi paritonasteista solmua,
-samalla algoritmilla voi myös muodostaa
+Hierholzerin algoritmilla voi myös muodostaa
 Eulerin polun lisäämällä kaaren
 paritonasteisten solmujen välille.
-Tämän jälkeen verkosta voi etsiä Eulerin kierroksen,
-ja lopuksi Eulerin kierroksesta saa Eulerin polun
-poistamalla ylimääräisen kaaren.
+Tämän jälkeen verkosta voi etsiä ensin
+Eulerin kierroksen ja poistaa siitä sitten
+ylimääräisen kaaren, jolloin tuloksena on Eulerin polku.
 
-Algoritmi muodostaa ensin verkkoon jonkin kierroksen,
+Hierholzerin algoritmi muodostaa ensin verkkoon jonkin kierroksen,
 johon kuuluu osa verkon kaarista.
 Sen jälkeen algoritmi alkaa laajentaa kierrosta
 lisäämällä sen osaksi uusia alikierroksia.
