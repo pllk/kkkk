@@ -567,7 +567,7 @@ onnistuvat ajassa $O(\log n)$.
 
 Kahden puun solmun
 \key{alin yhteinen esivanhempi}
-on mahdollisimman alhaalla puussa oleva solmu,
+on mahdollisimman matalalla puussa oleva solmu,
 jonka alipuuhun kumpikin solmu kuuluu.
 Tyypillinen tehtävä on vastata tehokkaasti
 joukkoon kyselyitä, jossa selvitettävänä on
@@ -595,7 +595,7 @@ Esimerkiksi puussa
 solmujen 5 ja 8 alin yhteinen esivanhempi on solmu 2
 ja solmujen 3 ja 4 alin yhteinen esivanhempi on solmu 1.
 
-Tutustumme seuraavaksi kahteen menetelmään
+Tutustumme seuraavaksi kahteen tehokkaaseen menetelmään
 alimman yhteisen esivanhemman selvittämiseen.
 
 \subsubsection{Menetelmä 1}
@@ -710,8 +710,8 @@ Ideana on jälleen järjestää solmut syvyyshaun mukaan:
 Erona aiempaan solmu lisätään kuitenkin solmutaulukkoon
 mukaan \textit{aina}, kun syvyyshaku käy solmussa,
 eikä vain ensimmäisellä kerralla.
-Niinpä solmu esiintyy solmutaulukossa $x+1$ kertaa,
-missä $x$ on solmun lasten määrä,
+Niinpä solmu esiintyy solmutaulukossa $k+1$ kertaa,
+missä $k$ on solmun lasten määrä,
 ja solmutaulukossa on yhteensä $2n-1$ solmua.
 
 Tallennamme solmutaulukkoon kaksi tietoa:
