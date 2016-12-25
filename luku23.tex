@@ -16,8 +16,8 @@ A =
 \]
 on matriisi, jossa on 3 riviä ja 4 saraketta
 eli se on kokoa $3 \times 4$.
-Matriisin alkioihin on mahdollista
-viitata merkinnällä $[i,j]$,
+Viittaamme matriisin alkioihin
+merkinnällä $[i,j]$,
 jossa $i$ on rivi ja $j$ on sarake.
 Esimerkiksi yllä olevassa matriisissa
 $A[2,3]=8$ ja $A[3,1]=9$.
@@ -59,7 +59,7 @@ korkeus ja leveys ovat samat.
 Esimerkiksi seuraava matriisi on neliömatriisi:
 
 \[
-A = 
+S = 
  \begin{bmatrix}
   3 & 12 & 4  \\
   5 & 9 & 15  \\
@@ -476,7 +476,7 @@ $X$, jolle pätee
  \begin{bmatrix}
   f(i+1) \\
   f(i+2) \\
- \end{bmatrix}
+ \end{bmatrix},
  \]
 eli $X$:lle annetaan
 ''syötteenä'' arvot $f(i)$ ja $f(i+1)$,
@@ -659,7 +659,7 @@ V= \begin{bmatrix}
   0 & 0 & 1 & 0 & 1 & 0 \\
  \end{bmatrix}.
 \]
-Esimerkiksi matriisi
+Nyt esimerkiksi matriisi
 \[
 V^4= \begin{bmatrix}
   0 & 0 & 1 & 1 & 1 & 0 \\
@@ -683,7 +683,7 @@ $2 \rightarrow 6 \rightarrow 3 \rightarrow 2 \rightarrow 5$.
 
 Samantapaisella idealla voi laskea painotetussa verkossa
 kullekin solmuparille,
-mikä on lyhin $n$ kaaren pituinen polku solmujen välillä.
+kuinka pitkä on lyhin $n$ kaaren pituinen polku solmujen välillä.
 Tämä vaatii matriisitulon määritelmän muuttamista
 niin, että siinä ei lasketa polkujen yhteismäärää
 vaan minimoidaan polun pituutta.
@@ -726,7 +726,7 @@ V= \begin{bmatrix}
  \end{bmatrix}.
 \]
 
-Nyt ideana on laskea matriisitulo kaavan
+Nyt voimme laskea matriisitulon kaavan
 \[
 AB[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j]
 \]
@@ -838,12 +838,11 @@ vasemman sarakkeen, tuloksena on
   0 & -1 & 2 \\
  \end{bmatrix}
 ) =3.\]
-
 Determinantista tulee aina sama riippumatta siitä,
 mikä rivi ja sarake matriisista $L$ poistetaan.
 
 Huomaa, että Kirchhoffin lauseen erikoistapauksena on
-luvun 22.5 Cayleyn kaava, koska voidaan osoittaa, että
+luvun 22.5 Cayleyn kaava, koska
 täydellisessä $n$ solmun verkossa
 
 \[ \det(
