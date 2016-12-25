@@ -531,7 +531,7 @@ Tarkastellaan esimerkkinä seuraavaa verkkoa:
 \end{tikzpicture}
 \end{center}
 \noindent
-Lyhin polku solmusta 1 solmuun 4 kulkee
+Lyhin polku solmusta 1 solmuun 4 on
 $1 \rightarrow 3 \rightarrow 4$,
 ja sen pituus on 1.
 Dijkstran algoritmi löytää
@@ -566,11 +566,11 @@ priority_queue<pair<int,int>> q;
 \end{lstlisting}
 Pieni hankaluus on,
 että Dijkstran algoritmissa täytyy saada selville
-pienimmän etäisyysarvion solmu,
+\emph{pienimmän} etäisyysarvion solmu,
 kun taas C++:n prioriteettijono antaa oletuksena
-suurimman alkion.
+\emph{suurimman} alkion.
 Helppo ratkaisu on tallentaa etäisyysarviot
-\textit{negatiivisina}, jolloin C++:n prioriteettijonoa
+\emph{negatiivisina}, jolloin C++:n prioriteettijonoa
 voi käyttää suoraan.
 
 Koodi merkitsee taulukkoon \texttt{z},
@@ -808,9 +808,11 @@ $O(n^3)$, koska siinä on kolme sisäkkäistä
 silmukkaa,
 jotka käyvät läpi verkon solmut.
 
-Koska algoritmin toteutus on yksinkertainen,
-se voi olla hyvä valinta jopa silloin,
+Koska Floyd–Warshallin
+algoritmin toteutus on yksinkertainen,
+algoritmi voi olla hyvä valinta jopa silloin,
 kun haettavana on yksittäinen
 lyhin polku verkossa.
-Tämä vaatii kuitenkin, että verkko on pieni
-ja kuutiollinen aikavaativuus on riittävä.
+Tämä on kuitenkin mahdollista vain silloin,
+kun verkko on niin pieni,
+että kuutiollinen aikavaativuus on riittävä.
