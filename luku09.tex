@@ -968,14 +968,21 @@ joten taulukon arvon muuttuminen vaikuttaa $O(\log n)$ solmuun puussa.
 
 \subsubsection{Puun tallennus}
 
-Tavallinen tapa tallentaa segmenttipuu muistiin
-on luoda taulukko, jossa on $2n-1$ alkiota.
-Taulukon kohdassa 1 on puun ylimmän solmun arvo,
+Segmenttipuun voi tallentaa muistiin 
+$2N$ alkion taulukkona,
+jossa $N$ on riittävän suuri 2:n potenssi.
+Tällaisen segmenttipuun avulla voi ylläpitää
+taulukkoa, jonka indeksialue on $[0,N-1]$.
+
+Segmenttipuun taulukon
+kohdassa 1 on puun ylimmän solmun arvo,
 kohdat 2 ja 3 sisältävät seuraavan tason
 solmujen arvot, jne.
-Segmenttipuun alin taso eli
-alkuperäisen taulukon sisältö
-tallennetaan kohdasta $n$ eteenpäin.
+Segmenttipuun alin taso eli varsinainen
+taulukon sisältä tallennetaan
+kohdasta $N$ alkaen.
+Niinpä taulukon kohdassa $k$ oleva alkio
+on segmenttipuun taulukossa kohdassa $k+N$.
 
 Esimerkiksi segmenttipuun
 \begin{center}
@@ -1016,7 +1023,7 @@ Esimerkiksi segmenttipuun
 \path[draw,thick,-] (m) -- (j);
 \end{tikzpicture}
 \end{center}
-voi tallentaa taulukkoon seuraavasti:
+voi tallentaa taulukkoon seuraavasti ($N=8$):
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 %\fill[color=lightgray] (3,0) rectangle (7,1);
@@ -1080,7 +1087,7 @@ välillä $a \ldots b$:
 
 \begin{lstlisting}
 int summa(int a, int b) {
-    a += n; b += n;
+    a += N; b += N;
     int s = 0;
     while (a <= b) {
         if (a%2 == 1) s += p[a++];
@@ -1102,7 +1109,7 @@ Funktio \texttt{lisaa} kasvattaa kohdan $k$ arvoa $x$:llä:
 
 \begin{lstlisting}
 void lisaa(int k, int x) {
-    k += n;
+    k += N;
     p[k] += x;
     for (k /= 2; k >= 1; k /= 2) {
         p[k] = p[2*k]+p[2*k+1];
