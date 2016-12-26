@@ -481,11 +481,11 @@ for (int i = 0; i < n; i++) {
 
 \subsubsection{Osajoukkojen summat}
 
-Tarkastellaan sitten
-joukon $\{0,1,\ldots,n-1\}$ osajoukkoja,
-kun jokaista osajoukkoa $x$ vastaa arvo $c(x)$.
-Tehtävänä on laskea jokaiselle osajoukolle $x$
-summa
+Oletetaan sitten, että jokaista
+joukon $\{0,1,\ldots,n-1\}$
+osajoukkoa $x$ vastaa arvo $c(x)$ ja
+tehtävänä on laskea kullekin
+osajoukolle $x$ summa
 \[s(x)=\sum_{y \subset x} c(y) \]
 eli bittimuodossa ilmaistuna
 \[s(x)=\sum_{y \& x = y} c(y). \]
@@ -514,33 +514,49 @@ muuttamalla millä tahansa tavalla bittien $0,1,\ldots,k$
 joukossa ykkösbittejä nollabiteiksi.
 Tämän funktion avulla ilmaistuna $s(x)=f(x,n-1)$.
 
-Funktion $f$ voi laskea rekursiivisesti seuraavasti:
-
+Funktion pohjatapaukset ovat:
+\begin{equation*}
+    f(x,0) = \begin{cases}
+               c(x)          & \textrm{jos $x$:n bitti 0 on 0}\\
+               c(x)+c(x \XOR 1) & \textrm{jos $x$:n bitti 0 on 1}\\
+           \end{cases}
+\end{equation*}
+Suuremmille $k$:n arvoille pätee seuraava rekursio:
 \begin{equation*}
     f(x,k) = \begin{cases}
-               c(x)          & \textrm{jos $k=-1$}\\
                f(x,k-1)          & \textrm{jos $x$:n bitti $k$ on 0}\\
                f(x,k-1)+f(x \XOR (1 < < k),k-1)    & \textrm{jos $x$:n bitti $k$ on 1}\\
            \end{cases}
 \end{equation*}
 
-Pohjatapauksena $f(x,-1)=c(x)$,
-koska mitään bittejä ei saa muokata.
-Muuten jos kohdan $k$ bitti on nolla,
-se säilyy nollana, ja jos kohdan $k$ bitti on ykkönen,
-se joko säilyy ykkösenä tai muuttuu nollaksi.
-
-Seuraava koodi laskee kaikki funktion $s$ arvot taulukkoon
-\texttt{s} olettaen, että funktion $c$ arvot ovat
-taulukossa \texttt{c}.
+Niinpä funktion arvot voi laskea seuraavasti
+dynaamisella ohjelmoinnilla.
+Koodi olettaa, että taulukko \texttt{c} sisältää
+funktion $c$ arvot ja muodostaa taulukon \texttt{s},
+jossa on funktion $s$ arvot.
 \begin{lstlisting}
-for (int b = 0; b < (1<<n); b++) s[b] = c[b];
+for (int x = 0; x < (1<<n); x++) {
+    f[x][0] = c[x];
+    if (x&1) f[x][0] += c[x^1];
+}
+for (int k = 1; k < n; k++) {
+    for (int x = 0; x < (1<<n); x++) {
+        f[x][k] = f[x][k-1];
+        if (b&(1<<k)) f[x][k] += f[x^(1<<k)][k-1];
+    }
+    if (k == n-1) s[x] = f[x][k];
+}
+\end{lstlisting}
+
+Itse asiassa saman laskennan voi toteuttaa lyhyemmin
+seuraavasti niin, että tulokset lasketaan
+suoraan taulukkoon \texttt{s}:
+\begin{lstlisting}
+for (int x = 0; x < (1<<n); x++) s[x] = c[x];
 for (int k = 0; k < n; k++) {
-    for (int b = 0; b < (1<<n); b++) {
-        if (b&(1<<k)) s[b] += s[b^(1<<k)];
+    for (int x = 0; x < (1<<n); x++) {
+        if (x&(1<<k)) s[x] += s[x^(1<<k)];
     }
 }
 \end{lstlisting}
-Koodi laskee ensin kaikki arvot funktiolle $f(x,0)$,
-sitten kaikki arvot funktiolle $f(x,1)$, jne.
 
