@@ -1,6 +1,6 @@
 \documentclass[twoside,12pt,a4paper,finnish]{book}
 
-%\includeonly{luku30}
+%\includeonly{luku13}
 
 \usepackage[finnish,english]{babel}
 \usepackage[utf8]{inputenc}
@@ -70,21 +70,6 @@
 \setcounter{page}{1}
 
 \newcommand{\key}[1] {\textbf{#1}}
-
-
-\newcounter{row}
-\newcounter{col}
-
-\newcommand\setrow[5]{
-  \setcounter{col}{1}
-  \foreach \n in {#1, #2, #3, #4, #5} {
-    \edef\x{\value{col} - 0.5}
-    \edef\y{9.5 - \value{row}}
-    \node[anchor=center] at (\x, \y) {\n};
-    \stepcounter{col}
-  }
-  \stepcounter{row}
-}
 
 \part{Perusasiat}
 \include{luku01}

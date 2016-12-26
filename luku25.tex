@@ -476,6 +476,20 @@ Sokkelopelin tiloja ovat kaikki sokkelon
 lattiaruudut. Tässä tapauksessa
 tilojen Grundy-luvut ovat seuraavat:
 
+\newcounter{row}
+\newcounter{col}
+
+\newcommand\setrow[5]{
+  \setcounter{col}{1}
+  \foreach \n in {#1, #2, #3, #4, #5} {
+    \edef\x{\value{col} - 0.5}
+    \edef\y{9.5 - \value{row}}
+    \node[anchor=center] at (\x, \y) {\n};
+    \stepcounter{col}
+  }
+  \stepcounter{row}
+}
+
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
