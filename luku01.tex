@@ -282,20 +282,22 @@ Tämä tyyppi ei kuitenkaan ole käytettävissä kaikissa kisajärjestelmissä.
 
 \subsubsection{Vastaus modulona}
 
+\index{jakojxxnnos@jakojäännös}
 \index{modulolaskenta@modulolaskenta}
 
-Joskus tehtävän vastaus on hyvin suuri kokonaisluku,
-mutta vastaus riittää tulostaa ''modulo $m$''
-eli vastauksen jakojäännös luvulla $m$
-(esimerkiksi ''modulo $10^9+7$'').
-Ideana on, että vaikka todellinen vastaus
-voi olla suuri luku,
-tehtävässä riittää käyttää tyyppejä \texttt{int} ja \texttt{long long}.
-
-Luvun $x$ jakojäännöstä $m$:llä
+Luvun $x$ \key{jakojäännös} eli \key{modulo}
+luvulla $m$
 merkitään $x \bmod m$.
 Esimerkiksi $17 \bmod 5 = 2$,
 koska $17 = 3 \cdot 5 + 2$.
+
+Joskus tehtävän vastaus on hyvin suuri kokonaisluku,
+mutta vastaus riittää ilmoittaa ''modulo $m$''
+eli vastauksen jakojäännös luvulla $m$
+(esimerkiksi ''modulo $10^9+7$'').
+Ideana on, että vaikka todellinen vastaus
+voi olla hyvin suuri luku,
+tehtävässä riittää käyttää tyyppejä \texttt{int} ja \texttt{long long}.
 
 Tärkeä modulon ominaisuus on,
 että yhteen-, vähennys- ja kertolaskussa
@@ -315,7 +317,7 @@ jokaisen laskun vaiheen jälkeen voi ottaa modulon
 eivätkä luvut kasva liian suuriksi.
 
 Esimerkiksi seuraava koodi
-laskee luvun $n$ kertoman modulo $m$:
+laskee luvun $n$ kertoman $n!$ modulo $m$:
 \begin{lstlisting}
 long long x = 1;
 for (int i = 2; i <= n i++) {
@@ -325,10 +327,10 @@ cout << x << "\n";
 \end{lstlisting}
 
 Yleensä vastaus modulona tulee antaa niin,
-että se on aina välillä $0\ldots m-1$.
+että se on välillä $0\ldots m-1$.
 Kuitenkin C++:ssa ja monissa
 muissa kielissä negatiivisen
-luvun modulo on nolla tai negatiivinen.
+luvun modulo voi olla negatiivinen.
 Helppo tapa varmistaa, että modulo ei ole negatiivinen,
 on laskea ensin modulo ja lisätä sitten $m$,
 jos tulos on negatiivinen:
