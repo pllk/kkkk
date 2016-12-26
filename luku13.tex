@@ -350,13 +350,13 @@ ettei verkossa ole negatiivisia kaaria.
 
 Tarkastellaan Dijkstran algoritmin toimintaa
 seuraavassa verkossa, kun alkusolmuna
-on solmu 4:
+on solmu 1:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (1,3) {1};
-\node[draw, circle] (2) at (4,3) {2};
-\node[draw, circle] (3) at (1,1) {3};
-\node[draw, circle] (4) at (4,1) {4};
+\node[draw, circle] (1) at (1,3) {3};
+\node[draw, circle] (2) at (4,3) {4};
+\node[draw, circle] (3) at (1,1) {2};
+\node[draw, circle] (4) at (4,1) {1};
 \node[draw, circle] (5) at (6,2) {5};
 
 \node[color=red] at (1,3+0.6) {$\infty$};
@@ -384,7 +384,7 @@ sellaisen solmun,
 jota ei ole vielä käsitelty
 ja jonka etäisyysarvio on
 mahdollisimman pieni.
-Alussa tällainen solmu on solmu 4,
+Alussa tällainen solmu on solmu 1,
 jonka etäisyysarvio on 0.
 
 Kun solmu tulee käsittelyyn,
@@ -394,10 +394,10 @@ parantaa etäisyysarvioita
 niiden avulla:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (1,3) {1};
-\node[draw, circle] (2) at (4,3) {2};
-\node[draw, circle] (3) at (1,1) {3};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle] (1) at (1,3) {3};
+\node[draw, circle] (2) at (4,3) {4};
+\node[draw, circle] (3) at (1,1) {2};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {1};
 \node[draw, circle] (5) at (6,2) {5};
 
 \node[color=red] at (1,3+0.6) {$\infty$};
@@ -418,18 +418,18 @@ niiden avulla:
 \path[draw=red,thick,->,line width=2pt] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-Solmun 4 käsittely paransi etäisyysarvioita
-solmuihin 2, 3 ja 5,
-joiden uudet etäisyydet ovat nyt 9, 5 ja 1.
+Solmun 1 käsittely paransi etäisyysarvioita
+solmuihin 2, 4 ja 5,
+joiden uudet etäisyydet ovat nyt 5, 9 ja 1.
 
 Seuraavaksi käsittelyyn tulee solmu 5,
 jonka etäisyys on 1:
 \begin{center}
 \begin{tikzpicture}
-\node[draw, circle] (1) at (1,3) {1};
-\node[draw, circle] (2) at (4,3) {2};
-\node[draw, circle] (3) at (1,1) {3};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle] (1) at (1,3) {3};
+\node[draw, circle] (2) at (4,3) {4};
+\node[draw, circle] (3) at (1,1) {2};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {1};
 \node[draw, circle, fill=lightgray] (5) at (6,2) {5};
 
 \node[color=red] at (1,3+0.6) {$\infty$};
@@ -448,13 +448,13 @@ jonka etäisyys on 1:
 \path[draw=red,thick,->,line width=2pt] (5) -- (2);
 \end{tikzpicture}
 \end{center}
-Tämän jälkeen vuorossa on solmu 2:
+Tämän jälkeen vuorossa on solmu 4:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle] (1) at (1,3) {1};
-\node[draw, circle, fill=lightgray] (2) at (4,3) {2};
-\node[draw, circle] (3) at (1,1) {3};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle] (1) at (1,3) {3};
+\node[draw, circle, fill=lightgray] (2) at (4,3) {4};
+\node[draw, circle] (3) at (1,1) {2};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {1};
 \node[draw, circle, fill=lightgray] (5) at (6,2) {5};
 
 \node[color=red] at (1,3+0.6) {$9$};
@@ -479,7 +479,7 @@ että aina kun solmu tulee käsittelyyn,
 sen etäisyysarvio on siitä lähtien lopullinen.
 Esimerkiksi tässä vaiheessa
 etäisyydet 0, 1 ja 3 ovat lopulliset
-etäisyydet solmuihin 4, 5 ja 2.
+etäisyydet solmuihin 1, 5 ja 4.
 
 Algoritmi käsittelee vastaavasti
 vielä kaksi viimeistä solmua,
@@ -488,10 +488,10 @@ etäisyydet ovat:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-\node[draw, circle, fill=lightgray] (1) at (1,3) {1};
-\node[draw, circle, fill=lightgray] (2) at (4,3) {2};
-\node[draw, circle, fill=lightgray] (3) at (1,1) {3};
-\node[draw, circle, fill=lightgray] (4) at (4,1) {4};
+\node[draw, circle, fill=lightgray] (1) at (1,3) {3};
+\node[draw, circle, fill=lightgray] (2) at (4,3) {4};
+\node[draw, circle, fill=lightgray] (3) at (1,1) {2};
+\node[draw, circle, fill=lightgray] (4) at (4,1) {1};
 \node[draw, circle, fill=lightgray] (5) at (6,2) {5};
 
 \node[color=red] at (1,3+0.6) {$7$};
