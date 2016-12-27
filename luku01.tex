@@ -280,13 +280,12 @@ tyypin \texttt{\_\_int128\_t}, jonka lukuväli on
 $-2^{127} \ldots 2^{127}-1$ eli noin $-10^{38} \ldots 10^{38}$.
 Tämä tyyppi ei kuitenkaan ole käytettävissä kaikissa kisajärjestelmissä.
 
-\subsubsection{Vastaus modulona}
+\subsubsection{Vastaus modulossa}
 
 \index{jakojxxnnos@jakojäännös}
 \index{modulolaskenta@modulolaskenta}
 
-Luvun $x$ \key{jakojäännös} eli \key{modulo}
-luvulla $m$
+Luvun $x$ jakojäännös luvulla $m$
 merkitään $x \bmod m$.
 Esimerkiksi $17 \bmod 5 = 2$,
 koska $17 = 3 \cdot 5 + 2$.
@@ -299,10 +298,9 @@ Ideana on, että vaikka todellinen vastaus
 voi olla hyvin suuri luku,
 tehtävässä riittää käyttää tyyppejä \texttt{int} ja \texttt{long long}.
 
-Tärkeä modulon ominaisuus on,
+Tärkeä jakojäännöksen ominaisuus on,
 että yhteen-, vähennys- ja kertolaskussa
-modulon voi laskea ennen laskutoimitusta,
-eli seuraavat kaavat pätevät:
+jakojäännöksen voi laskea ennen laskutoimitusta:
 
 \[
 \begin{array}{rcr}
@@ -313,7 +311,7 @@ eli seuraavat kaavat pätevät:
 \]
 
 Näiden kaavojen ansiosta
-jokaisen laskun vaiheen jälkeen voi ottaa modulon
+jokaisen laskun vaiheen jälkeen voi laskea jakojäännöksen
 eivätkä luvut kasva liian suuriksi.
 
 Esimerkiksi seuraava koodi
@@ -326,20 +324,20 @@ for (int i = 2; i <= n i++) {
 cout << x << "\n";
 \end{lstlisting}
 
-Yleensä vastaus modulona tulee antaa niin,
+Yleensä vastaus modulossa tulee antaa niin,
 että se on välillä $0\ldots m-1$.
-Kuitenkin C++:ssa ja monissa
+Kuitenkin C++:ssa ja
 muissa kielissä negatiivisen
-luvun modulo voi olla negatiivinen.
-Helppo tapa varmistaa, että modulo ei ole negatiivinen,
-on laskea ensin modulo ja lisätä sitten $m$,
+luvun jakojäännös voi olla negatiivinen.
+Helppo tapa varmistaa, että jakojäännös ei ole negatiivinen,
+on laskea ensin jakojäännös tavallisesti ja lisätä sitten $m$,
 jos tulos on negatiivinen:
 \begin{lstlisting}
 x = x%m;
 if (x < 0) x += m;
 \end{lstlisting}
 Tämä on tarpeen kuitenkin vain silloin,
-kun modulo voi olla negatiivinen
+kun jakojäännös voi olla negatiivinen
 koodissa olevien vähennyslaskujen vuoksi.
 
 \subsubsection{Liukuluvut}
