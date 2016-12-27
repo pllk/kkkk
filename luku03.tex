@@ -705,34 +705,27 @@ ne järjestyvät aakkosjärjestykseen.
 Parit (\texttt{pair}) järjestyvät ensisijaisesti
 ensimmäisen kentän (\texttt{first}) mukaan.
 Jos kuitenkin parien ensimmäiset kentät ovat samat,
-järjestys määräytyy toisen kentän (\texttt{second}) mukaan.
-Seuraava koodi esittelee asiaa:
-
+järjestys määräytyy toisen kentän (\texttt{second}) mukaan:
 \begin{lstlisting}
 vector<pair<int,int>> v;
 v.push_back({1,5});
 v.push_back({2,3});
 v.push_back({1,2});
-sort(v.begin(), v.end());
+sort(v.begin(), v.end()); // [(1,2),(1,5),(2,3)]
 \end{lstlisting}
 
-Koodin suorituksen jälkeen järjestys on
-$(1,2)$, $(1,5)$, $(2,3)$.
 
 \index{tuple@\texttt{tuple}}
 Vastaavasti \texttt{tuple}-rakenteet
 järjestyvät ensisijaisesti ensimmäisen kentän,
-toissijaisesti toisen kentän, jne., mukaan.
-Seuraava koodi esittelee asiaa:
+toissijaisesti toisen kentän, jne., mukaan:
 \begin{lstlisting}
 vector<tuple<int,int,int>> v;
 v.push_back(make_tuple(2,1,4));
 v.push_back(make_tuple(1,5,3));
 v.push_back(make_tuple(2,1,3));
-sort(v.begin(),v.end());
+sort(v.begin(), v.end()); // [(1,5,3),(2,1,3),(2,1,4)]
 \end{lstlisting}
-Koodin suorituksen jälkeen järjestys on
-$(1,5,3)$, $(2,1,3)$, $(2,1,4)$.
 
 \subsubsection{Omat tietueet}
 
