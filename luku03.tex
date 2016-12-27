@@ -333,42 +333,27 @@ joka järjestää taulukon
 rekursiivisesti jakamalla sen
 pienemmiksi osataulukoiksi.
 
-Lomitusjärjestäminen
-jakaa taulukon kahdeksi osataulukoksi,
-järjestää osataulukot rekursiivisesti ja muodostaa
-sitten järjestetyn taulukon yhdistämällä osataulukot.
-Algoritmin runko on seuraava:
+Lomitusjärjestäminen järjestää taulukon välin
+$[a,b]$ seuraavasti:
 
-\begin{lstlisting}
-void mergesort(int a, int b) {
-    if (a == b) return;
-    int c = (a+b)/2;
-    mergesort(a,c);
-    mergesort(c+1,b);
-    merge(a,c,c+1,b);
-}
-\end{lstlisting}
+\begin{enumerate}
+\item Jos $a=b$, älä tee mitään, koska väli on valmiiksi järjestyksessä.
+\item Valitse välin jakokohdaksi $k=\lfloor (a+b)/2 \rfloor$.
+\item Järjestä rekursiivisesti välin $[a,k]$ alkiot.
+\item Järjestä rekursiivisesti välin $[k+1,b]$ alkiot.
+\item \emph{Lomita} järjestetyt välit $[a,k]$ ja $[k+1,b]$
+järjestetyksi väliksi $[a,b]$.
+\end{enumerate}
 
-Funktio \texttt{mergesort}
-järjestää taulukon välin $a \ldots b$ alkiot.
-Jos $a=b$, välillä on vain yksi alkio,
-joten se on valmiiksi järjestyksessä.
-Muuten algoritmi jakaa välin
-kahteen osaan: vasen osa on väli $a \ldots c$
-ja oikea osa on väli $c+1 \ldots b$, missä $c=\lfloor (a+b)/2 \rfloor$.
-Funktion järjestää osat rekursiivisesti
-kutsumalla itseään.
+Lomitusjärjestämisen tehokkuus perustuu siihen,
+että se puolittaa joka askeleella välin kahteen osaan.
+Rekursiosta muodostuu yhteensä $O(\log n)$ tasoa
+ja jokaisen tason käsittely vie aikaa $O(n)$.
+Kohdan 5 lomittaminen on mahdollista ajassa $O(n)$,
+koska välit $[a,k]$ ja $[k+1,b]$ on jo järjestetty.
 
-Rekursiivisen järjestämisen jälkeen funktio \texttt{merge}
-lomittaa välin vasemman ja oikean osan alkiot
-eli kerää alkiot yhteen niin,
-että koko väli on järjestyksessä.
-Lomitus on mahdollista toteuttaa ajassa $O(n)$
-valitsemalla alkiot järjestyksessä vasemman ja
-oikean osan alusta alkaen.
-
-\begin{samepage}
-Esimerkiksi taulukko
+Tarkastellaan esimerkkinä seuraavan taulukon
+järjestämistä:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -392,8 +377,9 @@ Esimerkiksi taulukko
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-\end{samepage}
-jakautuu osataulukoiksi
+
+Taulukko jakautuu ensin kahdeksi
+osataulukoksi seuraavasti:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,1);
@@ -421,7 +407,9 @@ jakautuu osataulukoiksi
 
 \end{tikzpicture}
 \end{center}
-jotka ovat järjestettyinä
+
+Algoritmi järjestää osataulukot rekursiivisesti,
+jolloin tuloksena on:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,1);
@@ -448,7 +436,9 @@ jotka ovat järjestettyinä
 \node at (8.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-Osataulukot lomittamalla syntyy järjestetty taulukko
+
+Lopuksi algoritmi lomittaa järjestetyt osataulukot,
+jolloin syntyy lopullinen järjestetty taulukko:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -472,12 +462,6 @@ Osataulukot lomittamalla syntyy järjestetty taulukko
 \node at (7.5,1.4) {$8$};
 \end{tikzpicture}
 \end{center}
-
-Lomitusjärjestämisen aikavaativuus on $O(n \log n)$,
-koska algoritmin aikana
-osataulukoista muodostuu $O(\log n)$ tasoa
-ja kullakin tasolla osataulukoiden lomitus
-vie yhteensä $O(n)$ aikaa.
 
 \subsubsection{Järjestämisen alaraja}
 
