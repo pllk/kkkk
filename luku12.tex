@@ -321,7 +321,7 @@ solmu jonosta ja uudet solmut lisätään
 jonon perälle.
 
 Seuraava koodi toteuttaa leveyshaun
-solmusta $s$ lähtien.
+solmusta $x$ lähtien.
 Koodi olettaa, että verkko on tallennettu
 vieruslistoina, ja pitää yllä jonoa
 \begin{lstlisting}
@@ -344,8 +344,8 @@ ja taulukkoon \texttt{e} lasketaan lyhin
 etäisyys alkusolmusta kaikkiin verkon solmuihin.
 Toteutuksesta tulee seuraavanlainen:
 \begin{lstlisting}
-z[s] = 1; e[s] = 0;
-q.push(s);
+z[s] = 1; e[x] = 0;
+q.push(x);
 while (!q.empty()) {
     int s = q.front(); q.pop();
     // solmun s käsittely tähän     
