@@ -776,9 +776,9 @@ ja toissijaisesti y-koordinaatin mukaan.
 \begin{lstlisting}
 struct P {
     int x, y;
-    bool operator<(const P& a) {
-        if (this.x != a.x) return this.x < a.x;
-        else return this.y < a.y;
+    bool operator<(const P &p) {
+        if (x != p.x) return x < p.x;
+        else return y < p.y;
     }
 };
 \end{lstlisting}
