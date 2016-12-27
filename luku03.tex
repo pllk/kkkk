@@ -90,35 +90,36 @@ on järjestettynä seuraava:
 
 Yksinkertaiset algoritmit taulukon
 järjestämiseen vievät aikaa $O(n^2)$.
-Ehkä tunnetuin tällainen algoritmi on
+Tällaiset algoritmit ovat lyhyitä ja
+muodostuvat tyypillisesti
+kahdesta sisäkkäisestä silmukasta.
+Tunnettu $O(n^2)$-aikainen algoritmi on
 \key{kuplajärjestäminen},
-joka muodostuu peräkkäisistä taulukon läpikäynneistä.
+jossa alkiot ''kuplivat'' eteenpäin taulukossa
+niiden suuruuden perusteella.
 
-Algoritmissa jokainen taulukon läpikäynti
-etsii vierekkäisiä alkiopareja,
-jotka ovat väärässä järjestyksessä,
-ja korjaa näiden alkioparien järjestyksen.
-Algoritmi päättyy, kun läpikäynnin
-aikana ei tule mitään muutoksia taulukkoon,
-jolloin taulukko on järjestyksessä.
-
-Kuplajärjestämisen voi toteuttaa seuraavasti,
-kun järjestettävä taulukko muodostuu alkioista
+Kuplajärjestäminen muodostuu $n-1$ kierroksesta,
+joista jokainen käy taulukon läpi vasemmalta oikealle.
+Aina kun taulukosta löytyy kaksi vierekkäistä
+alkiota, joiden järjestys on väärä, algoritmi
+korjaa niiden järjestyksen.
+Algoritmin voi toteuttaa seuraavasti
+taulukolle
 $\texttt{t}[1],\texttt{t}[2],\ldots,\texttt{t}[n]$:
 \begin{lstlisting}
-while (true) {
-    bool x = false;
-    for (int i = 1; i <= n-1; i++) {
-        if (t[i] > t[i+1]) {
-            swap(t[i],t[i+1]);
-            x = true;
-        }
+for (int i = 1; i <= n-1; i++) {
+    for (int j = 1; j <= n-i; j++) {
+        if (t[j] > t[j+1]) swap(t[j],t[j+1]);
     }
-    if (!x) break;
 }
 \end{lstlisting}
 
-\noindent
+Algoritmin ensimmäisen kierroksen jälkeen suurin
+alkio on paikallaan, toisen kierroksen jälkeen
+kaksi suurinta alkiota on paikallaan, jne.
+Niinpä $n-1$ kierroksen jälkeen koko taulukko
+on järjestyksessä.
+
 Esimerkiksi taulukossa
 
 \begin{center}
@@ -256,14 +257,6 @@ läpikäynti tekee seuraavat vaihdot:
 \end{tikzpicture}
 \end{center}
 
-Kuplajärjestämisessä ensimmäisen läpikäynnin jälkeen suurin alkio
-on paikallaan, toisen läpikäynnin jälkeen
-kaksi suurinta alkiota on paikallaan, jne.
-Niinpä kuplajärjestäminen päättyy aina viimeistään $n-1$
-läpikäynnin jälkeen.
-Koska jokainen läpikäynti vie aikaa $O(n)$,
-algoritmin aikavaativuus on $O(n^2)$.
-
 \subsubsection{Inversiot}
 
 \index{inversio@inversio}
@@ -345,6 +338,7 @@ jakaa taulukon kahdeksi osataulukoksi,
 järjestää osataulukot rekursiivisesti ja muodostaa
 sitten järjestetyn taulukon yhdistämällä osataulukot.
 Algoritmin runko on seuraava:
+
 \begin{lstlisting}
 void mergesort(int a, int b) {
     if (a == b) return;
