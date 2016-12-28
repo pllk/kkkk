@@ -692,7 +692,7 @@ Negaatio $\lnot A$ muuttaa lausekkeen käänteiseksi.
 Lauseke $A \land B$ on tosi, jos molemmat $A$ ja $B$ ovat tosia,
 ja lauseke $A \lor B$ on tosi, jos $A$ tai $B$ on tosi.
 Lauseke $A \Rightarrow B$ on tosi,
-jos $A$:n ollessa tosi myös $B$:n on aina tosi.
+jos $A$:n ollessa tosi myös $B$ on aina tosi.
 Lauseke $A \Leftrightarrow B$ on tosi,
 jos $A$:n ja $B$:n totuusarvo on sama.
 
@@ -716,17 +716,18 @@ Esimerkiksi
 tarkoittaa, että jokaiselle joukon
 alkiolle $x$ on olemassa
 jokin joukon alkio $y$ niin, että $y$ on $x$:ää pienempi.
-Tämä lauseke on tosi kokonaislukujen joukossa,
-mutta epätosi luonnollisten lukujen joukossa.
+Tämä pätee kokonaislukujen joukossa,
+mutta ei päde luonnollisten lukujen joukossa.
 
 Yllä esitettyjen merkintöjä avulla on mahdollista esittää
 monenlaisia loogisia väitteitä.
 Esimerkiksi
-\[\forall x (\lnot P(x) \Rightarrow (\exists a (\exists b (x = ab \land a > 1 \land b > 1))))\]
-tarkoittaa kokonaislukujen joukossa, että jos luku $x$ ei ole alkuluku,
+\[\forall x ((x>2 \land \lnot P(x)) \Rightarrow (\exists a (\exists b (x = ab \land a > 1 \land b > 1))))\]
+tarkoittaa, että jos luku $x$ on suurempi
+kuin 2 eikä ole alkuluku,
 niin on olemassa luvut $a$ ja $b$,
 joiden tulo on $x$ ja jotka molemmat ovat suurempia kuin 1.
-Tämän lausekkeen arvo on tosi.
+Tämä väite pitää paikkansa kokonaislukujen joukossa.
 
 \subsubsection{Funktioita}
 
